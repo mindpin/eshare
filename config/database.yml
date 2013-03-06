@@ -1,0 +1,28 @@
+development:
+  adapter: mysql2
+  encoding: utf8
+  database: mindpin_edushare_development
+  username: root
+  password: root
+  pool: 5
+  timeout: 5000
+  reconnect: true
+
+test:
+  adapter: mysql2
+  encoding: utf8
+  database: mindpin_edushare_test
+  username: root
+  password: root
+  pool: 5
+  timeout: 5000
+  
+production:
+  adapter: mysql2
+  encoding: utf8
+  database: mindpin_edushare_production
+  username: root
+  password: root
+  pool: 5
+  timeout: 5000
+  reconnect: true
