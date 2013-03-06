@@ -4,14 +4,16 @@ current_path=`cd "$(dirname "$0")"; pwd`
 eshare_project_path=$current_path/../..
 . $current_path/function.sh
 
-MINDPIN_MRS_DATA_PATH="/MINDPIN_MRS_DATA"
-rails_env="development"
-
+MINDPIN_MRS_DATA_PATH=`ruby $current_path/parse_property.rb MINDPIN_MRS_DATA_PATH`
+rails_env=`ruby $current_path/parse_property.rb RAILS_ENV`
 pid=$MINDPIN_MRS_DATA_PATH/pids/unicorn-eshare.pid
 
 cd $eshare_project_path
-echo $rails_env
-echo `pwd`
+echo "######### info #############"
+echo "RAILS_ENV $rails_env"
+echo "pid_file_path $pid"
+echo "eshare_project_path $(pwd)"
+echo "############################"
 
 case "$1" in
   start)

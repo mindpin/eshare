@@ -1,7 +1,9 @@
 # worker 数量
 worker_processes 3
 
-MINDPIN_MRS_DATA_PATH = "/MINDPIN_MRS_DATA"
+eshare_project_path = File.expand_path("../../",__FILE__)
+MINDPIN_MRS_DATA_PATH = `ruby #{eshare_project_path}/deploy/sh/parse_property.rb MINDPIN_MRS_DATA_PATH`
+
 # 日志位置
 stderr_path("/#{MINDPIN_MRS_DATA_PATH}/logs/unicorn-eshare-error.log")
 stdout_path("/#{MINDPIN_MRS_DATA_PATH}/logs/unicorn-eshare.log")
