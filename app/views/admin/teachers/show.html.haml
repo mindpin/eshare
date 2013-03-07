@@ -1,10 +1,10 @@
-- htitle "教师维护 - #{@teacher.real_name}"
+- htitle "教师维护 - #{@teacher.user.name}"
 
 - hgoback '/admin/teachers'
 - hbreadcrumb '首页', '/admin'
 - hbreadcrumb '基础数据', '/admin'
 - hbreadcrumb '教师维护', '/admin/teachers'
-- hbreadcrumb @teacher.real_name
+- hbreadcrumb @teacher.user.name
 
 .page-unfixed-head
   = page_buttons do |p|
@@ -16,14 +16,14 @@
     = page_field :'base-info', :title=>'教师基础信息' do
       .base
         .avatar= avatar @teacher.user, :medium
-        .name= @teacher.real_name
+        .name= @teacher.user.name
         .tid
           %span 工号：
           %span= @teacher.tid
       .detail
         .f
           .k 系统用户名：
-          .v= @teacher.user.name
+          .v= @teacher.user.login
         .f
           .k 邮箱：
           .v= @teacher.user.email

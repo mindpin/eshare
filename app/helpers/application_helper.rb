@@ -99,7 +99,7 @@ module ApplicationHelper
       src   = User.new.logo.url(style)
       meta  = 'unknown-user'
     else
-      alt   = user.real_name
+      alt   = user.name
       src   = user.logo.url(style)
       meta  = dom_id(user)
     end

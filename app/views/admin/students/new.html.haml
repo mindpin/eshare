@@ -10,20 +10,19 @@
   = flash_info
   = form_for [:admin, @student] do |t|
     .field.need
-      %label 真实姓名
-      = t.text_field :real_name
-
-    .field.need
       %label 学生编号
       = t.text_field :sid
 
     = t.fields_for :user do |user_f|
       .field.need
+        %label 真实姓名
+        = user_f.text_field :name
+      .field.need
         %label 电子邮箱
         = user_f.text_field :email, :maxlength=>50
       .field.need
         %label 用户名
-        = user_f.text_field :name, :maxlength=>50
+        = user_f.text_field :login, :maxlength=>50
       .field.need
         %label 密码
         = user_f.password_field :password, :value=>'', :maxlength=>32

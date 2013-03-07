@@ -29,7 +29,6 @@ class Student < ActiveRecord::Base
   }
 
   # --- 校验方法
-  validates :real_name, :presence => true
   validates :sid, :uniqueness => { :if => Proc.new { |student| !student.sid.blank? } }
   validates :user, :presence => true
 

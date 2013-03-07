@@ -4,7 +4,7 @@
 - hbreadcrumb '首页', '/admin'
 - hbreadcrumb '基础数据', '/admin'
 - hbreadcrumb '学生维护', '/admin/students'
-- hbreadcrumb @student.real_name
+- hbreadcrumb @student.user.name
 
 .page-unfixed-head
   = page_buttons do |p|
@@ -20,13 +20,13 @@
         = avatar @student.user, :medium
 
     = page_field :'real-name', :title=>'学生姓名' do
-      .v= @student.real_name
+      .v= @student.user.name
 
     = page_field :'real-name', :title=>'学生编号' do
       .v= @student.sid
 
     = page_field :'real-name', :title=>'系统对应用户' do
-      .v= @student.user.name
+      .v= @student.user.login
 
     = page_field :'real-name', :title=>'登录邮箱' do
       .v= @student.user.email

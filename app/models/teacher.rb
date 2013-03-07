@@ -14,7 +14,6 @@ class Teacher < ActiveRecord::Base
     joins('inner join course_student_assigns on course_student_assigns.teacher_user_id = teachers.user_id').where('course_student_assigns.semester_value = ?', semester.value).group('teachers.id')
   }
   
-  validates :real_name, :presence => true
   validates :tid, :uniqueness => { :if => Proc.new { |teacher| !teacher.tid.blank? } }
   validates :user, :presence => true
   validate do |teacher|
