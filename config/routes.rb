@@ -21,9 +21,7 @@ Eshare::Application.routes.draw do
 
   # 头像设置
   get  "/setting/avatar"              => 'setting#avatar'
-  get  '/setting/temp_avatar'         => 'setting#temp_avatar'
-  post "/setting/avatar_submit_raw"   => 'setting#avatar_submit_raw'
-  post "/setting/avatar_submit_crop"  => 'setting#avatar_submit_crop'
+  post "/setting/avatar_submit"   => 'setting#avatar_submit'
   end
   
   namespace :admin do

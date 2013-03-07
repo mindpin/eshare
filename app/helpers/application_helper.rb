@@ -77,4 +77,18 @@ module ApplicationHelper
     return '未知用户' if user.blank?
     link_to user.real_name, "/users/#{user.id}", :class=>'u-name'
   end
+
+  def flash_info
+    re = ''
+
+    [:success, :error, :notice].each do |kind|
+      info = flash[kind]
+      if !info.blank?
+        re += content_tag(:div, info, :class=>'page-flash-info')
+      end
+    end
+
+    return re.html_safe
+  end
+  
 end
