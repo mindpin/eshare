@@ -1,58 +1,27 @@
 Eshare::Application.routes.draw do
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
+  root :to=>"index#index"
+  namespace :auth do
+    # ---------------- 首页和欢迎页面 ---------
+    root :to => 'sessions#new'
+    # 登入登出
+    get  '/login'  => 'sessions#new'
+    post '/login'  => 'sessions#create'
+    get  '/logout' => 'sessions#destroy'
 
-  # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
-  # Keep in mind you can assign values other than :controller and :action
 
-  # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
+    # 用户设置
+    # 基本信息
+    get  "/setting"                     => "setting#base"
+    put  "/setting"                     => "setting#base_submit"
 
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
+    # 设置密码
+    get '/setting/password'             => "setting#password"
+    put '/setting/password'             => "setting#password_submit"
 
-  # Sample resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Sample resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Sample resource route with more complex sub-resources
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', :on => :collection
-  #     end
-  #   end
-
-  # Sample resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
-
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
-
-  # See how all your routes lay out with "rake routes"
-
-  # This is a legacy wild controller route that's not recommended for RESTful applications.
-  # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id))(.:format)'
+    # 头像设置
+    get  "/setting/avatar"              => 'setting#avatar'
+    get  '/setting/temp_avatar'         => 'setting#temp_avatar'
+    post "/setting/avatar_submit_raw"   => 'setting#avatar_submit_raw'
+    post "/setting/avatar_submit_crop"  => 'setting#avatar_submit_crop'
+  end
 end

@@ -1,0 +1,6 @@
+.info= message
+
+.exception
+  .message= exception.message
+  - exception.backtrace.each do |m|
+    %div= m
