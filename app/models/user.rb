@@ -23,6 +23,7 @@ class User < ActiveRecord::Base
   end
 
   # ------------
+  attr_accessible :name
 
   include UserAvatarMethods
   # admin 模块
