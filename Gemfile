@@ -16,6 +16,9 @@ gem 'jquery-rails'
 gem 'unicorn'
 
 #### 其他 gem
+gem 'paperclip'
+gem 'pacecar'
+gem 'will_paginate'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
