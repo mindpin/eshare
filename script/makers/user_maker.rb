@@ -1,9 +1,10 @@
 class UserMaker
-  attr_reader :type, :real_names
+  attr_reader :type, :real_names, :progressbar
 
 	def initialize(type, real_names)
-		@type       = type.to_sym
-		@real_names = real_names
+		@type        = type.to_sym
+		@real_names  = real_names
+    @progressbar = ProgressBar.create title: type.pluralize.capitalize, length: 64, total: real_names.count, format: '%t: |%b>>%i| %p%%'
 	end
 
 	def self.load_yaml(yaml)
@@ -14,9 +15,9 @@ class UserMaker
 	def produce
 		self.real_names.each_with_index do |real_name, index|
 			num = index + 1
-			user = User.create(user_attrs(num))
-			user.set_role(self.type)
-			produce_attached_role_for(user, num, real_names)
+			user = User.create(user_attrs(real_name, num))
+			produce_attached_role_for(user, num, real_name)
+      self.progressbar.increment
 		end
 	end
 
@@ -26,8 +27,8 @@ private
 		"#{self.type}#{num}"
 	end
 
-	def user_attrs(num)
-		{name: "#{name_template(num)}", password: 1234, email: "#{name_template(num)}@edu.dev"}
+	def user_attrs(real_name, num)
+		{login: "#{name_template(num)}", name: real_name, password: 1234, email: "#{name_template(num)}@edu.dev"}
 	end
 
 	def academic_id_prefix

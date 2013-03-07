@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   end
 
   # ------------
-  attr_accessible :logo
+  attr_accessible :logo, :name
   include UserAvatarMethods
   # admin 模块
   include Student::UserMethods

@@ -16,6 +16,10 @@ group :test do
   gem 'database_cleaner', '0.9.1' # 加速测试时数据库清理
 end
 
+group :examples do
+  gem 'ruby-progressbar', '~> 1.0.2'
+end
+
 gem 'jquery-rails', '2.2.1'
 gem 'unicorn', '4.6.2'
 

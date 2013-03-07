@@ -1,5 +1,6 @@
 require './script/helper'
 require './script/pack1'
+Bundler.require(:examples)
 
 case ARGV[0]
 when 'clear-pack-records'
@@ -8,7 +9,7 @@ when 'clear-pack-records'
   exit
 when 'clear-db'
   puts '清空数据库....'
-  `rake db:drop && rake db:create && rake db:migrate > /dev/null`
+  `rake db:drop rake db:create rake db:migrate > /dev/null`
   exit
 end
 
@@ -28,9 +29,8 @@ prompt = '
 puts prompt
 
 def get_choice
-  puts '请选择要导入的选项(1-1):'
+  print '请选择要导入的选项(1-1): '
   choice = gets.chomp.to_i
-
   return choice if (1..1) === choice
   get_choice
 end
