@@ -1,4 +1,5 @@
 class OnlineRecord < ActiveRecord::Base
+  attr_accessible :user_id, :key
   belongs_to :user
 
   def self.onlines
