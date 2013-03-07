@@ -1,5 +1,6 @@
 Eshare::Application.routes.draw do
   root :to=>"index#index"
+  get '/dashboard' => 'index#dashboard'
   namespace :auth do
   # ---------------- 首页和欢迎页面 ---------
   root :to => 'sessions#new'
