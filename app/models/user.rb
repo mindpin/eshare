@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 class User < ActiveRecord::Base
+  attr_accessible :name, :password,
+    :salt, :email, :sign, :activation_code,
+    :logo_file_name, :logo_content_type, :logo_file_size,
+    :logo_updated_at, :activated_at, :reset_password_code,
+    :reset_password_code_until, :last_login_time,
+    :send_invite_email, :reputation, :roles_mask
+
   include UserAvatarMethods
   include UserAuthMethods
   # admin 模块
