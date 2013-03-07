@@ -16,7 +16,7 @@ class UserMaker
 		self.real_names.each_with_index do |real_name, index|
 			num = index + 1
 			user = User.create(user_attrs(real_name, num))
-			produce_attached_role_for(user, num, real_names)
+			produce_attached_role_for(user, num, real_name)
       self.progressbar.increment
 		end
 	end
