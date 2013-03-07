@@ -1,40 +1,33 @@
 class User < ActiveRecord::Base
-  attr_accessible :name, :password, :password_confirmation,
-    :salt, :email, :sign, :activation_code, :logo,
-    :logo_file_name, :logo_content_type, :logo_file_size,
-    :logo_updated_at, :activated_at, :reset_password_code,
-    :reset_password_code_until, :last_login_time,
-    :send_invite_email, :reputation, :roles_mask
+  # Include default devise modules. Others available are:
+  # :token_authenticatable, :confirmable,
+  # :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
+
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :email, :password, :password_confirmation, :remember_me
+  # attr_accessible :title, :body
+
+  attr_accessible :login
+  validates :login, :format => {:with => /\A\w+\z/, :message => '只允许数字、字母和下划线'},
+                    :length => {:in => 3..20},
+                    :presence => true,
+                    :uniqueness => {:case_sensitive => false}
+
+  validates :email, :uniqueness => {:case_sensitive => false}
+
+  def self.find_for_database_authentication(conditions)
+    login = conditions.delete(:login)
+    self.where(:login => login).first || self.where(:email => login).first
+  end
+
+  # ------------
 
   include UserAvatarMethods
-  include UserAuthMethods
   # admin 模块
   include Student::UserMethods
   include Teacher::UserMethods
-
-  # 在线状态记录
-  has_one :online_record,:dependent => :destroy
-  # 校验部分
-  # 不能为空的有：用户名，登录名，电子邮箱
-  # 不能重复的有：登录名，电子邮箱（大小写不区分）
-  # 两次密码输入必须一样，电子邮箱格式必须正确
-  # 密码允许为空，但是如果输入了，就必须是4-32
-  # 用户名：是2-20位的中文或者英文，可以混写
-  validates :email,
-    :presence => true,
-    :uniqueness => { :case_sensitive => false },
-    :format => /^([A-Za-z0-9_]+)([\.\-\+][A-Za-z0-9_]+)*(\@[A-Za-z0-9_]+)([\.\-][A-Za-z0-9_]+)*(\.[A-Za-z0-9_]+)$/
-
-  validates :name, 
-    :presence => true,
-    :length => 2..20,
-    :uniqueness => { :case_sensitive => false },
-    :format => /^([A-Za-z0-9一-龥]+)$/
-
-  validates :password,
-    :presence => { :on => :create },
-    :confirmation => true,
-    :length => { :in => 4..32 , :on => :create}
 
   ROLES = %w[admin student teacher]
   scope :with_role, lambda { |role| {:conditions => "roles_mask & #{2**ROLES.index(role.to_s)} > 0"} }
@@ -73,7 +66,6 @@ class User < ActiveRecord::Base
     return '学生' if self.is_student?
     '教师'
   end
-
 
 private
 

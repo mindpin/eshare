@@ -1,0 +1,15 @@
+- if resource.errors.any?
+  %a.close{:href => 'javascript:;', 'data-dismiss' => 'alert'}
+  %p
+    %strong 有 #{resource.errors.count} 处问题导致无法提交
+  %ul.errors
+    - resource.errors.full_messages.each do |m|
+      %li.error= m
+
+= simple_form_for resource, :as => resource_name, :url => registration_path(resource_name) do |f|
+  = f.input :login, :hint => '这是登录名'
+  = f.input :email, :hint => '这里填邮箱噢', :required => true, :input_html => {:placeholder => 'foo@bar.com'}
+  = f.input :password
+  = f.input :password_confirmation
+
+  = f.submit '提交注册信息', :disable_with => '正在提交'

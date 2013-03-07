@@ -11,7 +11,7 @@
     = stylesheet_link_tag 'application'
 
   %body.echo.gray
-    - if logged_in? && (current_user.is_teacher? || current_user.is_student?)
+    - if user_signed_in? && (current_user.is_teacher? || current_user.is_student?)
       .page-sider
         - if current_user.is_teacher?
           = mindpin_sidebar :teacher
@@ -41,7 +41,7 @@
       .page-sider
       .page-topbar
         .current-user
-          %a.logout{:href=>'/auth/logout'} 退出登录
+          %a.logout{:href=>'/account/sign_out'} 退出登录
       .page-content
         .invalid-role 你的用户信息不完整，你不是一个老师或者学生。不能使用这个系统。
         .invalid-role 请联系管理员帮忙解决

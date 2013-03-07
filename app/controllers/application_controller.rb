@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  include AuthenticatedSystem
   include ApplicationMethods
 
   def flash_error(arg)
