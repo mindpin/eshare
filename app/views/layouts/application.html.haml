@@ -1,0 +1,47 @@
+:ruby
+  tstr = ((yield :title) || '').gsub("\n",'')
+  title = tstr.blank? ? 'EduShare' : "#{tstr} - EduShare"
+
+!!! 5
+%html{:lang=>'zh'}
+  %head
+    %meta{:charset=>'utf-8'}
+    %title= title
+    = csrf_meta_tags
+    = stylesheet_link_tag 'application'
+
+  %body.echo.gray
+    - if logged_in? && (current_user.is_teacher? || current_user.is_student?)
+      .page-sider
+        - if current_user.is_teacher?
+          = mindpin_sidebar :teacher
+        - elsif current_user.is_student?
+          = mindpin_sidebar :student
+
+      .page-topbar
+        %a.topbar-logo{:href=>'/'} 返回首页
+        .fl
+          = render 'layouts/parts/application_current_user', :user=>current_user
+          = render 'layouts/parts/application_top_ops'
+
+      .page-content
+        .page-breadcrumb.page-top-fixed
+          = yield :breadcrumb
+        = yield
+
+      = javascript_include_tag '/kindeditor/kindeditor'
+      = javascript_include_tag "http://#{request.host}/juggernaut/application.js"
+      = javascript_include_tag 'application'
+      = javascript_include_tag '/swfobject'
+      = javascript_include_tag '/player-min'
+      = javascript_include_tag '/flash-player'
+      = yield :javascript
+
+    - else
+      .page-sider
+      .page-topbar
+        .current-user
+          %a.logout{:href=>'/auth/logout'} 退出登录
+      .page-content
+        .invalid-role 你的用户信息不完整，你不是一个老师或者学生。不能使用这个系统。
+        .invalid-role 请联系管理员帮忙解决
