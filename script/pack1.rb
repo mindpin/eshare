@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 $students = YAML.load_file 'script/data/students.yaml'
-$teacher  = YAML.load_file 'script/data/teachers.yaml'
+$teachers = YAML.load_file 'script/data/teachers.yaml'
 
 defpack 1 do
-  semester = Semester.now
-
   admin = User.create(:name => 'admin',
                       :email => 'admin@edu.dev',
                       :password => '1234')

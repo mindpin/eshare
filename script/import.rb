@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-require 'script/helper'
-require 'script/pack1'
+require './script/helper'
+require './script/pack1'
 
 case ARGV[0]
 when 'clear-pack-records'
