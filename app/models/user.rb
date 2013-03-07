@@ -2,8 +2,9 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+  # :recoverable
+  devise :database_authenticatable, :registerable, 
+         :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
@@ -22,7 +23,10 @@ class User < ActiveRecord::Base
     self.where(:login => login).first || self.where(:email => login).first
   end
 
-  # ------------
+  # ------------ 以上是用户登录相关代码，不要改动
+  # ------------ 任何代码请在下方添加
+
+
   attr_accessible :logo, :name
   include UserAvatarMethods
   # admin 模块
@@ -51,11 +55,6 @@ class User < ActiveRecord::Base
 
   def is_admin?
     role? "admin"
-  end
-
-  def real_name
-    return self.name if self.is_admin?
-    teacher_or_student_real_name if is_teacher_or_student?
   end
 
   def title_str

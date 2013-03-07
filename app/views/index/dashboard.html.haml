@@ -6,7 +6,7 @@
     .avatar= avatar current_user, :medium
     .data
       .name
-        %span= current_user.real_name
+        %span= current_user.name
         %span= current_user_title
       .id
         - if current_user.is_teacher?

@@ -130,7 +130,7 @@ module ApplicationHelper
 
   def user_link(user)
     return '未知用户' if user.blank?
-    link_to user.real_name, "/users/#{user.id}", :class=>'u-name'
+    link_to user.name, "/users/#{user.id}", :class=>'u-name'
   end
 
   def flash_info

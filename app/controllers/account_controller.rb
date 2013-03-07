@@ -5,4 +5,15 @@ class AccountController < Devise::RegistrationsController
     super
     # 在这里添加其他逻辑
   end
+
+  def edit
+    super
+    # 在这里添加其他逻辑
+  end
+
+  protected
+
+    def after_update_path_for(resource)
+      '/account/edit'
+    end
 end
