@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 class IndexController < ApplicationController
-  before_filter :login_required
-  
   def index
+    if !user_signed_in?
+      return redirect_to '/account/sign_in'
+    end
+
     if current_user.is_admin?
       return redirect_to "/admin"
     end
+    
     redirect_to '/dashboard'
   end
 

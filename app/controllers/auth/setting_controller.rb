@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 class Auth::SettingController <  ApplicationController
   before_filter :login_required
 
