@@ -12,4 +12,24 @@ module ApplicationHelper
       re1 + re2
     end
   end
+
+  def htitle(str)
+    content_for :title do
+      str
+    end
+  end
+
+  def hbreadcrumb(str, url = nil, options = {})
+    url ||= 'javascript:;'
+
+    content_for :breadcrumb do
+      content_tag :div, :class => 'link' do
+        content_tag(:a, truncate_u(str, 16), :href => url)
+      end
+    end
+  end
+
+  def truncate_u(text, length = 30, truncate_string = "...")
+    truncate(text, :length => length, :separator => truncate_string)
+  end
 end

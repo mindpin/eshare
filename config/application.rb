@@ -58,5 +58,8 @@ module Eshare
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+    
+    ### 自定义增加的代码
+    require File.join(Rails.root, 'lib/load_mindpin_sidebar.rb')
   end
 end

@@ -1,0 +1,28 @@
+.page-admin-side-calendar
+  - time = Time.now
+  - weekday = "星期#{['日','一','二','三','四','五','六'][time.wday]}"
+  .time-bar= time.strftime("#{time.month}月#{time.day}日 #{weekday} %H:%M")
+  .cb
+    .calendar
+      .weekday
+        - ['一','二','三','四','五','六','日'].each do |wd|
+          .wd= wd
+      .days
+        :ruby
+          first_day = time - (time.day - 1).days
+          first_day_weekday = first_day.wday
+          empty_days = first_day_weekday - 1
+          empty_days = 6 if empty_days < 0
+
+          last_day = (time + 1.month) - (time + 1.month).day.days
+
+          d = 0
+        - 35.times do |i|
+          - if empty_days > 0
+            - empty_days-=1
+            .day
+          - elsif d < last_day.day
+            - klass = d == time.day-1 ? 'today' : ''
+            .day{:class=>klass}= d+=1
+          - else
+            .day
