@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-$students = YAML.load_file 'script/data/students.yaml'
-$teachers = YAML.load_file 'script/data/teachers.yaml'
+$students = YAML.load_file('script/data/students.yaml')[1]
+$teachers = YAML.load_file('script/data/teachers.yaml')[1]
 
 defpack 1 do
   admin = User.create(:name => 'admin',
