@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 class Student < ActiveRecord::Base
   attr_accessible :real_name, :sid, :user_id, :user, :is_removed, :user_attributes
   include Pacecar

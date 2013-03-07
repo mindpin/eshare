@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 class User < ActiveRecord::Base
   attr_accessible :name, :password, :password_confirmation,
     :salt, :email, :sign, :activation_code, :logo,

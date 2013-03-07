@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 source 'http://ruby.taobao.org'
 
 #### 基础 gem
