@@ -1,0 +1,8 @@
+.current-user
+  .name>
+    %span> 你好，
+    %span= user_link user
+    - if user.is_teacher?
+      %span> 老师
+    - if user.is_student?
+      %span> 同学

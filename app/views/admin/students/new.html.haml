@@ -1,0 +1,35 @@
+- htitle '学生维护'
+
+- hgoback '/admin/students'
+- hbreadcrumb '首页', '/admin'
+- hbreadcrumb '基础数据', '/admin'
+- hbreadcrumb '学生维护', '/admin/students'
+- hbreadcrumb '增加学生'
+
+.page-model-form
+  = flash_info
+  = form_for [:admin, @student] do |t|
+    .field.need
+      %label 真实姓名
+      = t.text_field :real_name
+
+    .field.need
+      %label 学生编号
+      = t.text_field :sid
+
+    = t.fields_for :user do |user_f|
+      .field.need
+        %label 电子邮箱
+        = user_f.text_field :email, :maxlength=>50
+      .field.need
+        %label 用户名
+        = user_f.text_field :name, :maxlength=>50
+      .field.need
+        %label 密码
+        = user_f.password_field :password, :value=>'', :maxlength=>32
+      .field.need
+        %label 确认密码
+        = user_f.password_field :password_confirmation, :value=>'', :maxlength=>32
+
+    .field.submit
+      = submit_tag '确定'

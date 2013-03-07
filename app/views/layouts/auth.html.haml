@@ -1,0 +1,24 @@
+:ruby
+  app_name = 'MINDPIN EduShare'
+  yield_title = (yield :title) || ''
+  t_str = yield_title.gsub("\n",'')
+
+  title = t_str.blank? ? app_name : "#{t_str} - #{app_name}"
+
+!!! 5
+%html{:lang=>'zh'}
+  %head
+    %meta{:charset=>'utf-8'}
+    %title=title
+    = csrf_meta_tags
+    = stylesheet_link_tag :application
+    = yield :css
+    = yield :head
+
+  %body.echo.auth
+    .page-wallpaper{:'data-src'=>'/assets/auth/login1.jpg'}
+    .page-content
+      = yield
+
+    = javascript_include_tag :application
+    = yield :javascript

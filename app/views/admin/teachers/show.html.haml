@@ -1,0 +1,32 @@
+- htitle "教师维护 - #{@teacher.real_name}"
+
+- hgoback '/admin/teachers'
+- hbreadcrumb '首页', '/admin'
+- hbreadcrumb '基础数据', '/admin'
+- hbreadcrumb '教师维护', '/admin/teachers'
+- hbreadcrumb @teacher.real_name
+
+.page-unfixed-head
+  = page_buttons do |p|
+    = p.button '修改信息', "/admin/teachers/#{@teacher.id}/edit"
+    = p.button '修改密码', "/admin/teachers/#{@teacher.id}/password"
+
+.page-model-show
+  .page-admin-teacher
+    = page_field :'base-info', :title=>'教师基础信息' do
+      .base
+        .avatar= avatar @teacher.user, :medium
+        .name= @teacher.real_name
+        .tid
+          %span 工号：
+          %span= @teacher.tid
+      .detail
+        .f
+          .k 系统用户名：
+          .v= @teacher.user.name
+        .f
+          .k 邮箱：
+          .v= @teacher.user.email
+
+    = page_field :desc, :title=>'教师简介' do
+      = sanitize @teacher.description

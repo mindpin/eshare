@@ -1,0 +1,22 @@
+.page-login
+  = form_tag('/auth/login') do
+    .fields
+      .field.name.placeholder
+        %label 用户名 / 电子邮箱
+        = text_field_tag :email
+      .field.password.placeholder
+        %label 密码
+        = password_field_tag :password
+      .field.subm
+        = submit_tag "登 录"
+
+    .fields
+      .field.signup
+        =#link_to '注册一个新账号', '/signup'
+      .field.remember
+        = jcheckbox :remember_me, '', true, '下次记住我'
+      .field.forgot.hide
+        = link_to '我忘记密码了…', "/forgot_password"
+
+    .fields
+      .login-errors{:style=>'display:none;'} 登录失败：用户名密码错误

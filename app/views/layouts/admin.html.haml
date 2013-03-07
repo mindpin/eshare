@@ -1,0 +1,39 @@
+:ruby
+  tstr = ((yield :title) || '').gsub("\n",'')
+  title = tstr.blank? ? 'EduShare ADMIN' : "#{tstr} - EduShare ADMIN"
+
+!!! 5
+%html{:lang=>'zh'}
+  %head
+    %meta{:charset=>'utf-8'}
+    %title= title
+    = csrf_meta_tags
+    = stylesheet_link_tag 'application'
+
+  %body.echo.gray
+    .page-sider
+      = render 'layouts/parts/time_and_calendar'
+      = mindpin_sidebar :admin
+
+    .page-topbar
+      %a.topbar-logo{:href=>'/'} 返回首页
+      = yield :topbar
+
+      .fl
+        .current-user
+          .name>
+            %span> 教务管理
+        .ops
+          %a.setting{:href=>'/admin/setting/password'} 设置密码
+          %a.logout{:href=>'/auth/logout'} 退出登录
+
+    .page-content
+      .page-breadcrumb.page-top-fixed
+        = yield :breadcrumb
+      = yield
+
+    = yield :fbox
+
+    = javascript_include_tag '/kindeditor/kindeditor'
+    = javascript_include_tag 'application'
+    = yield :javascript
