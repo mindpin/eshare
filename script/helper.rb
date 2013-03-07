@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 $script_record_dir = 'tmp/scripts/'
 
 def touch_pack_record(number)

@@ -1,9 +1,10 @@
 class UserMaker
-  attr_reader :type, :real_names
+  attr_reader :type, :real_names, :progressbar
 
 	def initialize(type, real_names)
-		@type       = type.to_sym
-		@real_names = real_names
+		@type        = type.to_sym
+		@real_names  = real_names
+    @progressbar = ProgressBar.create title: type.pluralize.capitalize, length: 64, total: real_names.count, format: '%t: |%b>>%i| %p%%'
 	end
 
 	def self.load_yaml(yaml)
@@ -17,6 +18,7 @@ class UserMaker
 			user = User.create(user_attrs(num))
 			user.set_role(self.type)
 			produce_attached_role_for(user, num, real_names)
+      self.progressbar.increment
 		end
 	end
 

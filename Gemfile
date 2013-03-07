@@ -17,6 +17,10 @@ group :test do
   gem 'database_cleaner'
 end
 
+group :examples do
+  gem 'ruby-progressbar', '~> 1.0.2'
+end
+
 gem 'jquery-rails'
 gem 'unicorn'
 
