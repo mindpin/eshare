@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 class Teacher < ActiveRecord::Base
-  attr_accessible :real_name, :tid, :user_id, :user, :is_removed
+  attr_accessible :real_name, :tid, :user_id, :user, :is_removed, :user_attributes, :description
   include ModelRemovable
   include Paginated
   include Pacecar

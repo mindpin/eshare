@@ -1,0 +1,46 @@
+- htitle '教师维护'
+
+- hgoback '/admin'
+- hbreadcrumb '首页', '/admin'
+- hbreadcrumb '基础数据', '/admin'
+- hbreadcrumb '教师维护'
+
+= page_top_fixed 'buttons' do
+  = page_buttons do |p|
+    = p.button '增加教师记录', '/admin/teachers/new', :class=>'create'
+    = p.button '批量导入教师', '/admin/teachers/import_from_csv_page', :class=>'import'
+
+:ruby
+  cols_hash = {
+    :ops => 1,
+    :real_name => 2,
+    :tid => 2,
+    :username => 2,
+    :email => 4
+  }
+
+= page_top_fixed 'list-head' do
+  .headtop
+    = page_buttons do |p|
+      = p.batch_destroy Teacher
+
+    = list_pagination(@teachers)
+
+  = page_list_head :cols=>cols_hash do |p|
+    = p.checkbox
+    = p.cell :ops, '操作'
+    = p.cell :real_name, '教师姓名', :sortable=>true
+    = p.cell :tid, '教师工号', :sortable=>true
+    = p.cell :username, '用户名'
+    = p.cell :email, '用户邮箱'
+
+= page_model_list @teachers, :cols=>cols_hash, :class=>'admin-teachers' do |p|
+  - teacher = p.model
+  = p.checkbox(teacher)
+  = p.cell :ops do
+    %a.edit{:href=>"/admin/teachers/#{teacher.id}/edit"} 编辑
+  = p.cell :real_name do
+    %a.edit{:href=>"/admin/teachers/#{teacher.id}"}= teacher.real_name
+  = p.cell :tid, teacher.tid
+  = p.cell :username, teacher.user.name
+  = p.cell :email, teacher.user.email

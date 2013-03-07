@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 class User < ActiveRecord::Base
-  attr_accessible :name, :password,
+  attr_accessible :name, :password, :password_confirmation,
     :salt, :email, :sign, :activation_code, :logo,
     :logo_file_name, :logo_content_type, :logo_file_size,
     :logo_updated_at, :activated_at, :reset_password_code,
