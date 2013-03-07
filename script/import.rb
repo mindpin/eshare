@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 require './script/helper'
 require './script/pack1'
 

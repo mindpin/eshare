@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 require './script/makers/user_maker'
 
 defpack 1 do
