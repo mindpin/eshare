@@ -10,5 +10,5 @@ defpack 1 do
 
   admin.set_role :admin
   
-  ['students', 'teachers'].each {|yaml| UserMaker.load_yaml(yaml).produce}
+  ['teachers', 'students'].each {|yaml| UserMaker.load_yaml(yaml).produce}
 end
