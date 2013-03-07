@@ -1,5 +1,5 @@
 class Auth::SettingController <  ApplicationController
-  before_filter :login_required
+  before_filter :authenticate_user!
 
   # 基本信息
   def base
@@ -9,7 +9,6 @@ class Auth::SettingController <  ApplicationController
   def base_submit
     @user= current_user
 
-    @user.sign = params[:sign]
     @user.name = params[:name]
     if @user.save
       flash[:success] = "用户信息修改成功"
