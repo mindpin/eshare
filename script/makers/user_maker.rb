@@ -16,7 +16,7 @@ class UserMaker
 		self.real_names.each_with_index do |real_name, index|
 			num = index + 1
 			user = User.create(user_attrs(real_name, num))
-			produce_attached_role_for(user, num, real_name)
+			produce_attached_role_for(user, num)
       self.progressbar.increment
 		end
 	end
@@ -35,8 +35,8 @@ private
 		"#{self.type[0]}id".to_sym
 	end
 
-	def attached_role_attrs(user, num, real_name)
-		{academic_id_prefix => "#{academic_id_prefix}-#{num}", real_name: real_name, user: user}
+	def attached_role_attrs(user, num)
+		{academic_id_prefix => "#{academic_id_prefix}-#{num}", user: user}
 	end
 
 	def have_attached_role?
