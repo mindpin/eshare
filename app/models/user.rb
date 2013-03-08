@@ -33,47 +33,5 @@ class User < ActiveRecord::Base
   include Student::UserMethods
   include Teacher::UserMethods
 
-  ROLES = %w[admin student teacher]
-  scope :with_role, lambda { |role| {:conditions => "roles_mask & #{2**ROLES.index(role.to_s)} > 0"} }
-
-  def roles=(roles)
-    self.roles_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.sum
-  end
-
-  def roles
-    ROLES.reject { |r| ((roles_mask || 0) & 2**ROLES.index(r)).zero? }
-  end
-
-  def role?(role)
-    roles.include? role.to_s
-  end
-
-  def set_role(role)
-    self.roles = (ROLES & [role.to_s])
-    save
-  end
-
-  def is_admin?
-    role? "admin"
-  end
-
-  def title_str
-    "#{self.real_name}#{self.is_student? ? '同学' : '老师'}"
-  end
-
-  def role_str
-    return '学生' if self.is_student?
-    '教师'
-  end
-
-private
-
-  def teacher_or_student_real_name
-    (self.student && self.student.real_name) ||
-    (self.teacher && self.teacher.real_name)
-  end
-
-  def is_teacher_or_student?
-    self.is_teacher? || self.is_student?
-  end
+  include RoleMethods
 end
