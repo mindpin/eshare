@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  mount_uploader :avatar, AvatarUploader
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
@@ -28,8 +29,7 @@ class User < ActiveRecord::Base
   # 声明角色
   roles_field :roles_mask, :roles => [:admin, :manager, :teacher, :student]
 
-  attr_accessible :logo, :name
-  include UserAvatarMethods
+  attr_accessible :name, :avatar
   # admin 模块
   include Student::UserMethods
   include Teacher::UserMethods

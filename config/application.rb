@@ -61,5 +61,6 @@ module Eshare
     
     ### 自定义增加的代码
     require File.join(Rails.root, 'lib/load_mindpin_sidebar.rb')
+    require File.join(Rails.root, 'lib/mindpin_global_methods.rb')
   end
 end

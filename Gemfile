@@ -39,4 +39,7 @@ gem 'will_paginate', '3.0.4' # 分页支持
 gem 'roles-field', :git => 'git://github.com/mindpin/roles-field.git'
 
 #### 其他 gem
-gem 'paperclip' # 需要换掉
+# 文件上传（fushang318增加） 
+gem "carrierwave", "0.8.0"
+# carrierwave 用到的图片切割
+gem "mini_magick", "3.5.0", :require => false

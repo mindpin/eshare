@@ -23,6 +23,6 @@
     = form_tag '/auth/setting/avatar_submit', :multipart => true do
       .field
         %label 选择一张图片并上传
-        .ip=file_field_tag :logo
+        .ip=file_field_tag :avatar
       .field
         =submit_tag "上传图片"
