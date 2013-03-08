@@ -47,7 +47,7 @@ class Auth::SettingController <  ApplicationController
 
   # 修改头像 - 上传原始头像
   def avatar_submit
-    current_user.update_attributes(:logo=>params[:logo])
+    current_user.update_attributes(:avatar=>params[:avatar])
     redirect_to :action => :avatar
   rescue Exception => ex
     p ex.message

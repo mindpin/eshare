@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   # ------------ 任何代码请在下方添加
 
 
-  attr_accessible :logo, :name
+  attr_accessible :name, :avatar
   # admin 模块
   include Student::UserMethods
   include Teacher::UserMethods

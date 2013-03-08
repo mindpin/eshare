@@ -96,11 +96,11 @@ module ApplicationHelper
 
     if user.blank?
       alt   = '未知用户'
-      src   = User.new.logo.url(style)
+      src   = User.new.avatar.versions[style].url
       meta  = 'unknown-user'
     else
       alt   = user.name
-      src   = user.logo.url(style)
+      src   = user.avatar.versions[style].url
       meta  = dom_id(user)
     end
     
