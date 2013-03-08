@@ -1,4 +1,4 @@
 eshare
 ======
 
-教育内容组织实践
+[![Code Climate](https://codeclimate.com/github/mindpin/eshare.png)](https://codeclimate.com/github/mindpin/eshare)
