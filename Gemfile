@@ -43,3 +43,4 @@ gem 'roles-field', :git => 'git://github.com/mindpin/roles-field.git'
 gem "carrierwave", "0.8.0"
 # carrierwave 用到的图片切割
 gem "mini_magick", "3.5.0", :require => false
+gem 'simple-navbar', :git => 'git://github.com/mindpin/simple-navbar.git'
