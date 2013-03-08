@@ -6,7 +6,7 @@ eshare
 
 ## 依赖于以下自定义GEM
 
-# roles-field
+### roles-field
 
 https://github.com/mindpin/roles-field
 
@@ -14,7 +14,7 @@ https://github.com/mindpin/roles-field
 
 [![Code Climate](https://codeclimate.com/github/mindpin/roles-field/badges)](https://codeclimate.com/github/mindpin/roles-field)
 
-# simple-navbar
+### simple-navbar
 
 https://github.com/mindpin/simple-navbar
 
