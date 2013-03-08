@@ -1,3 +1,6 @@
+require 'bundler'
+Bundler.require(:examples)
+
 class UserMaker
   attr_reader :type, :real_names, :progressbar
 
