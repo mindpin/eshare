@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-MindpinSidebar::Base.config do
+SimpleNavbar::Base.config do
   # example
   # 
   # rule :admin do
