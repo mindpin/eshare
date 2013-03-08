@@ -1,6 +1,5 @@
 require './script/helper'
 require './script/pack1'
-Bundler.require(:examples)
 
 case ARGV[0]
 when 'clear-pack-records'
