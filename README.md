@@ -12,6 +12,7 @@ https://github.com/mindpin/roles-field
 
 用于实现简单的角色逻辑
 
+[![Travis CI](https://api.travis-ci.org/mindpin/roles-field.png?branch=master&.png)](https://travis-ci.org/mindpin/roles-field)
 [![Code Climate](https://codeclimate.com/github/mindpin/roles-field.png)](https://codeclimate.com/github/mindpin/roles-field)
 
 ### simple-navbar
