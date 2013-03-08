@@ -20,6 +20,7 @@ config/development.sphinx.conf
 .powenv
 .rvmrc
 public/system/*
+public/uploads/*
 coverage/
 .idea/*
 *DS_*
