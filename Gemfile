@@ -36,5 +36,12 @@ gem 'simple_form', '2.0.2' # 用于简化表单创建
 gem 'pacecar', '1.5.3' # 给模型添加实用的scope
 gem 'will_paginate', '3.0.4' # 分页支持
 
+#### 角色
+gem 'roles-field', :git => 'git://github.com/mindpin/roles-field.git'
+
 #### 其他 gem
-gem 'paperclip' # 需要换掉
+# 文件上传（fushang318增加） 
+gem "carrierwave", "0.8.0"
+# carrierwave 用到的图片切割
+gem "mini_magick", "3.5.0", :require => false
+gem 'simple-navbar', :git => 'git://github.com/mindpin/simple-navbar.git'
