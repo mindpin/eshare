@@ -37,7 +37,7 @@ gem 'pacecar', '1.5.3' # 给模型添加实用的scope
 gem 'will_paginate', '3.0.4' # 分页支持
 
 #### 角色
-gem 'roles-field', :git => 'git://github.com/mindpin/roles-field.git'
+gem 'roles-field', '0.0.2', :git => 'git://github.com/mindpin/roles-field.git'
 
 #### 其他 gem
 # 文件上传（fushang318增加） 
