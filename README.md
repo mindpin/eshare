@@ -12,7 +12,8 @@ https://github.com/mindpin/roles-field
 
 用于实现简单的角色逻辑
 
-[![Travis CI](https://api.travis-ci.org/mindpin/roles-field.png?branch=master&.png)](https://travis-ci.org/mindpin/roles-field)
+[![Gem Version](https://badge.fury.io/rb/roles-field.png)](http://badge.fury.io/rb/roles-field)
+[![Build Status](https://travis-ci.org/mindpin/roles-field.png?branch=master)](https://travis-ci.org/mindpin/roles-field)
 [![Code Climate](https://codeclimate.com/github/mindpin/roles-field.png)](https://codeclimate.com/github/mindpin/roles-field)
 
 ### simple-navbar
