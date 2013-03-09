@@ -27,3 +27,11 @@ https://github.com/mindpin/simple-navbar
 用于实现导航菜单配置
 
 [![Code Climate](https://codeclimate.com/github/mindpin/simple-navbar.png)](https://codeclimate.com/github/mindpin/simple-navbar)
+
+### simple-page-layout
+
+https://github.com/mindpin/simple-page-layout
+
+用于简化 view layouts 的编写
+
+[![Gem Version](https://badge.fury.io/rb/simple-page-layout.png)](http://badge.fury.io/rb/simple-page-layout)
