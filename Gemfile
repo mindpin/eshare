@@ -24,24 +24,33 @@ end
 gem 'jquery-rails', '2.2.1'
 gem 'unicorn', '4.6.2'
 
-#### 登录验证
+# 登录验证
 gem 'devise', '2.2.3'
 
-#### 页面渲染
+# 页面渲染
 gem 'haml', '4.0.0' # HAML模板语言
 gem 'cells', '3.8.8' # 用于复用一些前端组件
 gem 'simple_form', '2.0.2' # 用于简化表单创建
 
-#### 数据查询
+# 数据查询
 gem 'pacecar', '1.5.3' # 给模型添加实用的scope
-gem 'will_paginate', '3.0.4' # 分页支持
+gem 'will_paginate', '3.0.4' # 分页支持 TODO: 替换为 kaminari
 
-#### 角色
-gem 'roles-field', '0.0.2', :git => 'git://github.com/mindpin/roles-field.git'
-
-#### 其他 gem
 # 文件上传（fushang318增加） 
 gem "carrierwave", "0.8.0"
 # carrierwave 用到的图片切割
 gem "mini_magick", "3.5.0", :require => false
-gem 'simple-navbar', :git => 'git://github.com/mindpin/simple-navbar.git'
+
+# 自己写的 gem
+
+## 用户角色
+gem 'roles-field', '0.0.2', 
+    :git => 'git://github.com/mindpin/roles-field.git'
+
+## 导航栏
+gem 'simple-navbar', 
+    :git => 'git://github.com/mindpin/simple-navbar.git'
+
+## 页面布局辅助
+gem 'simple-page-layout', '0.0.2',
+    :git => 'git://github.com/mindpin/simple-page-layout'
