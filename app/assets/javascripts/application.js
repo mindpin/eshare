@@ -10,6 +10,8 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
+//= require html5-boilerplate/modernizr-2.6.2.min
+//= require html5-boilerplate/plugins
 //= require jquery
 //= require jquery_ujs
 //= require_tree .

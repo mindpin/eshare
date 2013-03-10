@@ -1,7 +1,16 @@
 @import 'html5-boilerplate/main';
 @import 'html5-boilerplate/normalize';
 
+html{
+  overflow-x:hidden;
+  overflow-y:scroll;
+}
+
 body{
   font-size:14px;
   background-color:#f8f8f8;
+}
+
+body.auth{
+  background:url(wallpaper/auth-bg.png);
 }

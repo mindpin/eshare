@@ -49,9 +49,9 @@ gem 'roles-field', '0.0.2',
     :git => 'git://github.com/mindpin/roles-field.git'
 
 ## 导航栏
-gem 'simple-navbar', 
+gem 'simple-navbar', '0.0.1',
     :git => 'git://github.com/mindpin/simple-navbar.git'
 
 ## 页面布局辅助
-gem 'simple-page-layout', '0.0.2',
+gem 'simple-page-layout', '0.0.3',
     :git => 'git://github.com/mindpin/simple-page-layout'

@@ -1,5 +1,5 @@
 !!!
-- simple_page_layout 'MINDPIN EduShare', :html_lang => :zh do
-  .page-wallpaper{:'data-src'=>'/assets/auth/login1.jpg'}
+- simple_page_layout 'MINDPIN EduShare', :html_lang => :zh, :body_class => 'auth' do
+  = page_wallpaper '/assets/wallpaper/auth-wallpaper.jpg'
   .page-content
     = yield
