@@ -15,6 +15,7 @@ group :test do
   gem 'rspec-rails', '2.13.0'
   gem 'database_cleaner', '0.9.1' # 加速测试时数据库清理
   gem 'factory_girl_rails', '~> 4.2.1'
+  gem 'coveralls', require: false # 帮助在 coveralls.io 线统计测试覆盖率
 end
 
 group :examples do
