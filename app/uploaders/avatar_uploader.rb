@@ -18,7 +18,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
   def default_url
     # For Rails 3.1+ asset pipeline compatibility:
     # asset_path("fallback/" + [version_name, "default.png"].compact.join('_'))
-    "/default_avatar.png"
+    "default_avatars/#{version_name}.png"
   end
 
   # 允许上传的文件类型的扩展名
@@ -29,19 +29,13 @@ class AvatarUploader < CarrierWave::Uploader::Base
   # 切割图片
   include CarrierWave::MiniMagick
   version :large do
-    process :resize_to_fill => [200, 200]
-  end
-  version :medium do
-    process :resize_to_fill => [96, 96]
+    process :resize_to_fill => [180, 180]
   end
   version :normal do
-    process :resize_to_fill => [48, 48]
+    process :resize_to_fill => [64, 64]
   end
-  version :tiny do
-    process :resize_to_fill => [32, 32]
-  end
-  version :mini do
-    process :resize_to_fill => [24, 24]
+  version :small do
+    process :resize_to_fill => [30, 30]
   end
 
   protected

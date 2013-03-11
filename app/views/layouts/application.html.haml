@@ -14,9 +14,9 @@
     - if user_signed_in? && (current_user.is_teacher? || current_user.is_student?)
       .page-sider
         - if current_user.is_teacher?
-          = mindpin_sidebar :teacher
+          = simple_navbar :teacher
         - elsif current_user.is_student?
-          = mindpin_sidebar :student
+          = simple_navbar :student
 
       .page-topbar
         %a.topbar-logo{:href=>'/'} 返回首页
@@ -29,12 +29,12 @@
           = yield :breadcrumb
         = yield
 
-      = javascript_include_tag '/kindeditor/kindeditor'
-      = javascript_include_tag "http://#{request.host}/juggernaut/application.js"
+      =# javascript_include_tag '/kindeditor/kindeditor'
+      =# javascript_include_tag "http://#{request.host}/juggernaut/application.js"
       = javascript_include_tag 'application'
-      = javascript_include_tag '/swfobject'
-      = javascript_include_tag '/player-min'
-      = javascript_include_tag '/flash-player'
+      =# javascript_include_tag '/swfobject'
+      =# javascript_include_tag '/player-min'
+      =# javascript_include_tag '/flash-player'
       = yield :javascript
 
     - else

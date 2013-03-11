@@ -1,39 +1,31 @@
-:ruby
-  tstr = ((yield :title) || '').gsub("\n",'')
-  title = tstr.blank? ? 'EduShare ADMIN' : "#{tstr} - EduShare ADMIN"
+!!!
+- simple_page_layout 'MINDPIN EduShare | ADMIN', :html_lang => :zh, :body_class => 'admin' do
+  .page-sider
+    = render 'layouts/parts/time_and_calendar'
+    = simple_navbar :admin
 
-!!! 5
-%html{:lang=>'zh'}
-  %head
-    %meta{:charset=>'utf-8'}
-    %title= title
-    = csrf_meta_tags
-    = stylesheet_link_tag 'application'
+  :ruby
+    navbar = page_navbar(:fixed_top, :color_inverse)
+    navbar.add_item('首页', '/admin')
+    navbar.add_item('设置密码', '/admin/setting/password')
+    navbar.add_item('退出登录', '/account/sign_out')
 
-  %body.echo.gray
-    .page-sider
-      = render 'layouts/parts/time_and_calendar'
-      = mindpin_sidebar :admin
+    navbar.prepend link_to('EduShare Admin', '/admin', :class => :brand)
 
-    .page-topbar
-      %a.topbar-logo{:href=>'/'} 返回首页
-      = yield :topbar
+  - navbar.render
 
-      .fl
-        .current-user
-          .name>
-            %span> 教务管理
-        .ops
-          %a.setting{:href=>'/admin/setting/password'} 设置密码
-          %a.logout{:href=>'/account/sign_out'} 退出登录
+  / .page-navbar.color-inverse.navbar-fixed-top
+  /   .navbar-inner
+  /     %a.brand{:href=>'/'} EduShare Admin
+  /     %ul.nav
+  /       %li.active
+  /         %a{:href=>'/admin'} 首页
+  /       %li
+  /         %a{:href=>'/admin/setting/password'} 设置密码
+  /       %li
+  /         %a{:href=>'/account/sign_out'} 退出登录
 
-    .page-content
-      .page-breadcrumb.page-top-fixed
-        = yield :breadcrumb
-      = yield
-
-    = yield :fbox
-
-    = javascript_include_tag '/kindeditor/kindeditor'
-    = javascript_include_tag 'application'
-    = yield :javascript
+  .page-content
+    .page-breadcrumb.page-top-fixed
+      = yield :breadcrumb
+    = yield
