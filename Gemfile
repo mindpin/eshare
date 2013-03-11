@@ -55,3 +55,7 @@ gem 'simple-navbar', '0.0.1',
 ## 页面布局辅助
 gem 'simple-page-layout', '0.0.3',
     :git => 'git://github.com/mindpin/simple-page-layout'
+
+## 在页面上显示图片的一些辅助方法
+gem 'simple-images',
+    :git => 'git://github.com/mindpin/simple-images'
