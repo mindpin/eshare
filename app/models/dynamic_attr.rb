@@ -45,6 +45,11 @@ class DynamicAttr < ActiveRecord::Base
           type.is_a?(Array) ? type.include?(value.class) : value.is_a?(type)
         end
 
+        define_singleton_method "where_#{name}" do |field, value|
+          joins(:dynamic_attrs)
+            .where(:dynamic_attrs => {owner_type: self.to_s, name: name, field: field, value: value})
+        end
+
         fields.each do |field, type|
           define_method "#{name}_#{field}=" do |value|
             raise DynamicAttr::TypeMismatch.new if !send("_#{name}_type_valid?", field, value)
