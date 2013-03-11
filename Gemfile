@@ -55,3 +55,8 @@ gem 'simple-navbar', '0.0.1',
 ## 页面布局辅助
 gem 'simple-page-layout', '0.0.3',
     :git => 'git://github.com/mindpin/simple-page-layout'
+
+## 页面布局辅助
+gem 'dynamic_attrs', '0.0.1',
+    :git => 'git://github.com/kaid/dynamic_attrs.git',
+    :branch => 'dev'
