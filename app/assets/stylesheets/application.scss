@@ -3,6 +3,7 @@
 
 @import 'mixins';
 @import 'form-reset';
+@import 'navbar';
 
 html{
   overflow-x:hidden;
@@ -54,6 +55,20 @@ body.auth{
       .form-actions{
         margin-left:80px + 15px;
       }
+    }
+  }
+}
+
+body.admin{
+  .page-navbar{
+    a.brand{
+      height:40px;line-height:40px;
+      float:left;
+      margin-left:40px;
+      color:white;
+      font-weight:bold;
+      font-size:20px;
+      text-decoration:none;
     }
   }
 }
