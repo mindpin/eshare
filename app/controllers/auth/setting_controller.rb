@@ -39,21 +39,4 @@ class Auth::SettingController <  ApplicationController
     end
     redirect_to :action => :password
   end
-
-  # -------------- 头像部分
-
-  # 头像
-  def avatar;end
-
-  # 修改头像 - 上传原始头像
-  def avatar_submit
-    current_user.update_attributes(:avatar=>params[:avatar])
-    redirect_to :action => :avatar
-  rescue Exception => ex
-    p ex.message
-    puts ex.backtrace * '\n'
-    flash[:error] = ex.message
-    return redirect_to :action => :avatar
-  end
-  
 end

@@ -14,6 +14,8 @@ end
 group :test do
   gem 'rspec-rails', '2.13.0'
   gem 'database_cleaner', '0.9.1' # 加速测试时数据库清理
+  gem 'factory_girl_rails', '~> 4.2.1'
+  gem 'coveralls', require: false # 帮助在 coveralls.io 线统计测试覆盖率
 end
 
 group :examples do
@@ -23,24 +25,42 @@ end
 gem 'jquery-rails', '2.2.1'
 gem 'unicorn', '4.6.2'
 
-#### 登录验证
+# 登录验证
 gem 'devise', '2.2.3'
 
-#### 页面渲染
+# 页面渲染
 gem 'haml', '4.0.0' # HAML模板语言
 gem 'cells', '3.8.8' # 用于复用一些前端组件
 gem 'simple_form', '2.0.2' # 用于简化表单创建
 
-#### 数据查询
+# 数据查询
 gem 'pacecar', '1.5.3' # 给模型添加实用的scope
-gem 'will_paginate', '3.0.4' # 分页支持
+gem 'will_paginate', '3.0.4' # 分页支持 TODO: 替换为 kaminari
 
-#### 角色
-gem 'roles-field', :git => 'git://github.com/mindpin/roles-field.git'
-
-#### 其他 gem
 # 文件上传（fushang318增加） 
 gem "carrierwave", "0.8.0"
 # carrierwave 用到的图片切割
 gem "mini_magick", "3.5.0", :require => false
-gem 'simple-navbar', :git => 'git://github.com/mindpin/simple-navbar.git'
+
+# 自己写的 gem
+
+## 用户角色
+gem 'roles-field', '0.0.2', 
+    :git => 'git://github.com/mindpin/roles-field.git'
+
+## 导航栏
+gem 'simple-navbar', '0.0.1',
+    :git => 'git://github.com/mindpin/simple-navbar.git'
+
+## 页面布局辅助
+gem 'simple-page-layout', '0.0.3',
+    :git => 'git://github.com/mindpin/simple-page-layout'
+
+## 在页面上显示图片的一些辅助方法
+gem 'simple-images',
+    :git => 'git://github.com/mindpin/simple-images'
+
+## 给指定 activerecord 模型动态添加属性
+gem 'dynamic_attrs', '0.0.1',
+    :git => 'git://github.com/kaid/dynamic_attrs.git',
+    :branch => 'dev'

@@ -1,0 +1,16 @@
+language: ruby
+
+rvm:
+  - 2.0.0
+
+services: 
+  - mysql
+
+before_script:
+  - cp config/database.yml.travis config/database.yml
+  - rake db:drop RAILS_ENV=test
+  - rake db:create RAILS_ENV=test
+  - rake db:migrate RAILS_ENV=test
+
+script:
+  - bundle exec rspec spec

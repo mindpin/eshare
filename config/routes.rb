@@ -9,20 +9,9 @@ Eshare::Application.routes.draw do
                        :sessions => :sessions
                      }
 
-
-  namespace :auth do
-    # 用户设置
-    # 基本信息
-    get  "/setting"                     => "setting#base"
-    put  "/setting"                     => "setting#base_submit"
-
-    # 设置密码
-    get '/setting/password'             => "setting#password"
-    put '/setting/password'             => "setting#password_submit"
-
-    # 头像设置
-    get  "/setting/avatar"              => 'setting#avatar'
-    post "/setting/avatar_submit"   => 'setting#avatar_submit'
+  devise_scope :user do
+    get  'account/avatar' => 'account#avatar'
+    put 'account/avatar' => 'account#avatar_update'
   end
   
   namespace :admin do

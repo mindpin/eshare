@@ -1,0 +1,19 @@
+-# use 上传用户头像
+-# see 用户设置->设置头像
+
+-htitle '设置头像'
+
+.page-model-form
+  .page-title 上传一张图片，然后选择要裁剪的部分，系统会自动替你裁好
+
+  .page-setting
+    .crop-avatars
+      .img= avatar current_user, :large
+      .img= avatar current_user, :normal
+      .img= avatar current_user, :small
+
+    = flash_info
+
+    = simple_form_for current_user, :url => '/account/avatar' do |f|
+      = f.input :avatar, :required => true, :hint => '选择一张图片并上传'
+      = f.submit '上传图片', :disable_with => '正在提交'

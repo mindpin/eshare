@@ -1,0 +1,15 @@
+zh-CN:
+  activerecord:
+    models:
+      user: 用户
+    attributes:
+      user:
+        login: 用户名
+        password: 密码
+        remember_me: 记住登录状态
+
+  common:
+    sign-in: 登录
+    sign-ining: 正在登录
+
+  
