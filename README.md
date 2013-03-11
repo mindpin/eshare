@@ -10,6 +10,16 @@
 * Libpng
 * Redis 2.2+
 
+## 参考
+
+请开发者参考
+
+[Rails 3 风格指南](https://github.com/ruby-china/rails-style-guide/blob/master/README-zhCN.md)
+
+[Ruby 风格指南](https://github.com/ruby-china/ruby-style-guide/blob/master/README-zhCN.md)
+
+[rspec + capybara BDD 测试驱动开发入门](http://ruby-china.org/topics/7770)
+
 ## Dependencies
 ### roles-field
 https://github.com/mindpin/roles-field
