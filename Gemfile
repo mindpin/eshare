@@ -40,3 +40,5 @@ gem 'will_paginate', '3.0.4' # 分页支持
 gem "carrierwave", "0.8.0"
 # carrierwave 用到的图片切割
 gem "mini_magick", "3.5.0", :require => false
+#  为ActiveRecord模型定义动态属性
+gem 'dynamic_attrs'
