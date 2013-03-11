@@ -35,9 +35,9 @@ module ApplicationMethods
       render "layouts/status_page/hold_ie678",:layout=>false
     end
 
-    if /MSIE 8/.match(request.user_agent)
-      render "layouts/status_page/hold_ie678",:layout=>false
-    end
+    # if /MSIE 8/.match(request.user_agent)
+    #   render "layouts/status_page/hold_ie678",:layout=>false
+    # end
   end
 
   def catch_some_exception

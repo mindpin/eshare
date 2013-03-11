@@ -1,0 +1,61 @@
+textarea, 
+input[type="text"], 
+input[type="password"], 
+input[type="datetime"], 
+input[type="datetime-local"], 
+input[type="date"], 
+input[type="month"], 
+input[type="time"], 
+input[type="week"], 
+input[type="number"], 
+input[type="email"], 
+input[type="url"], 
+input[type="search"], 
+input[type="tel"], 
+input[type="color"] {
+  background-color:#fff;
+  border:solid 1px #ccc;
+  @include box-shadow(0 1px 1px rgba(black, 0.075) inset);
+  
+
+  @include border-radius(3px);
+  color:#555;
+  font-size:14px;
+  height:20px;line-height:20px;
+  margin-bottom:10px;
+  padding:4px 6px;
+  vertical-align:middle;
+}
+
+label{
+  display:block;
+  margin-bottom:5px;
+}
+
+label.radio, label.checkbox {
+  padding-left:20px;
+  min-height:20px;
+}
+
+.radio input[type="radio"], 
+.checkbox input[type="checkbox"] {
+  float:left;
+  margin-left:-20px;
+}
+
+input[type="file"], 
+input[type="image"], 
+input[type="submit"], 
+input[type="reset"], 
+input[type="button"], 
+input[type="radio"], 
+input[type="checkbox"] {
+  width:auto;
+}
+
+input[type="radio"], 
+input[type="checkbox"] {
+  line-height:normal;
+  margin-top:4px;
+}
+
