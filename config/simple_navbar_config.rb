@@ -1,23 +1,5 @@
 # -*- coding: utf-8 -*-
 SimpleNavbar::Base.config do
-  # example
-  # 
-  # rule :admin do
-  #   nav :students, :name => '学生', :url => '/admin/students' do
-  #     controller :'admin/students'
-  #     subnav :student_info, :name => '学生信息', :url => '/admin/students/info' do
-  #       controller :'admin/student_infos'
-  #     end
-  #   end
-  # end
-
-  # rule [:teacher,:student] do
-  #   nav :media_resources, :name => '我的文件夹', :url => '/file' do
-  #     controller :media_resources, :except => [:xxx]
-  #     controller :file_entities, :only => [:upload]
-  #   end
-  # end
-
   rule :admin do
     group :default, :name => '教务功能…' do
       nav :home, :name => '首页', :url => '/admin' do
@@ -69,15 +51,15 @@ SimpleNavbar::Base.config do
       end
 
       nav :media_resources, :name => '资源网盘', :url => '/file' do
-        subnav :my_resources, :name => '我的文件夹', :url => '/file' do
+        nav :my_resources, :name => '我的文件夹', :url => '/file' do
           controller :media_resources
         end
 
-        subnav :media_shares, :name => '收到的共享', :url => '/media_shares' do
+        nav :media_shares, :name => '收到的共享', :url => '/media_shares' do
           controller :media_shares
         end
 
-        subnav :public_resources, :name => '公共资源库', :url => '/public_resources' do
+        nav :public_resources, :name => '公共资源库', :url => '/public_resources' do
           controller :public_resources
         end
       end
@@ -115,15 +97,15 @@ SimpleNavbar::Base.config do
       end
 
       nav :media_resources, :name => '资源网盘', :url => '/file' do
-        subnav :my_resources, :name => '我的文件夹', :url => '/file' do
+        nav :my_resources, :name => '我的文件夹', :url => '/file' do
           controller :media_resources
         end
 
-        subnav :media_shares, :name => '收到的共享', :url => '/media_shares' do
+        nav :media_shares, :name => '收到的共享', :url => '/media_shares' do
           controller :media_shares
         end
 
-        subnav :public_resources, :name => '公共资源库', :url => '/public_resources' do
+        nav :public_resources, :name => '公共资源库', :url => '/public_resources' do
           controller :public_resources
         end
       end
