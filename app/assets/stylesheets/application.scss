@@ -1,16 +1,12 @@
-@import 'html5-boilerplate/main';
-@import 'html5-boilerplate/normalize';
+//=require html5-boilerplate/main
+//=require html5-boilerplate/normalize
 
-@import 'mixins';
-@import 'form-reset';
-@import 'navbar';
+//=require simple-page-compoents
 
 html{
   overflow-x:hidden;
   overflow-y:scroll;
 }
-
-// ---- 
 
 body{
   font-size:14px;
@@ -42,8 +38,9 @@ body.auth{
           font-size:16px;
         }
         input{
-          padding:0 14px;
-          height:48px;line-height:48px;
+          padding:6px 14px;
+          $h : 48px - 6px * 2;
+          height:$h;line-height:$h;
           font-weight:bold;
           font-size:16px;
           width:300px;
