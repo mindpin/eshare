@@ -19,8 +19,6 @@ class UserMaker
 		self.real_names.each_with_index do |real_name, index|
 			num = index + 1
 			user = User.create(user_attrs(real_name, num))
-      user.set_role self.type
-      user.save
       self.progressbar.increment
 		end
 	end
@@ -32,7 +30,13 @@ private
 	end
 
 	def user_attrs(real_name, num)
-		{login: "#{name_template(num)}", name: real_name, password: 1234, email: "#{name_template(num)}@edu.dev"}
+		{
+			login: "#{name_template(num)}", 
+			name: real_name, 
+			password: 1234, 
+			email: "#{name_template(num)}@edu.dev",
+			role: self.type
+		}
 	end
 
 	def have_attached_role?

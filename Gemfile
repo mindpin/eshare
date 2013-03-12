@@ -4,9 +4,6 @@ gem 'rails', '3.2.12' # RAILS
 gem 'mysql2', '0.3.11' # MYSQL数据库连接
 gem 'json', '1.7.7' # JSON解析，RAILS默认引入的
 
-gem 'iconv'
-
-
 group :assets do
   gem 'sass-rails', '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
@@ -18,7 +15,8 @@ group :test do
   gem 'rspec-rails', '2.13.0'
   gem 'database_cleaner', '0.9.1' # 加速测试时数据库清理
   gem 'factory_girl_rails', '~> 4.2.1'
-  gem 'coveralls', require: false # 帮助在 coveralls.io 线统计测试覆盖率
+  gem 'coveralls', :require => false # 帮助在 coveralls.io 线统计测试覆盖率
+  gem 'capybara', '2.0.2' # 集成测试框架
 end
 
 group :examples do
@@ -45,8 +43,11 @@ gem "carrierwave", "0.8.0"
 # carrierwave 用到的图片切割
 gem "mini_magick", "3.5.0", :require => false
 
-# 导入 xls
-gem 'roo'
+# 解析 excel 文件
+gem 'roo', '1.10.3'
+
+# 编码处理基础库
+gem 'iconv', '1.0.2'
 
 # 自己写的 gem
 
