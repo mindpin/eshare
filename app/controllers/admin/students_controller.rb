@@ -57,7 +57,10 @@ class Admin::StudentsController < ApplicationController
     redirect_to "/admin/students/#{@student.id}/edit"
   end
 
+  def import
+  end
 
+  
   def do_import
     file = params[:excel_file]
     User.import(file, :student)
