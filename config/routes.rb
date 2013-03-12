@@ -17,6 +17,25 @@ Eshare::Application.routes.draw do
   namespace :admin do
     root :to => 'index#index'
 
+    resources :teachers do
+      collection do
+        get :import
+        post :do_import
+      end
+      member do
+        get :password
+        put :password_submit
+        get 'course/:course_id', :action => 'course_students'
+      end
+    end
+
+    resources :students do
+      collection do
+        get :import
+        post :do_import
+      end
+    end
+
     resources :users do
       member do
         get :student_attrs
