@@ -33,6 +33,38 @@ class User < ActiveRecord::Base
 
 
 
+  
+
+  # admin 模块
+  include Student::UserMethods
+  include Teacher::UserMethods
+  include DynamicAttr::Owner
+
+  has_dynamic_attrs :student_attrs,
+                    :fields => {
+                      :sid => :integer,
+                      :department => :string,
+                      :gender => :string,
+                      :nation => :string,
+                      :tel => :string,
+                      :description => :string,
+                      :id_card_number => :string,
+                      :enroll_date => :datetime,
+                      :graduation_date => :datetime
+                    }
+
+  has_dynamic_attrs :teacher_attrs,
+                    :fields => {
+                      :tid => :integer,
+                      :department => :string,
+                      :gender => :string,
+                      :nation => :string,
+                      :tel => :string,
+                      :description => :string,
+                      :id_card_number => :string
+                    }
+
+
   def self.import(file, role)
     spreadsheet = open_spreadsheet(file)
     header = spreadsheet.row(1)
@@ -56,8 +88,5 @@ class User < ActiveRecord::Base
   end
 
 
-
-  # admin 模块
-  include Student::UserMethods
-  include Teacher::UserMethods
+  
 end

@@ -17,6 +17,7 @@ Eshare::Application.routes.draw do
   namespace :admin do
     root :to => 'index#index'
 
+<<<<<<< HEAD
     resources :teachers do
       collection do
         get :import
@@ -34,10 +35,13 @@ Eshare::Application.routes.draw do
         get :import
         post :do_import
       end
+=======
+    resources :users do
+>>>>>>> 0c63cbcda24394bd4581529aa0e907d1e67b2ffa
       member do
-        get :password
-        put :password_submit
-        put :upload_attachment
+        get :student_attrs
+        get :teacher_attrs
+        put :user_attrs_update
       end
     end
     
