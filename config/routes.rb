@@ -34,6 +34,7 @@ Eshare::Application.routes.draw do
         get :import
         post :do_import
       end
+    end
 
     resources :users do
       member do

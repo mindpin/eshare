@@ -33,13 +33,6 @@ class User < ActiveRecord::Base
 
 
 
-  
-
-  # admin 模块
-  include Student::UserMethods
-  include Teacher::UserMethods
-  include DynamicAttr::Owner
-
   has_dynamic_attrs :student_attrs,
                     :fields => {
                       :sid => :integer,
@@ -88,5 +81,9 @@ class User < ActiveRecord::Base
   end
 
 
-  
+  # admin 模块
+  include Student::UserMethods
+  include Teacher::UserMethods
+  include DynamicAttr::Owner
+
 end
