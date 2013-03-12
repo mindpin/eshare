@@ -8,5 +8,6 @@ defpack 1 do
                       :password => '1234')
 
   admin.set_role :admin
+  admin.save
   ['teachers', 'students'].each {|yaml| UserMaker.load_yaml(yaml).produce}
 end
