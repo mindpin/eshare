@@ -3,6 +3,8 @@
 
 //=require simple-page-compoents
 
+@import 'mixins';
+
 html{
   overflow-x:hidden;
   overflow-y:scroll;
@@ -10,10 +12,22 @@ html{
 
 body{
   font-size:14px;
-  background-color:#f8f8f8;
+  background-color:white;
+  padding-top:40px;
+  position:relative;
+
+  a{
+    color:#0088cc;
+    text-decoration:none;
+    &:hover, &:focus{
+      color:005580;
+      text-decoration:underline;
+    }
+  }
 }
 
 body.auth{
+  position:static;
   background:url(wallpaper/auth-bg.png);
   color:white;
   text-shadow:0 0 3px black;
@@ -61,11 +75,16 @@ body.admin{
     a.brand{
       height:40px;line-height:40px;
       float:left;
-      margin-left:40px;
+      margin-left:20px;
       color:white;
       font-weight:bold;
       font-size:20px;
       text-decoration:none;
     }
+  }
+  .page-sidebar{
+    width:240px;
+    margin-left:20px;
+    margin-top:10px;
   }
 }

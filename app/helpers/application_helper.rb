@@ -16,7 +16,6 @@ module ApplicationHelper
   end
 
   def page_breadcrumb(*args)
-    # BreadcrumbRender.new(self, *args)
-    self.request.path
+    BreadcrumbRender.new(self, *args).render
   end
 end
