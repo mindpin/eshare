@@ -1,5 +1,5 @@
 Eshare::Application.routes.draw do
-  root :to=>"index#index"
+  root :to => 'index#index'
   get '/dashboard' => 'index#dashboard'
 
   # devise
@@ -10,12 +10,12 @@ Eshare::Application.routes.draw do
                      }
 
   devise_scope :user do
-    get  'account/avatar' => 'account#avatar'
+    get 'account/avatar' => 'account#avatar'
     put 'account/avatar' => 'account#avatar_update'
   end
   
   namespace :admin do
-    root :to=>"index#index"
+    root :to => 'index#index'
 
     resources :users do
       member do
