@@ -30,7 +30,30 @@ class User < ActiveRecord::Base
   roles_field :roles_mask, :roles => [:admin, :manager, :teacher, :student]
 
   attr_accessible :name, :avatar
-  # admin 模块
-  include Student::UserMethods
-  include Teacher::UserMethods
+
+  include DynamicAttr::Owner
+
+  has_dynamic_attrs :student_attrs,
+                    :fields => {
+                      :sid => :integer,
+                      :department => :string,
+                      :gender => :string,
+                      :nation => :string,
+                      :tel => :string,
+                      :description => :string,
+                      :id_card_number => :string,
+                      :enroll_date => :datetime,
+                      :graduation_date => :datetime
+                    }
+
+  has_dynamic_attrs :teacher_attrs,
+                    :fields => {
+                      :tid => :integer,
+                      :department => :string,
+                      :gender => :string,
+                      :nation => :string,
+                      :tel => :string,
+                      :description => :string,
+                      :id_card_number => :string
+                    }
 end
