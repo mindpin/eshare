@@ -19,8 +19,8 @@ Eshare::Application.routes.draw do
 
     resources :teachers do
       collection do
-        get :import_from_csv_page
-        post :import_from_csv
+        get :import
+        post :do_import
       end
       member do
         get :password
@@ -31,8 +31,8 @@ Eshare::Application.routes.draw do
 
     resources :students do
       collection do
-        get :import_from_csv_page
-        post :import_from_csv
+        get :import
+        post :do_import
       end
       member do
         get :password

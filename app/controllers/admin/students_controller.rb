@@ -57,15 +57,12 @@ class Admin::StudentsController < ApplicationController
     redirect_to "/admin/students/#{@student.id}/edit"
   end
 
-  def import_from_csv_page
-  end
 
-  def import_from_csv
-    Student.import_from_csv(params[:csv_file])
-    redirect_to "/admin/students"
-  rescue Exception=>ex
-    flash[:error] = ex.message
-    redirect_to "/admin/students/import_from_csv_page"
+  def do_import
+    file = params[:excel_file]
+    User.import(file, :student)
+
+    render :nothing => true
   end
 
   def password;end

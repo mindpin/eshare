@@ -4,6 +4,9 @@ gem 'rails', '3.2.12' # RAILS
 gem 'mysql2', '0.3.11' # MYSQL数据库连接
 gem 'json', '1.7.7' # JSON解析，RAILS默认引入的
 
+gem 'iconv'
+
+
 group :assets do
   gem 'sass-rails', '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
@@ -41,6 +44,9 @@ gem 'will_paginate', '3.0.4' # 分页支持 TODO: 替换为 kaminari
 gem "carrierwave", "0.8.0"
 # carrierwave 用到的图片切割
 gem "mini_magick", "3.5.0", :require => false
+
+# 导入 xls
+gem 'roo'
 
 # 自己写的 gem
 
