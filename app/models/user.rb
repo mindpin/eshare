@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
 
   attr_accessible :name, :avatar
 
-
+  include DynamicAttr::Owner
 
   has_dynamic_attrs :student_attrs,
                     :fields => {
@@ -79,11 +79,5 @@ class User < ActiveRecord::Base
     else raise "Unknown file type: #{file.original_filename}"
     end
   end
-
-
-  # admin 模块
-  include Student::UserMethods
-  include Teacher::UserMethods
-  include DynamicAttr::Owner
 
 end
