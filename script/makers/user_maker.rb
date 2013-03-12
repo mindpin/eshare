@@ -19,7 +19,8 @@ class UserMaker
 		self.real_names.each_with_index do |real_name, index|
 			num = index + 1
 			user = User.create(user_attrs(real_name, num))
-			produce_attached_role_for(user, num)
+      user.set_role self.type
+      user.save
       self.progressbar.increment
 		end
 	end
@@ -34,25 +35,7 @@ private
 		{login: "#{name_template(num)}", name: real_name, password: 1234, email: "#{name_template(num)}@edu.dev"}
 	end
 
-	def academic_id_prefix
-		"#{self.type[0]}id".to_sym
-	end
-
-	def attached_role_attrs(user, num)
-		{academic_id_prefix => "#{academic_id_prefix}-#{num}", user: user}
-	end
-
 	def have_attached_role?
 		[:student, :teacher].include? self.type
 	end
-
-	def get_class
-		self.type.to_s.capitalize.constantize
-  end
-
-  def produce_attached_role_for(*args)
-  	return if !have_attached_role?
-  	get_class.create attached_role_attrs(*args)
-  end
-
 end
