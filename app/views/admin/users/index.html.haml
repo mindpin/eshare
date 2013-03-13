@@ -1,0 +1,5 @@
+.page-admin-users
+  - @users.each do |user|
+    .user{:data => {:role => user.role}}
+      .name= user.name
+      = link_to t('common.user.edit'), [:edit, :admin, user], :class => :edit

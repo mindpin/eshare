@@ -12,4 +12,5 @@ zh-CN:
     sign-in: 登录
     sign-ining: 正在登录
 
-  
+    user:
+      edit: 修改

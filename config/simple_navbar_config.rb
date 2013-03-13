@@ -5,8 +5,8 @@ SimpleNavbar::Base.config do
       controller :'admin/index'
     end
 
-    nav :students, :name => '学籍管理', :url => '/admin/students' do
-      controller :'admin/students'
+    nav :users, :name => '用户管理', :url => '/admin/users' do
+      controller :'admin/users'
     end
 
     nav :teams, :name => '班级管理', :url => '/admin/teams' do
@@ -20,10 +20,6 @@ SimpleNavbar::Base.config do
 
     nav :course_score_records, :name => '成绩管理', :url => '/admin/course_score_records' do
       controller :'admin/course_score_records'
-    end
-
-    nav :teachers, :name => '教师管理', :url => '/admin/teachers' do
-      controller :'admin/teachers'
     end
 
     nav :course_surveys, :name => '课堂教学评价', :url => '/admin/course_surveys' do

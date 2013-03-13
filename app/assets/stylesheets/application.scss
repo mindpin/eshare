@@ -83,8 +83,14 @@ body.admin{
     }
   }
   .page-sidebar{
+    float:left;
     width:240px;
     margin-left:20px;
     margin-top:10px;
+  }
+  .page-content {
+    float:left;
+    margin-left:20px;
+    margin-top:20px;
   }
 }

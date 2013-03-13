@@ -1,6 +1,10 @@
 class Admin::UsersController < ApplicationController
   layout 'admin'
 
+  def index
+    @users = User.all
+  end
+
   def student_attrs
     @user = User.find(params[:id])
     redirect_to admin_root_path if !@user.role?(:student)

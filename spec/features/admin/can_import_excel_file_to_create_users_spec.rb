@@ -17,4 +17,9 @@ feature '管理员身份登录' do
     current_path.should == '/admin'
   end
 
+  # scenario '访问导入功能' do
+  #   visit '/admin/users/import'
+  #   current_path.should == '/admin/users/import'
+  # end
+
 end
