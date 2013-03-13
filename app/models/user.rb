@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  include MediaResource::UserMethods
   mount_uploader :avatar, AvatarUploader
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,

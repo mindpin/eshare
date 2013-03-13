@@ -75,3 +75,15 @@ gem 'simple-page-compoents',
 gem 'dynamic_attrs', '0.0.1',
     :git => 'git://github.com/kaid/dynamic_attrs.git',
     :branch => 'dev'
+
+########## fushang318_media_resource ########
+## tag 插件
+gem 'acts-as-taggable-on', '~> 2.3.3'
+
+## file_entity 上传文件临时方案
+gem 'paperclip', '~> 2.7'
+
+group :test do
+  gem 'timecop'
+end
+#############################################
