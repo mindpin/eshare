@@ -52,7 +52,7 @@ gem 'iconv', '1.0.2'
 # 自己写的 gem
 
 ## 用户角色
-gem 'roles-field', '0.0.2', 
+gem 'roles-field',
     :git => 'git://github.com/mindpin/roles-field.git'
 
 ## 导航栏
