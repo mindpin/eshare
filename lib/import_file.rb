@@ -24,7 +24,7 @@ module ImportFile
       def User.open_spreadsheet(file)
         original_filename = file.original_filename
         case File.extname(original_filename)
-        when ".csv" then Roo::Csv.new(file.path, nil, :ignore)
+        when ".sxc" then Roo::Openoffice.new(file.path, nil, :ignore)
         when ".xls" then Roo::Excel.new(file.path, nil, :ignore)
         when ".xlsx" then Roo::Excelx.new(file.path, nil, :ignore)
         else raise "Unknown file type: #{original_filename}"
