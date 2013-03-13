@@ -1,20 +1,15 @@
 !!!
 - simple_page_layout 'MINDPIN EduShare | ADMIN', :html_lang => :zh, :body_class => 'admin' do
-  .page-sider
-    = simple_navbar :admin
+  .page-sidebar
+    = simple_navbar :admin, :as_list, :with_icon
 
   :ruby
-    navbar = page_navbar(:fixed_top, :color_inverse).add_item('首页', '/admin')
-    navbar.add_item('设置密码', '/admin/setting/password')
-    navbar.add_item('退出登录', '/account/sign_out')
+    navbar = page_navbar(:fixed_top, :color_inverse).add_item('首页', '/admin').
+      add_item('设置密码', '/admin/setting/password').
+      add_item('退出登录', '/account/sign_out').
+      prepend link_to('EduShare Admin', '/admin', :class => :brand)
 
-    navbar.prepend link_to('EduShare Admin', '/admin', :class => :brand)
-    
   - navbar.render
 
-  = page_breadcrumb
-
   .page-content
-    .page-breadcrumb.page-top-fixed
-      = yield :breadcrumb
     = yield
