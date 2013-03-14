@@ -1,5 +1,13 @@
 .page-admin-users
-  - @users.each do |user|
-    .user{:data => {:role => user.role}}
-      .name= user.name
-      = link_to t('common.user.edit'), [:edit, :admin, user], :class => :edit
+  = paginate @users
+
+  = page_data_table(:users, @users) do |table|
+    - table.add_line_data(:role)
+    - table.add_column(:role)
+    - table.add_column(:login)
+    - table.add_column(:name)
+    - table.add_column(:email)
+    - table.add_column(:ops) do |user|
+      - if !user.is_admin?
+        = link_to t('common.user.edit'), [:edit, :admin, user], :class => :edit
+        = link_to t('common.user.delete'), 'javascript:;', :class => :delete

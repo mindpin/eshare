@@ -14,3 +14,13 @@ zh-CN:
 
     user:
       edit: 修改
+      delete: 删除
+
+  compoents:
+    data_table:
+      users:
+        role: 角色
+        login: 用户名
+        name: 姓名
+        email: 电子邮件
+        ops: 操作

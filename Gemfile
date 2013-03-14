@@ -36,7 +36,7 @@ gem 'simple_form', '2.0.2' # 用于简化表单创建
 
 # 数据查询
 gem 'pacecar', '1.5.3' # 给模型添加实用的scope
-gem 'will_paginate', '3.0.4' # 分页支持 TODO: 替换为 kaminari
+gem 'kaminari', '0.14.1' # 分页支持
 
 # 文件上传（fushang318增加） 
 gem "carrierwave", "0.8.0"
@@ -54,6 +54,7 @@ gem 'iconv', '1.0.2'
 ## 用户角色
 gem 'roles-field', '0.0.2.1', 
     :git => 'git://github.com/mindpin/roles-field.git'
+    # :path => '/web/songliang/roles-field'
 
 ## 导航栏
 gem 'simple-navbar', '0.0.1',

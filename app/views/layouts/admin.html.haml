@@ -3,13 +3,11 @@
   .page-sidebar
     = simple_navbar :admin, :as_list, :with_icon
 
-  :ruby
-    navbar = page_navbar(:fixed_top, :color_inverse).add_item('首页', '/admin').
-      add_item('设置密码', '/admin/setting/password').
-      add_item('退出登录', '/account/sign_out').
-      prepend link_to('EduShare Admin', '/admin', :class => :brand)
-
-  - navbar.render
+  = page_navbar(:fixed_top, :color_inverse) do |navbar|
+    - navbar.add_item('首页', '/admin')
+    - navbar.add_item('设置密码', '/admin/setting/password')
+    - navbar.add_item('退出登录', '/account/sign_out')
+    - navbar.prepend link_to('EduShare Admin', '/admin', :class => :brand)
 
   .page-content
     = yield
