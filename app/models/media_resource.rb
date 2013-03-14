@@ -72,8 +72,8 @@ class MediaResource < ActiveRecord::Base
 
   # --------
 
-  scope :dir_res, where(:is_dir => true)
-  scope :root_res, where(:dir_id => 0)
+  scope :dir_res, :conditions => ['is_dir = ?', true]
+  scope :root_res, :conditions => ['dir_id = ?', 0]
   scope :ops_order, order('fileops_time ASC')
   scope :web_order, order('is_dir DESC, name ASC')
   scope :of_creator, lambda{|user| where(:creator_id => user.id)}
