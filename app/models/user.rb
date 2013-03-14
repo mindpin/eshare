@@ -28,6 +28,7 @@ class User < ActiveRecord::Base
 
   # 声明角色
   attr_accessible :role
+  validates :role, :presence => true
   roles_field :roles_mask, :roles => [:admin, :manager, :teacher, :student]
 
   attr_accessible :name, :avatar

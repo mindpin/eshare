@@ -36,7 +36,7 @@ gem 'simple_form', '2.0.2' # 用于简化表单创建
 
 # 数据查询
 gem 'pacecar', '1.5.3' # 给模型添加实用的scope
-gem 'will_paginate', '3.0.4' # 分页支持 TODO: 替换为 kaminari
+gem 'kaminari', '0.14.1' # 分页支持
 
 # 文件上传（fushang318增加） 
 gem "carrierwave", "0.8.0"
@@ -54,13 +54,14 @@ gem 'iconv', '1.0.2'
 ## 用户角色
 gem 'roles-field',
     :git => 'git://github.com/mindpin/roles-field.git'
+    # :path => '/web/songliang/roles-field'
 
 ## 导航栏
-gem 'simple-navbar', '0.0.1',
+gem 'simple-navbar',
     :git => 'git://github.com/mindpin/simple-navbar.git'
 
 ## 页面布局辅助
-gem 'simple-page-layout', '0.0.3',
+gem 'simple-page-layout',
     :git => 'git://github.com/mindpin/simple-page-layout'
 
 ## 在页面上显示图片的一些辅助方法
@@ -72,6 +73,5 @@ gem 'simple-page-compoents',
     # :path => '/web/songliang/simple-page-compoents'
 
 ## 给指定 activerecord 模型动态添加属性
-gem 'dynamic_attrs', '0.0.1',
-    :git => 'git://github.com/kaid/dynamic_attrs.git',
-    :branch => 'dev'
+gem 'dynamic_attrs',
+    :git => 'git://github.com/kaid/dynamic_attrs.git'
