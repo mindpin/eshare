@@ -49,7 +49,7 @@ gem 'roo', '1.10.3'
 # 编码处理基础库
 gem 'iconv', '1.0.2'
 
-# 自己写的 gem
+# 自己写的 gem，都不指定版本号，如果有重大修改，通过GIT TAG解决
 
 ## 用户角色
 gem 'roles-field',
