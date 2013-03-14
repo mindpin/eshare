@@ -1,7 +1,7 @@
 class FileEntity < ActiveRecord::Base
+  file_part_upload
   attr_accessible :attach,
                   :merged
-  include FileEntityStorage::Filesystem
 
   CONTENT_TYPES = {
     :video    => [
@@ -25,10 +25,6 @@ class FileEntity < ActiveRecord::Base
   }
 
   has_many :media_resources
-
-  before_validation(:on => :create) do |file_entity|
-    file_entity.saved_size = 0
-  end
 
   def self.content_kind(type)
     case type

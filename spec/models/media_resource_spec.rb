@@ -343,13 +343,13 @@ describe MediaResource do
               :bytes => 11, 
               :is_dir => false, 
               :path => '/大熊猫/三只熊猫.jpg', 
-              :mime_type => 'text/plain'
+              :mime_type => "application/octet-stream"
             },
             {
               :bytes => 11, 
               :is_dir => false, 
               :path => '/大熊猫/倒挂.jpg',
-              :mime_type => 'text/plain'
+              :mime_type => "application/octet-stream"
             },
             {
               :bytes => 0, 
@@ -364,7 +364,7 @@ describe MediaResource do
           :bytes => 11,
           :is_dir => false,
           :path => '/大熊猫/三只熊猫.jpg',
-          :mime_type => 'text/plain'
+          :mime_type => "application/octet-stream"
         }
       end
     end
