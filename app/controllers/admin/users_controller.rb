@@ -5,6 +5,10 @@ class Admin::UsersController < ApplicationController
     @users = User.page params[:page]
   end
 
+  def edit
+    @user = User.find(params[:id])
+  end
+
   def student_attrs
     @user = User.find(params[:id])
     redirect_to admin_root_path if !@user.role?(:student)

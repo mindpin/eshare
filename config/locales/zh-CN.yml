@@ -8,6 +8,14 @@ zh-CN:
         password: 密码
         remember_me: 记住登录状态
 
+  views:
+    pagination:
+      first: "&laquo; 第一页"
+      last: "最后页 &raquo;"
+      previous: "&lsaquo; 上一页"
+      next: "下一页 &rsaquo;"
+      truncate: "..."
+
   common:
     sign-in: 登录
     sign-ining: 正在登录

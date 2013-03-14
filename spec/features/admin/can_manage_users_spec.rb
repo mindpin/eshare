@@ -75,4 +75,14 @@ feature '管理员进行用户管理' do
     end
   end
 
+  context '修改用户信息' do
+    before {
+      visit "/admin/users/#{User.last.id}/edit"
+    }
+
+    it {
+      page.should have_selector '.page-admin-user-edit'
+    }
+  end
+
 end
