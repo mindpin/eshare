@@ -1,6 +1,14 @@
 class Admin::UsersController < ApplicationController
   layout 'admin'
 
+  def index
+    @users = User.page params[:page]
+  end
+
+  def edit
+    @user = User.find(params[:id])
+  end
+
   def student_attrs
     @user = User.find(params[:id])
     redirect_if_not(@user, :student)
