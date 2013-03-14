@@ -1,0 +1,5 @@
+= simple_form_for @config, :url => admin_attrs_config_path(@config) do |f|
+  = f.hidden_field :role
+  = f.input :field
+  = f.select :field_type, AttrsConfig.types.map {|en, cn| [cn, en]}
+  = f.submit

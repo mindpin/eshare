@@ -1,4 +1,4 @@
 = simple_form_for @user, :url => user_attrs_update_admin_user_path(@user), :method => :put do |f|
-  - @user.class._dynamic_attrs[:teacher_attrs].keys.each do |field|
+  - @user.teacher_attrs.fields.keys.each do |field|
     = f.input :"teacher_attrs_#{field}"
   = f.button :submit

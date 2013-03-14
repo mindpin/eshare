@@ -1,0 +1,7 @@
+sid: integer
+department: string
+gender: string
+nation: string
+tel: string
+description: string
+id_card_number: string
