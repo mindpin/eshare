@@ -12,13 +12,11 @@ class Admin::UsersController < ApplicationController
   def student_attrs
     @user = User.find(params[:id])
     redirect_if_not(@user, :student)
-    @user.student_attrs.update_fields AttrsConfig.get(:student)
   end
 
   def teacher_attrs
     @user = User.find(params[:id])
     redirect_if_not(@user, :teacher)
-    @user.teacher_attrs.update_fields AttrsConfig.get(:teacher)
   end
 
   def user_attrs_update

@@ -36,11 +36,10 @@ class User < ActiveRecord::Base
   include DynamicAttr::Owner
 
   has_dynamic_attrs :student_attrs,
-                    :fields => AttrsConfig.get(:student_attrs)
+                    :updater => lambda {AttrsConfig.get(:student)}
 
   has_dynamic_attrs :teacher_attrs,
-                    :fields => AttrsConfig.get(:teacher_attrs)
-
+                    :updater => lambda {AttrsConfig.get(:teacher)}
   # 导入文件
   include ImportFile::UserMethods
 end

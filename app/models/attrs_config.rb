@@ -19,7 +19,6 @@ class AttrsConfig < ActiveRecord::Base
   end
 
   def self.get(role)
-    return {} if !self.table_exists?
     self.where(:role => role).inject({}) do |hash, config|
       hash[config.field.to_sym] = config.field_type.to_sym
       hash
