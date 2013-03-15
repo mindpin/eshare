@@ -56,11 +56,11 @@ gem 'roles-field',
     :git => 'git://github.com/mindpin/roles-field.git'
 
 ## 导航栏
-gem 'simple-navbar', '0.0.1',
+gem 'simple-navbar',
     :git => 'git://github.com/mindpin/simple-navbar.git'
 
 ## 页面布局辅助
-gem 'simple-page-layout', '0.0.3',
+gem 'simple-page-layout',
     :git => 'git://github.com/mindpin/simple-page-layout'
 
 ## 在页面上显示图片的一些辅助方法
@@ -72,5 +72,5 @@ gem 'simple-page-compoents',
     # :path => '/web/songliang/simple-page-compoents'
 
 ## 给指定 activerecord 模型动态添加属性
-gem 'dynamic_attrs', '0.0.1',
+gem 'dynamic_attrs',
     :git => 'git://github.com/kaid/dynamic_attrs.git'
