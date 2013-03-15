@@ -1,4 +1,3 @@
-# encoding: utf-8
 class AvatarUploader < CarrierWave::Uploader::Base
   # 存储方式 本地硬盘存储
   storage :file

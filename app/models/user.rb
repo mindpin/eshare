@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-  mount_uploader :avatar, AvatarUploader
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
@@ -26,8 +25,14 @@ class User < ActiveRecord::Base
   # ------------ 以上是用户登录相关代码，不要改动
   # ------------ 任何代码请在下方添加
 
+  include MediaResource::UserMethods
+  
+  # carrierwave
+  mount_uploader :avatar, AvatarUploader
+
   # 声明角色
   attr_accessible :role
+  validates :role, :presence => true
   roles_field :roles_mask, :roles => [:admin, :manager, :teacher, :student]
 
   attr_accessible :name, :avatar
