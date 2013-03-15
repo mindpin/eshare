@@ -10,19 +10,11 @@ class Admin::UsersController < ApplicationController
   end
 
   def update
-    @user = User.find(params[:id])
-    if @user.update_attributes(params[:user], :as => :change_base_info)
-      return redirect_to "/admin/users/#{@user.id}/edit"
-    end
-    render :action => :edit
+    _update_user(:change_base_info)
   end
 
   def change_password
-    @user = User.find(params[:id])
-    if @user.update_attributes(params[:user], :as => :change_password)
-      return redirect_to "/admin/users/#{@user.id}/edit"
-    end
-    render :action => :edit
+    _update_user(:change_password)
   end
 
   def student_attrs
@@ -51,5 +43,15 @@ protected
   def user_attrs_path(user)
     return student_attrs_admin_user_path(user) if user.role? :student
     teacher_attrs_admin_user_path(user)
+  end
+
+private
+
+  def _update_user(as)
+    @user = User.find(params[:id])
+    if @user.update_attributes(params[:user], :as => as)
+      return redirect_to "/admin/users/#{@user.id}/edit"
+    end
+    render :action => :edit
   end
 end
