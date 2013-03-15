@@ -48,6 +48,12 @@ Eshare::Application.routes.draw do
         get :import
       end
     end
-    
+
+    resources :attrs_configs do
+      collection do
+        get :teacher_attrs
+        get :student_attrs
+      end
+    end 
   end
 end

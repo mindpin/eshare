@@ -43,29 +43,10 @@ class User < ActiveRecord::Base
   include DynamicAttr::Owner
 
   has_dynamic_attrs :student_attrs,
-                    :fields => {
-                      :sid => :integer,
-                      :department => :string,
-                      :gender => :string,
-                      :nation => :string,
-                      :tel => :string,
-                      :description => :string,
-                      :id_card_number => :string,
-                      :enroll_date => :datetime,
-                      :graduation_date => :datetime
-                    }
+                    :updater => lambda {AttrsConfig.get(:student)}
 
   has_dynamic_attrs :teacher_attrs,
-                    :fields => {
-                      :tid => :integer,
-                      :department => :string,
-                      :gender => :string,
-                      :nation => :string,
-                      :tel => :string,
-                      :description => :string,
-                      :id_card_number => :string
-                    }
-
+                    :updater => lambda {AttrsConfig.get(:teacher)}
   # 导入文件
   include ImportFile::UserMethods
 end

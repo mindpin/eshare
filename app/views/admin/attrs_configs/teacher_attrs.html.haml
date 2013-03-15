@@ -1,0 +1,6 @@
+- @configs.each do |config|
+  .field= config.field
+  .field-type= config.field_type
+  .edit= link_to '编辑', edit_admin_attrs_config_path(config)
+
+= link_to '增加教师扩展字段', new_admin_attrs_config_path(:role => :teacher)
