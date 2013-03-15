@@ -37,9 +37,6 @@ module Eshare
     config.assets.enabled = true
     config.assets.version = '1.0'
     
-    ### 自定义增加的代码
-    require File.join(Rails.root, 'lib/mindpin_global_methods.rb')
-
     ### sanitized config
     config.action_view.sanitized_allowed_tags = 'table', 'tr', 'td', 'th',
       'thead', 'tbody', 'tfoot', 'h3', 'h4', 'div', 'ul', 'ol', 'li', 'a',
