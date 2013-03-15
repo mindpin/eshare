@@ -1,5 +1,6 @@
 class MediaResource < ActiveRecord::Base
   include ModelRemovable
+  include MediaResourceDynatreeMethods
   acts_as_taggable
   attr_accessible :name,
                   :is_dir,
@@ -87,6 +88,88 @@ class MediaResource < ActiveRecord::Base
     !is_dir?
   end
 
+  def remove
+    self._remove_children!
+
+    self.is_removed = true
+    self.fileops_time = Time.now
+    self.save
+
+    if self.is_file?
+      parent_dir = self.dir
+      while !parent_dir.blank? do
+        parent_dir.decrement!(:files_count, 1)
+        parent_dir = parent_dir.dir
+      end
+    end
+  end
+
+  def metadata(options = {:list => true})
+    is_dir ? dir_metadata(options) : file_metadata
+  end
+
+  def dir_metadata(options = {})
+    contents = options[:list] ? self.media_resources.map{|mr| mr.metadata(:list=>false)} : [] 
+
+    {
+      :bytes    => 0,
+      :path     => self.path,
+      :is_dir   => true,
+      :contents => contents
+    }
+  end
+
+  def file_metadata
+    bytes = self.attach.blank? ? 0 : self.attach.size
+    bytes ||= 0
+    
+    {
+      :bytes     => bytes,
+      :path      => self.path,
+      :is_dir    => false,
+      :mime_type => self.attach.blank? ? 'application/octet-stream' : self.attach.content_type
+    }
+  end
+
+  def attach
+    file_entity && file_entity.attach
+  end
+
+  def path
+    if(self.dir_id == 0)
+      return "/#{self.name}"
+    end
+
+    return "#{self.dir.path}/#{self.name}"
+  end
+
+  def shared?
+    media_share_rule ? true : false
+  end
+
+  def shared_to?(user)
+    user.received_media_shares.where(:media_resource_id => self.id).any?
+  end
+
+  def move(parent_path)
+    to_dir = MediaResource.get(self.creator, parent_path)
+    to_dir_id = to_dir.blank? ? 0 : to_dir.id
+    self.dir_id = to_dir_id
+    self.save
+  end
+
+  def set_tags_by!(user, tags)
+    return if user != self.creator && self.is_dir?
+    self.tag_list = tags.split(%r{,\s*}).uniq
+    self.save
+  end
+
+  def video_time_str
+    FfmpegMovieInfo.new(self.file_entity.attach.path).raw_duration
+  rescue
+    "00:00:00"
+  end
+
   # 根据传入的资源路径字符串，查找一个资源对象
   # 传入的路径类似 /foo/bar/hello/test.txt
   # 或者 /foo/bar/hello/world
@@ -167,70 +250,7 @@ class MediaResource < ActiveRecord::Base
     return nil
   end
 
-  def remove
-    self._remove_children!
-
-    self.is_removed = true
-    self.fileops_time = Time.now
-    self.save
-
-    if self.is_file?
-      parent_dir = self.dir
-      while !parent_dir.blank? do
-        parent_dir.decrement!(:files_count, 1)
-        parent_dir = parent_dir.dir
-      end
-    end
-  end
-
   # -----------
-
-  def metadata(options = {:list => true})
-    is_dir ? dir_metadata(options) : file_metadata
-  end
-
-  def dir_metadata(options = {})
-    contents = options[:list] ? self.media_resources.map{|mr| mr.metadata(:list=>false)} : [] 
-
-    {
-      :bytes    => 0,
-      :path     => self.path,
-      :is_dir   => true,
-      :contents => contents
-    }
-  end
-
-  def file_metadata
-    bytes = self.attach.blank? ? 0 : self.attach.size
-    bytes ||= 0
-    
-    {
-      :bytes     => bytes,
-      :path      => self.path,
-      :is_dir    => false,
-      :mime_type => self.attach.blank? ? 'application/octet-stream' : self.attach.content_type
-    }
-  end
-
-  def attach
-    file_entity && file_entity.attach
-  end
-
-  def path
-    if(self.dir_id == 0)
-      return "/#{self.name}"
-    end
-
-    return "#{self.dir.path}/#{self.name}"
-  end
-
-  def shared?
-    media_share_rule ? true : false
-  end
-
-  def shared_to?(user)
-    user.received_media_shares.where(:media_resource_id => self.id).any?
-  end
 
   def self.delta(creator, cursor, limit = 100)
     with_exclusive_scope do
@@ -256,102 +276,6 @@ class MediaResource < ActiveRecord::Base
         :has_more => has_more
       }
     end
-  end
-
-  def self_and_ancestors
-    resources = [self]
-    loop do
-      resource = resources.first.dir
-      break if resource.blank?
-      resources.unshift(resource)
-    end
-    resources
-  end
-
-  def self.root_dynatree(user)
-    root_resources = user.media_resources.root_res.dir_res
-    [{
-      :title => '根目录', :isFolder => true, :activate => true, :dir => "",
-      :children=>_preload_dynatree(root_resources,[]), :expand => true
-    }]
-  end
-
-  def preload_dynatree
-    root_resources = self.creator.media_resources.root_res.dir_res
-    ancestor_resources = self_and_ancestors-[self]
-    children = self.class._preload_dynatree(root_resources,ancestor_resources,self)
-    [{
-      :title => '根目录', :isFolder => true, :activate => true, :dir => "",
-      :children=>children, :expand => true
-    }]
-  end
-
-  def self._preload_dynatree(resources,ancestor_resources,current_resource = nil)
-    resources.map do |resource|
-      child_resources = resource.media_resources.dir_res
-      isLazy = child_resources.blank? ? false : true
-      children = ancestor_resources.include?(resource) ? _preload_dynatree(child_resources,ancestor_resources,current_resource) : []
-      activate = resource == current_resource ? true : false
-      expand = ancestor_resources.include?(resource) ? true : false
-
-      {
-        :title => resource.name, :dir => resource.path,
-        :isFolder => true, :children => children,
-        :expand => expand, :activate => activate, :isLazy => isLazy
-      }
-    end
-  end
-
-  def lazyload_sub_dynatree(current_resource)
-    return [] if current_resource == self
-    child_resources = self.media_resources.dir_res
-    child_resources.map do |resource|
-      isLazy = resource.media_resources.dir_res.blank? ? false : true
-      isLazy = false if current_resource == resource
-      {
-        :title => resource.name, :dir => resource.path,
-        :isFolder => true, :isLazy => isLazy
-      }
-    end
-  end
-
-  def move(parent_path)
-    to_dir = MediaResource.get(self.creator, parent_path)
-    to_dir_id = to_dir.blank? ? 0 : to_dir.id
-    self.dir_id = to_dir_id
-    self.save
-  end
-
-  def set_tags_by!(user, tags)
-    return if user != self.creator && self.is_dir?
-    self.tag_list = tags.split(%r{,\s*}).uniq
-    self.save
-  end
-
-  # 个人资源库 整个文件树的 dynatree 数据
-  def self.dynatree(user)
-    root_resources = user.media_resources.root_res
-    [{
-      :title => '根目录', :isFolder => true, :activate => true, :dir => "",
-      :children=>_dynatree(root_resources), :expand => true
-    }]
-  end
-
-  def self._dynatree(resources)
-    resources.map do |resource|
-      media_resources = resource.media_resources
-      {
-        :title => resource.name, :isFolder => resource.is_dir?,
-        :activate => true, :id => resource.id,
-        :children=>_dynatree(media_resources), :expand => false
-      }
-    end
-  end
-
-  def video_time_str
-    FfmpegMovieInfo.new(self.file_entity.attach.path).raw_duration
-  rescue
-    "00:00:00"
   end
 
   private
