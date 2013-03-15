@@ -83,5 +83,7 @@ group :test do
   gem 'timecop'
 end
 
-gem 'file-part-upload', :git => 'git://github.com/mindpin/file-part-upload.git'
+gem 'file-part-upload', 
+  :git => 'git://github.com/mindpin/file-part-upload.git',
+  :tag => '0.0.1'
 #############################################
