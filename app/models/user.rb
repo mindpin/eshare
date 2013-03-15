@@ -32,6 +32,7 @@ class User < ActiveRecord::Base
 
   # 声明角色
   attr_accessible :role
+  validates :role, :presence => true
   roles_field :roles_mask, :roles => [:admin, :manager, :teacher, :student]
 
   attr_accessible :name, :avatar
@@ -62,27 +63,6 @@ class User < ActiveRecord::Base
                       :id_card_number => :string
                     }
 
-
-  def self.import(file, role)
-    spreadsheet = open_spreadsheet(file)
-    header = spreadsheet.row(1)
-    (2..spreadsheet.last_row).each do |i|
-      row = Hash[[header, spreadsheet.row(i)].transpose]
-      p row
-      user = find_by_email(row["email"]) || new
-      user.attributes = row.to_hash.slice(*accessible_attributes)
-      user.set_role(role)
-      user.save
-    end
-  end
-
-  def self.open_spreadsheet(file)
-    case File.extname(file.original_filename)
-    when ".csv" then Roo::Csv.new(file.path, nil, :ignore)
-    when ".xls" then Roo::Excel.new(file.path, nil, :ignore)
-    when ".xlsx" then Roo::Excelx.new(file.path, nil, :ignore)
-    else raise "Unknown file type: #{file.original_filename}"
-    end
-  end
-
+  # 导入文件
+  include ImportFile::UserMethods
 end

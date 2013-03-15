@@ -1,21 +1,14 @@
 module ApplicationHelper
-  class BreadcrumbRender
+  def test_xxx(&block)
+    user = User.first
 
-
-    def initialize(view, *args)
-      @view = view
-
-      @breadcrumbs = [
-
-      ]
+    tmp = capture do
+      block.call user
     end
-
-    def add(text, url)
-
+    capture do
+      haml_tag :div, :class => 'haha' do
+        concat 'haha'
+      end
     end
-  end
-
-  def page_breadcrumb(*args)
-    BreadcrumbRender.new(self, *args).render
   end
 end
