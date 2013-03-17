@@ -41,12 +41,19 @@ Eshare::Application.routes.draw do
         get :student_attrs
         get :teacher_attrs
         put :user_attrs_update
+        put :change_password
       end
 
       collection do
         get :import
       end
     end
-    
+
+    resources :attrs_configs do
+      collection do
+        get :teacher_attrs
+        get :student_attrs
+      end
+    end 
   end
 end

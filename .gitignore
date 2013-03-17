@@ -21,6 +21,7 @@ config/development.sphinx.conf
 .rvmrc
 public/system/*
 public/uploads/*
+public/file_part_upload/*
 coverage/
 .idea/*
 *DS_*

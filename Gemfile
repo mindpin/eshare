@@ -17,6 +17,7 @@ group :test do
   gem 'factory_girl_rails', '~> 4.2.1'
   gem 'coveralls', :require => false # 帮助在 coveralls.io 线统计测试覆盖率
   gem 'capybara', '2.0.2' # 集成测试框架
+  gem 'timecop', '0.6.1' # 用于在测试中调整时间
 end
 
 group :examples do
@@ -49,6 +50,9 @@ gem 'roo', '1.10.3'
 # 编码处理基础库
 gem 'iconv', '1.0.2'
 
+## tag 插件
+gem 'acts-as-taggable-on', '~> 2.3.3'
+
 # 自己写的 gem，都不指定版本号，如果有重大修改，通过GIT TAG解决
 
 ## 用户角色
@@ -76,4 +80,7 @@ gem 'simple-page-compoents',
 gem 'dynamic_attrs',
     :git => 'git://github.com/kaid/dynamic_attrs.git'
 
-gem 'awesome_print'
+## 文件分段上传
+gem 'file-part-upload', 
+    :git => 'git://github.com/mindpin/file-part-upload.git',
+    :tag => '0.0.1'

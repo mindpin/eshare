@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-  mount_uploader :avatar, AvatarUploader
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
@@ -26,6 +25,14 @@ class User < ActiveRecord::Base
   # ------------ 以上是用户登录相关代码，不要改动
   # ------------ 任何代码请在下方添加
 
+  # 修改基本信息
+  attr_accessible :login, :name, :email, :as => :change_base_info
+  # 修改密码
+  attr_accessible :password, :password_confirmation, :as => :change_password
+  include MediaResource::UserMethods
+  # carrierwave
+  mount_uploader :avatar, AvatarUploader
+
   # 声明角色
   attr_accessible :role
   validates :role, :presence => true
@@ -36,29 +43,10 @@ class User < ActiveRecord::Base
   include DynamicAttr::Owner
 
   has_dynamic_attrs :student_attrs,
-                    :fields => {
-                      :sid => :integer,
-                      :department => :string,
-                      :gender => :string,
-                      :nation => :string,
-                      :tel => :string,
-                      :description => :string,
-                      :id_card_number => :string,
-                      :enroll_date => :datetime,
-                      :graduation_date => :datetime
-                    }
+                    :updater => lambda {AttrsConfig.get(:student)}
 
   has_dynamic_attrs :teacher_attrs,
-                    :fields => {
-                      :tid => :integer,
-                      :department => :string,
-                      :gender => :string,
-                      :nation => :string,
-                      :tel => :string,
-                      :description => :string,
-                      :id_card_number => :string
-                    }
-
+                    :updater => lambda {AttrsConfig.get(:teacher)}
   # 导入文件
   include ImportFile::UserMethods
 end

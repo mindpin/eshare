@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 SimpleNavbar::Base.config do
   rule :admin do
     nav :home, :name => '首页', :url => '/admin' do
