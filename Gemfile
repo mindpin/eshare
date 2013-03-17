@@ -75,3 +75,5 @@ gem 'simple-page-compoents',
 ## 给指定 activerecord 模型动态添加属性
 gem 'dynamic_attrs',
     :git => 'git://github.com/kaid/dynamic_attrs.git'
+
+gem 'awesome_print'
