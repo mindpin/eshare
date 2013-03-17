@@ -1,157 +1,45 @@
 require "spec_helper"
 
 describe User do
+  describe '用户邮箱校验' do
+    before {
+      @user1 = User.new :login => 'jerry',
+                       :email => 'aaa',
+                       :password => '1234',
+                       :role => 'admin'
 
-  describe "import file" do
-    it "should raise format error" do
-      file = ActionDispatch::Http::UploadedFile.new({
-          :filename => 'incorrect_excel.aaa',
-          :type => 'application/vnd.ms-excel',
-          :tempfile => File.new(Rails.root.join('spec/data/incorrect_excel.aaa'))
-        })
+      @user2 = User.new :login => 'jerry',
+                       :email => 'a@b.com',
+                       :password => '1234',
+                       :role => 'admin'
 
-        expect {
-          User.import(file, :teacher)
-        }.to raise_error(User::FormatError)
+      @user1.save
+      @user2.save
+    }
+
+    it {
+      User.count.should == 1      
+    }
+
+    it {
+      User.all.last.should == @user2
+    }
+
+    it {
+      @user1.errors.count.should == 1
+    }
+
+    it {
+      @user1.errors.first[0].should == :email
+    }
+
+    it 'email should invalid' do
+      @user1.errors.first[1].
+        should == I18n.t("activerecord.errors.models.user.attributes.email.invalid")
     end
 
-
-    context "import teacher excel files" do
-      describe "import xls format" do
-        before(:each){
-          file = ActionDispatch::Http::UploadedFile.new({
-            :filename => 'teacher.xls',
-            :type => 'application/vnd.ms-excel',
-            :tempfile => File.new(Rails.root.join('spec/data/teacher.xls'))
-          })
-          User.count.should == 0
-          User.import(file, :teacher)
-          User.count.should == 3
-
-          @user = User.find_by_email('hi22@gmail.com')
-        }
-
-        it{
-          @user.login.should == 'bbb22'
-        }
-
-        it{
-          @user.email.should == 'hi22@gmail.com'
-        }
-
-        it{
-          @user.role?(:teacher).should == true
-        }
-      end
-
-
-
-      describe "import xlsx format" do
-        before(:each){
-          file = ActionDispatch::Http::UploadedFile.new({
-            :filename => 'msexcel_teacher.xlsx',
-            :type => 'application/vnd.ms-excel',
-            :tempfile => File.new(Rails.root.join('spec/data/msexcel_teacher.xlsx'))
-          })
-          User.count.should == 0
-          User.import(file, :teacher)
-          User.count.should == 3
-
-          @user = User.find_by_email('www22@gmail.com')
-        }
-
-        it{
-          @user.login.should == 'www22'
-        }
-
-        it{
-          @user.email.should == 'www22@gmail.com'
-        }
-
-        it{
-          @user.role?(:teacher).should == true
-        }
-      end
-
-
-
-      it "import openoffice format" do
-        file = ActionDispatch::Http::UploadedFile.new({
-          :filename => 'openoffice_teacher.sxc',
-          :type => 'application/vnd.ms-excel',
-          :tempfile => File.new(Rails.root.join('spec/data/openoffice_teacher.sxc'))
-        })
-       
-        User.count.should == 0
-        User.import(file, :teacher)
-        User.count.should == 3
-
-        teacher = User.find_by_email('ooo22@gmail.com')
-        teacher.login.should == 'ooo22'
-        teacher.email.should == 'ooo22@gmail.com'
-        teacher.role?(:teacher).should == true
-      end
-    end
-
-
-    context "import student excel files" do
-      it "import xls format" do
-        
-        file = ActionDispatch::Http::UploadedFile.new({
-          :filename => 'teacher.xls',
-          :type => 'application/vnd.ms-excel',
-          :tempfile => File.new(Rails.root.join('spec/data/student.xls'))
-        })
-       
-        User.count.should == 0
-        User.import(file, :student)
-        User.count.should == 3
-
-        student = User.find_by_email('hi2@gmail.com')
-        student.login.should == 'bbb2'
-        student.email.should == 'hi2@gmail.com'
-        student.role?(:student).should == true
-        
-      end
-
-
-
-      it "import xlsx format" do
-        file = ActionDispatch::Http::UploadedFile.new({
-          :filename => 'msexcel_student.xlsx',
-          :type => 'application/vnd.ms-excel',
-          :tempfile => File.new(Rails.root.join('spec/data/msexcel_student.xlsx'))
-        })
-       
-        User.count.should == 0
-        User.import(file, :student)
-        User.count.should == 3
-
-        student = User.find_by_email('www2@gmail.com')
-        student.login.should == 'www2'
-        student.email.should == 'www2@gmail.com'
-        student.role?(:student).should == true
-      end
-
-      it "import openoffice format" do
-        file = ActionDispatch::Http::UploadedFile.new({
-          :filename => 'openoffice_student.sxc',
-          :type => 'application/vnd.ms-excel',
-          :tempfile => File.new(Rails.root.join('spec/data/openoffice_student.sxc'))
-        })
-       
-        User.count.should == 0
-        User.import(file, :student)
-        User.count.should == 3
-
-        student = User.find_by_email('ooo2@gmail.com')
-        student.login.should == 'ooo2'
-        student.email.should == 'ooo2@gmail.com'
-        student.role?(:student).should == true
-      end
-    end
-
-    
+    it {
+      @user2.errors.count.should == 0
+    }
   end
-
 end
