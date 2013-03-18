@@ -86,5 +86,5 @@ end
 
 gem 'file-part-upload', 
   :git => 'git://github.com/mindpin/file-part-upload.git',
-  :tag => '0.0.2'
+  :tag => '0.0.3'
 #############################################
