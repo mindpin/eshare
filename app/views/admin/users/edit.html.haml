@@ -1,1 +1,14 @@
 .page-admin-user-edit
+
+  .title 基本信息
+  = simple_form_for @user, :url => "/admin/users/#{@user.id}" do |f|
+    = f.input :login
+    = f.input :name
+    = f.input :email
+    = f.button :submit
+
+  .title 修改密码
+  = simple_form_for @user, :url => "/admin/users/#{@user.id}/change_password" do |f|
+    = f.input :password
+    = f.input :password_confirmation
+    = f.button :submit, '修改密码'

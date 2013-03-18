@@ -25,8 +25,11 @@ class User < ActiveRecord::Base
   # ------------ 以上是用户登录相关代码，不要改动
   # ------------ 任何代码请在下方添加
 
+  # 修改基本信息
+  attr_accessible :login, :name, :email, :as => :change_base_info
+  # 修改密码
+  attr_accessible :password, :password_confirmation, :as => :change_password
   include MediaResource::UserMethods
-  
   # carrierwave
   mount_uploader :avatar, AvatarUploader
 
