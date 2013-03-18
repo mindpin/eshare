@@ -56,4 +56,8 @@ Eshare::Application.routes.draw do
       end
     end 
   end
+
+  # 资源网盘
+  get '/disk' => 'disk#index'
+  post '/upload' => 'files#upload'
 end

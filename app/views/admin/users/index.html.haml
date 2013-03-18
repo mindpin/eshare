@@ -1,9 +1,5 @@
 .page-admin-users
   = paginate @users
-  = page_progress_bar 10, :info, :striped, :active
-  = page_progress_bar 20, :success, :striped, :active
-  = page_progress_bar 30, :warning, :striped, :active
-  = page_progress_bar 40, :danger, :striped, :active
 
   = page_data_table(:users, @users, :striped, :bordered) do |table|
     - table.add_line_data(:role)

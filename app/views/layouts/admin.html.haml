@@ -1,5 +1,8 @@
+- title = t('common.site.title.admin')
+- home_title = t('common.site.home_title.admin')
+
 !!!
-- simple_page_layout 'MINDPIN EduShare | ADMIN', :html_lang => :zh, :body_class => 'admin' do
+- simple_page_layout title, :html_lang => :zh, :body_class => 'admin' do
   .page-sidebar
     = simple_navbar :admin, :as_list, :with_icon
 
@@ -7,7 +10,7 @@
     - navbar.add_item('首页', '/admin')
     - navbar.add_item('设置密码', '/admin/setting/password')
     - navbar.add_item('退出登录', '/account/sign_out')
-    - navbar.prepend link_to('EduShare Admin', '/admin', :class => :brand)
+    - navbar.prepend link_to(home_title, '/admin', :class => :brand)
 
   .page-content
     = yield

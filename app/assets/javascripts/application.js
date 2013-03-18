@@ -15,5 +15,7 @@
 //= require jquery.min
 //= require jquery_ujs
 
+//= require resumable/resumable
+
 //= require simple-images
 //= require_tree .

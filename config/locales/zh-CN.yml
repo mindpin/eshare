@@ -5,7 +5,9 @@ zh-CN:
     attributes:
       user:
         login: 用户名
+        name: 姓名
         password: 密码
+        password_confirmation: 确认密码
         remember_me: 记住登录状态
 
   views:
@@ -26,11 +28,19 @@ zh-CN:
       edit: 修改
       delete: 删除
 
+    site:
+      title:
+        app: MINDPIN EduShare
+        admin: MINDPIN EduShare | ADMIN
+      home_title:
+        app: EduShare
+        admin: EduShare Admin
+
   compoents:
     data_table:
       users:
         role: 角色
         login: 用户名
         name: 姓名
-        email: 电子邮件
+        email: Email
         ops: 操作

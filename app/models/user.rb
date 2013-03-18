@@ -29,22 +29,23 @@ class User < ActiveRecord::Base
   attr_accessible :login, :name, :email, :as => :change_base_info
   # 修改密码
   attr_accessible :password, :password_confirmation, :as => :change_password
+
+  # MediaResource
   include MediaResource::UserMethods
+
   # carrierwave
   mount_uploader :avatar, AvatarUploader
+  attr_accessible :name, :avatar
 
   # 声明角色
   attr_accessible :role
   validates :role, :presence => true
   roles_field :roles_mask, :roles => [:admin, :manager, :teacher, :student]
 
-  attr_accessible :name, :avatar
-
+  # 分别为学生和老师增加动态字段
   include DynamicAttr::Owner
-
   has_dynamic_attrs :student_attrs,
                     :updater => lambda {AttrsConfig.get(:student)}
-
   has_dynamic_attrs :teacher_attrs,
                     :updater => lambda {AttrsConfig.get(:teacher)}
   # 导入文件
