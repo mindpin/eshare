@@ -1,7 +1,5 @@
 class FileEntity < ActiveRecord::Base
   file_part_upload
-  attr_accessible :attach,
-                  :merged
 
   CONTENT_TYPES = {
     :video    => [
