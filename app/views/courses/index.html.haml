@@ -1,0 +1,12 @@
+.page-admin-courses
+  = paginate @courses
+  
+  = link_to "new course", "courses/new" 
+  = page_data_table(:courses, @courses, :striped, :bordered) do |table|
+    - table.add_column(:name) do |course|
+      = link_to course.name, "/courses/#{course.id}"
+    - table.add_column(:cid)
+    - table.add_column(:desc)
+    - table.add_column(:ops) do |course|
+      = link_to 'edit', "/courses/#{course.id}/edit"
+      = link_to 'delete', "/courses/#{course.id}", :method => :delete, :confirmation => true

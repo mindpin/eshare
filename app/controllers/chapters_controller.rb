@@ -1,9 +1,13 @@
 class ChaptersController < ApplicationController
+  before_filter :authenticate_user!
+  
   def index
-    @chapters = Chapter.all
+    @course = Course.find(params[:course_id])
+    @chapters = @course.chapters
   end
 
   def new
+    @course = Course.find(params[:course_id])
     @chapter = Chapter.new
   end
 
@@ -12,10 +16,13 @@ class ChaptersController < ApplicationController
   end
 
   def create
-    @chapter = Chapter.new(params[:chapter])
+    @course = Course.find(params[:course_id])
+    @chapter = @course.chapters.build(params[:chapter])
     @chapter.creator = current_user
-    return redirect_to chapter_path(@chapter) if @chapter.save
-    redirect_to :action => :new
+    if @chapter.save
+      return redirect_to "/courses/#{@course.id}/chapters"
+    end
+    render :action => :new
   end
 
   def show
@@ -25,7 +32,7 @@ class ChaptersController < ApplicationController
   def update
     @chapter = Chapter.find(params[:id])
     return redirect_to chapter_path(@chapter) if @chapter.update_attributes params[:chapter]
-    redirect_to :action => :edit, :id => @chapter.id
+    render :action => :edit, :id => @chapter.id
   end
 
   def destroy

@@ -1,10 +1,8 @@
-- @chapters.each do |chapter|
-  .chapter
-    .title= chapter.title
-    .desc=  chapter.desc
-    .creator=  chapter.creator.name
+.add= link_to '增加章节', "/courses/#{@course.id}/chapters/new"
 
-    .edit= link_to '编辑',  edit_admin_chapter_path(chapter)
-    .destroy= link_to '删除', chapter_path(chapter),  :method => :delete, :confirmation => true
-
-.add= link_to '增加', new_chapter_path
+.list
+  - @chapters.each do |chapter|
+    .chapter
+      = link_to chapter.title, "/chapters/#{chapter.id}"
+      = link_to '编辑',  "/chapters/#{chapter.id}/edit"
+      = link_to '删除', "/chapters/#{chapter.id}",  :method => :delete, :confirmation => true

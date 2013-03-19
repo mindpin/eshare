@@ -1,18 +1,14 @@
-class Admin::CoursesController < ApplicationController
-  layout 'admin'
+class CoursesController < ApplicationController
   before_filter :authenticate_user!
   before_filter :pre_load
 
-  
   def pre_load
     @course = Course.find(params[:id]) if params[:id]
   end
 
-
   def index
     @courses = Course.page params[:page]
   end
-
 
   def new
     @course = Course.new
@@ -21,8 +17,9 @@ class Admin::CoursesController < ApplicationController
   def create
     @course = current_user.courses.build(params[:course])
     if @course.save
-      redirect_to "/admin/courses/#{@course.id}"
+      return redirect_to :action => :index
     end
+    render :action => :new
   end
 
   def show
@@ -32,14 +29,14 @@ class Admin::CoursesController < ApplicationController
   end
 
   def update
-    @course.update_attributes(params[:course])
-
-    redirect_to "/admin/courses/#{@course.id}"
+    if @course.update_attributes(params[:course])
+      return redirect_to :action => :index
+    end
+    render :action => :edit
   end
 
   def destroy
     @course.destroy
-
-    redirect_to "/admin/courses"
+    redirect_to :action => :index
   end
 end

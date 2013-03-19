@@ -1,4 +1,4 @@
-= simple_form_for @chapter do |f|
+= simple_form_for @chapter, :url => "/courses/#{@course.id}/chapters" do |f|
   = f.input :title
   = f.input :desc
   = f.button :submit
