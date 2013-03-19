@@ -31,13 +31,15 @@ class ChaptersController < ApplicationController
 
   def update
     @chapter = Chapter.find(params[:id])
-    return redirect_to chapter_path(@chapter) if @chapter.update_attributes params[:chapter]
+    if @chapter.update_attributes params[:chapter]
+      return redirect_to "/courses/#{@chapter.course_id}/chapters"
+    end
     render :action => :edit, :id => @chapter.id
   end
 
   def destroy
     @chapter = Chapter.find(params[:id])
     @chapter.destroy
-    redirect_to :action => :index
+    redirect_to :action => :index, :course_id => @chapter.course_id
   end
 end

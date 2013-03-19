@@ -9,4 +9,4 @@
     - table.add_column(:desc)
     - table.add_column(:ops) do |course|
       = link_to 'edit', "/courses/#{course.id}/edit"
-      = link_to 'delete', "/courses/#{course.id}", :method => :delete, :confirmation => true
+      = link_to 'delete', "/courses/#{course.id}", :method => :delete, :confirm => "确定删除吗?"

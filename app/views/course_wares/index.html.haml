@@ -5,4 +5,4 @@
   .item
     = link_to course_ware.title, "/course_wares/#{course_ware.id}"
     = link_to "编辑", "/course_wares/#{course_ware.id}/edit"
-    = link_to "删除", "/course_wares/#{course_ware.id}", :method => :delete, :confirmation => true
+    = link_to "删除", "/course_wares/#{course_ware.id}", :method => :delete, :confirm => "确定删除吗?"

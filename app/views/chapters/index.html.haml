@@ -5,4 +5,4 @@
     .chapter
       = link_to chapter.title, "/chapters/#{chapter.id}"
       = link_to '编辑',  "/chapters/#{chapter.id}/edit"
-      = link_to '删除', "/chapters/#{chapter.id}",  :method => :delete, :confirmation => true
+      = link_to '删除', "/chapters/#{chapter.id}",  :method => :delete, :confirm => "确定删除吗?"
