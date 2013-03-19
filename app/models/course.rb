@@ -1,5 +1,5 @@
 class Course < ActiveRecord::Base
-  attr_accessible :name, :cid, :desc, :syllabus
+  attr_accessible :name, :cid, :desc, :syllabus, :cover
 
   belongs_to :creator, :class_name => 'User', :foreign_key => :creator_id
   has_many :chapters
@@ -11,6 +11,8 @@ class Course < ActiveRecord::Base
   default_scope order('id desc')
   max_paginates_per 50
 
+  # carrierwave
+  mount_uploader :cover, CourseCoverUploader
 
   module UserMethods
     def self.included(base)
