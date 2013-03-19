@@ -1,13 +1,20 @@
 class FileEntity < ActiveRecord::Base
   file_part_upload
 
-  attr_accessible :attach,
-                  :merged,
-                  :identifier,
-                  :attach_file_name, 
-                  :attach_file_size,
-                  :saved_size,
-                  :attach_content_type
+  validates :attach_file_name, :presence => true, :if => :upload_file_blank?
+  validates :attach_file_size, :presence => true, :if => :upload_file_blank?
+  validates :saved_size, :presence => true, :if => :upload_file_blank?
+
+  # will be fixed on Issue #8
+  def upload_file_blank?
+    @upload_file.blank?
+  end
+
+  # will be fixed on Issue #9
+  before_validation :set_default_saved_size
+  def set_default_saved_size
+    self.saved_size = 0 if self.saved_size.blank?
+  end
 
   CONTENT_TYPES = {
     :video    => [

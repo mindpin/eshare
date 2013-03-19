@@ -201,7 +201,7 @@ class MediaResource < ActiveRecord::Base
     raise FileEmptyError if file.blank?
 
     resource_path = self.process_same_file_name(creator,resource_path)
-    file_entity = FileEntity.new(:attach => file, :merged => true)
+    file_entity = FileEntity.new(:attach => file)
     self._put(creator, resource_path, file_entity)
   end
 
@@ -209,7 +209,7 @@ class MediaResource < ActiveRecord::Base
     raise NotAssignCreatorError if creator.blank?
     raise FileEmptyError if file.blank?
 
-    file_entity = FileEntity.new(:attach => file, :merged => true)
+    file_entity = FileEntity.new(:attach => file)
     self._put(creator, resource_path, file_entity)
   end
 

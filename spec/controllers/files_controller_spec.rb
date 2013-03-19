@@ -10,6 +10,26 @@ describe FilesController do
       })
     }
 
+    context '参数不正确，异常情况' do
+      before {
+        post :upload, :aaa => 'bbb',
+                      :blob => 'foobar'
+
+      }
+
+      it {
+        response.code.should == '500'
+      }
+
+      it {
+        response.body.should == 'params or other error.'
+      }
+
+      it {
+        FileEntity.count.should == 0
+      }
+    end
+
     context '上传一个新文件' do
       before do
         post :upload, :file_name  => 'test.zip',

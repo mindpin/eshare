@@ -24,6 +24,8 @@ class FilesController < ApplicationController
 
   rescue FilePartUpload::AlreadyMergedError
     render :text => 'file already merged.', :status => 500
+  rescue
+    render :text => 'params or other error.', :status => 500
   end
 
   private
@@ -40,8 +42,7 @@ class FilesController < ApplicationController
     def _build_file_entity
       return FileEntity.new({
         :attach_file_name => params[:file_name],
-        :attach_file_size => params[:file_size],
-        :saved_size       => 0
+        :attach_file_size => params[:file_size]
       })
     end
 
@@ -56,7 +57,7 @@ class FilesController < ApplicationController
     def _build_json(file_entity)
       return {
         :file_entity_id => file_entity.id,
-        :saved_size     => file_entity.saved_size || 0
+        :saved_size     => file_entity.saved_size
       }
     end
 end

@@ -111,6 +111,14 @@ describe MediaResource do
       MediaResource.create(:name => '可乐', :is_dir => true, :is_removed => true, :creator => @ben7th)
     end
 
+    it {
+      MediaResource.find_by_name('三只熊猫.jpg').file_entity.should_not be_blank
+    }
+
+    it {
+      
+    }
+
     describe '获取资源' do
       it '传入的路径没有资源时，返回空' do
         MediaResource.get(@ben7th, '/foo/bar/123').should == nil
