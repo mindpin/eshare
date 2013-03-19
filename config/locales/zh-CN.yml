@@ -32,3 +32,11 @@ zh-CN:
         name: 姓名
         email: 电子邮件
         ops: 操作
+
+      courses:
+        role: 角色
+        name: 课程名称
+        cid: 课程编号
+        desc: 简介
+        syllabus: 教学大钢
+        ops: 操作

@@ -54,6 +54,10 @@ Eshare::Application.routes.draw do
         get :teacher_attrs
         get :student_attrs
       end
-    end 
+    end
+
+    resources :courses do
+    end
+    
   end
 end
