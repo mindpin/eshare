@@ -15,7 +15,9 @@ Eshare::Application.routes.draw do
   end
 
   # 课件
-  resources :course_wares
+  resources :chapters, :shallow => true do
+    resources :course_wares
+  end
   
   namespace :admin do
     root :to => 'index#index'
@@ -59,6 +61,5 @@ Eshare::Application.routes.draw do
       end
     end 
 
-    resources :chapters
   end
 end
