@@ -14,9 +14,11 @@ Eshare::Application.routes.draw do
     put 'account/avatar' => 'account#avatar_update'
   end
 
-  # 课件
-  resources :chapters, :shallow => true do
-    resources :course_wares
+  # 课程
+  resources :courses, :shallow => true do
+    resources :chapters, :shallow => true do
+      resources :course_wares
+    end
   end
   
   namespace :admin do

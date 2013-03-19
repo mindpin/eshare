@@ -49,4 +49,5 @@ class User < ActiveRecord::Base
                     :updater => lambda {AttrsConfig.get(:teacher)}
   # 导入文件
   include ImportFile::UserMethods
+  include Course::UserMethods
 end

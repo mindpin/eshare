@@ -1,0 +1,6 @@
+= simple_form_for [:admin, @course] do |f|
+  = f.input :name
+  = f.input :cid
+  = f.input :desc, as: :text
+  = f.input :syllabus, as: :text
+  = f.submit

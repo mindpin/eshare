@@ -1,0 +1,11 @@
+.page-admin-courses
+  = paginate @courses
+  
+  = link_to "new course", "/admin/courses/new" 
+  = page_data_table(:courses, @courses, :striped, :bordered) do |table|
+    - table.add_column(:name)
+    - table.add_column(:cid)
+    - table.add_column(:desc)
+    - table.add_column(:ops) do |course|
+      = link_to t('course.edit'), [:edit, :admin, course], :class => :edit
+      = link_to t('course.delete'), 'javascript:;', :class => :delete
