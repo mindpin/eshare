@@ -17,4 +17,6 @@ class Course < ActiveRecord::Base
       base.has_many :courses, :foreign_key => 'creator_id'
     end
   end
+
+  include ImportFile::CourseMethods
 end

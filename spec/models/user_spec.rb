@@ -12,7 +12,7 @@ describe User do
 
         expect {
           User.import(file, :teacher)
-        }.to raise_error(User::FormatError)
+        }.to raise_error(ImportFile::FormatError)
     end
 
 

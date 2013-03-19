@@ -42,4 +42,15 @@ class Admin::CoursesController < ApplicationController
 
     redirect_to "/admin/courses"
   end
+
+
+  def import
+  end
+
+  def do_import
+    file = params[:excel_file]
+    Course.import(file, current_user)
+
+    render :nothing => true
+  end
 end

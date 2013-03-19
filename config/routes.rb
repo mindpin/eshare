@@ -57,6 +57,10 @@ Eshare::Application.routes.draw do
     end
 
     resources :courses do
+      collection do
+        get :import
+        post :do_import
+      end
     end
     
   end
