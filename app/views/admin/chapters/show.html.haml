@@ -1,0 +1,7 @@
+.chapter
+  .title= @chapter.title
+  .desc=  @chapter.desc
+  .creator=  @chapter.creator.name
+
+  .edit= link_to '编辑',  edit_admin_chapter_path(@chapter)
+  .destroy= link_to '删除', admin_chapter_path(@chapter),  :method => :delete, :confirmation => true
