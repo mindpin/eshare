@@ -13,6 +13,9 @@ Eshare::Application.routes.draw do
     get 'account/avatar' => 'account#avatar'
     put 'account/avatar' => 'account#avatar_update'
   end
+
+  # 课件
+  resources :course_wares
   
   namespace :admin do
     root :to => 'index#index'
