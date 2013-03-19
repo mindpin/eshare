@@ -55,5 +55,7 @@ Eshare::Application.routes.draw do
         get :student_attrs
       end
     end 
+
+    resources :chapters
   end
 end
