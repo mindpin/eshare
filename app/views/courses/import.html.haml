@@ -1,5 +1,5 @@
 
-= form_tag '/admin/courses/do_import', :method => :post, :multipart => true do
+= form_tag '/courses/do_import', :method => :post, :multipart => true do
   .field
     %label excel文件
     = file_field_tag 'excel_file'

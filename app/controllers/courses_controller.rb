@@ -48,6 +48,6 @@ class CoursesController < ApplicationController
     file = params[:excel_file]
     Course.import(file, current_user)
 
-    render :nothing => true
+    redirect_to :action => :index
   end
 end
