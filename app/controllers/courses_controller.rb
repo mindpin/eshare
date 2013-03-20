@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  before_filter :authenticate_user!
+  layout 'admin'
   before_filter :pre_load
 
   def pre_load
