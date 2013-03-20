@@ -1,11 +1,12 @@
 FactoryGirl.define do
   sequence(:num) {|n| n}
 
-  factory :user do
+  factory :user, :aliases => [:creator] do
     login    {"user#{generate(:num)}"}
     name     {"用户#{generate(:num)}"}
     email    {"user#{generate(:num)}@edu.dev"}
     password '1234'
+    role :teacher
 
     trait :teacher do
       role :teacher
