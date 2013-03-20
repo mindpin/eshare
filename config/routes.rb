@@ -16,6 +16,11 @@ Eshare::Application.routes.draw do
 
   # 课程
   resources :courses, :shallow => true do
+    collection do
+      get :import
+      post :do_import
+    end
+      
     resources :chapters, :shallow => true do
       resources :course_wares
     end

@@ -39,4 +39,15 @@ class CoursesController < ApplicationController
     @course.destroy
     redirect_to :action => :index
   end
+
+
+  def import
+  end
+
+  def do_import
+    file = params[:excel_file]
+    Course.import(file, current_user)
+
+    render :nothing => true
+  end
 end
