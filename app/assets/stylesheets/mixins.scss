@@ -24,3 +24,8 @@
   -webkit-transition : $params;
           transition : $params;
 }
+
+// 用于子元素全部是浮动元素的容器，修正高度
+@mixin floatfix{
+  &:after{content:"";display:block;clear:both;font-size:0;line-height:0;}
+}

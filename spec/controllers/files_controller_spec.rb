@@ -1,5 +1,13 @@
 require 'spec_helper'
 
+describe 'Issue #8 #9' do
+  it {
+    FileEntity.create :attach_file_name => 'abc.test',
+                      :attach_file_size => 1234
+    FileEntity.last.saved_size.should == 0
+  }
+end
+
 describe FilesController do
   describe 'POST #upload' do
     before {
@@ -160,5 +168,28 @@ describe FilesController do
         end
       end
     end
+  end
+
+  describe 'POST #upload 不允许上传空文件' do
+    before {
+      blob = ActionDispatch::Http::UploadedFile.new({
+        :filename => 'blob',
+        :type => 'text/html',
+        :tempfile => File.new(Rails.root.join('spec/data/empty.txt')) # 这是一个空文件
+      })
+
+      post :upload, :file_name  => 'test.zip',
+                    :file_size  => 0,
+                    :start_byte => 0,
+                    :blob       => blob
+    }
+
+    it {
+      response.code.should == '415'
+    }
+
+    it {
+      response.body.should == 'cannot upload a empty file.'
+    }
   end
 end

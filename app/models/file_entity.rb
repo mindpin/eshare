@@ -1,19 +1,8 @@
 class FileEntity < ActiveRecord::Base
-  file_part_upload
-
-  validates :attach_file_name, :presence => true, :if => :upload_file_blank?
-  validates :attach_file_size, :presence => true, :if => :upload_file_blank?
-  validates :saved_size, :presence => true, :if => :upload_file_blank?
-
-  # will be fixed on Issue #8
-  def upload_file_blank?
-    @upload_file.blank?
-  end
-
-  # will be fixed on Issue #9
-  before_validation :set_default_saved_size
-  def set_default_saved_size
-    self.saved_size = 0 if self.saved_size.blank?
+  if Rails.env == 'test'
+    file_part_upload :path => 'files/test/:class/:id/:name'
+  else
+    file_part_upload :path => 'files/:class/:id/:name'
   end
 
   CONTENT_TYPES = {

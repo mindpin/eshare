@@ -97,3 +97,42 @@ body{
     margin-right:20px;
   }
 }
+
+.page-files-index {
+  .file-uploader {
+    width:600px;
+    margin-top:20px;
+
+    .list {
+      .item {
+        border:solid 1px #E5E5E5;
+        padding:9px;
+        margin-top:-1px;
+
+        &:nth-child(2) {
+          @include border-radius(4px 4px 0 0);
+        }
+
+        &:last-child {
+          @include border-radius(0 0 4px 4px);
+        }
+
+        .meta {
+          font-size:12px;
+          overflow:hidden;
+          height:20px;line-height:20px;
+
+          .filename {
+            float:left;
+            width:40%;
+            text-overflow:ellipsis;
+            height:20px;line-height:20px;
+            overflow:hidden;
+          }
+          .size {float:left;margin-left:20px;}
+          .percent {float:right;}
+        }
+      }
+    }
+  }
+}

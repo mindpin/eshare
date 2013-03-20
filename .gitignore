@@ -22,6 +22,7 @@ config/development.sphinx.conf
 public/system/*
 public/uploads/*
 public/file_part_upload/*
+public/files/*
 public/test/*
 coverage/
 .idea/*

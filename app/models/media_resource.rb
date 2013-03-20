@@ -200,9 +200,7 @@ class MediaResource < ActiveRecord::Base
     raise NotAssignCreatorError if creator.blank?
     raise FileEmptyError if file.blank?
 
-    resource_path = self.process_same_file_name(creator,resource_path)
-    file_entity = FileEntity.new(:attach => file)
-    self._put(creator, resource_path, file_entity)
+    self.put_file_entity creator, resource_path, FileEntity.new(:attach => file)
   end
 
   def self.replace(creator, resource_path, file)

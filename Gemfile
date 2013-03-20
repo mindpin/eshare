@@ -83,4 +83,4 @@ gem 'dynamic_attrs',
 ## 文件分段上传
 gem 'file-part-upload', 
     :git => 'git://github.com/mindpin/file-part-upload.git',
-    :tag => '0.0.5'
+    :tag => '0.0.6'

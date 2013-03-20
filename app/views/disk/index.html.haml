@@ -2,3 +2,12 @@
   %h1 我的文件夹
   .breadcrumb 所有文件
   %a.upload{:href => 'javascript:;'} 上传文件
+
+  .file-uploader
+    .list
+      .item.sample{:style => 'display:none;'}
+        = page_progress_bar 61, :striped, :active
+        .meta
+          .filename foobarfoobarfoobarfoobarfoobarfoobarfoobar.zip
+          .size 1.6M
+          .percent 62%

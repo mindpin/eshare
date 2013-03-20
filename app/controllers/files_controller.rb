@@ -9,6 +9,12 @@ class FilesController < ApplicationController
   #             blob : #### form_data ####
 
   def upload
+    # 不允许上传零字节文件
+    if params[:file_size] == 0 || (params[:blob] && params[:blob].size == 0)
+      render :text => 'cannot upload a empty file.', :status => 415
+      return
+    end
+
     file_entity = _find_or_build_file_entity
     exist = _find_exist_file_entity(file_entity)
 
