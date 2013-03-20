@@ -20,8 +20,13 @@ module ImportFile
       header = spreadsheet.row(1)
       (2..spreadsheet.last_row).each do |i|
         row = Hash[[header, spreadsheet.row(i)].transpose]
-        user = find_by_email(row['email']) || new
-        user.attributes = row.to_hash.slice(*accessible_attributes)
+        row = row.values
+
+        user = User.new(:login => row[0],
+                    :name => row[1],
+                    :email => row[2],
+                    :password => row[3])
+
         user.set_role(role)
         user.save
       end
@@ -40,10 +45,12 @@ module ImportFile
       header = spreadsheet.row(1)
       (2..spreadsheet.last_row).each do |i|
         row = Hash[[header, spreadsheet.row(i)].transpose]
-        course = Course.new(:name => row['name'],
-                          :cid => row['cid'],
-                          :desc => row['desc'],
-                          :syllabus => row['syllabus'])
+        row = row.values
+    
+        course = Course.new(:name => row[0],
+                          :cid => row[1],
+                          :desc => row[2],
+                          :syllabus => row[3])
         course.creator = user
         course.save
       end
