@@ -34,9 +34,9 @@ describe Course do
             :tempfile => File.new(Rails.root.join('spec/data/courses.xls'))
           })
 
-          Course.count.should == 0
-          Course.import(file, @user)
-          Course.count.should == 3
+          expect{
+            Course.import(file, @user)
+          }.to change{Course.count}.by(3)
 
         }
 
@@ -58,9 +58,10 @@ describe Course do
             :type => 'application/vnd.ms-excel',
             :tempfile => File.new(Rails.root.join('spec/data/courses.xlsx'))
           })
-          Course.count.should == 0
-          Course.import(file, @user)
-          Course.count.should == 3
+
+          expect{
+            Course.import(file, @user)
+          }.to change{Course.count}.by(3)
         }
 
         it{
@@ -82,9 +83,9 @@ describe Course do
             :tempfile => File.new(Rails.root.join('spec/data/courses.sxc'))
           })
          
-          Course.count.should == 0
-          Course.import(file, @user)
-          Course.count.should == 3
+          expect{
+            Course.import(file, @user)
+          }.to change{Course.count}.by(3)
         }
 
         it{

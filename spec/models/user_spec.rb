@@ -24,9 +24,10 @@ describe User do
             :type => 'application/vnd.ms-excel',
             :tempfile => File.new(Rails.root.join('spec/data/user.xls'))
           })
-          User.count.should == 0
-          User.import(file, :teacher)
-          User.count.should == 3
+
+          expect{
+            User.import(file, :teacher)
+          }.to change{User.count}.by(3)
 
           @user = User.find_by_email('hi2@gmail.com')
         }
@@ -49,9 +50,10 @@ describe User do
             :type => 'application/vnd.ms-excel',
             :tempfile => File.new(Rails.root.join('spec/data/user.xlsx'))
           })
-          User.count.should == 0
-          User.import(file, :teacher)
-          User.count.should == 3
+
+          expect{
+            User.import(file, :teacher)
+          }.to change{User.count}.by(3)
 
           @user = User.find_by_email('hi2@gmail.com')
         }
@@ -74,9 +76,9 @@ describe User do
           :tempfile => File.new(Rails.root.join('spec/data/user.sxc'))
         })
        
-        User.count.should == 0
-        User.import(file, :teacher)
-        User.count.should == 3
+        expect{
+          User.import(file, :teacher)
+        }.to change{User.count}.by(3)
       end
     end
 
@@ -90,10 +92,10 @@ describe User do
           :tempfile => File.new(Rails.root.join('spec/data/user.xls'))
         })
        
-        User.count.should == 0
-        User.import(file, :student)
-        User.count.should == 3
-        
+        expect{
+          User.import(file, :student)
+        }.to change{User.count}.by(3)
+
       end
 
 
@@ -104,10 +106,10 @@ describe User do
           :type => 'application/vnd.ms-excel',
           :tempfile => File.new(Rails.root.join('spec/data/user.xlsx'))
         })
-       
-        User.count.should == 0
-        User.import(file, :student)
-        User.count.should == 3
+
+        expect{
+          User.import(file, :student)
+        }.to change{User.count}.by(3)
       end
 
       it "import openoffice format" do
@@ -117,9 +119,9 @@ describe User do
           :tempfile => File.new(Rails.root.join('spec/data/user.sxc'))
         })
        
-        User.count.should == 0
-        User.import(file, :student)
-        User.count.should == 3
+        expect{
+          User.import(file, :student)
+        }.to change{User.count}.by(3)
       end
     end
 
