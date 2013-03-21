@@ -209,15 +209,10 @@ class ResumableFile
     return "#{new Number(@progress() * 100).toFixed(1)}%"
 
   size_str: =>
-    if @size < 1024
-      return "#{@size}B"
-    else if @size < 1048576 # 1024 ^ 2
-      return "#{new Number(@size/1024).toFixed(1)}K"
-    else if @size < 1073741824 # 1024 ^ 3
-      return "#{new Number(@size/1048576).toFixed(1)}M"
-    else
-      return "#{new Number(@size/1073741824).toFixed(1)}G"
-
+    return "#{@size}B" if @size < 1024
+    return "#{new Number(@size/1024).toFixed(1)}K" if @size < 1048576
+    return "#{new Number(@size/1048576).toFixed(1)}M" if @size < 1073741824
+    return "#{new Number(@size/1073741824).toFixed(1)}G"
 
 class ResumableChunk
   constructor: (@part_upload_obj, @file_obj, @offset, @callback) ->

@@ -36,6 +36,9 @@ describe DiskController do
     it {
       @json['name'].should == 'foo.txt'
     }
+  end
 
+  describe '#destroy' do
+    
   end
 end

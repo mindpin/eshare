@@ -36,7 +36,7 @@ feature '访问个人网盘文件夹' do
     }
 
     it {
-      page.should have_css('.files .list-view .file-item', :count => 3)
+      page.should have_css('.files-view .list-view .media_resource', :count => 3)
     }
   end
 end

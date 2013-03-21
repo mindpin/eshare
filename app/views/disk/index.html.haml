@@ -13,9 +13,14 @@
           .percent 62%
 
 
-  .files
+  .files-view
     .list-view
       = page_data_table(:files, @media_resources, :striped, :bordered) do |table|
         - table.add_column(:name)
+        - table.add_column(:size_str)
+        - table.add_column(:fileops_time)
+        - table.add_column(:ops) do |mr|
+          - url = File.join "/disk", mr.path
+          = link_to t('common.delete'), url, :method => :delete, :confirm => t('common.delete_confirm')
 
     .grid-view{:style => 'display:none;'}

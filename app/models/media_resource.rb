@@ -134,6 +134,15 @@ class MediaResource < ActiveRecord::Base
     return self.attach.size || 0
   end
 
+  def size_str
+    return '' if self.is_dir?
+    
+    return "#{size}B" if size < 1024
+    return "#{(size / 1024.0).round(1)}K" if size < 1048576
+    return "#{(size / 1048576.0).round(1)}M" if size < 1073741824
+    return "#{(size / 1073741824.0).round(1)}G"
+  end
+
   def attach
     file_entity && file_entity.attach
   end

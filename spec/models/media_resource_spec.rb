@@ -371,6 +371,14 @@ describe MediaResource do
         it {
           @file.size.should == 11
         }
+
+        it {
+          @dir.size_str.should == ''
+        }
+
+        it {
+          @file.size_str.should == '11B'
+        }
       end
     end
 

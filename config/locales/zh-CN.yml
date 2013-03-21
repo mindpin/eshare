@@ -24,6 +24,9 @@ zh-CN:
     sign-in: 登录
     sign-ining: 正在登录
 
+    delete: 删除
+    delete_confirm: 确定要删除吗？
+
     user:
       edit: 修改
       delete: 删除
@@ -43,4 +46,10 @@ zh-CN:
         login: 用户名
         name: 姓名
         email: Email
+        ops: 操作
+      files:
+        name: 文件名
+        size: 大小
+        size_str: 大小
+        fileops_time: 修改日期
         ops: 操作
