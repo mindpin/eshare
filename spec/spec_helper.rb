@@ -19,6 +19,7 @@ RSpec.configure do |config|
   # config.mock_with :rr
 
   config.include FactoryGirl::Syntax::Methods
+  config.include Devise::TestHelpers, :type => :controller
 
   # If true, the base class of anonymous controllers will be inferred
   # automatically. This will be the default behavior in future versions of

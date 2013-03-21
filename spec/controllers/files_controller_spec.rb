@@ -14,7 +14,7 @@ describe FilesController do
       @blob = ActionDispatch::Http::UploadedFile.new({
         :filename => 'blob',
         :type => 'text/html',
-        :tempfile => File.new(Rails.root.join('spec/data/upload_test.file'))
+        :tempfile => File.new(Rails.root.join('spec/data/upload_test_files/test1024.file'))
       })
     }
 
@@ -175,7 +175,7 @@ describe FilesController do
       blob = ActionDispatch::Http::UploadedFile.new({
         :filename => 'blob',
         :type => 'text/html',
-        :tempfile => File.new(Rails.root.join('spec/data/empty.txt')) # 这是一个空文件
+        :tempfile => File.new(Rails.root.join('spec/data/upload_test_files/empty.txt')) # 这是一个空文件
       })
 
       post :upload, :file_name  => 'test.zip',

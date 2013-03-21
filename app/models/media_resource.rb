@@ -112,23 +112,26 @@ class MediaResource < ActiveRecord::Base
     contents = options[:list] ? self.media_resources.map{|mr| mr.metadata(:list=>false)} : [] 
 
     {
-      :bytes    => 0,
+      :bytes    => self.size,
       :path     => self.path,
       :is_dir   => true,
       :contents => contents
     }
   end
 
-  def file_metadata
-    bytes = self.attach.blank? ? 0 : self.attach.size
-    bytes ||= 0
-    
+  def file_metadata    
     {
-      :bytes     => bytes,
+      :bytes     => self.size,
       :path      => self.path,
       :is_dir    => false,
       :mime_type => self.attach.blank? ? 'application/octet-stream' : self.attach.content_type
     }
+  end
+
+  def size
+    return 0 if self.is_dir?
+    return 0 if self.attach.blank?
+    return self.attach.size || 0
   end
 
   def attach
@@ -189,6 +192,21 @@ class MediaResource < ActiveRecord::Base
     return resource
   rescue InvalidPathError
     return nil
+  end
+
+  # 根据传入的文件夹资源路径字符串，查找该文件夹下所有资源对象
+  # 传入的路径类似 /foo/bar
+  # 返回该文件夹下所有资源，包括下级文件和下级文件夹
+  # 如果传入的路径并非文件夹，抛出异常 NotDirError
+  def self.gets(creator, resource_path = '/')
+    if resource_path == '/' || resource_path.blank?
+      return self.root_res
+    end
+
+    dir = self.get creator, resource_path
+    raise InvalidPathError if dir.nil?
+    raise NotDirError if !dir.is_dir?
+    dir.media_resources
   end
 
   def self.put_file_entity(creator, resource_path, file_entity)
@@ -338,6 +356,7 @@ class MediaResource < ActiveRecord::Base
   class RepeatedlyCreateFolderError < Exception; end
   class NotAssignCreatorError < Exception; end
   class FileEmptyError < Exception; end
+  class NotDirError < Exception; end
 
   class RootDir
     def self.media_resources

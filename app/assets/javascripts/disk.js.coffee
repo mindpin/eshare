@@ -21,7 +21,18 @@ jQuery ->
         file.uploader_item.sync_percent() if file.uploader_item
 
       @uploader.on 'fileSuccess', (file) =>
-        file.uploader_item.mark_success() if file.uploader_item
+        param_path = "/#{file.file_name}"
+        param_file_entity_id = file.file_entity_id
+
+        jQuery.ajax
+          url : '/disk/create'
+          type : 'POST'
+          data :
+            path : param_path
+            file_entity_id : param_file_entity_id
+          success : (res)->
+            console.log res
+            file.uploader_item.mark_success() if file.uploader_item
 
     add_file: (file) =>
       uploader_item = new PageFileUploaderItem(@, file).init()

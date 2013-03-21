@@ -11,3 +11,11 @@
           .filename foobarfoobarfoobarfoobarfoobarfoobarfoobar.zip
           .size 1.6M
           .percent 62%
+
+
+  .files
+    .list-view
+      = page_data_table(:files, @media_resources, :striped, :bordered) do |table|
+        - table.add_column(:name)
+
+    .grid-view{:style => 'display:none;'}

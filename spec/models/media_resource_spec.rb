@@ -42,23 +42,9 @@ describe MediaResource do
   end
 
   describe '资源操作' do
-
     before do
-      @ben7th = User.create!(
-        :login => 'ben7th',
-        :name  => 'ben7th',
-        :email => 'ben7th@sina.com',
-        :password => '123456',
-        :role     => :teacher
-      )
-
-      @lifei = User.create!(
-        :login => 'lifei',
-        :name  => 'lifei',
-        :email => 'fushang318@gmail.com',
-        :password => '123456',
-        :role     => :teacher
-      )
+      @ben7th = FactoryGirl.create :user, :teacher, :login => 'ben7th', :name => '宋亮'
+      @lifei = FactoryGirl.create :user, :teacher, :login => 'lifei', :name => '李飞'
 
       MediaResource.create(
         :name    => '北极熊',
@@ -113,10 +99,6 @@ describe MediaResource do
 
     it {
       MediaResource.find_by_name('三只熊猫.jpg').file_entity.should_not be_blank
-    }
-
-    it {
-      
     }
 
     describe '获取资源' do
@@ -375,6 +357,21 @@ describe MediaResource do
           :mime_type => "application/octet-stream"
         }
       end
+
+      context '读取文件大小信息' do
+        before {
+          @dir  = MediaResource.get(@ben7th, '/大熊猫')
+          @file = MediaResource.get(@ben7th, '/大熊猫/三只熊猫.jpg')
+        }
+
+        it {
+          @dir.size.should == 0
+        }
+
+        it {
+          @file.size.should == 11
+        }
+      end
     end
 
     describe '删除资源' do
@@ -486,6 +483,40 @@ describe MediaResource do
         MediaResource.get(@ben7th, '/电影').files_count.should == 0
         MediaResource.get(@ben7th, '/电影/文艺片').files_count.should == 0
       end
+
+      context '获取文件夹下的文件' do
+        it { MediaResource.gets(@ben7th, '/').length.should > 0 }
+
+        it { MediaResource.gets(@ben7th, '').length.should > 0 }
+
+        it { MediaResource.gets(@ben7th).length.should > 0}
+
+        it { MediaResource.gets(@ben7th, '  ').length.should > 0}
+
+        it {
+          MediaResource.gets(@ben7th, '/大熊猫').length.should == 3
+        }
+
+        it {
+          MediaResource.gets(@ben7th, '/大熊猫/').length.should == 3
+        }
+
+        it {
+          MediaResource.put(@ben7th, '/小吃/花生.txt', file)
+          MediaResource.gets(@ben7th, '/小吃/').length.should == 1
+
+          expect {
+            MediaResource.gets(@ben7th, '/小吃/花生.txt')
+          }.to raise_error(MediaResource::NotDirError)
+        }
+
+        it {
+          expect {
+            MediaResource.gets(@ben7th, '/椰子汁')
+          }.to raise_error(MediaResource::InvalidPathError)
+        }
+      end
+
     end
 
     describe '能够根据传入的 cursor(状态标识) 返回 delta(变更信息)' do
