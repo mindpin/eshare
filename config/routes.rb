@@ -58,7 +58,9 @@ Eshare::Application.routes.draw do
   end
 
   # 资源网盘
-  get '/disk' => 'disk#index'
   post '/upload' => 'files#upload'
-  post '/disk/create' => 'disk#create'
+
+  get    '/disk'        => 'disk#index'
+  post   '/disk/create' => 'disk#create'
+  delete '/disk'        => 'disk#destroy'
 end

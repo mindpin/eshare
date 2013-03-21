@@ -20,7 +20,7 @@
         - table.add_column(:size_str)
         - table.add_column(:fileops_time)
         - table.add_column(:ops) do |mr|
-          - url = File.join "/disk", mr.path
+          - url = "/disk?path=#{mr.path}"
           = link_to t('common.delete'), url, :method => :delete, :confirm => t('common.delete_confirm')
 
     .grid-view{:style => 'display:none;'}

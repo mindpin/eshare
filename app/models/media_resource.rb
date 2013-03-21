@@ -136,7 +136,7 @@ class MediaResource < ActiveRecord::Base
 
   def size_str
     return '' if self.is_dir?
-    
+
     return "#{size}B" if size < 1024
     return "#{(size / 1024.0).round(1)}K" if size < 1048576
     return "#{(size / 1048576.0).round(1)}M" if size < 1073741824
@@ -228,6 +228,12 @@ class MediaResource < ActiveRecord::Base
     raise FileEmptyError if file.blank?
 
     self.put_file_entity creator, resource_path, FileEntity.new(:attach => file)
+  end
+
+  def self.del(creator, resource_path)
+    r = self.get(creator, resource_path)
+    raise InvalidPathError if r.nil?
+    r.remove
   end
 
   def self.replace(creator, resource_path, file)
