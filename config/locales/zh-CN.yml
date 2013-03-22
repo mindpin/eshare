@@ -49,9 +49,17 @@ zh-CN:
         name: 姓名
         email: Email
         ops: 操作
+        
       files:
         name: 文件名
         size: 大小
         size_str: 大小
         fileops_time: 修改日期
         ops: 操作
+
+      courses:
+        role: 角色
+        name: 课程名称
+        cid: 课程编号
+        desc: 简介
+        syllabus: 教学大钢

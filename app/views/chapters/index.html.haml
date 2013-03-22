@@ -1,0 +1,8 @@
+.add= link_to '增加章节', "/courses/#{@course.id}/chapters/new"
+
+.list
+  - @chapters.each do |chapter|
+    .chapter
+      = link_to chapter.title, "/chapters/#{chapter.id}"
+      = link_to '编辑',  "/chapters/#{chapter.id}/edit"
+      = link_to '删除', "/chapters/#{chapter.id}",  :method => :delete, :confirm => "确定删除吗?"

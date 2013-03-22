@@ -13,6 +13,18 @@ Eshare::Application.routes.draw do
     get 'account/avatar' => 'account#avatar'
     put 'account/avatar' => 'account#avatar_update'
   end
+
+  # 课程
+  resources :courses, :shallow => true do
+    collection do
+      get :import
+      post :do_import
+    end
+      
+    resources :chapters, :shallow => true do
+      resources :course_wares
+    end
+  end
   
   namespace :admin do
     root :to => 'index#index'
@@ -55,6 +67,7 @@ Eshare::Application.routes.draw do
         get :student_attrs
       end
     end 
+
   end
 end
 

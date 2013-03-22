@@ -1,0 +1,12 @@
+
+= @course.name
+
+= @course.cid
+
+= @course.desc
+
+= @course.syllabus
+
+= image_tag @course.cover.url
+
+.list= link_to "章节列表", "/courses/#{@course.id}/chapters"
