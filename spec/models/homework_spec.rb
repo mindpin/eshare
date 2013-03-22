@@ -64,8 +64,8 @@ describe Homework do
       @file_entity_2 = FactoryGirl.create(:file_entity)
       
       homework_attaches_attributes = [
-        {:file_entity => @file_entity_1, :name => '附件一'},
-        {:file_entity => @file_entity_2, :name => '附件二'}
+        {:file_entity_id => @file_entity_1.id, :name => '附件一'},
+        {:file_entity_id => @file_entity_2.id, :name => '附件二'}
       ]
 
       @homework = chapter.homeworks.new(
