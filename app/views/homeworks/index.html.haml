@@ -1,0 +1,4 @@
+= link_to '新建作业', "/chapters/#{@chapter.id}/homeworks/new"
+
+- @homeworks.each do |homework|
+  = homework.title

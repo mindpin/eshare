@@ -23,6 +23,7 @@ Eshare::Application.routes.draw do
       
     resources :chapters, :shallow => true do
       resources :course_wares
+      resources :homeworks
     end
   end
   

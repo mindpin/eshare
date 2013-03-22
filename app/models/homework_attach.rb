@@ -4,5 +4,5 @@ class HomeworkAttach < ActiveRecord::Base
   belongs_to :homework
   belongs_to :file_entity
 
-  validates :homework, :file_entity, :name, :presence => true
+  validates :file_entity, :name, :presence => true
 end

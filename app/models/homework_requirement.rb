@@ -3,5 +3,5 @@ class HomeworkRequirement < ActiveRecord::Base
 
   belongs_to :homework
 
-  validates :content, :homework, :presence => true
+  validates :content, :presence => true
 end
