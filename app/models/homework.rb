@@ -16,4 +16,14 @@ class Homework < ActiveRecord::Base
 
   accepts_nested_attributes_for :homework_requirements
   accepts_nested_attributes_for :homework_attaches
+
+  scope :unexpired, :conditions => ['deadline > ?', Time.now]
+  scope :expired, :conditions => ['deadline <= ?', Time.now]
+
+  module UserMethods
+    def self.included(base)
+      base.has_many :created_homeworks, :class_name => 'Homework',
+                    :foreign_key => :creator_id
+    end
+  end
 end

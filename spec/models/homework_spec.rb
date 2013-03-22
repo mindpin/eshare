@@ -99,4 +99,52 @@ describe Homework do
     }
   end
   
+
+  describe '过期作业和未过期作业' do
+    before(:each) do
+      @user = FactoryGirl.create(:user)
+      chapter = FactoryGirl.create(:chapter)
+
+      @homework_1 = chapter.homeworks.new(
+        :title => '标题1', :content => "内容1", 
+        :deadline => Time.now + 10.day)
+      @homework_1.creator = @user
+      @homework_1.save
+
+      @homework_2 = chapter.homeworks.new(
+        :title => '标题2', :content => "内容2", 
+        :deadline => Time.now + 11.day)
+      @homework_2.creator = @user
+      @homework_2.save
+
+      @homework_3 = chapter.homeworks.new(
+        :title => '标题3', :content => "内容3", 
+        :deadline => Time.now - 10.day)
+      @homework_3.creator = @user
+      @homework_3.save
+
+      @homework_4 = chapter.homeworks.new(
+        :title => '标题4', :content => "内容4", 
+        :deadline => Time.now - 11.day)
+      @homework_4.creator = @user
+      @homework_4.save
+    end
+
+    it{
+      @user.created_homeworks.count.should == 4
+    }
+
+    it{
+      @user.created_homeworks.expired.count.should == 2
+      @user.created_homeworks.expired.include?(@homework_3).should == true
+      @user.created_homeworks.expired.include?(@homework_4).should == true
+    }
+
+
+    it{
+      @user.created_homeworks.unexpired.count.should == 2
+      @user.created_homeworks.unexpired.include?(@homework_1).should == true
+      @user.created_homeworks.unexpired.include?(@homework_2).should == true
+    }
+  end
 end

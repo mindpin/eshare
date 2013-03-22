@@ -50,4 +50,6 @@ class User < ActiveRecord::Base
   # 导入文件
   include ImportFile::UserMethods
   include Course::UserMethods
+
+  include Homework::UserMethods
 end
