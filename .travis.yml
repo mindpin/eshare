@@ -11,6 +11,7 @@ before_script:
   - rake db:drop RAILS_ENV=test
   - rake db:create RAILS_ENV=test
   - rake db:migrate RAILS_ENV=test
+  - export "JAVA_HOME=/usr/lib/jvm/java-6-openjdk/"
 
 script:
   - bundle exec rspec spec
