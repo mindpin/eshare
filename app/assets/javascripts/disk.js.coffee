@@ -21,14 +21,13 @@ jQuery ->
         file.uploader_item.sync_percent() if file.uploader_item
 
       @uploader.on 'fileSuccess', (file) =>
-        param_path = "/#{file.file_name}"
         param_file_entity_id = file.file_entity_id
 
         jQuery.ajax
           url : '/disk/create'
           type : 'POST'
           data :
-            path : param_path
+            path : @param_path(file)
             file_entity_id : param_file_entity_id
           success : (res)->
             console.log res
@@ -38,6 +37,11 @@ jQuery ->
       uploader_item = new PageFileUploaderItem(@, file).init()
       @items.push uploader_item
       @$elm.find('.list').append uploader_item.$elm
+
+    param_path: (file) =>
+      dir = jQuery('.page-files-index').data('path')
+      return "/#{file.file_name}" if dir == '/'
+      return "#{dir}/#{file.file_name}"
 
   class PageFileUploaderItem
     constructor: (@uploader, @file) ->

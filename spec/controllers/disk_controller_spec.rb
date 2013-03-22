@@ -97,6 +97,37 @@ describe DiskController do
     end
   end
 
+  describe '创建和访问文件夹' do
+
+    before {
+      sign_in @user
+      post :create_folder, :path => '/abc/def/hjk'
+    }
+
+    context '#create_folder' do
+
+      it {
+        MediaResource.get(@user, '/abc/def/hjk').is_dir.should == true
+      }
+
+      it {
+        MediaResource.get(@user, '/abc/def').is_dir.should == true
+      }
+    end
+
+    context '访问文件夹' do
+      it 'should find sub folder' do
+        get :index, :path => '/abc'
+        response.body.should have_content 'def'
+      end
+
+      it 'should find sub folder' do
+        get :index, :path => '/abc/def'
+        response.body.should have_content 'hjk'
+      end
+    end
+  end
+
   describe '#show' do
     before {
       @file_entity = FileEntity.create({

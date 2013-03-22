@@ -26,6 +26,8 @@ zh-CN:
 
     delete: 删除
     delete_confirm: 确定要删除吗？
+    
+    confirm: 确定吗？
 
     user:
       edit: 修改
