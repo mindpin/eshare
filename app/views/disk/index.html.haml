@@ -1,7 +1,10 @@
 .page-files-index
   %h1 我的文件夹
-  .breadcrumb 所有文件
-  %a.upload{:href => 'javascript:;'} 上传文件
+  = render_cell :file_breadcrumb, :display
+
+  .operatebar.btn-group
+    %a.btn.upload{:href => 'javascript:;'} 上传文件
+    %button.btn.primary.create-folder 新建文件夹
 
   .file-uploader
     .list
@@ -16,7 +19,8 @@
   .files-view
     .list-view
       = page_data_table(:files, @media_resources, :striped, :bordered) do |table|
-        - table.add_column(:name)
+        - table.add_column(:name) do |mr|
+          = link_to mr.name, "/disk/file?path=#{mr.path}"
         - table.add_column(:size_str)
         - table.add_column(:fileops_time)
         - table.add_column(:ops) do |mr|

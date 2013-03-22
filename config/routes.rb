@@ -63,4 +63,5 @@ Eshare::Application.routes.draw do
   get    '/disk'        => 'disk#index'
   post   '/disk/create' => 'disk#create'
   delete '/disk'        => 'disk#destroy'
+  get    '/disk/file'   => 'disk#show'
 end

@@ -25,6 +25,10 @@ class DiskController < ApplicationController
     return _after_remove
   end
 
+  def show
+    @media_resource = MediaResource.get current_user, params[:path]
+  end
+
   private
     def _current_dir_path
       path = request.path[5..-1]

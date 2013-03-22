@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe DiskController do
+  render_views
+  # 这一行必须写，否则不会渲染 view
+  # 下面检查时必须使用 response.body
+  
   before {
     @user = FactoryGirl.create(:user, :teacher, :name => '狄仁杰')
     @another_user = FactoryGirl.create(:user, :student, :name => '元芳')
@@ -91,5 +95,28 @@ describe DiskController do
         }
       end
     end
+  end
+
+  describe '#show' do
+    before {
+      @file_entity = FileEntity.create({
+        :attach => File.new(Rails.root.join('spec/data/upload_test_files/test1024.file'))
+      })
+
+      sign_in @user
+
+      post :create, :file_entity_id => FileEntity.last.id,
+                    :path => '/我的文档/样例.doc'
+
+      get :show, :path => '/我的文档/样例.doc'
+    }
+
+    it {
+      response.should be_success
+    }
+
+    it {
+      response.body.should have_css('.page-file-show > .file-name', :text => '样例.doc')
+    }
   end
 end

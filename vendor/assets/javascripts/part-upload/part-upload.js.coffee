@@ -49,7 +49,9 @@ class PartUpload
         $dom.style.display = 'inline-block'
         $dom.style.position = 'relative'
         input.style.position = 'absolute'
-        input.style.top = input.style.left = input.style.bottom = input.style.right = 0
+        input.style.top = input.style.right = 0
+        input.style.left = 'auto'
+        input.style.fontSize = '28px'
         input.style.opacity = 0
         input.style.cursor = 'pointer'
         $dom.appendChild(input)

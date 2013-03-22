@@ -18,6 +18,7 @@ group :test do
   gem 'coveralls', :require => false # 帮助在 coveralls.io 线统计测试覆盖率
   gem 'capybara', '2.0.2' # 集成测试框架
   gem 'timecop', '0.6.1' # 用于在测试中调整时间
+  gem 'rspec-cells', '0.1.7' # 用于测试 cells
 end
 
 group :examples do
@@ -73,8 +74,8 @@ gem 'simple-images',
     :git => 'git://github.com/mindpin/simple-images'
 
 gem 'simple-page-compoents',
-    :git => 'git://github.com/mindpin/simple-page-compoents'
-    # :path => '/web/songliang/simple-page-compoents'
+    # :git => 'git://github.com/mindpin/simple-page-compoents'
+    :path => '/web/songliang/simple-page-compoents'
 
 ## 给指定 activerecord 模型动态添加属性
 gem 'dynamic_attrs',
