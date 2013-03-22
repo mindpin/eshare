@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 source 'http://ruby.taobao.org'
 
 gem 'rails', '3.2.12' # RAILS
@@ -25,6 +26,7 @@ end
 
 gem 'jquery-rails', '2.2.1'
 gem 'unicorn', '4.6.2'
+gem 'sidekiq', '2.8.0'
 
 # 登录验证
 gem 'devise', '2.2.3'
@@ -76,6 +78,10 @@ gem 'simple-page-compoents',
 gem 'dynamic_attrs',
     :git => 'git://github.com/kaid/dynamic_attrs.git'
 
+## office文档转换
+gem 'odocuconv',
+    :git => 'git://github.com/kaid/odocuconv.git'
+
 ########## fushang318_media_resource ########
 ## tag 插件
 gem 'acts-as-taggable-on', '~> 2.3.3'
@@ -85,6 +91,6 @@ group :test do
 end
 
 gem 'file-part-upload', 
-  :git => 'git://github.com/mindpin/file-part-upload.git',
-  :tag => '0.0.3'
+    :git => 'git://github.com/mindpin/file-part-upload.git',
+    :tag => '0.0.7'
 #############################################
