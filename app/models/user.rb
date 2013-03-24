@@ -48,7 +48,13 @@ class User < ActiveRecord::Base
                     :updater => lambda {AttrsConfig.get(:student)}
   has_dynamic_attrs :teacher_attrs,
                     :updater => lambda {AttrsConfig.get(:teacher)}
+
   # 导入文件
-  include ImportFile::UserMethods
+  simple_excel_import :teacher, :fields => [:login, :name, :email, :password],
+                                :default => {:role => :teacher}
+
+  simple_excel_import :student, :fields => [:login, :name, :email, :password],
+                                :default => {:role => :student}
+
   include Course::UserMethods
 end

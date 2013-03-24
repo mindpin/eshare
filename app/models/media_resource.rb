@@ -1,5 +1,5 @@
 class MediaResource < ActiveRecord::Base
-  include ModelRemovable
+  include ModelRemovable # add scope
   include MediaResourceDynatreeMethods
   include MediaResourceInfosMethods
   include MediaResourceCrudMethods
