@@ -86,3 +86,7 @@ gem 'dynamic_attrs',
 gem 'file-part-upload', 
     :git => 'git://github.com/mindpin/file-part-upload.git',
     :tag => '0.0.8'
+
+gem 'simple-excel-import',
+    :git => 'git://github.com/mindpin/simple-excel-import.git',
+    :tag => '0.0.2'

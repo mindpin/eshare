@@ -36,28 +36,4 @@ module ImportFile
   end
 
 
-
-
-  module CourseMethods
-
-    def Course.import(file, user)
-      spreadsheet = ImportFile.open_spreadsheet(file)
-      header = spreadsheet.row(1)
-      (2..spreadsheet.last_row).each do |i|
-        row = Hash[[header, spreadsheet.row(i)].transpose]
-        row = row.values
-    
-        course = Course.new(:name => row[0],
-                          :cid => row[1],
-                          :desc => row[2],
-                          :syllabus => row[3])
-        course.creator = user
-        course.save
-      end
-    end
-
-    
-  end
-
-
 end
