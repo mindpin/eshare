@@ -63,7 +63,7 @@ class PartUpload
 
       # When new files are added, simply append them to the overall list
       input.addEventListener 'change', (e) =>
-        @append_files_from_file_list(e.target.files)
+        @append_files_from_file_list(e.target)
         e.target.value = ''
       , false
 
@@ -73,11 +73,17 @@ class PartUpload
       #   input.removeAttribute('webkitdirectory');
       # }
 
-  append_files_from_file_list: (filelist) =>
+  append_files_from_file_list: (input_target) =>
+    filelist = input_target.files
     files = []
     jQuery(filelist).each (index, file) =>
       if file.size > 0
         f = new ResumableFile(@, file)
+        f.input_target = input_target 
+        # 为了适应这种情况：页面上有许多的上传按钮
+        # 需要根据每个上传按钮所处的dom位置，获取上传后的回调中
+        # 所需的参数
+
         @files.push f
         files.push f
         @fire('fileAdded', f)

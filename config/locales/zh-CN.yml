@@ -6,9 +6,7 @@ zh-CN:
         content: 作业内容
         homework_requirements:
           content: 作业提交物要求
-        homework_attaches:
-          file_entity: 附件
-          name: 附件说明
+          
   activerecord:
     models:
       user: 用户

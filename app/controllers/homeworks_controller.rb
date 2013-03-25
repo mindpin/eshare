@@ -14,7 +14,6 @@ class HomeworksController < ApplicationController
     @homework.homework_requirements.build
 
     @homework.homework_attaches.build
-    @homework.homework_attaches.build
   end
 
   def create
