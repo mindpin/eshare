@@ -3,7 +3,7 @@
   = render_cell :file_breadcrumb, :display
 
   .operatebar.btn-group
-    %a.btn.upload{:href => 'javascript:;'} 上传文件
+    %a.btn.media-resource-upload{:href => 'javascript:;'} 上传文件
     - path = File.join @current_dir_path, "newfolder-#{Time.now.to_i}"
     - url = "/disk/create_folder?path=#{path}"
     = link_to '新建文件夹', url, :method => :post, :class => 'btn info create-folder', :confirm => t('common.confirm')
