@@ -6,4 +6,5 @@ FactoryGirl.define do
     saved_size 100
     merged true
   end
+
 end

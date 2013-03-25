@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 source 'http://ruby.taobao.org'
 
 gem 'rails', '3.2.12' # RAILS
@@ -27,6 +28,7 @@ end
 
 gem 'jquery-rails', '2.2.1'
 gem 'unicorn', '4.6.2'
+gem 'sidekiq', '2.8.0'
 
 # 登录验证
 gem 'devise', '2.2.3'
@@ -91,3 +93,7 @@ gem 'simple-excel-import',
     :git => 'git://github.com/mindpin/simple-excel-import.git',
     :tag => '0.0.2.2'
     # :path => '/web/songliang/simple-excel-import'
+
+## office文档转换
+gem 'odocuconv',
+    :git => 'git://github.com/kaid/odocuconv.git'
