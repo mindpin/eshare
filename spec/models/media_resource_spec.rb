@@ -3,62 +3,62 @@ require 'spec_helper'
 describe MediaResource do
 
   describe '私有方法' do
-    it '能够切分传入的路径' do
-      MediaResource.split_path('/foo/bar/123').should == ['foo', 'bar', '123']
-      MediaResource.split_path('/foo/bar').should == ['foo', 'bar']
-      MediaResource.split_path('/foo').should == ['foo']
-      MediaResource.split_path('/中国国宝大熊猫').should == ['中国国宝大熊猫']
+    context '能够切分传入的路径' do
+      it { MediaResource.send(:split_path, '/foo/bar/123').should == ['foo', 'bar', '123'] }
+      it { MediaResource.send(:split_path, '/foo/bar').should == ['foo', 'bar'] }
+      it { MediaResource.send(:split_path, '/foo').should == ['foo'] }
+      it { MediaResource.send(:split_path, '/中国国宝大熊猫').should == ['中国国宝大熊猫'] }
     end
 
-    it '对于传入的无效路径会抛出异常' do
-      expect {
-        MediaResource.split_path(nil)
-      }.to raise_error(MediaResource::InvalidPathError)
+    context '对于传入的无效路径会抛出异常' do
+      it {
+        expect {
+          MediaResource.send(:split_path, nil)
+        }.to raise_error(MediaResource::InvalidPathError)
+      }
 
-      expect {
-        MediaResource.split_path('')
-      }.to raise_error(MediaResource::InvalidPathError)
+      it {
+        expect {
+          MediaResource.send(:split_path, '')
+        }.to raise_error(MediaResource::InvalidPathError)
+      }
 
-      expect {
-        MediaResource.split_path('/')
-      }.to raise_error(MediaResource::InvalidPathError)
+      it {
+        expect {
+          MediaResource.send(:split_path, '/')
+        }.to raise_error(MediaResource::InvalidPathError)
+      }
 
-      expect {
-        MediaResource.split_path('foo/bar')
-      }.to raise_error(MediaResource::InvalidPathError)
+      it {
+        expect {
+          MediaResource.send(:split_path, 'foo/bar')
+        }.to raise_error(MediaResource::InvalidPathError)
+      }
 
-      expect {
-        MediaResource.split_path('//foo')
-      }.to raise_error(MediaResource::InvalidPathError)
+      it {
+        expect {
+          MediaResource.send(:split_path, '//foo')
+        }.to raise_error(MediaResource::InvalidPathError)
+      }
 
-      expect {
-        MediaResource.split_path('/ha///ha')
-      }.to raise_error(MediaResource::InvalidPathError)
+      it {
+        expect {
+          MediaResource.send(:split_path, '/ha///ha')
+        }.to raise_error(MediaResource::InvalidPathError)
+      }
 
-      expect {
-        MediaResource.split_path('/fo\o')
-      }.to raise_error(MediaResource::InvalidPathError)
+      it {
+        expect {
+          MediaResource.send(:split_path, '/fo\o')
+        }.to raise_error(MediaResource::InvalidPathError)
+      }
     end
   end
 
   describe '资源操作' do
-
     before do
-      @ben7th = User.create!(
-        :login => 'ben7th',
-        :name  => 'ben7th',
-        :email => 'ben7th@sina.com',
-        :password => '123456',
-        :role     => :teacher
-      )
-
-      @lifei = User.create!(
-        :login => 'lifei',
-        :name  => 'lifei',
-        :email => 'fushang318@gmail.com',
-        :password => '123456',
-        :role     => :teacher
-      )
+      @ben7th = FactoryGirl.create :user, :teacher, :login => 'ben7th', :name => '宋亮'
+      @lifei = FactoryGirl.create :user, :teacher, :login => 'lifei', :name => '李飞'
 
       MediaResource.create(
         :name    => '北极熊',
@@ -110,6 +110,10 @@ describe MediaResource do
       MediaResource.create(:name => '蓝蓝路.txt', :is_dir => false, :is_removed => true, :creator => @ben7th)
       MediaResource.create(:name => '可乐', :is_dir => true, :is_removed => true, :creator => @ben7th)
     end
+
+    it {
+      MediaResource.find_by_name('三只熊猫.jpg').file_entity.should_not be_blank
+    }
 
     describe '获取资源' do
       it '传入的路径没有资源时，返回空' do
@@ -367,6 +371,29 @@ describe MediaResource do
           :mime_type => "application/octet-stream"
         }
       end
+
+      context '读取文件大小信息' do
+        before {
+          @dir  = MediaResource.get(@ben7th, '/大熊猫')
+          @file = MediaResource.get(@ben7th, '/大熊猫/三只熊猫.jpg')
+        }
+
+        it {
+          @dir.size.should == 0
+        }
+
+        it {
+          @file.size.should == 11
+        }
+
+        it {
+          @dir.size_str.should == ''
+        }
+
+        it {
+          @file.size_str.should == '11B'
+        }
+      end
     end
 
     describe '删除资源' do
@@ -478,6 +505,40 @@ describe MediaResource do
         MediaResource.get(@ben7th, '/电影').files_count.should == 0
         MediaResource.get(@ben7th, '/电影/文艺片').files_count.should == 0
       end
+
+      context '获取文件夹下的文件' do
+        it { MediaResource.gets(@ben7th, '/').length.should > 0 }
+
+        it { MediaResource.gets(@ben7th, '').length.should > 0 }
+
+        it { MediaResource.gets(@ben7th).length.should > 0}
+
+        it { MediaResource.gets(@ben7th, '  ').length.should > 0}
+
+        it {
+          MediaResource.gets(@ben7th, '/大熊猫').length.should == 3
+        }
+
+        it {
+          MediaResource.gets(@ben7th, '/大熊猫/').length.should == 3
+        }
+
+        it {
+          MediaResource.put(@ben7th, '/小吃/花生.txt', file)
+          MediaResource.gets(@ben7th, '/小吃/').length.should == 1
+
+          expect {
+            MediaResource.gets(@ben7th, '/小吃/花生.txt')
+          }.to raise_error(MediaResource::NotDirError)
+        }
+
+        it {
+          expect {
+            MediaResource.gets(@ben7th, '/椰子汁')
+          }.to raise_error(MediaResource::InvalidPathError)
+        }
+      end
+
     end
 
     describe '能够根据传入的 cursor(状态标识) 返回 delta(变更信息)' do
@@ -742,29 +803,45 @@ describe MediaResource do
       )
     end
 
-    it '移动资源（文件、目录）时，目标位置有同名资源（文件、目录）时，应当都不允许移动' do
-      @file_media_resource_1.move('/我是目录').should == true
-      @file_media_resource_1.dir.should == @dir_media_resource
+    context '移动资源（文件、目录）时，目标位置有同名资源（文件、目录）时，应当都不允许移动' do
+      it {
+        @file_media_resource_1.move_to('/我是目录').should == true
+        @file_media_resource_1.dir.should == @dir_media_resource
+      }
 
-      @dir_media_resource_1.move('/我是目录').should == true
-      @dir_media_resource_1.dir.should == @dir_media_resource
+      it {
+        @dir_media_resource_1.move_to('/我是目录').should == true
+        @dir_media_resource_1.dir.should == @dir_media_resource
+      }
 
-      @file_media_resource_2.move('/我是目录').should == false
-      @file_media_resource_2.valid?.should == false
-      @file_media_resource_2.errors[:dir_id].blank?.should == false
+      it {
+        @file_media_resource_2.move_to('/我是目录').should == false
+        @file_media_resource_2.valid?.should == false
+        @file_media_resource_2.errors[:dir].blank?.should == false
+      }
 
-      @dir_media_resource_2.move('/我是目录').should == false
-      @dir_media_resource_2.valid?.should == false
-      @dir_media_resource_2.errors[:dir_id].blank?.should == false
+      it {
+        @dir_media_resource_2.move_to('/我是目录').should == false
+        @dir_media_resource_2.valid?.should == false
+        @dir_media_resource_2.errors[:dir].blank?.should == false
+      }
 
-      @file_media_resource_1.move('').should == true
-      @file_media_resource_1.dir_id.should == 0
-      @file_media_resource_1.move('/我是目录').should == true
-      @file_media_resource_1.move(nil).should == true
-      @file_media_resource_1.dir_id.should == 0
-      @file_media_resource_1.move('/我是目录').should == true
-      @file_media_resource_1.move('/').should == true
-      @file_media_resource_1.dir_id.should == 0
+      it {
+        @file_media_resource_1.move_to('').should == true
+        @file_media_resource_1.dir_id.should == 0
+      }
+
+      it {
+        @file_media_resource_1.move_to('/我是目录')
+        @file_media_resource_1.move_to(nil).should == true
+        @file_media_resource_1.dir_id.should == 0
+      }
+
+      it {
+        @file_media_resource_1.move_to('/我是目录')
+        @file_media_resource_1.move_to('/').should == true
+        @file_media_resource_1.dir_id.should == 0
+      }
     end
   end
 
@@ -801,17 +878,23 @@ describe MediaResource do
       )
     end
 
-    it '个人资源目录 dir_id 字段没有增加校验' do
-      @file_media_resource_1.dir_id = @dir_media_resource.id
-      @file_media_resource_1.valid?.should == true
+    context '个人资源目录 dir_id 字段没有增加校验' do
+      it {
+        @file_media_resource_1.dir_id = @dir_media_resource.id
+        @file_media_resource_1.valid?.should == true
+      }
 
-      @file_media_resource_1.dir_id = @file_media_resource_2.id
-      @file_media_resource_1.valid?.should == false
-      @file_media_resource_1.errors[:dir_id].blank?.should == false
+      it {
+        @file_media_resource_1.dir_id = @file_media_resource_2.id
+        @file_media_resource_1.valid?.should == false
+        @file_media_resource_1.errors[:dir].should_not be_blank
+      }
 
-      @file_media_resource_1.dir_id = -1
-      @file_media_resource_1.valid?.should == false
-      @file_media_resource_1.errors[:dir_id].blank?.should == false    
+      it {
+        @file_media_resource_1.dir_id = -1
+        @file_media_resource_1.valid?.should == false
+        @file_media_resource_1.errors[:dir].should_not be_blank
+      } 
     end
   end
 end

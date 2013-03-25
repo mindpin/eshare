@@ -15,5 +15,6 @@
 //= require jquery.min
 //= require jquery_ujs
 
+//= require part-upload/part-upload
 //= require simple-images
 //= require_tree .

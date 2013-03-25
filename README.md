@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/mindpin/eshare.png?branch=master)](https://travis-ci.org/mindpin/eshare)
 [![Code Climate](https://codeclimate.com/github/mindpin/eshare.png)](https://codeclimate.com/github/mindpin/eshare)
+[![Coverage Status](https://coveralls.io/repos/mindpin/eshare/badge.png?branch=master)](https://coveralls.io/r/mindpin/eshare)
 
 ## Requirements
 * Ruby 2.0

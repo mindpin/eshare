@@ -1,0 +1,41 @@
+.page-files-index{:data => {:path => @current_dir_path}}
+  %h1 我的文件夹
+  = render_cell :file_breadcrumb, :display
+
+  .operatebar.btn-group
+    %a.btn.upload{:href => 'javascript:;'} 上传文件
+    - path = File.join @current_dir_path, "newfolder-#{Time.now.to_i}"
+    - url = "/disk/create_folder?path=#{path}"
+    = link_to '新建文件夹', url, :method => :post, :class => 'btn info create-folder', :confirm => t('common.confirm')
+
+  .file-uploader
+    .list
+      .item.sample{:style => 'display:none;'}
+        = page_progress_bar 61, :striped, :active
+        .meta
+          .filename foobarfoobarfoobarfoobarfoobarfoobarfoobar.zip
+          .size 1.6M
+          .percent 62%
+
+
+  .files-view
+    .list-view
+      = page_data_table(:files, @media_resources, :striped, :bordered) do |table|
+        - table.add_column(:name) do |mr|
+          - if mr.is_dir?
+            = link_to "/disk?path=#{mr.path}" do
+              %i.icon-folder-open
+              %span= mr.name
+          - else
+            = link_to "/disk/file?path=#{mr.path}" do
+              %i.icon-file
+              %span= mr.name
+
+
+        - table.add_column(:size_str)
+        - table.add_column(:fileops_time)
+        - table.add_column(:ops) do |mr|
+          - url = "/disk?path=#{mr.path}"
+          = link_to t('common.delete'), url, :method => :delete, :confirm => t('common.delete_confirm')
+
+    .grid-view{:style => 'display:none;'}

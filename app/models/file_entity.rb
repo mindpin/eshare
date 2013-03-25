@@ -1,5 +1,9 @@
 class FileEntity < ActiveRecord::Base
-  file_part_upload
+  if Rails.env == 'test'
+    file_part_upload :path => 'files/test/:class/:id/:name'
+  else
+    file_part_upload :path => 'files/:class/:id/:name'
+  end
 
   CONTENT_TYPES = {
     :video    => [
