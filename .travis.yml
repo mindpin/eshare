@@ -6,9 +6,6 @@ rvm:
 services: 
   - mysql
 
-before_install:
-  - export "JAVA_HOME=/usr/lib/jvm/java-7-openjdk-i386/"
-
 before_script:
   - cp config/database.yml.travis config/database.yml
   - rake db:drop RAILS_ENV=test
