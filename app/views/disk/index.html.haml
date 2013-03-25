@@ -8,15 +8,7 @@
     - url = "/disk/create_folder?path=#{path}"
     = link_to '新建文件夹', url, :method => :post, :class => 'btn info create-folder', :confirm => t('common.confirm')
 
-  .file-uploader
-    .list
-      .item.sample{:style => 'display:none;'}
-        = page_progress_bar 61, :striped, :active
-        .meta
-          .filename foobarfoobarfoobarfoobarfoobarfoobarfoobar.zip
-          .size 1.6M
-          .percent 62%
-
+  - page_file_uploader
 
   .files-view
     .list-view
