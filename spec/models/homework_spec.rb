@@ -19,7 +19,7 @@ describe Homework do
   end
 
   describe '创建有要求的作业' do
-    before(:all) do
+    before(:each) do
       user = FactoryGirl.create(:user)
       chapter = FactoryGirl.create(:chapter)
 
@@ -57,7 +57,7 @@ describe Homework do
   end
 
   describe '创建有附件的作业' do
-    before(:all) do
+    before(:each) do
       user = FactoryGirl.create(:user)
       chapter = FactoryGirl.create(:chapter)
       @file_entity_1 = FactoryGirl.create(:file_entity)
