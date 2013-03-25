@@ -1,5 +1,3 @@
-require 'active_support/concern'
-
 module MediaResourceDynatreeMethods
   extend ActiveSupport::Concern
 

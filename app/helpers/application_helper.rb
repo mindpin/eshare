@@ -1,14 +1,5 @@
 module ApplicationHelper
-  def test_xxx(&block)
-    user = User.first
-
-    tmp = capture do
-      block.call user
-    end
-    capture do
-      haml_tag :div, :class => 'haha' do
-        concat 'haha'
-      end
-    end
+  def truncate_u(text, length = 30, truncate_string = "...")
+    truncate(text, :length => length, :separator => truncate_string)
   end
 end

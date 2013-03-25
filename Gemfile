@@ -17,6 +17,8 @@ group :test do
   gem 'factory_girl_rails', '~> 4.2.1'
   gem 'coveralls', :require => false # 帮助在 coveralls.io 线统计测试覆盖率
   gem 'capybara', '2.0.2' # 集成测试框架
+  gem 'timecop', '0.6.1' # 用于在测试中调整时间
+  gem 'rspec-cells', '0.1.7' # 用于测试 cells
 end
 
 group :examples do
@@ -43,11 +45,14 @@ gem "carrierwave", "0.8.0"
 # carrierwave 用到的图片切割
 gem "mini_magick", "3.5.0", :require => false
 
-# 解析 excel 文件
-gem 'roo', '1.10.3'
+# # 解析 excel 文件
+# gem 'roo', '1.10.3'
 
 # 编码处理基础库
 gem 'iconv', '1.0.2'
+
+## tag 插件
+gem 'acts-as-taggable-on', '~> 2.3.3'
 
 # 自己写的 gem，都不指定版本号，如果有重大修改，通过GIT TAG解决
 
@@ -69,22 +74,20 @@ gem 'simple-images',
     :git => 'git://github.com/mindpin/simple-images'
 
 gem 'simple-page-compoents',
-    :git => 'git://github.com/mindpin/simple-page-compoents'
+    :git => 'git://github.com/mindpin/simple-page-compoents',
+    :tag => '0.0.6'
     # :path => '/web/songliang/simple-page-compoents'
 
 ## 给指定 activerecord 模型动态添加属性
 gem 'dynamic_attrs',
     :git => 'git://github.com/kaid/dynamic_attrs.git'
 
-########## fushang318_media_resource ########
-## tag 插件
-gem 'acts-as-taggable-on', '~> 2.3.3'
-
-group :test do
-  gem 'timecop'
-end
-
+## 文件分段上传
 gem 'file-part-upload', 
-  :git => 'git://github.com/mindpin/file-part-upload.git',
-  :tag => '0.0.3'
-#############################################
+    :git => 'git://github.com/mindpin/file-part-upload.git',
+    :tag => '0.0.8'
+
+gem 'simple-excel-import',
+    :git => 'git://github.com/mindpin/simple-excel-import.git',
+    :tag => '0.0.2.1'
+    # :path => '/web/songliang/simple-excel-import'

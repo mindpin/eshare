@@ -1,47 +1,21 @@
-:ruby
-  tstr = ((yield :title) || '').gsub("\n",'')
-  title = tstr.blank? ? 'EduShare' : "#{tstr} - EduShare"
+- title = t('common.site.title.app')
+- home_title = t('common.site.home_title.app')
 
-!!! 5
-%html{:lang=>'zh'}
-  %head
-    %meta{:charset=>'utf-8'}
-    %title= title
-    = csrf_meta_tags
-    = stylesheet_link_tag 'application'
+!!!
+- simple_page_layout title, :html_lang => :zh, :body_class => 'app' do
+  .page-sidebar
+    - if current_user.is_teacher?
+      = simple_navbar :teacher, :as_list, :with_icon
+    - if current_user.is_student?
+      = simple_navbar :student, :as_list, :with_icon
 
-  %body.echo.gray
-    - if user_signed_in? && (current_user.is_teacher? || current_user.is_student?)
-      .page-sider
-        - if current_user.is_teacher?
-          = simple_navbar :teacher
-        - elsif current_user.is_student?
-          = simple_navbar :student
+  = page_navbar(:fixed_top, :color_inverse) do |navbar|
+    - navbar.add_item('首页', '/admin')
+    - navbar.add_item('设置密码', '/admin/setting/password')
+    - navbar.add_item('退出登录', '/account/sign_out')
+    - navbar.prepend link_to(home_title, '/admin', :class => :brand)
 
-      .page-topbar
-        %a.topbar-logo{:href=>'/'} 返回首页
-        .fl
-          = render 'layouts/parts/application_current_user', :user=>current_user
-          = render 'layouts/parts/application_top_ops'
-
-      .page-content
-        .page-breadcrumb.page-top-fixed
-          = yield :breadcrumb
-        = yield
-
-      =# javascript_include_tag '/kindeditor/kindeditor'
-      =# javascript_include_tag "http://#{request.host}/juggernaut/application.js"
-      = javascript_include_tag 'application'
-      =# javascript_include_tag '/swfobject'
-      =# javascript_include_tag '/player-min'
-      =# javascript_include_tag '/flash-player'
-      = yield :javascript
-
-    - else
-      .page-sider
-      .page-topbar
-        .current-user
-          %a.logout{:href=>'/account/sign_out'} 退出登录
-      .page-content
-        .invalid-role 你的用户信息不完整，你不是一个老师或者学生。不能使用这个系统。
-        .invalid-role 请联系管理员帮忙解决
+  .page-content
+    .page-breadcrumb.page-top-fixed
+      = yield :breadcrumb
+    = yield
