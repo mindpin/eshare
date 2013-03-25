@@ -1,5 +1,4 @@
 class CoursesController < ApplicationController
-  layout 'admin'
   before_filter :pre_load
 
   def pre_load
@@ -7,7 +6,7 @@ class CoursesController < ApplicationController
   end
 
   def index
-    @courses = Course.page params[:page]
+    @courses = current_user.courses.page params[:page]
   end
 
   def new

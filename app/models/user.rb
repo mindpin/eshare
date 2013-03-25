@@ -57,4 +57,6 @@ class User < ActiveRecord::Base
                                 :default => {:role => :student}
 
   include Course::UserMethods
+
+  include Homework::UserMethods
 end

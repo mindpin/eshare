@@ -6,3 +6,4 @@
   .edit= link_to '编辑',  "/chapters/#{@chapter.id}/edit"
   .destroy= link_to '删除', "/chapters/#{@chapter.id}", :method => :delete, :confirm => "确定删除吗?"
   = link_to '课件列表', "/chapters/#{@chapter.id}/course_wares"
+  = link_to '作业列表', "/chapters/#{@chapter.id}/homeworks"
