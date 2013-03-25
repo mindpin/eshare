@@ -89,5 +89,5 @@ gem 'file-part-upload',
 
 gem 'simple-excel-import',
     :git => 'git://github.com/mindpin/simple-excel-import.git',
-    :tag => '0.0.2.1'
+    :tag => '0.0.2.2'
     # :path => '/web/songliang/simple-excel-import'
