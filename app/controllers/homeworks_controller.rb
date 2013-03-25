@@ -31,4 +31,8 @@ class HomeworksController < ApplicationController
     @homework = Homework.find(params[:id])
   end
 
+  def student
+    @homework = Homework.find(params[:id])
+  end
+
 end
