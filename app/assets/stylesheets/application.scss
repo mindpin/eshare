@@ -101,48 +101,13 @@ body{
 
 .page-files-index {
   .operatebar{
+    margin-bottom:20px;
     a.upload {
       overflow:hidden;
       input {cursor:pointer;}
     }
   }
 
-  .file-uploader {
-    width:600px;
-    margin-top:20px;
-
-    .list {
-      .item {
-        border:solid 1px #E5E5E5;
-        padding:9px;
-        margin-top:-1px;
-
-        &:nth-child(2) {
-          @include border-radius(4px 4px 0 0);
-        }
-
-        &:last-child {
-          @include border-radius(0 0 4px 4px);
-        }
-
-        .meta {
-          font-size:12px;
-          overflow:hidden;
-          height:20px;line-height:20px;
-
-          .filename {
-            float:left;
-            width:40%;
-            text-overflow:ellipsis;
-            height:20px;line-height:20px;
-            overflow:hidden;
-          }
-          .size {float:left;margin-left:20px;}
-          .percent {float:right;}
-        }
-      }
-    }
-  }
   .files-view {
     .page-data-table.files {
       td.name {
@@ -156,6 +121,45 @@ body{
           color:#000;
           &:hover {color:#000;text-decoration:underline;}
         }
+      }
+    }
+  }
+}
+
+.page-file-uploader {
+  width:600px;
+
+  .list {
+    .item {
+      border:solid 1px #E5E5E5;
+      padding:9px;
+      margin-top:-1px;
+
+      &:nth-child(1), &:nth-child(2) {
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+      }
+
+      &:last-child {
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        margin-bottom:20px;
+      }
+
+      .meta {
+        font-size:12px;
+        overflow:hidden;
+        height:20px;line-height:20px;
+
+        .filename {
+          float:left;
+          width:40%;
+          text-overflow:ellipsis;
+          height:20px;line-height:20px;
+          overflow:hidden;
+        }
+        .size {float:left;margin-left:20px;}
+        .percent {float:right;}
       }
     }
   }
