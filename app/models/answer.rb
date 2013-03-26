@@ -8,8 +8,6 @@ class Answer < ActiveRecord::Base
 
 
   default_scope order('id desc')
-  max_paginates_per 50
-
 
 
   module UserMethods

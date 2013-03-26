@@ -4,7 +4,6 @@ describe Question do
   describe '不能为空较验' do
     before(:all) {
       @question = FactoryGirl.create(:question)
-      @user = FactoryGirl.create(:user)
 
       3.times { FactoryGirl.create(:question) }
       @questions = Question.all
@@ -19,7 +18,7 @@ describe Question do
     end
 
     it "creator should not be empty" do
-      @question.creator.class.should == @user.class
+      @question.creator.should be_a(User)
     end
 
     it "should order by id desc" do
