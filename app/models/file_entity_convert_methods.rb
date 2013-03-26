@@ -38,7 +38,7 @@ module FileEntityConvertMethods
   end
 
   def convert_ppt_path
-    Rails.root.join("public/convert_ppt/file_entities/#{self.id}.swf").to_s
+    File.join(R::CONVERT_BASE_PATH, convert_ppt_url)
   end
 
   def convert_ppt_url
