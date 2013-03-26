@@ -1,0 +1,5 @@
+= simple_form_for @test_question do |f|
+  = f.input :title
+  = f.hidden_field :course_id, :value => @test_question.course_id
+  = f.hidden_field :creator_id, :value => current_user.id
+  = f.submit

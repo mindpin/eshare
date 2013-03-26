@@ -24,8 +24,14 @@ Eshare::Application.routes.draw do
     resources :chapters, :shallow => true do
       resources :course_wares
     end
+    # 题库
+    resources :test_questions
+    # 试卷
+    resources :test_papers
   end
-  
+
+ 
+
   namespace :admin do
     root :to => 'index#index'
 

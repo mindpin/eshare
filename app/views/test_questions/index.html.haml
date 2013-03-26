@@ -1,0 +1,9 @@
+.test-querstions= 'Querstions'
+.list= link_to '创建题库', new_course_test_question_path
+
+.test-questions
+  - @test_questions.each do |test_question|
+    .title= test_question.title
+    = link_to '显示', test_question_path(test_question)
+    = link_to '编辑', edit_test_question_path(test_question)
+    = link_to '删除', test_question_path(test_question), :method => :delete
