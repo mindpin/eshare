@@ -10,9 +10,6 @@ class AnswersController < ApplicationController
     @answers = @question.answers.page params[:page]
   end
 
-  def new
-    @answer = @question.answer
-  end
 
   def create
     @answer = current_user.answers.build(params[:answer])
@@ -20,7 +17,7 @@ class AnswersController < ApplicationController
     if @answer.save
       return redirect_to "/questions/#{@answer.question_id}"
     end
-    render :action => :new
+    render 'questions/show'
   end
 
   def show

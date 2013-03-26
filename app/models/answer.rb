@@ -5,7 +5,8 @@ class Answer < ActiveRecord::Base
   belongs_to :question
 
   validates :creator, :question, :content, :presence => true
-  validates_uniqueness_of :question_id, :scope => :creator_id
+  validates_uniqueness_of :question_id, :scope => :creator_id,
+                          :message => "reply only one time limitly"
 
 
   default_scope order('id desc')
