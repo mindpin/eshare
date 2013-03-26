@@ -9,5 +9,5 @@
     
 
     - table.add_column(:ops) do |question|
+      
       = link_to 'edit', "/questions/#{question.id}/edit"
-      = link_to 'delete', "/questions/#{question.id}", :method => :delete, :confirm => "确定删除吗?"
