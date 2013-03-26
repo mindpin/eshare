@@ -5,6 +5,7 @@ class Answer < ActiveRecord::Base
   belongs_to :question
 
   validates :creator, :question, :content, :presence => true
+  validates_uniqueness_of :question_id, :scope => :creator_id
 
 
   default_scope order('id desc')

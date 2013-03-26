@@ -1,0 +1,14 @@
+= @question.title
+
+= @question.content
+
+- @question.answers.each do |answer|
+  .answer
+    = answer.content
+    .op
+      = link_to 'edit', "/answers/#{answer.id}/edit"
+
+
+= simple_form_for [@question, @answer] do |f|
+  = f.input :content, as: :text
+  = f.submit

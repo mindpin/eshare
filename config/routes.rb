@@ -37,7 +37,9 @@ Eshare::Application.routes.draw do
   end
 
 
-  resources :questions
+  resources :questions, :shallow => true do
+    resources :answers
+  end
   
   namespace :admin do
     root :to => 'index#index'

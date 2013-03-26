@@ -22,6 +22,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
+    @answer = Answer.new
   end
 
   def edit
@@ -34,8 +35,4 @@ class QuestionsController < ApplicationController
     render :action => :edit
   end
 
-  def destroy
-    @question.destroy
-    redirect_to :action => :index
-  end
 end
