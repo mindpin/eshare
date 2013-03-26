@@ -1,0 +1,13 @@
+.page-questions
+  = paginate @questions
+  
+  = link_to "new question", "/questions/new"
+
+  = page_data_table(:questions, @questions, :striped, :bordered) do |table|
+    - table.add_column(:title) do |question|
+      = link_to question.title, "/questions/#{question.id}"
+    
+
+    - table.add_column(:ops) do |question|
+      = link_to 'edit', "/questions/#{question.id}/edit"
+      = link_to 'delete', "/questions/#{question.id}", :method => :delete, :confirm => "确定删除吗?"

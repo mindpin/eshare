@@ -35,6 +35,9 @@ Eshare::Application.routes.draw do
       post :upload
     end
   end
+
+
+  resources :questions
   
   namespace :admin do
     root :to => 'index#index'

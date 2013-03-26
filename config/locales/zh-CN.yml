@@ -71,3 +71,11 @@ zh-CN:
         cid: 课程编号
         desc: 简介
         syllabus: 教学大钢
+
+      questions:
+        title: 标题
+        content: 内容
+        ops: 操作
+
+      answer:
+        content: 内容
