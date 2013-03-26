@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe Question do
   describe '不能为空较验' do
-    before(:all) {
+    before {
 
       3.times { FactoryGirl.create(:question) }
       @questions = Question.all
