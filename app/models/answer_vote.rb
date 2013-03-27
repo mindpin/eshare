@@ -9,8 +9,6 @@ class AnswerVote < ActiveRecord::Base
                           :message => "每个回答只允许投票一次"
 
 
-  default_scope order('id desc')
-
 
   module UserMethods
     def self.included(base)

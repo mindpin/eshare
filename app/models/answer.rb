@@ -10,7 +10,7 @@ class Answer < ActiveRecord::Base
                           :message => "reply only one time limitly"
 
 
-  default_scope order('id desc')
+  default_scope order('vote_sum desc')
 
 
   module UserMethods
