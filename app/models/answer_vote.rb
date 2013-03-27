@@ -8,7 +8,7 @@ class AnswerVote < ActiveRecord::Base
   validates_uniqueness_of :answer_id, :scope => :creator_id,
                           :message => "每个回答只允许投票一次"
 
-  after_update :update_vote_sum
+  after_save :update_vote_sum
 
 
   def update_vote_sum
