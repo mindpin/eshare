@@ -8,8 +8,9 @@ describe Answer do
     }
 
 
-    it "should order by id desc" do
-      @answers.last.id.should be < @answers.first.id
+    it "should order by vote_sum desc" do
+      @answers.last.vote_sum.should be < @answers.second.vote_sum
+      @answers.second.vote_sum.should be < @answers.first.vote_sum
     end
 
 
