@@ -8,12 +8,9 @@ describe AnswerVote do
 
       @answer = FactoryGirl.create(:answer)
 
-
       AnswerVote.create(:answer => @answer, :kind => 'VOTE_UP', :creator => @users[2])
       AnswerVote.create(:answer => @answer, :kind => 'VOTE_UP', :creator => @users[3])
       AnswerVote.create(:answer => @answer, :kind => 'VOTE_UP', :creator => @users[4])
-
-      @answer_vote = FactoryGirl.create(:answer_vote)
     }
 
 
