@@ -1,7 +1,10 @@
 = simple_form_for @course do |f|
-  = f.input :name
-  = f.input :cid
-  = f.input :desc, as: :text
-  = f.input :syllabus, as: :text
-  = f.input :cover, as: :file
-  = f.submit
+  %legend= t('common.course.create_course')
+  .form-inputs
+    = f.input :name
+    = f.input :cid
+    = f.input :desc, :as => :text,:input_html => {:rows => 3}
+    = f.input :cover, :as => :file
+  .form-actions
+    = f.button :submit, :class => 'success'
+    %a.btn.cancel{:href => '/courses'}= t('common.form.cancel')
