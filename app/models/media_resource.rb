@@ -5,7 +5,6 @@ class MediaResource < ActiveRecord::Base
   include MediaResourceCrudMethods
   include MediaResourceConvertMethods
 
-  acts_as_taggable
   attr_accessible :name,
                   :is_dir,
                   :creator,
