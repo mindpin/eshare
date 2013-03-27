@@ -40,6 +40,9 @@ Eshare::Application.routes.draw do
   resources :questions, :shallow => true do
     resources :answers
   end
+  match "/answers/:answer_id/answer_votes/up" => "answer_votes#up"
+  match "/answers/:answer_id/answer_votes/down" => "answer_votes#down"
+
   
   namespace :admin do
     root :to => 'index#index'

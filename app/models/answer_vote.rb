@@ -1,5 +1,5 @@
 class AnswerVote < ActiveRecord::Base
-  attr_accessible :answer_id, :creator_id, :kind
+  attr_accessible :answer, :creator, :kind
 
   belongs_to :creator, :class_name => 'User', :foreign_key => :creator_id
   belongs_to :answer
@@ -7,6 +7,10 @@ class AnswerVote < ActiveRecord::Base
   validates :creator, :answer, :kind, :presence => true
   validates_uniqueness_of :answer_id, :scope => :creator_id,
                           :message => "每个回答只允许投票一次"
+
+
+  scope :by_user, lambda { |user| where(:creator_id => user.id) }
+
 
   after_save :update_vote_sum
 

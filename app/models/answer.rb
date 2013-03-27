@@ -7,10 +7,15 @@ class Answer < ActiveRecord::Base
 
   validates :creator, :question, :content, :presence => true
   validates_uniqueness_of :question_id, :scope => :creator_id,
-                          :message => "reply only one time limitly"
+                          :message => "只允许回复一次"
 
 
   default_scope order('vote_sum desc')
+
+
+  def has_voted_by?(user)
+    self.answer_votes.by_user(user).count > 0
+  end
 
 
   module UserMethods

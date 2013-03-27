@@ -1,11 +1,21 @@
-= @question.title
+.title
+  = @question.title
 
-= @question.content
+.content
+  = @question.content
 
 - @question.answers.each do |answer|
   .answer
     = answer.content
+    .vote_points
+      分数
+      = answer.vote_sum
+    .vote_count
+      投票数
+      = answer.answer_votes.count
     .op
+      = link_to 'vote up', "/answers/#{answer.id}/answer_votes/up"
+      = link_to 'vote down', "/answers/#{answer.id}/answer_votes/down"
       = link_to 'edit', "/answers/#{answer.id}/edit"
 
 
