@@ -8,7 +8,7 @@ describe Answer do
     }
 
 
-    it "should order by vote_sum desc" do
+    it "按照投票分数排序" do
       @answers.last.vote_sum.should be < @answers.second.vote_sum
       @answers.second.vote_sum.should be < @answers.first.vote_sum
     end
