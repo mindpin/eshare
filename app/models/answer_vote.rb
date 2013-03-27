@@ -1,5 +1,5 @@
 class AnswerVote < ActiveRecord::Base
-  attr_accessible :kind
+  attr_accessible :answer_id, :creator_id, :kind
 
   belongs_to :creator, :class_name => 'User', :foreign_key => :creator_id
   belongs_to :answer
@@ -12,7 +12,7 @@ class AnswerVote < ActiveRecord::Base
 
 
   def update_vote_sum
-    if self.kind_changed
+    if self.kind_changed?
       self.answer.vote_sum += 1 if self.kind == 'VOTE_UP'
       self.answer.vote_sum -= 1 if self.kind == 'VOTE_DOWN'
       self.answer.save
