@@ -1,5 +1,5 @@
 class AnswerVote < ActiveRecord::Base
-  attr_accessible :answer, :creator, :kind
+  attr_accessible :answer, :creator, :kind, :creator_id, :answer_id
 
   belongs_to :creator, :class_name => 'User', :foreign_key => :creator_id
   belongs_to :answer

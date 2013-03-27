@@ -10,14 +10,13 @@ class AnswerVotesController < ApplicationController
     if @answer.has_voted_by?(current_user)
       return @answer.answer_votes.by_user(current_user).first
     end
-    @answer_vote = @answer.answer_votes.create(:creator => current_user, :kind => kind)
+    @answer.answer_votes.create(:creator => current_user, :kind => kind)
   end
   private :setup
 
 
   def up
     @answer_vote = setup('VOTE_UP')
-
     @answer_vote.up
 
     redirect_to :back

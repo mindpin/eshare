@@ -11,7 +11,15 @@ describe Answer do
       @vote = AnswerVote.new(:creator_id => @user.id)
       @vote.answer = @answer
 
+      @a = Answer.new(:creator_id => @user.id)
     }
+
+    it "是否投过票" do
+      @answer.has_voted_by?(@user).should == false
+      @vote.kind = 'VOTE_UP'
+      @vote.save
+      @answer.has_voted_by?(@user).should == true
+    end
 
     it "总分数要加1" do
       @vote.kind = 'VOTE_UP'

@@ -8,6 +8,7 @@ describe AnswerVote do
       @answer = FactoryGirl.create(:answer)
     }
 
+    
 
     it "投赞成票" do
       @vote = AnswerVote.create(:answer_id => @answer.id, 
