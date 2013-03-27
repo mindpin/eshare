@@ -20,6 +20,7 @@ class AnswerVote < ActiveRecord::Base
   end
 
 
+
   def up
     self.kind = "VOTE_UP"
     self.save
