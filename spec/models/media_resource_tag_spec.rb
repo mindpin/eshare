@@ -13,23 +13,11 @@ describe MediaResource do
     }
 
     it{
-      @media_resource.public_tag_list.should == ''
-    }
-
-    it{
       @media_resource.public_tags.should == []
     }
 
     it{
-      @media_resource.private_tag_list(@user_1).should == ''
-    }
-
-    it{
       @media_resource.private_tags(@user_1).should == []
-    }
-
-    it{
-      @media_resource.private_tag_list(@creator).should == ''
     }
 
     it{
@@ -43,23 +31,11 @@ describe MediaResource do
         }
 
         it{
-          @media_resource.public_tag_list.split(',').should =~ ['编程','java','api','教程']
-        }
-
-        it{
           @media_resource.public_tags.map(&:name).should =~ ['编程','java','api','教程'] 
         }
 
         it{
-          @media_resource.private_tag_list(@user_1).should == ''
-        }
-
-        it{
           @media_resource.private_tags(@user_1).should == []
-        }
-
-        it{
-          @media_resource.private_tag_list(@creator).split(',').should =~ ['编程','java','api','教程']
         }
 
         it{
@@ -77,19 +53,7 @@ describe MediaResource do
         }
 
         it{
-          @media_resource.public_tag_list.split(',').should =~ ['编程','java','api','教程']
-        }
-
-        it{
-          @media_resource.private_tag_list(@user_1).should == ''
-        }
-
-        it{
           @media_resource.private_tags(@user_1).should == []
-        }
-
-        it{
-          @media_resource.private_tag_list(@creator).split(',').should =~ ['编程','java','api','教程']
         }
 
         it{
@@ -105,15 +69,7 @@ describe MediaResource do
         }
 
         it{
-          @media_resource.public_tag_list.should == ''
-        }
-
-        it{
           @media_resource.public_tags.should == []
-        }
-
-        it{
-          @media_resource.private_tag_list(@user_1).split(',').should =~ ['编程','java','api','教程']
         }
 
         it{
@@ -129,23 +85,11 @@ describe MediaResource do
       }
 
       it{
-        @media_resource.public_tag_list.split(',').should =~ ['java','api']
-      }
-
-      it{
         @media_resource.public_tags.map(&:name).should =~ ['java','api'] 
       }
 
       it{
-        @media_resource.private_tag_list(@user_1).split(',').should =~ ['编程','java','api']
-      }
-
-      it{
         @media_resource.private_tags(@user_1).map(&:name).should =~ ['编程','java','api'] 
-      }
-
-      it{
-        @media_resource.private_tag_list(@user_2).split(',').should =~ ['java','api','教程']
       }
 
       it{
@@ -156,21 +100,13 @@ describe MediaResource do
         @media_resource.private_tags(@creator).should == []
       }
 
-      it{
-        @media_resource.private_tag_list(@creator).should == ''
-      }
-
       context '如果一个公共TAG，是被多于一个人（非 creator）标记才变为的公共TAG，当人数变为少于两人时，取消该TAG的公共属性' do
         before{
           @media_resource.set_tag_list("java", :user => @user_2)
         }
 
         it{
-          @media_resource.private_tag_list(@user_2).split(',').should =~ ['java']
-        }
-
-        it{
-          @media_resource.public_tag_list.split(',').should =~ ['java']
+          @media_resource.private_tags(@user_2).map(&:name).should =~ ['java']
         }
 
         it{
@@ -184,15 +120,15 @@ describe MediaResource do
           }
 
           it{
-            @media_resource.private_tag_list(@user_1).split(',').should =~ ['java','编程']
+            @media_resource.private_tags(@user_1).map(&:name).should =~ ['java','编程']
           }
 
           it{
-            @media_resource.private_tag_list(@user_2).split(',').should =~ ['java'] 
+            @media_resource.private_tags(@user_2).map(&:name).should =~ ['java'] 
           }
 
           it{
-            @media_resource.private_tag_list(@creator).split(',').should =~ ['api']  
+            @media_resource.private_tags(@creator).map(&:name).should =~ ['api']
           }
 
           it{
