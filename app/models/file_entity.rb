@@ -1,4 +1,6 @@
 class FileEntity < ActiveRecord::Base
+  include FileEntityConvertMethods
+
   if Rails.env == 'test'
     file_part_upload :path => 'files/test/:class/:id/:name'
   else
@@ -60,6 +62,9 @@ class FileEntity < ActiveRecord::Base
     :image == self.content_kind
   end
 
+  def is_ppt?
+    file_content_type('ppt') == self.attach_content_type
+  end
 
 end
 
