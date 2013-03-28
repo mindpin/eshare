@@ -27,6 +27,7 @@ group :examples do
 end
 
 gem 'jquery-rails', '2.2.1'
+gem 'jquery-ui-rails', '4.0.2'
 gem 'unicorn', '4.6.2'
 gem 'sidekiq', '2.8.0'
 

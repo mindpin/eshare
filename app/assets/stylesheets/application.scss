@@ -1,6 +1,10 @@
 //=require html5-boilerplate/main
 //=require html5-boilerplate/normalize
 
+//=require jquery.ui.all
+
+//=require tag-it/jquery.tagit
+
 //=require simple-page-compoents
 
 @import 'mixins';
@@ -20,6 +24,7 @@ body{
   a{
     color:#0088CC;
     text-decoration:none;
+    outline:none !important;
     &:hover, &:focus{
       color:#005580;
       text-decoration:underline;
@@ -126,6 +131,10 @@ body{
   }
 }
 
+.page-file-show {
+  width:700px;
+}
+
 .page-file-uploader {
   width:600px;
 
@@ -184,6 +193,62 @@ ul.page-breadcrumb {
     & > .divider {
       color:#ccc;
       padding:0 5px;
+    }
+  }
+}
+
+.page-tags {
+  @include floatfix;
+  padding:0;
+  margin-bottom:20px;
+  .shower {
+    height:34px;
+    i {
+      float:left;
+      margin-right:7px;
+      opacity:0.62;
+      margin-top:(27px - 16px) / 2 + 4px;
+    }
+    .tags {
+      float:left;
+      margin-top:4px;
+      a.tag {
+        display:block;float:left;margin-right:5px;
+        @include gradient(#FDD870, #FDBD4F);
+        color:#815828;
+        height:20px;line-height:20px;
+        @include border-radius(3px);
+        padding:2px 7px;
+        border:solid 1px rgba(black, 0.2);
+        @include box-shadow((0 1px 1px rgba(white, 0.8) inset, 0 1px 2px rgba(black, 0.1)));
+        text-shadow:1px 1px 2px rgba(white, 0.5);
+        margin-bottom:1px;
+        text-decoration:none;
+        &:hover, &:active {
+          @include gradient(#FEE49B, #FDD083);
+        }
+        &:active {
+          margin-top:1px;
+          margin-bottom: 0;
+        }
+      }
+    }
+    a.edit {
+      float:left;
+      height:27px;line-height:27px;
+      margin-left:7px;
+      margin-top:4px;
+    }
+  }
+  .inputer {
+    position:relative;
+    ul {
+      // padding-right:100px;
+      margin-bottom:5px;
+    }
+    .btns {
+      // position:absolute;
+      // top:4px;right:4px;
     }
   }
 }
