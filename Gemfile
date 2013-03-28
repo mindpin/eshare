@@ -62,7 +62,8 @@ gem 'roles-field',
 
 ## 导航栏
 gem 'simple-navbar',
-    :git => 'git://github.com/mindpin/simple-navbar.git'
+    :git => 'git://github.com/mindpin/simple-navbar.git',
+    :tag => '0.0.1'
 
 ## 页面布局辅助
 gem 'simple-page-layout',
