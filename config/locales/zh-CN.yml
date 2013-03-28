@@ -107,3 +107,13 @@ zh-CN:
         desc: 简介
         syllabus: 教学大钢
         ops: 操作
+
+
+      questions:
+        title: 标题
+        content: 内容
+        ops: 操作
+
+      answer:
+        content: 内容
+        ops: 操作

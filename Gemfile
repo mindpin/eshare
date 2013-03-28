@@ -54,9 +54,6 @@ gem "mini_magick", "3.5.0", :require => false
 # 编码处理基础库
 gem 'iconv', '1.0.2'
 
-## tag 插件
-gem 'acts-as-taggable-on', '~> 2.3.3'
-
 # 自己写的 gem，都不指定版本号，如果有重大修改，通过GIT TAG解决
 
 ## 用户角色
@@ -66,7 +63,8 @@ gem 'roles-field',
 
 ## 导航栏
 gem 'simple-navbar',
-    :git => 'git://github.com/mindpin/simple-navbar.git'
+    :git => 'git://github.com/mindpin/simple-navbar.git',
+    :tag => '0.0.1'
 
 ## 页面布局辅助
 gem 'simple-page-layout',

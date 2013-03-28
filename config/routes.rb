@@ -35,6 +35,20 @@ Eshare::Application.routes.draw do
       post :upload
     end
   end
+
+
+  resources :questions, :shallow => true do
+    resources :answers
+  end
+
+  scope '/answers/:answer_id' do
+    match "answer_votes/up" => "answer_votes#up"
+    match "answer_votes/down" => "answer_votes#down"
+    match "answer_votes/cancel" => "answer_votes#cancel"
+  end
+  
+
+
   
   namespace :admin do
     root :to => 'index#index'

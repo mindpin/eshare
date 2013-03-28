@@ -14,4 +14,7 @@ class PPTConverter
     converter.stop
   end
 
+  def self.sidekiq_running?
+    `ps aux | grep sidekiq`.split("\n").select {|process| process.include? 'busy'}.present?
+  end
 end

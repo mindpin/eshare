@@ -1,0 +1,25 @@
+.title
+  = @question.title
+
+.content
+  = @question.content
+
+- @question.answers.each do |answer|
+  .answer
+    = answer.content
+    .vote_points
+      分数
+      = answer.vote_sum
+    .vote_count
+      投票数
+      = answer.answer_votes.count
+    .op
+      = link_to 'vote up', "/answers/#{answer.id}/answer_votes/up"
+      = link_to 'vote down', "/answers/#{answer.id}/answer_votes/down"
+      = link_to 'cancel vote', "/answers/#{answer.id}/answer_votes/cancel", :method=>:delete
+      = link_to 'edit', "/answers/#{answer.id}/edit"
+
+
+= simple_form_for [@question, @answer] do |f|
+  = f.input :content, as: :text
+  = f.submit
