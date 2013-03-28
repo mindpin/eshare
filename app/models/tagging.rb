@@ -7,29 +7,39 @@ class Tagging < ActiveRecord::Base
 
   validates :tag, :taggable, :presence => true
 
-  scope :have_user, :conditions => 'user_id is not null'
-  scope :by_user, lambda { | user | {:conditions => "user_id = #{user.id}"} }
-  scope :by_tag,  lambda { |  tag | {:conditions => "tag_id = #{tag.id}"} }
-  scope :by_tags, lambda { | tags | {:conditions => "tag_id in (#{tags.map(&:id)*','})"} }
+  scope :without_user, :conditions => 'taggings.user_id IS NULL'
+  scope :with_user, :conditions => 'taggings.user_id IS NOT NULL'
+
+  scope :by_user, lambda { | user | {:conditions => ['user_id = ?', user.id] } }
+  scope :by_tag,  lambda { |  tag | {:conditions => ['tag_id = ?', tag.id] } }
+  scope :by_tags, lambda { | tags | {:conditions => ['tag_id in (?)', tags.map(&:id)] } }
 
   after_save :update_public_tags
   after_destroy :update_public_tags
   def update_public_tags
     return if self.user_id.blank?
 
-    count  = taggable.private_tagged_count(tag)
-    tagged = taggable.tagged_with_creator?(tag)
+    count  = taggable.private_tagged_count tag
+    tagged = taggable.tagged_with_creator? tag
 
     if tagged || count > 1
-      taggable.send(:_add_public_tag, self.tag)
-      return
+      _add_public_tag(taggable, tag)
+      return true
     end
 
-    if !tagged && count < 2
-      taggable.send(:_remove_public_tag, self.tag)
-      return
-    end
+    _remove_public_tag(taggable, tag)
   end
+
+  private
+    def _add_public_tag(taggable, tag)
+      return if taggable.public_tags.include?(tag)
+      taggable.taggings.create(:tag => tag)
+    end
+
+    def _remove_public_tag(taggable, tag)
+      return unless taggable.public_tags.include?(tag)
+      taggable.taggings.by_tag(tag).without_user.destroy_all
+    end
 
   module TaggableMethods
     extend ActiveSupport::Concern
@@ -37,8 +47,8 @@ class Tagging < ActiveRecord::Base
     included do
       self.has_many :taggings, :as => :taggable
       self.has_many :public_tags, :through => :taggings,
-        :source => :tag,
-        :conditions => 'taggings.user_id is null'
+                                  :source => :tag,
+                                  :conditions => 'taggings.user_id IS NULL'
     end
 
     def private_tags(user)
@@ -59,24 +69,14 @@ class Tagging < ActiveRecord::Base
     end
 
     def private_tagged_count(tag)
-      self.taggings.by_tag(tag).have_user.count
+      taggings.by_tag(tag).with_user.count
     end
 
     def tagged_with_creator?(tag)
-      self.taggings.by_tag(tag).by_user(self.creator).present?
+      taggings.by_tag(tag).by_user(creator).present?
     end
 
     private
-
-      def _add_public_tag(tag)
-        return if self.public_tags.include?(tag)
-        self.taggings.create(:tag => tag)
-      end
-
-      def _remove_public_tag(tag)
-        return if !self.public_tags.include?(tag)
-        self.taggings.by_tag(tag).destroy_all
-      end
 
       def _set_private_tags(after_tags, user)
         before_tags  = self.private_tags(user)

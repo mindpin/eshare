@@ -171,6 +171,84 @@ describe MediaResource do
         }
       end
     end
+
+    describe '#update_public_tags' do
+      before {
+        @user_a = FactoryGirl.create(:user)
+        @user_b = FactoryGirl.create(:user)
+
+        @media_resource.set_tag_list '苹果,橘子,香蕉', :user => @creator
+      }
+
+      it {
+        @media_resource.public_tags.map(&:name).
+          should =~ %w(苹果 香蕉 橘子)
+      }
+
+      it { @media_resource.private_tags(@user_a).should be_blank }
+
+      it { @media_resource.private_tags(@user_b).should be_blank }
+
+      context '第一个非所有者添加了tag' do
+        before {
+          @media_resource.set_tag_list '西瓜,芒果,猕猴桃', :user => @user_a
+        }
+
+        it {
+          @media_resource.public_tags.map(&:name).
+            should =~ %w(苹果 香蕉 橘子)
+        }
+
+        it {
+          @media_resource.private_tags(@user_a).map(&:name).
+            should =~ %w(芒果 西瓜 猕猴桃)
+        }
+
+        it { @media_resource.private_tags(@user_b).should be_blank }
+
+        context '第二个非所有者添加了tag' do
+          before {
+            @media_resource.set_tag_list '西瓜,草莓,火龙果', :user => @user_b
+          }
+
+          it {
+            @media_resource.public_tags.map(&:name).
+              should =~ %w(苹果 香蕉 西瓜 橘子)
+          }
+
+          it {
+            @media_resource.private_tags(@user_a).map(&:name).
+              should =~ %w(芒果 西瓜 猕猴桃)
+          }
+
+          it {
+            @media_resource.private_tags(@user_b).map(&:name).
+              should =~ %w(火龙果 西瓜 草莓)
+          }
+
+          context '第一个非所有者移除了tag' do
+            before {
+              @media_resource.set_tag_list '橄榄', :user => @user_a
+            }
+
+            it {
+              @media_resource.public_tags.map(&:name).
+                should =~ %w(苹果 香蕉 橘子)
+            }
+
+            it {
+              @media_resource.private_tags(@user_a).map(&:name).
+                should =~ %w(橄榄)
+            }
+
+            it {
+              @media_resource.private_tags(@user_b).map(&:name).
+                should =~ %w(火龙果 西瓜 草莓)
+            }
+          end
+        end
+      end
+    end
   end
 
   describe '根据TAG查询' do
@@ -232,7 +310,7 @@ describe MediaResource do
       MediaResource.by_tag('api', :user => @user_2).should =~ [@media_resource_1]
     }
 
-    context 'private_tagged_count' do
+    context '#private_tagged_count' do
       before{
         @tag_java = Tag.by_name('java').first
         @tag_api = Tag.by_name('api').first
