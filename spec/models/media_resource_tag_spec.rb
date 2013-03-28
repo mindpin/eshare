@@ -146,23 +146,23 @@ describe MediaResource do
       @media_resource_3 = FactoryGirl.create(:media_resource, :file)
       @media_resource_4 = FactoryGirl.create(:media_resource, :file)
 
-      @media_resource_1.set_tag_list('java')
+      @media_resource_1.set_tag_list('java,api')
       @media_resource_4.set_tag_list('java')
 
       @media_resource_1.set_tag_list('java', :user => @user_1)
-      @media_resource_2.set_tag_list('java', :user => @user_1)
+      @media_resource_2.set_tag_list('java,api', :user => @user_1)
 
       @media_resource_2.set_tag_list('java', :user => @user_2)
       @media_resource_3.set_tag_list('java', :user => @user_2)      
     }
 
     it{
-      @media_resource_1.public_tags.map(&:name).should =~ ['java']
+      @media_resource_1.public_tags.map(&:name).should =~ ['java','api']
       @media_resource_1.private_tags(@user_1).map(&:name).should =~ ['java']
       @media_resource_1.private_tags(@user_2).should == []
 
       @media_resource_2.public_tags.map(&:name).should =~ ['java']
-      @media_resource_2.private_tags(@user_1).map(&:name).should =~ ['java']
+      @media_resource_2.private_tags(@user_1).map(&:name).should =~ ['java','api']
       @media_resource_2.private_tags(@user_2).map(&:name).should =~ ['java']
 
       @media_resource_3.public_tags.should == []
@@ -186,5 +186,96 @@ describe MediaResource do
       MediaResource.by_tag('java', :user => @user_2) =~ [@media_resource_1, @media_resource_2, @media_resource_3, @media_resource_4]
     }
 
+    it{
+      MediaResource.by_tag('api').should =~ [@media_resource_1]
+    }
+
+    it{
+      MediaResource.by_tag('api', :user => @user_1).should =~ [@media_resource_1,@media_resource_2]
+    }
+
+    it{
+      MediaResource.by_tag('api', :user => @user_2).should =~ [@media_resource_1]
+    }
+
+    context 'private_tagged_count' do
+      before{
+        @tag_java = Tag.by_name('java').first
+        @tag_api = Tag.by_name('api').first
+      }
+
+      it{
+        @media_resource_1.private_tagged_count(@tag_java).should == 2
+      }
+
+      it{
+        @media_resource_1.private_tagged_count(@tag_api).should == 1 
+      }
+
+      it{
+        @media_resource_2.private_tagged_count(@tag_java).should == 2
+      }
+
+      it{
+        @media_resource_2.private_tagged_count(@tag_api).should == 1
+      }
+
+      it{
+        @media_resource_3.private_tagged_count(@tag_java).should == 1
+      }
+
+      it{
+        @media_resource_3.private_tagged_count(@tag_api).should == 0
+      }
+
+      it{
+        @media_resource_4.private_tagged_count(@tag_java).should == 1
+      }
+
+      it{
+        @media_resource_4.private_tagged_count(@tag_api).should == 0
+      }
+    end
+
+    context 'tagged_with_creator' do
+      before{
+        @tag_java = Tag.by_name('java').first
+        @tag_api = Tag.by_name('api').first
+      }
+
+      it{
+        @media_resource_1.tagged_with_creator?(@tag_java).should == true
+      }
+
+      it{
+        @media_resource_1.tagged_with_creator?(@tag_api).should == true
+      }
+
+      it{
+        @media_resource_2.tagged_with_creator?(@tag_java).should == false
+      }
+
+      it{
+        @media_resource_2.tagged_with_creator?(@tag_api).should == false
+      }
+
+      it{
+        @media_resource_3.tagged_with_creator?(@tag_java).should == false
+      }
+
+      it{
+        @media_resource_3.tagged_with_creator?(@tag_api).should == false
+      }
+
+      it{
+        @media_resource_4.tagged_with_creator?(@tag_java).should == true
+      }
+
+      it{
+        @media_resource_4.tagged_with_creator?(@tag_api).should == false
+      }
+    end
+
   end
+
 end
