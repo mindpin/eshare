@@ -1,0 +1,21 @@
+- @test_paper.test_questions.each do |test_question|
+  .P= '----------------------------------------------------------'
+  - paper_item = @test_paper.find_item_for(test_question)
+  = simple_form_for paper_item, :url => "/test_paper_items/#{paper_item.id}" do |f|
+    .title= test_question.title
+    - if test_question.kind =='SINGLE_CHOICE' || test_question.kind == 'MULTIPLE_CHOICE'
+      - test_question.test_question_choice_options.result.each   do |key, value|
+        =key
+        =value
+
+    - case test_question.kind
+    - when 'MULTIPLE_CHOICE', 'SINGLE_CHOICE'
+      = f.input :answer_choice
+    - when 'FILL'
+      = f.input :answer_fill
+    - when 'TRUE_FALSE'
+      = f.input :answer_true_false
+    
+    = f.submit
+
+

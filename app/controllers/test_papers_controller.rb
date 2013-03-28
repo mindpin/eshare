@@ -6,7 +6,11 @@ class TestPapersController < ApplicationController
   def create
     @course = Course.find(params[:course_id])
     @test_paper = TestPaper.make_test_paper_for(@course,current_user)
-    redirect_to :action => :show, :id => @test_paper
+    redirect_to :action => :edit, :id => @test_paper
+  end
+
+  def edit
+    @test_paper = TestPaper.find(params[:id])
   end
 
   def show

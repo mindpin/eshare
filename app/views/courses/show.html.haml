@@ -15,6 +15,6 @@
 
 - test_paper = TestPaper.find_paper_for(@course,current_user)
 - if test_paper
-  .list= link_to '开始答题', test_paper_path(test_paper) 
+  .list= link_to '开始答题', edit_test_paper_path(test_paper) 
 - else
   .list= link_to '开始答题', course_test_papers_path(@course), :method => :post

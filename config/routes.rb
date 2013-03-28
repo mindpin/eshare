@@ -27,7 +27,9 @@ Eshare::Application.routes.draw do
     # 题库
     resources :test_questions
     # 试卷
-    resources :test_papers
+    resources :test_papers do
+      resources :test_paper_items
+    end
   end
 
  

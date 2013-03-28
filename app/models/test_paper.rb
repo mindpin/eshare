@@ -3,10 +3,9 @@ class TestPaper < ActiveRecord::Base
 
   belongs_to :course
   belongs_to :user
-  has_many :test_paper_test_questions
+  has_many :test_paper_items
 
-  has_many :test_questions, :through => :test_paper_test_questions
-
+  has_many :test_questions, :through => :test_paper_items
   validates :course_id, :presence => true
   validates :user_id,   :presence => true
 
@@ -24,7 +23,11 @@ class TestPaper < ActiveRecord::Base
     end
   end
 
-  def self.find_paper_for(course,user)
+  def find_item_for(test_question)
+    self.test_paper_items.where('test_question_id = ?', test_question.id).first
+  end
+
+  def self.find_paper_for(course, user)
     course.test_papers.find_by_user_id(user.id)
   end
 end
