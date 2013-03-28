@@ -1,0 +1,22 @@
+- rule = @test_option.test_option_rule
+.kind 单选题
+.scoring
+  .count 题目数: #{rule.single_choice.count}
+  .point 分值: #{rule.single_choice.point}
+
+.kind 多选题
+.scoring
+  .count 题目数: #{rule.multiple_choice.count}
+  .point 分值: #{rule.multiple_choice.point}
+
+.kind 填空题
+.scoring
+  .count 题目数: #{rule.fill.count}
+  .point 分值: #{rule.fill.point}
+
+.kind 判断题
+.scoring
+  .count 题目数: #{rule.true_false.count}
+  .point 分值: #{rule.true_false.point}
+
+

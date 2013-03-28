@@ -1,0 +1,8 @@
+= simple_form_for @test_option do |f|
+  = f.simple_fields_for :test_option_rule, @test_option.test_option_rule do |rule|
+    - [:single_choice,:multiple_choice,:fill,:true_false].each do |option|
+      = option
+      = rule.simple_fields_for option, @test_option.test_option_rule.send(option) do |fields|
+        - [:count, :point].each do |field|
+          = fields.input field
+  = f.submit
