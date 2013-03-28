@@ -3,7 +3,6 @@ class AnswerVotesController < ApplicationController
 
   def pre_load
     @answer = Answer.find(params[:answer_id]) if params[:answer_id]
-    @answer_vote = AnswerVote.find(params[:id]) if params[:id]
   end
 
   def setup(kind)
@@ -29,8 +28,8 @@ class AnswerVotesController < ApplicationController
     redirect_to :back
   end
 
-  def destroy
-    @answer_vote.destroy
+  def cancel
+    @answer.answer_votes.by_user(current_user).first.destroy
 
     redirect_to :back
   end

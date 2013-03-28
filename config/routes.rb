@@ -40,8 +40,14 @@ Eshare::Application.routes.draw do
   resources :questions, :shallow => true do
     resources :answers
   end
-  match "/answers/:answer_id/answer_votes/up" => "answer_votes#up"
-  match "/answers/:answer_id/answer_votes/down" => "answer_votes#down"
+
+  scope '/answers/:answer_id' do
+    match "answer_votes/up" => "answer_votes#up"
+    match "answer_votes/down" => "answer_votes#down"
+    match "answer_votes/cancel" => "answer_votes#cancel"
+  end
+  
+
 
   
   namespace :admin do
