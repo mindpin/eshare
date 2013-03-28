@@ -1,0 +1,5 @@
+.test-papers
+  - @test_papers.each do |test_paper|
+    .test-question-title= "试卷#{test_paper.id}"   
+    .link= link_to '删除', test_paper_path, :method => :delete
+

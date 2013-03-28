@@ -1,0 +1,11 @@
+= simple_form_for @test_question, :url => "/courses/#{params[:course_id]}/test_questions" do |f|
+  = f.input :title
+  = f.hidden_field :course_id,  :value => params[:course_id]
+  = f.hidden_field :creator_id, :value => current_user.id
+  = f.hidden_field :kind,       :value => params[:kind]
+  - if params[:kind] =='SINGLE_CHOICE' || params[:kind] == 'MULTIPLE_CHOICE'
+    = f.simple_fields_for TestQuestion::ChoiceOptions.new do |choices_option|
+      - ('a'..'e').each do |option|
+        = choices_option.input option
+  = f.input TestQuestion::KINDS[params[:kind]]
+  = f.submit

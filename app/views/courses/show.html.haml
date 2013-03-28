@@ -10,3 +10,11 @@
 = image_tag @course.cover.url
 
 .list= link_to "章节列表", "/courses/#{@course.id}/chapters"
+
+.list= link_to '管理题库下的题目录入', course_test_questions_path(@course)
+
+- test_paper = TestPaper.find_paper_for(@course,current_user)
+- if test_paper
+  .list= link_to '开始答题', edit_test_paper_path(test_paper) 
+- else
+  .list= link_to '开始答题', course_test_papers_path(@course), :method => :post

@@ -29,13 +29,18 @@ Eshare::Application.routes.draw do
         end
       end
     end
+    # 题库
+    resources :test_questions
+    # 试卷
+    resources :test_papers do
+      resources :test_paper_items
+    end
   end
   resources :homework_requirements do
     member do
       post :upload
     end
   end
-
 
   resources :questions, :shallow => true do
     resources :answers
@@ -48,8 +53,6 @@ Eshare::Application.routes.draw do
   end
   
 
-
-  
   namespace :admin do
     root :to => 'index#index'
 
