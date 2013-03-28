@@ -29,7 +29,9 @@ class AnswerVotesController < ApplicationController
   end
 
   def cancel
-    @answer.answer_votes.by_user(current_user).first.destroy
+    if @answer.has_voted_by?(current_user)
+      @answer.answer_votes.by_user(current_user).first.destroy
+    end
 
     redirect_to :back
   end
