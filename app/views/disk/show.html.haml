@@ -1,17 +1,7 @@
 .page-file-show
   %h1.file-name= @media_resource.name
 
-  :ruby
-    def @media_resource.private_tags(user)
-      [
-        DiskController::TagMock.new('橘子'),
-        DiskController::TagMock.new('菠萝'),
-        DiskController::TagMock.new('西瓜'),
-        DiskController::TagMock.new('草莓'),
-      ]
-    end
-
-  .page-tags
+  .page-tags{:data => {:'tagable-id' => @media_resource.id, :'tagable-type' => @media_resource.class.to_s}}
     .shower
       %i.icon-tags
       .tags

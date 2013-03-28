@@ -46,9 +46,12 @@ Eshare::Application.routes.draw do
     match "answer_votes/down" => "answer_votes#down"
     match "answer_votes/cancel" => "answer_votes#cancel"
   end
-  
 
-
+  resources :tags do
+    collection do
+      put :set_tags
+    end
+  end
   
   namespace :admin do
     root :to => 'index#index'

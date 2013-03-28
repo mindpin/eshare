@@ -19,6 +19,7 @@ jQuery ->
         @show()
 
       @$elm.find('a.btn.yes').click =>
+        @submit()
         @sync_to_shower()
         @show()
 
@@ -47,6 +48,16 @@ jQuery ->
 
       @$ul.after($new_ul).remove()
       @$ul = $new_ul
+
+    submit: =>
+      tagstr = @$ul.tagit('assignedTags').join(',')
+      jQuery.ajax
+        url : '/tags/set_tags'
+        type : 'PUT',
+        data :
+          tagable_id : @$elm.data('tagable-id')
+          tagable_type : @$elm.data('tagable-type')
+          tags : tagstr
 
 
     build_tag_elm: (tag) =>
