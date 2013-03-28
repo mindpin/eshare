@@ -19,4 +19,7 @@ describe TestPaperItem do
       }
     end
   end
+
+  describe '.score?' do
+  end
 end

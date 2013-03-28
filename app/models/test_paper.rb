@@ -1,5 +1,5 @@
 class TestPaper < ActiveRecord::Base
-  attr_accessible :course_id, :user_id
+  attr_accessible :course_id, :user_id, :score
 
   belongs_to :course
   belongs_to :user
@@ -29,5 +29,11 @@ class TestPaper < ActiveRecord::Base
 
   def self.find_paper_for(course, user)
     course.test_papers.find_by_user_id(user.id)
+  end
+
+  def score!
+    self.test_paper_items.inject(0) do |acc, item|
+      item.score? ? acc + item.point : acc
+    end
   end
 end

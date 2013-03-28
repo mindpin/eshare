@@ -5,7 +5,7 @@ class Course < ActiveRecord::Base
   has_many :chapters
   has_many :course_wares, :through => :chapters
   has_many :test_questions
-  has_many :test_options
+  has_one  :test_option
 
   has_many :test_papers
 
