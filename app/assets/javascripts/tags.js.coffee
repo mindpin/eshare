@@ -9,7 +9,8 @@ jQuery ->
       @setup()
 
     setup: ->
-      @$ul.tagit()
+      @$ul.tagit
+        caseSensitive : false
 
       @$elm.find('a.edit').click =>
         @edit()
@@ -36,6 +37,8 @@ jQuery ->
 
       jQuery(@$ul.tagit('assignedTags')).each (index, tag) =>
         @$tags.append @build_tag_elm(tag)
+
+      @$ul.find('.tagit-new input').val('')
 
     sync_to_inputer: =>
       $new_ul = jQuery("<ul></ul>")

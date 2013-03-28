@@ -27,16 +27,16 @@ ul.tagit li.tagit-new {
 }
 
 ul.tagit li.tagit-choice a.tagit-label {
-    cursor: pointer;
-    text-decoration: none;
+    cursor:pointer;
+    text-decoration:none;
 }
 ul.tagit li.tagit-choice .tagit-close {
-    cursor: pointer;
+    cursor:pointer;
     position: absolute;
-    right: .1em;
-    top: 50%;
-    margin-top: -8px;
-    line-height: 17px;
+    right:5px;
+    top:5px;
+    line-height:16px;
+    height:16px;
 }
 
 /* used for some custom themes that don't need image icons */
@@ -74,35 +74,37 @@ ul.tagit li.tagit-choice {
             border-radius: 3px;
        -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
-    border: 1px solid #CAD8F3;
+    border: 1px solid #c5dbec;
 
     background: none;
-    background-color: #DEE7F8;
+    background-color: #EAF4FD;
+    box-shadow:0 1px 1px rgba(white, 0.5) inset;
 
     font-weight: normal;
 }
 ul.tagit li.tagit-choice .tagit-label:not(a) {
-    color: #555;
+    // color: #555;
+    color:#2e6e9e;
 }
 ul.tagit li.tagit-choice a.tagit-close {
     text-decoration: none;
 }
-ul.tagit li.tagit-choice .tagit-close {
-    right: .4em;
-}
+
 ul.tagit li.tagit-choice .ui-icon {
     display: none;
 }
 ul.tagit li.tagit-choice .tagit-close .text-icon {
-    display: inline;
+    // display: none;
+    display: block;
     font-family: arial, sans-serif;
     font-size: 16px;
     line-height: 16px;
-    color: #777;
+    color: #6CAAD4;
+    font-weight:bold;
 }
 ul.tagit li.tagit-choice:hover, ul.tagit li.tagit-choice.remove {
-    background-color: #bbcef1;
-    border-color: #6d95e0;
+    // background-color: #dAe4eD;
+    border-color: #b5cbdc;
 }
 ul.tagit li.tagit-choice a.tagLabel:hover,
 ul.tagit li.tagit-choice a.tagit-close .text-icon:hover {

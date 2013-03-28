@@ -12,27 +12,31 @@ class Tagging < ActiveRecord::Base
   scope :by_tag,  lambda { |  tag | {:conditions => "tag_id = #{tag.id}"} }
   scope :by_tags, lambda { | tags | {:conditions => "tag_id in (#{tags.map(&:id)*','})"} }
 
-  after_save :set_public_tag_by_private_tag_count
-  after_destroy :set_public_tag_by_private_tag_count
-  def set_public_tag_by_private_tag_count
+  after_save :update_public_tags
+  after_destroy :update_public_tags
+  def update_public_tags
     return if self.user_id.blank?
 
-    count = taggable.private_tagged_count(tag)
+    count  = taggable.private_tagged_count(tag)
     tagged = taggable.tagged_with_creator?(tag)
 
     if tagged || count > 1
       taggable.send(:_add_public_tag, self.tag)
-    elsif !tagged && count < 2
-      taggable.send(:_remove_public_tag, self.tag)
+      return
     end
 
+    if !tagged && count < 2
+      taggable.send(:_remove_public_tag, self.tag)
+      return
+    end
   end
 
   module TaggableMethods
-    def self.included(base)
-      base.extend ClassMethods
-      base.has_many :taggings, :as => :taggable
-      base.has_many :public_tags, :through => :taggings,
+    extend ActiveSupport::Concern
+
+    included do
+      self.has_many :taggings, :as => :taggable
+      self.has_many :public_tags, :through => :taggings,
         :source => :tag,
         :conditions => 'taggings.user_id is null'
     end
@@ -47,7 +51,7 @@ class Tagging < ActiveRecord::Base
 
     def set_tag_list(str, options = {})
       user = options[:user] || self.creator
-      after_tags = Tag.get_by_str(str)
+      after_tags = _get_by_str(str)
 
       _set_private_tags(after_tags, user)
 
@@ -64,29 +68,36 @@ class Tagging < ActiveRecord::Base
 
     private
 
-    def _add_public_tag(tag)
-      return if self.public_tags.include?(tag)
-      self.taggings.create(:tag => tag)
-    end
-
-    def _remove_public_tag(tag)
-      return if !self.public_tags.include?(tag)
-      self.taggings.by_tag(tag).destroy_all
-    end
-
-    def _set_private_tags(after_tags, user)
-      before_tags  = self.private_tags(user)
-      removed_tags = before_tags - after_tags
-      added_tags   = after_tags  - before_tags
-
-      if removed_tags.present?
-        self.taggings.by_user(user).by_tags(removed_tags).destroy_all
+      def _add_public_tag(tag)
+        return if self.public_tags.include?(tag)
+        self.taggings.create(:tag => tag)
       end
 
-      added_tags.each do |tag|
-        self.taggings.create(:tag => tag, :user => user)
+      def _remove_public_tag(tag)
+        return if !self.public_tags.include?(tag)
+        self.taggings.by_tag(tag).destroy_all
       end
-    end
+
+      def _set_private_tags(after_tags, user)
+        before_tags  = self.private_tags(user)
+        removed_tags = before_tags - after_tags
+        added_tags   = after_tags  - before_tags
+
+        if removed_tags.present?
+          self.taggings.by_user(user).by_tags(removed_tags).destroy_all
+        end
+
+        added_tags.each do |tag|
+          self.taggings.create(:tag => tag, :user => user)
+        end
+      end
+
+      def _get_by_str(str)
+        tag_names = str.downcase.split(/\s|,|，/).compact.uniq
+        tag_names.map do |name|
+          Tag.find_or_create_by_name(name)
+        end
+      end
 
     module ClassMethods
       def by_tag(tag_name, options = {})

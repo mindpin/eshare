@@ -137,6 +137,40 @@ describe MediaResource do
         end
       end
     end
+
+    describe '#set_tag_list' do
+      context '大小写' do
+        before {
+          @media_resource.set_tag_list 'AJAX,Java,W3C', :user => @creator
+        }
+
+        it {
+          @media_resource.public_tags.map(&:name).
+            should =~ %w(ajax w3c java)
+        }
+
+        it {
+          @media_resource.private_tags(@creator).map(&:name).
+            should =~ %w(ajax w3c java)
+        }
+      end
+
+      context '重复检查' do
+        before {
+          @media_resource.set_tag_list 'AJAX,Java,W3C,abc,ABC,aBC', :user => @creator
+        }
+
+        it {
+          @media_resource.public_tags.map(&:name).
+            should =~ %w(ajax w3c java abc)
+        }
+
+        it {
+          @media_resource.private_tags(@creator).map(&:name).
+            should =~ %w(ajax w3c java abc)
+        }
+      end
+    end
   end
 
   describe '根据TAG查询' do
@@ -275,7 +309,5 @@ describe MediaResource do
         @media_resource_4.tagged_with_creator?(@tag_api).should == false
       }
     end
-
   end
-
 end
