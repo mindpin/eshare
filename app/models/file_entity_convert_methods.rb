@@ -3,6 +3,7 @@ module FileEntityConvertMethods
     CONVERTING = 'CONVERTING'
     SUCCESS  = "SUCCESS"
     FAILURE  = "FAILURE"
+    QUEUE_DOWN = "QUEUE_DOWN"
   end
 
   def convert_success?
@@ -20,10 +21,15 @@ module FileEntityConvertMethods
   def convert_enqueue
     return if converting? || convert_success?
 
-    self.convert_status = ConvertStatus::CONVERTING
-    self.save
-    PPTConverter.perform_async(self.id)
-  rescue Redis::CannotConnectError=>ex
+    if PPTConverter.sidekiq_running?
+      self.convert_status = ConvertStatus::CONVERTING
+      self.save
+      PPTConverter.perform_async(self.id)      
+    else
+      self.convert_status = ConvertStatus::QUEUE_DOWN
+      self.save
+    end
+  rescue Redis::CannotConnectError
     convert_failed!
   end
 

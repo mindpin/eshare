@@ -5,8 +5,13 @@ class Course < ActiveRecord::Base
   has_many :chapters
   has_many :course_wares, :through => :chapters
 
-  validates :creator, :name, :cid, :desc, :syllabus, :presence => true
+  validates :creator, :presence => true
 
+  validates :name, :uniqueness => {:case_sensitive => false},
+                   :presence => true
+
+  validates :cid, :uniqueness => {:case_sensitive => false},
+                  :presence => true
 
   default_scope order('id desc')
   max_paginates_per 50
@@ -15,7 +20,7 @@ class Course < ActiveRecord::Base
   mount_uploader :cover, CourseCoverUploader
 
   # excel import
-  simple_excel_import :course, :fields => [:name, :cid, :desc, :syllabus]
+  simple_excel_import :course, :fields => [:name, :cid, :desc]
   def self.import(excel_file, creator)
     courses = self.parse_excel_course excel_file
     courses.each do |c|

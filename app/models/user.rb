@@ -59,4 +59,7 @@ class User < ActiveRecord::Base
   include Course::UserMethods
 
   include Homework::UserMethods
+  include Question::UserMethods
+  include Answer::UserMethods
+  include AnswerVote::UserMethods
 end

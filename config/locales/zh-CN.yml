@@ -6,10 +6,16 @@ zh-CN:
         content: 作业内容
         homework_requirements:
           content: 作业提交物要求
-          
+  helpers:
+    submit:
+      course:
+        create: 创建%{model}
+
   activerecord:
     models:
       user: 用户
+      course: 课程
+
     attributes:
       user:
         login: 用户名
@@ -17,6 +23,27 @@ zh-CN:
         password: 密码
         password_confirmation: 确认密码
         remember_me: 记住登录状态
+      course:
+        name: 课程名
+        cid: 课程编号
+        desc: 课程简介
+        syllabus: 课程大纲
+        cover: 课程封面
+    errors:
+      models:
+        course:
+          attributes:
+            name:
+              blank: 必须填写课程名
+              taken: 有重复的课程名
+            cid:
+              blank: 必须填写课程编号
+              taken: 有重复的课程编号
+            desc:
+              blank: 必须填写课程简介
+            syllabus:
+              blank: 必须填写课程大纲
+
 
   views:
     pagination:
@@ -32,6 +59,7 @@ zh-CN:
     sign-in: 登录
     sign-ining: 正在登录
 
+    edit: 编辑
     delete: 删除
     delete_confirm: 确定要删除吗？
     
@@ -48,6 +76,13 @@ zh-CN:
       home_title:
         app: EduShare
         admin: EduShare Admin
+
+    form:
+      cancel: 取消返回
+
+    course:
+      create_course: 创建课程
+
 
   compoents:
     data_table:
@@ -71,3 +106,14 @@ zh-CN:
         cid: 课程编号
         desc: 简介
         syllabus: 教学大钢
+        ops: 操作
+
+
+      questions:
+        title: 标题
+        content: 内容
+        ops: 操作
+
+      answer:
+        content: 内容
+        ops: 操作
