@@ -9,4 +9,5 @@ class Chapter < ActiveRecord::Base
   validates :creator, :presence => true
 
   has_many :course_wares
+  has_many :homeworks
 end

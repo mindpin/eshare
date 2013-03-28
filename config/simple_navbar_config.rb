@@ -37,12 +37,16 @@ SimpleNavbar::Base.config do
   # -------------------------
   # 教师
   rule :teacher do
-    nav :dashboard, :name => '课程首页', :url => '/dashboard' do
+    nav :dashboard, :name => '首页', :url => '/dashboard' do
       controller :index, :only => :dashboard
     end
 
     nav :disk, :name => '我的文件夹', :url => '/disk' do
       controller :disk
+    end
+
+    nav :courses, :name => '课程', :url => '/courses' do
+      controller :courses
     end
   end
 

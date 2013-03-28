@@ -3,6 +3,7 @@ class MediaResource < ActiveRecord::Base
   include MediaResourceDynatreeMethods
   include MediaResourceInfosMethods
   include MediaResourceCrudMethods
+  include MediaResourceConvertMethods
 
   acts_as_taggable
   attr_accessible :name,

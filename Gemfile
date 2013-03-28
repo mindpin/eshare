@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 source 'http://ruby.taobao.org'
 
-gem 'rails', '3.2.12' # RAILS
+gem 'rails', '3.2.12' # RAILS #不要更新 3.2.13 有性能问题，等 3.2.14
 gem 'mysql2', '0.3.11' # MYSQL数据库连接
 gem 'json', '1.7.7' # JSON解析，RAILS默认引入的
 
@@ -77,7 +77,7 @@ gem 'simple-images',
 
 gem 'simple-page-compoents',
     :git => 'git://github.com/mindpin/simple-page-compoents',
-    :tag => '0.0.6'
+    :tag => '0.0.6.4'
     # :path => '/web/songliang/simple-page-compoents'
 
 ## 给指定 activerecord 模型动态添加属性
@@ -89,6 +89,7 @@ gem 'file-part-upload',
     :git => 'git://github.com/mindpin/file-part-upload.git',
     :tag => '0.0.8'
 
+## excel导入和示例生成
 gem 'simple-excel-import',
     :git => 'git://github.com/mindpin/simple-excel-import.git',
     :tag => '0.0.2.2'
