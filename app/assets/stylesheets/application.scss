@@ -107,7 +107,7 @@ body{
 .page-files-index {
   .operatebar{
     margin-bottom:20px;
-    a.upload {
+    a.media-resource-upload {
       overflow:hidden;
       input {cursor:pointer;}
     }
@@ -251,4 +251,18 @@ ul.page-breadcrumb {
       // top:4px;right:4px;
     }
   }
+}
+
+.page-questions-index {
+  width:700px;
+  .questions {
+    .question {
+      border-top:solid 1px #eee;
+      padding-top:15px;
+    }
+  }
+}
+
+img.page-avatar {
+  @include border-radius(3px);
 }

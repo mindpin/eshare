@@ -6,7 +6,7 @@ class QuestionsController < ApplicationController
   end
 
   def index
-    @questions = current_user.questions.page params[:page]
+    @questions = Question.page params[:page]
   end
 
   def new

@@ -1,4 +1,12 @@
 zh-CN:
+  simple-navbar:
+    teacher:
+      dashboard: 首页
+      disk: 资源文件夹
+      courses: 课程
+      questions: 问答
+
+
   simple_form:
     labels:
       homework:
@@ -55,6 +63,10 @@ zh-CN:
       next: "下一页 &raquo;"
       truncate: "..."
 
+  page:
+    questions:
+      index: 问答首页
+
   common:
     sign-in: 登录
     sign-ining: 正在登录
@@ -64,6 +76,8 @@ zh-CN:
     delete_confirm: 确定要删除吗？
     
     confirm: 确定吗？
+
+    unknown-user: 未知用户
 
     user:
       edit: 修改

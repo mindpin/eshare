@@ -1,13 +1,24 @@
-.page-questions
+.page-questions-index
+  %h1= t('page.questions.index')
+
+  = page_button_group :questions do |g|
+    - g.add '发起提问', '/questions/new'
+
   = paginate @questions
   
-  = link_to "new question", "/questions/new"
+  = page_tile(:questions, @questions) do |tile|
+    - tile.add_left(:avatar) do |question|
+      = avatar question.creator
 
-  = page_data_table(:questions, @questions, :striped, :bordered) do |table|
-    - table.add_column(:title) do |question|
-      = link_to question.title, "/questions/#{question.id}"
-    
+    - tile.add(:activity, :quiet) do |question|
+      杜甫老师 回答了这个问题 #TODO
+    - tile.add(:title) do |question|
+      %a{:href => "/questions/#{question.id}"}= question.title
+    - tile.add(:content)
 
-    - table.add_column(:ops) do |question|
-      
-      = link_to 'edit', "/questions/#{question.id}/edit"
+    - tile.add_foot(:add_fav) do |question|
+      %a{:herf => 'javascript:;'} 关注问题
+    - tile.add_foot(:answers) do |question|
+      %a{:href => 'javascript:;'}= "#{question.answers.count} 个回答"
+    - tile.add_foot(:comment) do
+      %a{:href => 'javascript:;'} 5 条评论 #TODO

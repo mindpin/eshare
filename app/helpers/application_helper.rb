@@ -26,4 +26,24 @@ module ApplicationHelper
       end
     end
   end
+
+  def avatar(user, style = :normal)
+    klass = ['page-avatar', style] * ' '
+
+    if user.blank?
+      alt   = t('common.unknown-user')
+      src   = User.new.avatar.versions[style].url
+      meta  = 'unknown-user'
+    else
+      alt   = user.name
+      src   = user.avatar.versions[style].url
+      meta  = dom_id(user)
+    end
+
+    image_tag src, :alt => alt,
+                   :class => klass,
+                   :data => {
+                      :meta => meta
+                   }
+  end
 end

@@ -85,28 +85,6 @@ module OtherHelper
     end
   end
 
-  def avatar(user, style = :normal)
-    klass = ['page-avatar-img', style]*' '
-
-    if user.blank?
-      alt   = '未知用户'
-      src   = User.new.avatar.versions[style].url
-      meta  = 'unknown-user'
-    else
-      alt   = user.name
-      src   = user.avatar.versions[style].url
-      meta  = dom_id(user)
-    end
-    
-    # jimage src, :alt => alt, 
-    #             :class => klass, 
-    #             :'data-meta' => meta
-
-    image_tag src, :alt => alt, 
-                   :class => klass, 
-                   :'data-meta' => meta
-  end
-
   def current_user_title
     return '老师' if current_user.is_teacher?
     return '同学' if current_user.is_student?
