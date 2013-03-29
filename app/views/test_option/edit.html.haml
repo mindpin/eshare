@@ -1,4 +1,4 @@
-= simple_form_for @test_option do |f|
+= simple_form_for @test_option, :url => "/courses/#{params[:course_id]}/test_option" do |f|
   = f.simple_fields_for :test_option_rule, @test_option.test_option_rule do |rule|
     - [:single_choice,:multiple_choice,:fill,:true_false].each do |option|
       = option

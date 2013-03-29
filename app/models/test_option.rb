@@ -1,5 +1,6 @@
 class TestOption < ActiveRecord::Base
-  attr_accessible :course_id, 
+  attr_accessible :course_id,
+                  :course,
                   :test_option_rule
 
   belongs_to :course

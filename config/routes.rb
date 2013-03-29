@@ -36,7 +36,7 @@ Eshare::Application.routes.draw do
       resources :test_paper_items
     end
     # 组卷参数
-    resources :test_options
+    resource :test_option, :controller => :test_option
   end
   resources :homework_requirements do
     member do
