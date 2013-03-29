@@ -6,26 +6,24 @@ describe AnswerVote do
       @user = FactoryGirl.create(:user)
 
       @answer = FactoryGirl.create(:answer)
+      @vote = AnswerVote.new(:answer => @answer, :creator => @user)
     }
 
     
 
     it "投赞成票" do
-      @vote = AnswerVote.create(:answer_id => @answer.id, 
-        :kind => 'VOTE_DOWN', 
-        :creator_id => @user.id
-      )
-
+      @vote.kind = 'VOTE_DOWN'
+      @vote.save
+      
       @vote.up
       @vote.kind.should == "VOTE_UP"
 
     end
 
     it "投反对票" do
-      @vote = AnswerVote.create(:answer_id => @answer.id, 
-        :kind => 'VOTE_UP', 
-        :creator_id => @user.id
-      )
+      @vote.kind = 'VOTE_UP'
+      @vote.save
+
       @vote.down
       @vote.kind.should == "VOTE_DOWN"
     end

@@ -15,14 +15,14 @@ class AnswerVotesController < ApplicationController
 
 
   def up
-    @answer_vote = setup('VOTE_UP')
+    @answer_vote = setup(AnswerVote::Kind::VOTE_UP)
     @answer_vote.up
 
     redirect_to :back
   end
 
   def down
-    @answer_vote = setup('VOTE_DOWN')
+    @answer_vote = setup(AnswerVote::Kind::VOTE_DOWN)
     @answer_vote.down
 
     redirect_to :back
