@@ -1,0 +1,9 @@
+.page-announcements
+  = paginate @announcements
+  
+  = link_to "new announcement", "/announcements/new"
+
+  = page_data_table(:announcements, @announcements, :striped, :bordered) do |table|
+    - table.add_column(:title) do |announcement|
+      = link_to announcement.title, "/announcements/#{announcement.id}"
+    
