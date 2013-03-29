@@ -17,7 +17,7 @@ class Announcement < ActiveRecord::Base
   end
 
   def has_readed?(user)
-    self.announcement_users.by_user(user).count > 0
+    self.announcement_users.by_user(user).count == 1
   end
 
 
