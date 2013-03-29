@@ -47,6 +47,8 @@ Eshare::Application.routes.draw do
     match "answer_votes/cancel" => "answer_votes#cancel"
   end
 
+  resources :announcements
+
   resources :tags do
     collection do
       put :set_tags

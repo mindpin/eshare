@@ -1,4 +1,9 @@
 class AnswerVote < ActiveRecord::Base
+  class Kind
+    VOTE_UP = 'VOTE_UP'
+    VOTE_DOWN = 'VOTE_DOWN'
+  end
+
   attr_accessible :answer, :creator, :kind, :creator_id, :answer_id
 
   belongs_to :creator, :class_name => 'User', :foreign_key => :creator_id
@@ -17,8 +22,8 @@ class AnswerVote < ActiveRecord::Base
 
   def update_vote_sum
     if self.kind_changed?
-      self.answer.vote_sum += 1 if self.kind == 'VOTE_UP'
-      self.answer.vote_sum -= 1 if self.kind == 'VOTE_DOWN'
+      self.answer.vote_sum += 1 if self.kind == AnswerVote::Kind::VOTE_UP
+      self.answer.vote_sum -= 1 if self.kind == AnswerVote::Kind::VOTE_DOWN
       self.answer.save
     end
   end
@@ -26,13 +31,13 @@ class AnswerVote < ActiveRecord::Base
 
 
   def up
-    self.kind = "VOTE_UP"
+    self.kind = AnswerVote::Kind::VOTE_UP
     self.save
   end
 
 
   def down
-    self.kind = "VOTE_DOWN"
+    self.kind = AnswerVote::Kind::VOTE_DOWN
     self.save
   end
 

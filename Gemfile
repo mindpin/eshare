@@ -97,3 +97,8 @@ gem 'simple-excel-import',
 ## office文档转换
 gem 'odocuconv',
     :git => 'git://github.com/kaid/odocuconv.git'
+
+## tag
+gem 'mindpin-simple-tags',
+    :git => 'git://github.com/mindpin/mindpin-simple-tags.git',
+    :tag => '0.0.1'

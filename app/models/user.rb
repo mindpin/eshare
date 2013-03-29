@@ -62,4 +62,5 @@ class User < ActiveRecord::Base
   include Question::UserMethods
   include Answer::UserMethods
   include AnswerVote::UserMethods
+  include Announcement::UserMethods
 end

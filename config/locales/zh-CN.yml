@@ -128,6 +128,11 @@ zh-CN:
         content: 内容
         ops: 操作
 
-      answer:
+      answers:
+        content: 内容
+        ops: 操作
+
+      announcements:
+        title: 标题
         content: 内容
         ops: 操作
