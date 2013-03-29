@@ -25,13 +25,13 @@ describe AnnouncementUser do
       @announcement.has_readed?(@creator).should == true
     end
 
-    it "用户应该有通知记录" do
+    it "其它用户应该有通知记录" do
       @announcement.read_by_user(@user)
       @announcement.announcement_users.by_user(@user).count.should == 1
     end
 
 
-    it "应该设置成已读" do
+    it "其它用户应该设置成已读" do
       @announcement.read_by_user(@user)
       @announcement.has_readed?(@user).should == true
     end
