@@ -10,6 +10,11 @@ class Announcement < ActiveRecord::Base
   default_scope order('id desc')
 
 
+  def read_by_user(user)
+    self.announcement_users.create(:user => user, :read => true)
+  end
+
+
   module UserMethods
     def self.included(base)
       base.has_many :announcements, :foreign_key => 'creator_id'
