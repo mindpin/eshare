@@ -7,7 +7,7 @@ class AnnouncementsController < ApplicationController
 
 
   def index
-    @announcements = Announcement.all
+    @announcements = Announcement.page params[:page]
   end
 
   def new
