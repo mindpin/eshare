@@ -23,6 +23,7 @@ class AnnouncementsController < ApplicationController
   end
 
   def show
+    @announcement.read_by_user(current_user)
   end
 
 
