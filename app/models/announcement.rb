@@ -5,12 +5,14 @@ class Announcement < ActiveRecord::Base
   has_many :announcement_users
 
   validates :creator, :title, :content, :presence => true
+
+  after_save :read_by_user
   
 
   default_scope order('id desc')
 
 
-  def read_by_user(user)
+  def read_by_user(user = creator)
     self.announcement_users.create(:user => user, :read => true)
   end
 

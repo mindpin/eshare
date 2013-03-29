@@ -16,9 +16,7 @@ class AnnouncementsController < ApplicationController
 
   def create
     @announcement = current_user.announcements.build(params[:announcement])
-    if @announcement.save
-      @announcement.read_by_user(current_user)
-      
+    if @announcement.save      
       return redirect_to :action => :index
     end
     render :action => :new
