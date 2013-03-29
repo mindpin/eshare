@@ -1,5 +1,5 @@
 class CreateAnnouncements < ActiveRecord::Migration
-  def up
+  def change
     create_table :announcements do |t|
       t.integer :creator_id
       t.integer :title
