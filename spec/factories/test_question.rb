@@ -3,6 +3,6 @@ FactoryGirl.define do
     sequence(:title){|n| "title_#{n}"}
     course
     creator
-    kind {TestQuestion::KINDS.keys[rand 4]}
+    kind {TestQuestion::KINDS.keys[3]}
   end
 end

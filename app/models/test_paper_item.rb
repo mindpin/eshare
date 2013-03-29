@@ -9,11 +9,13 @@ class TestPaperItem < ActiveRecord::Base
   belongs_to :test_paper
   belongs_to :test_question
 
-  validates :test_paper_id,      :presence => true
-  validates :test_question_id,   :presence => true
+  validates :test_paper_id,    :presence => true
+  validates :test_question_id, :presence => true
 
-  delegate :kind,             :to => :test_question
-  delegate :course,           :to => :test_question
+  delegate :kind,   :to => :test_question
+  delegate :course, :to => :test_question
+
+  scope :with_kind, lambda {|kind| joins(:test_question).where('test_questions.kind = ?', kind)}
 
   def score?
     self.send(answer_field) == self.test_question.send(answer_field)

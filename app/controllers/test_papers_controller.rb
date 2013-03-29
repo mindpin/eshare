@@ -20,6 +20,6 @@ class TestPapersController < ApplicationController
   def destroy
     @test_paper = TestPaper.find(params[:id])
     @test_paper.destroy
-    redirect_to :action => :index
+    redirect_to course_path(@test_paper.course)
   end
 end

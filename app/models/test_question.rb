@@ -4,7 +4,7 @@ class TestQuestion < ActiveRecord::Base
     "MULTIPLE_CHOICE" => :answer_choice,
     "FILL" => :answer_fill,
     "TRUE_FALSE" => :answer_true_false
-   }
+  }
   attr_accessible :title, 
                   :course_id, 
                   :creator_id, 
@@ -20,10 +20,12 @@ class TestQuestion < ActiveRecord::Base
   has_many :test_paper_items
   has_many :test_papers, :through => :test_paper_items
 
-  validates :title,  :presence => true
-  validates :course, :presence => true
-  validates :creator,:presence => true
+  validates :title,  :presence  => true
+  validates :course, :presence  => true
+  validates :creator,:presence  => true
   validates :kind,   :inclusion => KINDS.keys
+
+  scope :with_kind, lambda {|kind| where('kind = ?', kind)}
 
   include AnswerChoice
 

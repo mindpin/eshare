@@ -12,7 +12,11 @@ class TestOption < ActiveRecord::Base
   end
 
   def test_option_rule
-    Rule.new(JSON.parse(read_attribute :rule))
+    Rule.new(self.rule)
+  end
+
+  def rule
+    JSON.parse(read_attribute :rule)
   end
 
   class Rule

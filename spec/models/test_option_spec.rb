@@ -2,17 +2,6 @@ require 'spec_helper'
 
 describe TestOption do
   let(:test_option){FactoryGirl.create(:test_option)}
-  before{
-    # test_option.rule=
-  }
-
-  describe '.rule=(opt)' do
-
-  end
-
-  describe '.rule' do
-
-  end
 
   let(:scoring_result){
     {
@@ -20,6 +9,7 @@ describe TestOption do
       :point => 4
     }
   }
+
   let(:scoring) {TestOption::Scoring.new scoring_result}
 
   describe TestOption::Scoring do
@@ -28,7 +18,6 @@ describe TestOption do
     its(:count){ should eq 10}
     its(:point){ should eq 4 }
   end
-
 
   describe TestOption::Rule do
     let(:result){

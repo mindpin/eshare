@@ -1,3 +1,4 @@
+.link= link_to '删除', test_paper_path(@test_paper), :method => :delete
 - @test_paper.test_questions.each do |test_question|
   .P= '----------------------------------------------------------'
   - paper_item = @test_paper.find_item_for(test_question)

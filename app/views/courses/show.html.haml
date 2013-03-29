@@ -11,8 +11,10 @@
 
 .list= link_to "章节列表", "/courses/#{@course.id}/chapters"
 
-/courses/:course_id/test_options/new(.:format)
-.list= link_to '组卷参数调整和自动评分', course_test_option_path(@course)
+- if @course.test_option
+  .list= link_to '组卷参数调整和自动评分', course_test_option_path(@course)
+- else
+  .list= link_to '组卷参数调整和自动评分', new_course_test_option_path(@course)
 
 .list= link_to '管理题库下的题目录入', course_test_questions_path(@course)
 

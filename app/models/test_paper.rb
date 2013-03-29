@@ -9,18 +9,23 @@ class TestPaper < ActiveRecord::Base
   validates :course_id, :presence => true
   validates :user_id,   :presence => true
 
+  delegate :test_option, :to => :course
+
   def self.make_test_paper_for(course, user)
     paper = self.create(:course_id => course.id,:user_id => user.id)
-    paper.select_questions!
+    paper.test_questions = paper.select_questions
     paper
   end
 
-  def select_questions!
-    if self.test_questions.blank?
-      test_questions = self.course.test_questions.to_a.shuffle
-      selected = test_questions[0,10]
-      self.test_questions = selected     
-    end
+  def select_questions
+    return [] if test_option.blank?
+    TestQuestion::KINDS.keys.map do |kind|
+      self.course.test_questions.with_kind(kind).to_a.shuffle[0, option_count_for(kind)]
+    end.flatten.uniq
+  end
+
+  def option_count_for(kind)
+    self.test_option.test_option_rule.send(kind.downcase).count.to_i
   end
 
   def find_item_for(test_question)
