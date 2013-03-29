@@ -14,6 +14,10 @@ class Announcement < ActiveRecord::Base
     self.announcement_users.create(:user => user, :read => true)
   end
 
+  def has_readed?(user)
+    self.announcement_users.by_user(user).count > 0
+  end
+
 
   module UserMethods
     def self.included(base)
