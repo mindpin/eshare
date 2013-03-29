@@ -3,7 +3,7 @@ FactoryGirl.define do
     sequence(:id){|n| "#{n}" }
 
     announcement
-    creator
+    user
 
     read true
   end
