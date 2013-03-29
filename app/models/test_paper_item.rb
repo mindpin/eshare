@@ -14,8 +14,6 @@ class TestPaperItem < ActiveRecord::Base
 
   delegate :kind,             :to => :test_question
   delegate :course,           :to => :test_question
-  delegate :test_option,      :to => :course
-  delegate :test_option_rule, :to => :test_option
 
   def score?
     self.send(answer_field) == self.test_question.send(answer_field)
@@ -26,6 +24,6 @@ class TestPaperItem < ActiveRecord::Base
   end
 
   def point
-    self.test_option_rule.send(self.kind.downcase).point.to_i
+    self.course.test_option.test_option_rule.send(self.kind.downcase).point.to_i
   end
 end

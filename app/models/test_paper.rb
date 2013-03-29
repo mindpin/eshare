@@ -9,7 +9,7 @@ class TestPaper < ActiveRecord::Base
   validates :course_id, :presence => true
   validates :user_id,   :presence => true
 
-  def self.make_test_paper_for(course,user)
+  def self.make_test_paper_for(course, user)
     paper = self.create(:course_id => course.id,:user_id => user.id)
     paper.select_questions!
     paper
