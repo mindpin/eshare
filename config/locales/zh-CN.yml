@@ -117,3 +117,8 @@ zh-CN:
       answer:
         content: 内容
         ops: 操作
+
+      announcements:
+        title: 标题
+        content: 内容
+        ops: 操作
