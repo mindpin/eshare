@@ -3,6 +3,8 @@ require "spec_helper"
 describe AnnouncementUser do
   describe 'Validation' do
     before {
+      @user = FactoryGirl.create(:user)
+
       @announcement = FactoryGirl.create(:announcement)
     }
 
