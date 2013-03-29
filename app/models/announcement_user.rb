@@ -1,6 +1,7 @@
 class AnnouncementUser < ActiveRecord::Base
   attr_accessible :announcement, :read, :user
 
+  belongs_to :user
   belongs_to :announcement
 
   validates :user, :announcement, :read, :presence => true
