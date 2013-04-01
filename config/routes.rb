@@ -54,6 +54,10 @@ Eshare::Application.routes.draw do
       put :set_tags
     end
   end
+
+  resources :surveys, :shallow => true do
+    resources :survey_items
+  end
   
   namespace :admin do
     root :to => 'index#index'

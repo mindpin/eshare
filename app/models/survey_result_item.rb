@@ -8,17 +8,16 @@ class SurveyResultItem < ActiveRecord::Base
 
   validates :answer_choice_mask, :presence => {:if=> lambda {|item|
     !item.survey_item.blank? && (
-      item.survey_item.kind == SurveyItem::Kind::SINGLE_CHOICE ||
-        item.survey_item.kind == SurveyItem::Kind::MULTIPLE_CHOICE
+      item.survey_item.is_choice?
       )
   }}
 
   validates :answer_fill, :presence => {:if=> lambda {|item|
-    !item.survey_item.blank? && item.survey_item.kind == SurveyItem::Kind::FILL
+    !item.survey_item.blank? && item.survey_item.is_fill?
   }}
 
   validates :answer_text, :presence => {:if=> lambda {|item|
-    !item.survey_item.blank? && item.survey_item.kind == SurveyItem::Kind::TEXT
+    !item.survey_item.blank? && item.survey_item.is_text?
   }}
 
   before_validation :set_answer_value

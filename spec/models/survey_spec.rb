@@ -27,6 +27,24 @@ describe Survey do
       it{
         @survey_item.choice_options.should == ['男','女'] 
       }
+
+      context 'choice_options_str' do
+        before{
+          @survey_item_str = @survey.survey_items.create(:kind => SurveyItem::Kind::SINGLE_CHOICE, :content => '你的性别?', :choice_options_str => "男\r\n女" )
+        }
+
+        it{
+          @survey_item.id.blank?.should == false 
+        }
+
+        it{
+          @survey_item.kind.should == SurveyItem::Kind::SINGLE_CHOICE
+        }
+
+        it{
+          @survey_item.choice_options.should == ['男','女'] 
+        }
+      end
     end
 
     describe '给调查问卷增加多选类型的问题' do
