@@ -3,7 +3,8 @@ require 'spec_helper'
 describe TestQuestion do
   let(:test_question) {FactoryGirl.build :test_question}
   describe '#answer_choice=' do
-    context '单选' do    
+    context '单选' do
+      before {test_question.kind = 'SINGLE_CHOICE'}
       it {
         expect{
           test_question.answer_choice=('B')
@@ -11,7 +12,8 @@ describe TestQuestion do
       }
     end
 
-    context '多选' do    
+    context '多选' do
+      before {test_question.kind = 'MULTIPLE_CHOICE'}
       it {
         expect{
           test_question.answer_choice=('BDE')
@@ -22,7 +24,10 @@ describe TestQuestion do
 
   describe '.answer_choice' do
     subject {test_question.answer_choice}
-    before  {test_question.answer_choice = 'CE'}
+    before do
+      test_question.kind = 'MULTIPLE_CHOICE'
+      test_question.answer_choice = 'CE'
+    end
 
     it {should be_an String}
     it {should include('C','E')}

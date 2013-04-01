@@ -3,7 +3,7 @@ class TestPaper < ActiveRecord::Base
 
   belongs_to :course
   belongs_to :user
-  has_many :test_paper_items
+  has_many :test_paper_items, :dependent => :destroy
 
   has_many :test_questions, :through => :test_paper_items
   validates :course_id, :presence => true

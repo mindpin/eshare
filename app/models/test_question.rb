@@ -9,7 +9,7 @@ class TestQuestion < ActiveRecord::Base
                   :answer,
                   :answer_fill, 
                   :answer_true_false, 
-                  :answer_choice 
+                  :answer_choice,
                   :test_question_choice_options
 
   belongs_to :course
@@ -18,6 +18,7 @@ class TestQuestion < ActiveRecord::Base
   has_many :test_papers, :through => :test_paper_items
 
   validates :title,  :presence  => true
+  validates :answer, :presence  => true
   validates :course, :presence  => true
   validates :creator,:presence  => true
   validates :kind,   :inclusion => KINDS.keys, :presence  => true
