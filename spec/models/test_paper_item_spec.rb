@@ -35,19 +35,19 @@ describe TestPaperItem do
 
     before do
       FactoryGirl.create :test_option, :course => @course, :test_option_rule => @result
-      @test_question.answer_choice = 'D';@test_question.save
+      @test_question.answer = 'D';@test_question.save
     end
 
     it {@test_paper_item.point.should be 4}
 
     context '答对' do
-      before {@test_paper_item.answer_choice = 'D';@test_paper_item.save}
+      before {@test_paper_item.answer = 'D';@test_paper_item.save}
       it {@test_paper_item.score?.should be true}
     end
 
     context '答错' do
-      before {@test_paper_item.answer_choice = 'A';@test_paper_item.save}
-      it {@test_paper_item.answer_choice.should == @test_paper_item.test_question.answer_choice}
+      before {@test_paper_item.answer = 'A';@test_paper_item.save}
+      # it {@test_paper_item.answer_choice.should == @test_paper_item.test_question.answer_choice}
       it {@test_paper_item.score?.should be false}
     end
   end 

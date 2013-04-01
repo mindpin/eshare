@@ -40,7 +40,7 @@ class TestQuestion < ActiveRecord::Base
   def choice_options
     JSON.parse(self.read_attribute :choice_options)
   end
-
+  
   class ChoiceOptions
     extend ActiveModel::Naming
     attr_accessor :result

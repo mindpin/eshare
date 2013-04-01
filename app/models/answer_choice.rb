@@ -12,4 +12,12 @@ module AnswerChoice
       num == "1" ?  acc + [('A'..'E').to_a[index]] : acc
     end.compact.sort.join('')
   end
+
+  def answer
+    TestQuestion::KINDS[self.kind]
+  end
+
+  def answer=(input)
+    self.send "#{answer}=", input
+  end
 end

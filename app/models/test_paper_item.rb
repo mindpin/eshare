@@ -18,14 +18,11 @@ class TestPaperItem < ActiveRecord::Base
   scope :with_kind, lambda {|kind| joins(:test_question).where('test_questions.kind = ?', kind)}
 
   def score?
-    self.send(answer_field) == self.test_question.send(answer_field)
-  end
-
-  def answer_field
-    TestQuestion::KINDS[self.kind]
+    self.send(answer) == self.test_question.send(answer)
   end
 
   def point
     self.course.test_option.test_option_rule.send(self.kind.downcase).point.to_i
   end
+
 end
