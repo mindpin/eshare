@@ -1,7 +1,8 @@
 class TestPaperItem < ActiveRecord::Base
   include AnswerChoice
   attr_accessible :test_paper_id, 
-                  :test_question_id, 
+                  :test_question_id,
+                  :answer,
                   :answer_fill, 
                   :answer_true_false, 
                   :answer_choice

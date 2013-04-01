@@ -8,7 +8,6 @@ class TestQuestionsController < ApplicationController
   end
 
   def create
-    
     @course = Course.find(params[:course_id])
     @test_question = @course.test_questions.build(params[:test_question])
 

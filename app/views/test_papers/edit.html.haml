@@ -1,4 +1,5 @@
 .link= link_to '删除', test_paper_path(@test_paper), :method => :delete
+.score 分数#{@test_paper.score}
 - @test_paper.test_questions.each do |test_question|
   .P= '----------------------------------------------------------'
   - paper_item = @test_paper.find_item_for(test_question)
@@ -8,14 +9,14 @@
       - test_question.test_question_choice_options.result.each   do |key, value|
         =key
         =value
-
-    - case test_question.kind
-    - when 'MULTIPLE_CHOICE', 'SINGLE_CHOICE'
-      = f.input :answer_choice
-    - when 'FILL'
-      = f.input :answer_fill
-    - when 'TRUE_FALSE'
-      = f.input :answer_true_false
+    = f.input paper_item.answer
+    / - case test_question.kind
+    / - when 'MULTIPLE_CHOICE', 'SINGLE_CHOICE'
+    /   = f.input :answer_choice
+    / - when 'FILL'
+    /   = f.input :answer_fill
+    / - when 'TRUE_FALSE'
+    /   = f.input :answer_true_false
     
     = f.submit
 

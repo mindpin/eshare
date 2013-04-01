@@ -1,10 +1,6 @@
 .choice
   .title= '请选择你要创建题的类型'
-  .item= link_to '创建填空题', new_course_test_question_path(params[:course_id], :kind => 'FILL')
-  .item= link_to '判断题', new_course_test_question_path(params[:course_id],:kind => 'TRUE_FALSE')
-  .item= link_to '单选题', new_course_test_question_path(params[:course_id],:kind => 'SINGLE_CHOICE')
-  .item= link_to '多选题', new_course_test_question_path(params[:course_id],:kind => 'MULTIPLE_CHOICE')
-
+  .item= link_to '录入一道题', new_course_test_question_path(params[:course_id])
 .test-questions
   - @test_questions.each do |test_question|
     .title= test_question.title

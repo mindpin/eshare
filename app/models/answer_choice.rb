@@ -1,6 +1,14 @@
 module AnswerChoice
+  KINDS = {
+    "SINGLE_CHOICE" => :answer_choice,
+    "MULTIPLE_CHOICE" => :answer_choice,
+    "FILL" => :answer_fill,
+    "TRUE_FALSE" => :answer_true_false
+  }
+
   def answer_choice=(choices)
-    value = choices.split('').map do |choice|
+    array = self.kind == 'SINGLE_CHOICE' ? [choices[0]] : choices.split('').uniq
+    value = array.uniq.map do |choice|
      2 ** ('A'..'E').to_a.index(choice.to_s.upcase)
     end.sum
     write_attribute(:answer_choice_mask, value)
@@ -14,10 +22,11 @@ module AnswerChoice
   end
 
   def answer
-    TestQuestion::KINDS[self.kind]
+    KINDS[self.kind]
   end
 
   def answer=(input)
+    return if self.kind.blank?
     self.send "#{answer}=", input
   end
 end

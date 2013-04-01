@@ -19,7 +19,7 @@
   .count 题目数: #{rule.true_false.count}
   .point 分值: #{rule.true_false.point}
 
-.link= link_to '编辑', edit_course_test_option_path(@test_option)
-.link= link_to '删除', course_test_option_path(@test_option), :method => :delete
+.link= link_to '编辑', edit_course_test_option_path(@test_option.course)
+.link= link_to '删除', course_test_option_path(@test_option.course), :method => :delete
 
 

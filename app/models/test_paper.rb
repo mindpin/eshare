@@ -36,7 +36,7 @@ class TestPaper < ActiveRecord::Base
     course.test_papers.find_by_user_id(user.id)
   end
 
-  def score!
+  def score
     self.test_paper_items.inject(0) do |acc, item|
       item.score? ? acc + item.point : acc
     end
