@@ -3,8 +3,14 @@ class Survey < ActiveRecord::Base
 
   belongs_to :creator, :class_name => 'User'
 
-  validates :title, :content, :creator, :presence => true
+  validates :title, :creator, :presence => true
 
   has_many :survey_items
   has_many :survey_results
+
+  module UserMethods
+    def self.included(base)
+      base.has_many :surveys, :foreign_key => :creator_id
+    end
+  end
 end
