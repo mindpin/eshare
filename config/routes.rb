@@ -57,6 +57,7 @@ Eshare::Application.routes.draw do
 
   resources :surveys, :shallow => true do
     resources :survey_items
+    resources :survey_results
   end
   
   namespace :admin do

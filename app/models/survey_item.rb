@@ -42,20 +42,13 @@ class SurveyItem < ActiveRecord::Base
     self.content.gsub('*', replace_str)
   end
 
-  def choice_options_str=(str)
-    @choice_options_str = str
-    self.choice_options = str.split(/\r?\n/)
-  end
-
-  def choice_options_str
-    @choice_options_str
-  end
-
-  def choice_options=(array)
+  def choice_options=(array_or_str)
+    array = array_or_str.is_a?(String) ? array_or_str.split(/\r?\n/) : array_or_str
     write_attribute(:choice_options, array.to_json)
   end
 
   def choice_options
     ActiveSupport::JSON.decode(read_attribute(:choice_options))
   end
+
 end

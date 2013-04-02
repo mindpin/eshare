@@ -34,12 +34,27 @@ class SurveyResultItem < ActiveRecord::Base
     end
   end
 
+  scope :by_survey_item, lambda {|survey_item| {:conditions => ['survey_item_id = ?', survey_item.id] }}
+
   def answer=(answer)
-    @answer = answer
+    @answer = [answer].flatten*","
+  end
+
+  def answer
+    case self.survey_item.kind
+    when SurveyItem::Kind::SINGLE_CHOICE, SurveyItem::Kind::MULTIPLE_CHOICE
+      self.answer_choice
+    when SurveyItem::Kind::TEXT
+      self.answer_text
+    when SurveyItem::Kind::FILL
+      self.answer_fill
+    end
   end
 
   def answer_choice=(choices)
-    value = choices.upcase.split('').map do |choice|
+    choice_arr = choices.upcase.split('')
+    choice_arr.delete(',')
+    value = choice_arr.map do |choice|
      2 ** ('A'..'Z').to_a.index(choice.to_s.upcase)
     end.sum
     write_attribute(:answer_choice_mask, value)
