@@ -1,10 +1,10 @@
 class SurveyResultItem < ActiveRecord::Base
-  attr_accessible :answer
+  attr_accessible :answer, :survey_item_id
 
   belongs_to :survey_result
   belongs_to :survey_item
 
-  validates :survey_result, :survey_item, :presence => true
+  validates :survey_item, :presence => true
 
   validates :answer_choice_mask, :presence => {:if=> lambda {|item|
     !item.survey_item.blank? && (

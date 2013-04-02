@@ -1,13 +1,19 @@
 = form_tag "/surveys/#{@survey.id}/survey_results", :method => :post do
-  - @survey.survey_items.each do |item|
+
+  - @survey.survey_items.each_with_index do |item, item_i|
     .item
+      = hidden_field_tag "survey_result_items_attributes[#{item_i}][survey_item_id]", item.id
+
+      - arr_name = "survey_result_items_attributes[#{item_i}][answer][]"
+      - str_name = "survey_result_items_attributes[#{item_i}][answer]"
+
       - if item.is_single_choice?
 
         = item.content + "[#{item.kind}]"
         - item.choice_options.each_with_index do |option,index|
           .field
             - char = ('A'..'Z').to_a[index]
-            = radio_button_tag "item[#{item.id}][answer]", char
+            = radio_button_tag arr_name, char
             = option
 
 
@@ -17,17 +23,18 @@
         - item.choice_options.each_with_index do |option,index|
           .field
             - char = ('A'..'Z').to_a[index]
-            = check_box_tag "item[#{item.id}][answer][]", char
+            = check_box_tag arr_name, char
             = option
 
       - elsif item.is_fill?
-        = item.content_by_replace(text_field_tag("item[#{item.id}][answer][]")).html_safe
+
+        = item.content_by_replace(text_field_tag(arr_name)).html_safe
 
 
       - elsif item.is_text?
         = item.content + "[#{item.kind}]"
         .field
-          = text_area_tag "item[#{item.id}][answer]"
+          = text_area_tag str_name
 
   = submit_tag '确定'
       

@@ -12,21 +12,6 @@ class Survey < ActiveRecord::Base
     self.survey_results.where(:creator_id => current_user.id).present?
   end
 
-  def record_result(user, params)
-    SurveyResult.transaction do
-      result = self.survey_results.build
-      result.creator = user
-      result.save!
-
-      params.each do |survey_item_id, answer|
-        survey_item = self.survey_items.find(survey_item_id)
-        sri = result.survey_result_items.build(:answer => answer[:answer])
-        sri.survey_item = survey_item
-        sri.save!
-      end
-    end
-  end
-
   module UserMethods
     def self.included(base)
       base.has_many :surveys, :foreign_key => :creator_id

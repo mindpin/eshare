@@ -6,9 +6,13 @@ class SurveyResultsController < ApplicationController
 
   def create
     @survey = Survey.find(params[:survey_id])
-    @survey.record_result(current_user, params[:item])
-    survey_result = @survey.survey_results.by_user(current_user).first
-    redirect_to "/survey_results/#{survey_result.id}"
+    survey_result = @survey.survey_results.build
+    survey_result.survey_result_items_attributes = params[:survey_result_items_attributes]
+    survey_result.creator = current_user
+    if survey_result.save
+      return redirect_to "/survey_results/#{survey_result.id}"
+    end
+    render :action => :new
   end
 
   def show
