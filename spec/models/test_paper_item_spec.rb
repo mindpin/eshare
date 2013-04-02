@@ -52,9 +52,23 @@ describe TestPaperItem do
       before {@test_paper_item.answer = 'A';@test_paper_item.save}
       it {@test_paper_item.score?.should be false}
     end
-  end 
-end
+  end
 
+  describe '#each_fill_field' do
+    subject {@test_paper_item.each_fill_field(&lambda{|_| _})}
+    before do
+      @test_question.kind = 'FILL'
+      @test_question.title = '*heihei*haha*xixi*'
+      @test_question.save
+    end
+
+    it {should be_an Enumerator}
+    it 'yields only asterisks' do
+      subject.to_a.count.should_not be 0
+      subject.to_a.count('*').should eq subject.to_a.count
+    end
+  end
+end
 
 
 

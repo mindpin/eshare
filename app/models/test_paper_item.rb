@@ -37,4 +37,12 @@ class TestPaperItem < ActiveRecord::Base
     return if self.kind != 'FILL'
     self.answer_fill = input.sort_by {|pair| pair[0]}.map {|pair| pair[1]}.join(',')
   end
+
+  def each_fill_field(&block)
+    Enumerator.new do |yielder|
+      self.title.split(/(\*)/).reject(&:blank?).each do |i|
+        i == '*' ? yielder << i : block.call(i)
+      end
+    end
+  end
 end

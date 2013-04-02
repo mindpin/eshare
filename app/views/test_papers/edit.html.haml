@@ -6,15 +6,11 @@
   = simple_form_for paper_item, :url => "/test_paper_items/#{paper_item.id}" do |f|
     - if paper_item.kind == 'FILL'
       .title
-      = f.simple_fields_for :fill_fields, paper_item.fill_fields do |fields|
-        - fragments = test_question.title.split('*')
-        - count = paper_item.fill_fields.count
-        - last = count > fragments.count
-        - fragments.each.with_index do |fragment, index|
-          = fragment
-          = fields.input :"field#{index + 1}"
-        - if last
-          = fields.input :"field#{count}"
+        = f.simple_fields_for :fill_fields, paper_item.fill_fields do |fields|
+          - paper_item.each_fill_field do |fragment|
+            = fragment
+          - end.each.with_index do |_, index|
+            = fields.input :"field#{index + 1}"
 
     - else
       .title= test_question.title
