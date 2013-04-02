@@ -54,6 +54,11 @@ gem "mini_magick", "3.5.0", :require => false
 # 编码处理基础库
 gem 'iconv', '1.0.2'
 
+
+# 分类目录
+gem 'awesome_nested_set'
+
+
 # 自己写的 gem，都不指定版本号，如果有重大修改，通过GIT TAG解决
 
 ## 用户角色
