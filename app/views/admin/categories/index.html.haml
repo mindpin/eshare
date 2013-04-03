@@ -1,7 +1,7 @@
 .page-admin-categories
 
   
-  = form_tag '/categories/do_import', :method => :post, :multipart => true do
+  = form_tag '/admin/categories/do_import', :method => :post, :multipart => true do
     .field
       = file_field_tag 'yaml_file'
       = submit_tag '导入'
