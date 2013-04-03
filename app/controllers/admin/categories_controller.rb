@@ -8,7 +8,7 @@ class Admin::CategoriesController < ApplicationController
   end
 
   def index
-    @categories = Category.all
+    @categories = Category.roots
   end
 
   def new
@@ -35,5 +35,8 @@ class Admin::CategoriesController < ApplicationController
   def destroy
     @category.destroy
     redirect_to :back
+  end
+
+  def do_import
   end
 end

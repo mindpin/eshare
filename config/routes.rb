@@ -103,7 +103,11 @@ Eshare::Application.routes.draw do
     end 
 
 
-    resources :categories
+    resources :categories do
+      collection do
+        post :do_import
+      end
+    end
 
   end
 end
