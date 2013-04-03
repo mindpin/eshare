@@ -14,8 +14,9 @@ describe Category do
       @linux = @root_nodes.last
 
       @nodes = Category.get_nodes(file)
-      @slackware = @nodes[@linux].keys.first
-      @debian = @nodes[@linux].keys.last
+      @linux_nodes = @nodes[@linux].keys
+      @slackware = @linux_nodes.first
+      @debian = @linux_nodes.last
     }
 
     it "根目录" do
@@ -27,7 +28,7 @@ describe Category do
     end
 
     it "第二级 linux 目录" do
-      @nodes[@linux].keys.should == ['slackware', 'debian']
+      @linux_nodes.should == ['slackware', 'debian']
     end
 
     it "第三级 debian 目录" do
