@@ -1,6 +1,8 @@
 class Category < ActiveRecord::Base
   attr_accessible :name, :parent_id
 
+  validates :name, :presence => true
+
   acts_as_nested_set
 
   def self.get_nodes(file)
