@@ -38,7 +38,7 @@ class Admin::CategoriesController < ApplicationController
   end
 
   def do_import
-    file = params['yaml_file'].path
+    file = params['yaml_file']
     Category.save_yaml(file)
 
     redirect_to "/admin/categories"

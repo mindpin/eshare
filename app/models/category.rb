@@ -6,7 +6,7 @@ class Category < ActiveRecord::Base
   acts_as_nested_set
 
   def self.get_nodes(file)
-    YAML::load(File.open(file))
+    YAML::load(File.open(file.path))
   end
 
   def self.save_yaml(file)
