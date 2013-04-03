@@ -3,8 +3,12 @@ class Category < ActiveRecord::Base
 
   acts_as_nested_set
 
+  def self.get_nodes(file)
+    YAML::load(File.open(file))
+  end
+
   def self.save_yaml(file)
-    nodes = YAML::load(File.open(file))
+    nodes = get_nodes(file)
     save_nodes(nodes, nil)
   end
 
