@@ -1,0 +1,13 @@
+.page-admin-categories
+  
+  = page_button_group :categories do |g|
+    - g.add '创建', '/admin/categories/new'
+    - g.add '导入', '/admin/categories/import', :success
+
+  = page_data_table(:categories, @categories, :striped, :bordered) do |table|
+    - table.add_column(:name)
+    - table.add_column(:lft)
+    - table.add_column(:rgt)
+    - table.add_column(:ops) do |category|
+      %a.btn.mini{:href => "/admin/categories/#{category.id}/edit"}= t('common.edit')
+      = link_to t('common.delete'), "/admin/categories/#{category.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger'

@@ -136,3 +136,11 @@ zh-CN:
         title: 标题
         content: 内容
         ops: 操作
+
+
+      categories:
+        name: 菜单
+        parent: 父节点
+        lft: left
+        rgt: right
+        ops: 操作

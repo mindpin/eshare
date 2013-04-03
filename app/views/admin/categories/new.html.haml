@@ -1,6 +1,11 @@
 .page-admin-categories
+  = link_to 'categories', "/admin/categories"
 
   = simple_form_for @category, :url => "/admin/categories" do |f|
+    = f.input :name
+
+    = f.label :parent_id
     = f.select :parent_id, nested_set_options(Category, @category) {|i| "#{'-' * i.level} #{i.name}" }
-    = select_tag 'parent_id', options_for_select(nested_set_options(Category) {|i| "#{'-' * i.level} #{i.name}" } )
+
+
     = f.button :submit
