@@ -6,14 +6,14 @@ describe Category do
     before {
       file = 'spec/data/categories.yaml'
 
-      @nodes = Category.get_nodes(file)
       Category.save_yaml(file)
 
       @root_nodes = Category.roots.map { |c| c.name }
 
-      @microsoft = @root_nodes[0]
-      @linux = @root_nodes[1]
+      @microsoft = @root_nodes.first
+      @linux = @root_nodes.last
 
+      @nodes = Category.get_nodes(file)
       @slackware = @nodes[@linux].keys.first
       @debian = @nodes[@linux].keys.last
     }
