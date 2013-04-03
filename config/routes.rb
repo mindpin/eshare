@@ -102,6 +102,9 @@ Eshare::Application.routes.draw do
       end
     end 
 
+
+    resources :categories
+
   end
 end
 
