@@ -3,6 +3,10 @@ class Category < ActiveRecord::Base
 
   acts_as_nested_set
 
+  def self.save_yaml(file)
+    nodes = YAML::load(File.open(file))
+    save_nodes(nodes, nil)
+  end
 
   def self.save_nodes(nodes, parent)
     nodes.keys.each do |name|

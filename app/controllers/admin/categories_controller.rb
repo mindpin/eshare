@@ -39,8 +39,7 @@ class Admin::CategoriesController < ApplicationController
 
   def do_import
     file = params['yaml_file'].path
-    nodes = YAML::load(File.open(file))
-    Category.save_nodes(nodes, nil)
+    Category.save_yaml(file)
 
     redirect_to "/admin/categories"
   end
