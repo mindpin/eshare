@@ -75,9 +75,9 @@ gem 'simple-images',
     :git => 'git://github.com/mindpin/simple-images'
 
 gem 'simple-page-compoents',
-    :git => 'git://github.com/mindpin/simple-page-compoents',
-    :tag => '0.0.7.1'
-    # :path => '/web/songliang/simple-page-compoents'
+    # :git => 'git://github.com/mindpin/simple-page-compoents',
+    # :tag => '0.0.7.1'
+    :path => '/web/songliang/simple-page-compoents'
 
 ## 给指定 activerecord 模型动态添加属性
 gem 'dynamic_attrs',
@@ -102,3 +102,7 @@ gem 'odocuconv',
 gem 'mindpin-simple-tags',
     :git => 'git://github.com/mindpin/mindpin-simple-tags.git',
     :tag => '0.0.1'
+
+# feed
+gem 'mindpin-feeds',
+    :git => 'git://github.com/mindpin/mindpin-feeds'

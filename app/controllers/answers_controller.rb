@@ -6,11 +6,6 @@ class AnswersController < ApplicationController
     @answer = Answer.find(params[:id]) if params[:id]
   end
 
-  def index
-    @answers = @question.answers.page params[:page]
-  end
-
-
   def create
     @answer = current_user.answers.build(params[:answer])
     @answer.question = @question
