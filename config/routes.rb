@@ -43,6 +43,11 @@ Eshare::Application.routes.draw do
       put :set_tags
     end
   end
+
+  resources :surveys, :shallow => true do
+    resources :survey_items
+    resources :survey_results
+  end
   
   namespace :admin do
     root :to => 'index#index'
@@ -85,6 +90,13 @@ Eshare::Application.routes.draw do
         get :student_attrs
       end
     end 
+
+
+    resources :categories do
+      collection do
+        post :do_import
+      end
+    end
 
   end
 end
