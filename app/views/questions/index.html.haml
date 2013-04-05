@@ -8,10 +8,15 @@
 
   = page_tile(:'questions-feeds', @feeds) do
     - add_left(:avatar) do |feed|
-      = avatar feed.to.creator
+      - if feed.to
+        = avatar feed.to.creator
     - add(:desc) do |feed|
       = feed_desc feed
+    - add(:time, :quiet) do |feed|
+      = feed.created_at
+
     - context do |feed|
+
       - if feed.what == 'create_question'
         - question = feed.to
         - add(:title) do
@@ -20,10 +25,23 @@
           = question.content
         - add_foot(:answers) do
           %a{:href => "/questions/#{question.id}"} #{question.answers.count} 个回答
+
       - if feed.what == 'create_answer'
         - answer = feed.to
         - question = answer.question
         - add(:title) do
           %a{:href => "/questions/#{question.id}"}= question.title
+        - add(:'answer-content') do
+          = answer.content
+
+      - if ['update_answervote', 'create_answervote'].include? feed.what
+        - vote = feed.to
+        - answer = vote.answer
+        - question = answer.question
+        - add(:title) do
+          %a{:href => "/questions/#{question.id}"}= question.title
+        - add(:'answer-creator', :bold) do
+          %span>= user_link answer.creator
+          %span> ：
         - add(:'answer-content') do
           = answer.content

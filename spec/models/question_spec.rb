@@ -77,6 +77,12 @@ describe Answer do
       end
 
       it {
+        @answer.vote_up_by!(@user)
+        @answer.vote_down_by!(@user)
+        @answer.answer_votes.by_user(@user).count.should == 1
+      }
+
+      it {
         expect {
           @answer.vote_up_by!(@user)
         }.to change {
@@ -157,4 +163,46 @@ describe Answer do
       }
     end
   end
+end
+
+describe AnswerVote do
+  context('Validation') {
+    before {
+      @question     = FactoryGirl.create :question
+      @user         = FactoryGirl.create :user
+      @answer       = FactoryGirl.create :answer, :question => @question,
+                                                  :creator => @user
+    }
+
+    it {
+      vote = AnswerVote.new :answer => @answer,
+                            :user => @user
+      vote.valid?.should == false
+    }
+
+    context {
+      before { @vote = @answer.answer_votes.create :user => @user }
+      it { @vote.valid?.should == false }
+      it { AnswerVote.count.should == 0 }
+    }
+
+    context {
+      before {
+        @vote = @answer.answer_votes.create :user => @user
+        @vote.update_attribute :kind, 'VOTE_CANCEL'
+      }
+      it { @vote.valid?.should == true }
+      it { AnswerVote.count.should == 1 }
+    }
+
+    context {
+      before {
+        @vote = @answer.answer_votes.create :user => @user
+        @vote.update_attributes :kind => 'XXXX'
+        # udpate_attribute 方法不会触发校验
+      }
+      it { @vote.valid?.should == false }
+      it { AnswerVote.count.should == 0 }
+    }
+  }
 end

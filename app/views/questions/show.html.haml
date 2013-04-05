@@ -8,9 +8,9 @@
       answer-#{answer.id}
 
     - add_left(:vote_up) do |answer|
-      = link_to t('common.vote.up'), "/answers/#{answer.id}/answer_votes/up"
+      = link_to t('common.vote.up'), "/answers/#{answer.id}/vote_up", :method => :put
     - add_left(:vote_down) do |answer|
-      = link_to t('common.vote.down'), "/answers/#{answer.id}/answer_votes/down"
+      = link_to t('common.vote.down'), "/answers/#{answer.id}/vote_down", :method => :put
 
     - context do |answer|
       - add(:avatar) do

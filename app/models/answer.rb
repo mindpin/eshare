@@ -22,28 +22,29 @@ class Answer < ActiveRecord::Base
   end
 
   def vote_up_by!(user)
-    self.vote_cancel_by!(user)
-    self.answer_votes.create :kind => AnswerVote::Kind::VOTE_UP,
-                             :user => user
-    self.reload
+    _prepate_answer_vote(user).update_attributes :kind => AnswerVote::Kind::VOTE_UP
+    reload
   end
 
   def vote_down_by!(user)
-    self.vote_cancel_by!(user)
-    self.answer_votes.create :kind => AnswerVote::Kind::VOTE_DOWN,
-                             :user => user
-    self.reload
+    _prepate_answer_vote(user).update_attributes :kind => AnswerVote::Kind::VOTE_DOWN
+    reload
   end
 
   def vote_cancel_by!(user)
-    self.answer_votes.by_user(user).destroy_all
-    self.reload
+    _prepate_answer_vote(user).update_attributes :kind => AnswerVote::Kind::VOTE_CANCEL
+    reload
   end
 
   def refresh_vote_sum!
     self.vote_sum = self.answer_votes.map(&:point).sum
     self.save
   end
+
+  private
+    def _prepate_answer_vote(user)
+      self.answer_votes.by_user(user).first || self.answer_votes.build(:user => user)
+    end
 
   module UserMethods
     def self.included(base)

@@ -52,13 +52,18 @@ module ApplicationHelper
     case feed.what
       when 'create_question'
         capture_haml {
-          haml_concat user_link(feed.to.creator)
+          haml_concat user_link(feed.who)
           haml_concat '提了一个问题'
         }
       when 'create_answer'
         capture_haml {
-          haml_concat user_link(feed.to.creator)
+          haml_concat user_link(feed.who)
           haml_concat '回答了这个问题'
+        }
+      when 'create_answervote', 'update_answervote'
+        capture_haml {
+          haml_concat user_link(feed.who)
+          haml_concat '对这个回答表示支持'
         }
       else
         feed.what

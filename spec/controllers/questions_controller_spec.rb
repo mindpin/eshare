@@ -47,12 +47,11 @@ describe QuestionsController do
 
     context '有人对回答投票' do
       before {
-        answer = @user.answers.create :question => Question.last,
+        @answer = @user.answers.create :question => Question.last,
                                       :content => '我认为……'
 
         @user1 = FactoryGirl.create :user
-        @vote_up = FactoryGirl.create :answer_vote, :user => @user,
-                                                    :answer => answer
+        @answer.vote_up_by!(@user1)
 
         get :index
       }
@@ -64,7 +63,25 @@ describe QuestionsController do
       it {
         response.body.should have_css('.questions-feeds .feed', :count => 12)
       }
+
+      context '反复投票和取消' do
+        it {
+          @answer.vote_down_by!(@user1)
+          get :index
+          response.body.should have_css('.questions-feeds .feed', :count => 11)
+          # feed 不显示反对票
+        }
+
+        it {
+          @answer.vote_cancel_by!(@user1)
+          get :index
+          response.body.should have_css('.questions-feeds .feed', :count => 11)
+          # feed 不显示取消投票
+        }
+      end
     end
+
+
   end
 
   context '#show' do

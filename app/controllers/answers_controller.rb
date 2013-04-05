@@ -15,10 +15,14 @@ class AnswersController < ApplicationController
     render 'questions/show'
   end
 
-  def show
+  def vote_up
+    @answer.vote_up_by! current_user
+    redirect_to :back
   end
 
-  def edit
+  def vote_down
+    @answer.vote_down_by! current_user
+    redirect_to :back
   end
 
   def update
