@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 describe Admin::UsersController do
+  before {
+    @user = FactoryGirl.create :user, :role => :admin
+    sign_in @user
+  }
+
   let(:teacher) {FactoryGirl.create(:user, :teacher)}
   let(:student) {FactoryGirl.create(:user, :student)}
 

@@ -1,10 +1,10 @@
-.page-admin-courses
-  = paginate @courses
-  
+.page-content-header
   = page_button_group :courses do |g|
     - g.add '创建课程', '/courses/new'
-    - g.add '导入课程', '/courses/import', :success
+    - g.add '导入Excel', '/courses/import', :success
 
+.page-admin-courses
+  = paginate @courses
   = page_data_table(:courses, @courses, :striped, :bordered) do |table|
     - table.add_column(:name) do |course|
       = link_to course.name, "/courses/#{course.id}"

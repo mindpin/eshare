@@ -44,18 +44,11 @@ feature '管理员进行用户管理' do
         length.should == 3
     }
 
-    context '修改和删除链接' do
+    context '修改链接' do
       it {
         page.all('.page-admin-users .user[data-role=teacher]').each do |user|
           user.should have_selector('a.edit')
           user.find('a.edit').text.should == t('common.user.edit')
-        end
-      }
-
-      it {
-        page.all('.page-admin-users .user[data-role=teacher]').each do |user|
-          user.should have_selector('a.delete')
-          user.find('a.delete').text.should == t('common.user.delete')
         end
       }
     end
@@ -82,6 +75,16 @@ feature '管理员进行用户管理' do
 
     it {
       page.should have_selector '.page-admin-user-edit'
+    }
+  end
+
+  context '导入用户信息' do
+    before {
+      visit '/admin/users/import'
+    }
+
+    it {
+      page.should have_selector '.page-admin-users-import'
     }
   end
 

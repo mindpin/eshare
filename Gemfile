@@ -80,9 +80,9 @@ gem 'simple-images',
     :git => 'git://github.com/mindpin/simple-images'
 
 gem 'simple-page-compoents',
-    :git => 'git://github.com/mindpin/simple-page-compoents',
-    :tag => '0.0.7.2'
-    # :path => '/web/songliang/simple-page-compoents'
+    # :git => 'git://github.com/mindpin/simple-page-compoents',
+    # :tag => '0.0.7.2'
+    :path => '/web/songliang/simple-page-compoents'
 
 ## 给指定 activerecord 模型动态添加属性
 gem 'dynamic_attrs',

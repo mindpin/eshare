@@ -13,18 +13,18 @@ feature '创建课程' do
   context '创建课程' do
     before {
       within '.page-sidebar' do
-        click_on '课程'
+        click_on '课程管理'
       end
       click_on '创建课程'
     }
 
     it {
-      page.should have_css('form legend', :text => '创建课程')
+      page.should have_css('h1', :text => '创建课程')
     }
 
     it {
       click_on I18n.t('common.form.cancel')
-      current_path.should == '/courses'
+      current_path.should == '/courses/manage'
     }
 
     context '正确的参数' do
@@ -44,7 +44,7 @@ feature '创建课程' do
       }
 
       it {
-        current_path.should == '/courses'
+        current_path.should == '/courses/manage'
       }
     end
 

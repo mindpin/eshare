@@ -17,6 +17,7 @@ Eshare::Application.routes.draw do
   # 课程
   resources :courses, :shallow => true do
     collection do
+      get :manage
       get :import
       post :do_import
     end
@@ -48,28 +49,12 @@ Eshare::Application.routes.draw do
     resources :survey_items
     resources :survey_results
   end
-  
+end
+
+# 管理员
+Eshare::Application.routes.draw do
   namespace :admin do
     root :to => 'index#index'
-
-    resources :teachers do
-      collection do
-        get :import
-        post :do_import
-      end
-      member do
-        get :password
-        put :password_submit
-        get 'course/:course_id', :action => 'course_students'
-      end
-    end
-
-    resources :students do
-      collection do
-        get :import
-        post :do_import
-      end
-    end
 
     resources :users do
       member do
@@ -91,13 +76,11 @@ Eshare::Application.routes.draw do
       end
     end 
 
-
     resources :categories do
       collection do
         post :do_import
       end
     end
-
   end
 end
 
