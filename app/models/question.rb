@@ -1,7 +1,9 @@
 class Question < ActiveRecord::Base
-  attr_accessible :title, :content
+  attr_accessible :title, :content, :chapter_id, :ask_to_user_id
 
   belongs_to :creator, :class_name => 'User', :foreign_key => :creator_id
+  belongs_to :ask_to, :class_name => 'User', :foreign_key => :ask_to_user_id
+  belongs_to :chapter
   has_many :answers
 
   validates :creator, :title, :content, :presence => true

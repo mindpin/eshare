@@ -1,18 +1,16 @@
 - content_for :header do
-  %h1= @course.name
-  %span.split /
-  %h1= @chapter.title
-
+  = render_cell :manage_courses_breadcrumb, :display, :model => @chapter
   = page_button_group :courses do |g|
     - g.add '增加课件', "/manage/chapters/#{@chapter.id}/course_wares/new", :success
 
 .page-chapter-show
   = page_data_table :'course-wares', @course_wares, :striped, :bordered do |table|
-    - table.add_column :name do
-      = ''
+    - table.add_column :title do |cw|
+      = link_to cw.title, 'javascript:;'
     - table.add_column :kind do |cw|
       = cw.kind
-    - table.add_column :'pages-count' do
-      0 页
-    - table.add_column :duration do
-      00:00
+    - table.add_column :desc do |cw|
+      = truncate_u cw.desc, 20
+    - table.add_column :ops do |cw|
+      %a.btn.mini{:href => "/manage/course_wares/#{cw.id}/edit"}= t('common.edit')
+      = link_to t('common.delete'), "/manage/course_wares/#{cw.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger'

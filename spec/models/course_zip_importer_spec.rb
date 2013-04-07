@@ -25,7 +25,7 @@ describe CourseZipImporter do
         end
 
         context 'imports coursewares' do
-          it {expect {subject}.to change {CourseWare.count}.by(2)}
+          it {expect {subject}.to change {CourseWare.count}.by(3)}
         end
       end
     end

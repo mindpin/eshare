@@ -27,8 +27,15 @@ zh-CN:
     submit:
       course:
         create: 创建%{model}
+        update: 更新%{model}
       answer:
         create: 发布回答
+      chapter:
+        create: 创建章节
+        update: 更新章节
+      course_ware:
+        create: 创建课件
+        update: 更新课件
 
   activerecord:
     models:
@@ -48,6 +55,12 @@ zh-CN:
         desc: 课程简介
         syllabus: 课程大纲
         cover: 课程封面
+      chapter:
+        title: 章节标题
+        desc: 章节简介
+      course_ware:
+        title: 课件标题
+        desc: 课件简介
 
     errors:
       models:
@@ -63,6 +76,16 @@ zh-CN:
               blank: 必须填写课程简介
             syllabus:
               blank: 必须填写课程大纲
+
+        chapter:
+          attributes:
+            title:
+              blank: 必须填写章节标题
+
+        course_ware:
+          attributes:
+            title:
+              blank: 必须填写课件标题
 
 
   views:
@@ -141,14 +164,18 @@ zh-CN:
 
       chapters:
         title: 标题
-        course-wares-count: 课件数
-        homeworks-count: 练习数
+        course-wares-count: 课件数目
+        homeworks-count: 练习数目
+        updated_at: 更新时间
+        ops: 操作
 
       course-wares:
-        name: 课件名
+        title: 课件名
         kind: 类型
+        desc: 课件简介
         pages-count: 页数
         duration: 时长
+        ops: 操作
 
       questions:
         title: 标题
