@@ -13,78 +13,6 @@ module OtherHelper
     end
   end
 
-  def hbreadcrumb(str, url = nil, options = {})
-    url ||= 'javascript:;'
-
-    content_for :breadcrumb do
-      content_tag :div, :class => 'link' do
-        content_tag(:a, truncate_u(str, 16), :href => url)
-      end
-    end
-  end
-
-  def truncate_u(text, length = 30, truncate_string = "...")
-    truncate(text, :length => length, :separator => truncate_string)
-  end
-
-  def hgoback(url)
-    content_for :breadcrumb do
-      content_tag :div, :class => 'link goback' do
-        content_tag(:a, '返回上级', :href => url)
-      end
-    end
-  end
-  ##
-  def page_top_fixed(klass, &block)
-    css_class = [klass, 'page-top-fixed'] * ' '
-    content_tag :div, :class => css_class, &block
-  end
-
-  def page_field(css_class, options={}, &block)
-    options.assert_valid_keys :title
-    content_tag :div, :class => ['page-field', css_class] do
-      content_tag(:div, options[:title], :class => 'field-title') +
-      content_tag(:div, :class => 'field-data') do
-        capture(&block)
-      end
-    end
-  end
-
-  def page_list_head(options={})
-    options.assert_valid_keys :cols
-    content_tag :div, :class => :cells do
-      yield HeadWidget.new(self, options[:cols])
-    end
-  end
-
-  def page_model_list(models, options={}, &block)
-    options.assert_valid_keys :cols, :class
-    cols = options[:cols] || {}
-
-    content_tag :div, :class => ['page-model-list', options[:class]] do
-      if models.blank?
-        content_tag :div, '目前列表没有内容', :class => :blank
-      else
-        models.map do |model|
-          page_list_body :cols => cols, :model => model, &block
-        end.reduce(&:+)
-      end
-    end
-  end
-
-  def page_list_body(options={})
-    options.assert_valid_keys :cols, :model
-    content_tag :div, :class => :cells do
-      yield BodyWidget.new(self, options[:cols], options[:model])
-    end
-  end
-
-  def page_buttons
-    content_tag :div, :class => :buttons do
-      yield HeadWidget.new(self)
-    end
-  end
-
   def current_user_title
     return '老师' if current_user.is_teacher?
     return '同学' if current_user.is_student?
@@ -98,11 +26,6 @@ module OtherHelper
   def user_email(user)
     return "未知用户" if user.blank?
     user.email
-  end
-
-  def user_link(user)
-    return '未知用户' if user.blank?
-    link_to user.name, "/users/#{user.id}", :class=>'u-name'
   end
 
   def flash_info

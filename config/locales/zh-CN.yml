@@ -18,6 +18,8 @@ zh-CN:
     submit:
       course:
         create: 创建%{model}
+      answer:
+        create: 发布回答
 
   activerecord:
     models:
@@ -37,6 +39,7 @@ zh-CN:
         desc: 课程简介
         syllabus: 课程大纲
         cover: 课程封面
+
     errors:
       models:
         course:
@@ -97,6 +100,10 @@ zh-CN:
     course:
       create_course: 创建课程
 
+    question:
+      you-can-answer-only-once: 一个问题你只能回答一次，不过你可以修改 %{your-answer}
+      your-answer: 你自己的回答
+
 
   compoents:
     data_table:
@@ -135,4 +142,12 @@ zh-CN:
       announcements:
         title: 标题
         content: 内容
+        ops: 操作
+
+
+      categories:
+        name: 菜单
+        parent: 父节点
+        lft: left
+        rgt: right
         ops: 操作

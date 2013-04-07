@@ -1,25 +1,53 @@
-.title
-  = @question.title
+.page-question-show
+  .question
+    %h2.title= @question.title
+    .content= @question.content
 
-.content
-  = @question.content
+  = page_tile(:answers, @question.answers) do
+    - set_id do |answer|
+      answer-#{answer.id}
 
-- @question.answers.each do |answer|
-  .answer
-    = answer.content
-    .vote_points
-      分数
-      = answer.vote_sum
-    .vote_count
-      投票数
-      = answer.answer_votes.count
-    .op
-      = link_to 'vote up', "/answers/#{answer.id}/answer_votes/up"
-      = link_to 'vote down', "/answers/#{answer.id}/answer_votes/down"
-      = link_to 'cancel vote', "/answers/#{answer.id}/answer_votes/cancel", :method=>:delete
-      = link_to 'edit', "/answers/#{answer.id}/edit"
+    - add_left(:vote_up) do |answer|
+      = link_to t('common.vote.up'), "/answers/#{answer.id}/vote_up", :method => :put
+    - add_left(:vote_down) do |answer|
+      = link_to t('common.vote.down'), "/answers/#{answer.id}/vote_down", :method => :put
+
+    - context do |answer|
+      - add(:avatar) do
+        = avatar answer.creator, :small
+      - add(:name, :bold) do
+        = user_link answer.creator
+
+      - count = answer.answer_votes.count
+      - if count > 0
+        - add(:votes_count, :quiet) do
+          %span> #{count} 票
+          %span> ，
+          %span> 来自xxx，xxx
+
+      - add(:content)
+      - add(:edit) do
+        = link_to t('common.edit'), "/answers/#{answer.id}/edit"
+
+    - add_foot(:updated_at)
+    - add_foot(:comments) do |answer|
+      x 条评论
+
+  - if @question.answered_by? current_user
+    .you-can-answer-only-once
+      :ruby
+        my_answer = @question.answer_of(current_user)
+        str = t('common.question.you-can-answer-only-once')
+        str.sub!('%{your-answer}') do
+          link_to t('common.question.your-answer'), "#answer-#{my_answer.id}"
+        end
+      = str.html_safe
 
 
-= simple_form_for [@question, @answer] do |f|
-  = f.input :content, as: :text
-  = f.submit
+  - else
+    = simple_form_for [@question, @answer] do |f|
+      .form-inputs
+        = f.input :content, :as => :text, :input_html => {:rows => 4, :class => 'xxlarge'}
+      .form-actions
+        = f.button :submit, :class => 'success'
+

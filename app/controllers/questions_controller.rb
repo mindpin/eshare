@@ -6,7 +6,7 @@ class QuestionsController < ApplicationController
   end
 
   def index
-    @questions = Question.page params[:page]
+    @feeds = Feed.on_scene(:questions).page params[:page]
   end
 
   def new

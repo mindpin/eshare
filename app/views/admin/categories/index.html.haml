@@ -1,0 +1,11 @@
+.page-admin-categories
+
+  
+  = form_tag '/admin/categories/do_import', :method => :post, :multipart => true do
+    .field
+      = file_field_tag 'yaml_file'
+      = submit_tag '导入'
+
+  %ul
+    - @categories.each do |node|
+      = render '/admin/categories/tree', :node => node

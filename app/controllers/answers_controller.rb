@@ -6,11 +6,6 @@ class AnswersController < ApplicationController
     @answer = Answer.find(params[:id]) if params[:id]
   end
 
-  def index
-    @answers = @question.answers.page params[:page]
-  end
-
-
   def create
     @answer = current_user.answers.build(params[:answer])
     @answer.question = @question
@@ -20,10 +15,14 @@ class AnswersController < ApplicationController
     render 'questions/show'
   end
 
-  def show
+  def vote_up
+    @answer.vote_up_by! current_user
+    redirect_to :back
   end
 
-  def edit
+  def vote_down
+    @answer.vote_down_by! current_user
+    redirect_to :back
   end
 
   def update

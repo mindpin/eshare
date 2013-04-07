@@ -54,6 +54,11 @@ gem "mini_magick", "3.5.0", :require => false
 # 编码处理基础库
 gem 'iconv', '1.0.2'
 
+
+# 分类目录
+gem 'awesome_nested_set'
+
+
 # 自己写的 gem，都不指定版本号，如果有重大修改，通过GIT TAG解决
 
 ## 用户角色
@@ -76,7 +81,7 @@ gem 'simple-images',
 
 gem 'simple-page-compoents',
     :git => 'git://github.com/mindpin/simple-page-compoents',
-    :tag => '0.0.7.1'
+    :tag => '0.0.7.2'
     # :path => '/web/songliang/simple-page-compoents'
 
 ## 给指定 activerecord 模型动态添加属性
@@ -102,3 +107,7 @@ gem 'odocuconv',
 gem 'mindpin-simple-tags',
     :git => 'git://github.com/mindpin/mindpin-simple-tags.git',
     :tag => '0.0.1'
+
+# feed
+gem 'mindpin-feeds',
+    :git => 'git://github.com/mindpin/mindpin-feeds'

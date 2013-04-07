@@ -27,22 +27,6 @@ describe '教师使用问答功能' do
     it {
       current_path.should == '/questions'
     }
-
-    it {
-      page.should have_css('.page-questions-index')
-    }
-
-    it {
-      page.should have_css('h1', :text => t('page.questions.index'))
-    }
-
-    it {
-      Question.count.should == 20
-    }
-
-    it {
-      page.should have_css('.questions .question', :count => 20)
-    }
   }
 
 end

@@ -36,17 +36,6 @@ Eshare::Application.routes.draw do
     end
   end
 
-
-  resources :questions, :shallow => true do
-    resources :answers
-  end
-
-  scope '/answers/:answer_id' do
-    match "answer_votes/up" => "answer_votes#up"
-    match "answer_votes/down" => "answer_votes#down"
-    match "answer_votes/cancel" => "answer_votes#cancel"
-  end
-
   resources :announcements
 
   resources :tags do
@@ -102,6 +91,13 @@ Eshare::Application.routes.draw do
       end
     end 
 
+
+    resources :categories do
+      collection do
+        post :do_import
+      end
+    end
+
   end
 end
 
@@ -114,4 +110,17 @@ Eshare::Application.routes.draw do
   post   '/disk/create' => 'disk#create'
   delete '/disk'        => 'disk#destroy'
   get    '/disk/file'   => 'disk#show'
+end
+
+# 问答和问答投票
+Eshare::Application.routes.draw do
+  resources :questions, :shallow => true do
+    resources :answers do
+      member do
+        put :vote_up
+        put :vote_down
+        put :vote_cancel
+      end
+    end
+  end
 end

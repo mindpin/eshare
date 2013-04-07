@@ -1,0 +1,18 @@
+microsoft:
+  xp:
+    2003:
+    2004:
+  vista:
+    2005:
+    2006:
+  windows8:
+    2010:
+    2011:
+
+Linux:
+  slackware:
+    test:
+    alpha:
+  debian:
+    etch:
+    squeeze:
