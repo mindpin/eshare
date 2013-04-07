@@ -7,7 +7,7 @@ describe '公共网盘' do
       @category = FactoryGirl.create(:category)
       
       media_resource.to_public(@category)
-      @media_resource.find(media_resource.id)
+      @media_resource = MediaResource.find(media_resource.id)
     }
 
     it{

@@ -4,6 +4,8 @@ class MediaResource < ActiveRecord::Base
   include MediaResourceInfosMethods
   include MediaResourceCrudMethods
   include MediaResourceConvertMethods
+  include MediaResourceCategoryMethods
+  include MediaResourceTipMethods
   simple_taggable
 
   attr_accessible :name,
@@ -72,7 +74,7 @@ class MediaResource < ActiveRecord::Base
   end
 
   # --------
-
+  scope :by_name, lambda{|name|{:conditions=>['name =?', name]}}
   scope :dir_res, :conditions => ['is_dir = ?', true]
   scope :root_res, :conditions => ['dir_id = ?', 0]
   scope :ops_order, order('fileops_time ASC')

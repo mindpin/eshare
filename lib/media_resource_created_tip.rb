@@ -19,7 +19,7 @@ class MediaResourceCreatedTip
 
     return tips if tips.present?
 
-    [MediaResourceCreatedTip.new(MATCH_NOTHING)]
+    [MediaResourceCreatedTip.new(MATCH_NOTHING,{})]
   end
 
   private
