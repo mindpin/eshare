@@ -19,32 +19,4 @@ class CoursesController < ApplicationController
 
   def manage_one
   end
-
-  def edit
-  end
-
-  def update
-    if @course.update_attributes(params[:course])
-      return redirect_to :action => :index
-    end
-    render :action => :edit
-  end
-
-  # -------------
-
-  def destroy
-    @course.destroy
-    redirect_to :action => :index
-  end
-
-
-  def import
-  end
-
-  def do_import
-    file = params[:excel_file]
-    Course.import(file, current_user)
-
-    redirect_to :action => :index
-  end
 end

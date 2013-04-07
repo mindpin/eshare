@@ -19,10 +19,6 @@ feature '创建课程' do
     }
 
     it {
-      page.should have_css('h1', :text => '创建课程')
-    }
-
-    it {
       click_on I18n.t('common.form.cancel')
       current_path.should == '/manage/courses'
     }

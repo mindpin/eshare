@@ -1,8 +1,8 @@
 - content_for :header do
-  %h1 课程管理
+  = render_cell :manage_courses_breadcrumb, :display
   = page_button_group :courses do |g|
-    - g.add '创建课程', '/manage/courses/new'
-    - g.add '导入Excel', '/manage/courses/import', :success
+    - g.add '创建课程', '/manage/courses/new', :success
+    - g.add '导入Excel', '/manage/courses/import'
 
 .page-admin-courses
   = paginate @courses
