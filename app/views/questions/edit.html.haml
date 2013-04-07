@@ -1,4 +1,6 @@
 = simple_form_for @question do |f|
   = f.input :title
   = f.input :content, as: :text
+  = f.association :chapter
+  = f.association :ask_to
   = f.submit
