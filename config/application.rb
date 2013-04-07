@@ -12,7 +12,7 @@ module Eshare
     # gem 的配置可以放到 initialzers 文件夹里
 
     # Custom directories with classes and modules you want to be autoloadable.
-    config.autoload_paths += %W(#{config.root}/lib)
+    config.autoload_paths += Dir["#{config.root}/lib/**/"]
 
     # 时区，国际化
     config.time_zone = 'Beijing'
