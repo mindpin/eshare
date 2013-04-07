@@ -1,9 +1,0 @@
-= simple_form_for @course do |f|
-  = f.input :name
-  = f.input :cid
-  = f.input :desc, as: :text
-  = f.input :syllabus, as: :text
-  - if @course.cover
-    = image_tag @course.cover.url
-  = f.input :cover, as: :file
-  = f.submit

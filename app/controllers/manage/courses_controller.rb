@@ -15,8 +15,37 @@ class Manage::CoursesController < ApplicationController
     render :action => :new
   end
 
+  def edit
+    @course = Course.find params[:id]
+  end
+
+  def update
+    @course = Course.find params[:id]
+    if @course.update_attributes(params[:course])
+      return redirect_to :action => :index
+    end
+    render :action => :edit
+  end
+
   def show
     @course = Course.find params[:id]
     @chapters = @course.chapters
+  end
+
+  def destroy
+    @course = Course.find params[:id]
+    @course.destroy
+    redirect_to :action => :index
+  end
+
+
+  def import
+  end
+
+  def do_import
+    file = params[:excel_file]
+    Course.import(file, current_user)
+
+    redirect_to :action => :index
   end
 end

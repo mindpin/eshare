@@ -1,7 +1,7 @@
 .page-content-header
   = render_cell :manage_courses_breadcrumb, :form, :model => @course
 
-= simple_form_for @course, :url => '/manage/courses' do |f|
+= simple_form_for @course, :url => "/manage/courses/#{@course.id}" do |f|
   .form-inputs
     = f.input :name
     = f.input :cid
