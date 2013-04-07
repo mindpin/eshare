@@ -66,4 +66,5 @@ class User < ActiveRecord::Base
   include Announcement::UserMethods
   include Survey::UserMethods
   include Follow::UserMethods
+  include UserFeedStream
 end
