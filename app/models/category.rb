@@ -3,6 +3,8 @@ class Category < ActiveRecord::Base
 
   validates :name, :presence => true
 
+  scope :by_name, lambda {|name|{:conditions => ['name = ?', name]}}
+
   acts_as_nested_set
 
   def self.get_nodes(file)
