@@ -1,11 +1,12 @@
 require 'spec_helper'
 
 describe Follow do
-  describe Follow::UserMethods do
-    describe '#follow' do
-      let(:user1) {FactoryGirl.create :user}
-      let(:user2) {FactoryGirl.create :user}
 
+  describe Follow::UserMethods do
+    let(:user1) {FactoryGirl.create :user}
+    let(:user2) {FactoryGirl.create :user}
+
+    describe '#follow' do
       context 'user1 follows user2'do
         subject {user1.follow user2}
 
@@ -17,7 +18,9 @@ describe Follow do
           expect {subject}.to change {user2.followers.count}.by(1)
         end
       end
+    end
 
+    describe '#unfollow' do
       context 'user1 unfollows user2' do
         subject {user1.unfollow user2}
 
