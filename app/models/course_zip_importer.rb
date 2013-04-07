@@ -32,7 +32,7 @@ module CourseZipImporter
       @course = Course.create(:name    => info[:name],
                               :desc    => info[:desc],
                               :cover   => file(info[:cover]),
-                              :cid     => info[:cid],
+                              :cid     => rand(999),
                               :creator => creator)
     end
 
