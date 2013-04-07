@@ -38,12 +38,16 @@ class Manage::CoursesController < ApplicationController
     redirect_to :action => :index
   end
 
+  def download_import_sample
+    send_file Course.get_sample_excel_course, :filename => 'course_sample.xlsx'
+  end
 
   def import
   end
 
   def do_import
     file = params[:excel_file]
+    # render :text => File.extname(file.original_filename)
     Course.import(file, current_user)
 
     redirect_to :action => :index
