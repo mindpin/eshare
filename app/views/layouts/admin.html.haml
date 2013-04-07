@@ -12,5 +12,10 @@
     - navbar.add_item('退出登录', '/account/sign_out')
     - navbar.prepend link_to(home_title, '/admin', :class => :brand)
 
+  .page-search-bar
+  .page-content-header
+    = yield :header
+
   .page-content
-    = yield
+    .content-inner
+      = yield

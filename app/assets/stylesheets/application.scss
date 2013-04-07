@@ -14,12 +14,12 @@ html{
   overflow-y:scroll;
 }
 
-body{
+body {
   font-size:14px;
-  background-color:white;
+  background-color:#f1f1f1;
   padding-top:40px;
   position:relative;
-  font-family:Helvetica,​Arial,​sans-serif;
+  font-family:arial, sans-serif;
 
   a{
     color:#0088CC;
@@ -37,6 +37,7 @@ body.auth{
   background:url(wallpaper/auth-bg.png);
   color:white;
   text-shadow:0 0 3px black;
+
   .page-sign-in{
     background-color:rgba(black, 0.5);
     width:600px;
@@ -76,7 +77,7 @@ body.auth{
   }
 }
 
-body{
+body.app, body.admin {
   .page-navbar{
     a.brand{
       height:40px;line-height:40px;
@@ -89,20 +90,85 @@ body{
     }
   }
 
-  $sidebar-width:200px;  
-  .page-sidebar{
+  $sidebar-width:100px;  
+  .page-sidebar {
     position:fixed;
     width:$sidebar-width;
-    margin-left:20px;
-    margin-top:20px;
-    top:40px;left:0;
-  }
-  .page-content {
-    margin-left:20px + $sidebar-width + 20px;
     margin-top:20px;
     margin-right:20px;
+    top:40px;left:0px;bottom:0;
+    z-index:2;
+  }
+  .page-search-bar{
+    position:fixed;
+    top:40px;
+    left:0;right:0;
+    height:30px;
+    background-color:#f1f1f1;
+    z-index:1;
+  }
+  .page-content-header {
+    position:fixed;
+    right:0;
+    left:120px;
+    top:40px + 20px;
+    padding:0 20px;
+    z-index:2;
+
+    background-color:white;
+    border:solid 1px #d7d7d7;
+    border-right:0 none;
+    @include border-radius(6px 0 0 0);
+    
+    @include floatfix;
+    $h:59px;
+
+    height:$h;
+
+    .header-inner {
+      width:860px;
+    }
+
+    h1 {
+      font-size:21px;font-weight:normal;
+      margin-right:20px;
+      margin:0;height:$h;line-height:$h;
+      margin-right:20px;
+      display:inline-block;
+    }
+    .page-desc {
+      display:inline-block;height:$h;line-height:$h;
+      color:#999;
+    }
+    .btn-group {
+      float:right;
+      margin:14px 0 0 0;
+    }
+    span.split {
+      font-size:20px;margin-right:20px;
+    }
+  }
+
+
+  .page-content {
+    margin-left:10px + $sidebar-width + 10px;
+    margin-top:20px;
+    margin-right:0;
+    background-color:white;
+    border:solid 1px #D7D7D7;
+    border-right:0 none;
+    position:relative;
+
+    @include border-radius(6px 0 0 6px);
+    .content-inner {
+      width:860px;
+      padding:20px + 59px 20px 20px 20px;
+      min-height:500px;
+    }
   }
 }
+
+// ------------
 
 .page-files-index {
   .operatebar{
@@ -137,7 +203,6 @@ body{
 
 .page-file-uploader {
   width:600px;
-
   .list {
     .item {
       border:solid 1px #E5E5E5;

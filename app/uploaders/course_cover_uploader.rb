@@ -11,4 +11,9 @@ class CourseCoverUploader < CarrierWave::Uploader::Base
     # asset_path("fallback/" + [version_name, "default.png"].compact.join('_'))
     "default_course_covers/#{version_name}.png"
   end
+
+  # 图片裁剪
+  version :normal do
+    process :resize_to_fit => [120, 120]
+  end
 end

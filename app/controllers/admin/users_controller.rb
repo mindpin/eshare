@@ -1,4 +1,5 @@
 class Admin::UsersController < ApplicationController
+  before_filter :authenticate_user!
   layout 'admin'
 
   def index
@@ -12,6 +13,8 @@ class Admin::UsersController < ApplicationController
   def update
     _update_user(:change_base_info)
   end
+
+  # ---------------
 
   def change_password
     _update_user(:change_password)
@@ -33,6 +36,16 @@ class Admin::UsersController < ApplicationController
     @user.save
     redirect_to user_attrs_path(@user)
   end
+
+  def import
+  end
+
+  # def do_import
+  #   file = params[:excel_file]
+  #   User.import(file, :teacher)
+
+  #   render :nothing => true
+  # end
 
 protected
 

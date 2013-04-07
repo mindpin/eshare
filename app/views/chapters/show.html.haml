@@ -1,9 +1,8 @@
-.chapter
-  .title= @chapter.title
-  .desc=  @chapter.desc
-  .creator=  @chapter.creator.name
+- content_for :header do
+  %h1= @course.name
+  %span.split /
+  %h1= @chapter.title
 
-  .edit= link_to '编辑',  "/chapters/#{@chapter.id}/edit"
-  .destroy= link_to '删除', "/chapters/#{@chapter.id}", :method => :delete, :confirm => "确定删除吗?"
-  = link_to '课件列表', "/chapters/#{@chapter.id}/course_wares"
-  = link_to '作业列表', "/chapters/#{@chapter.id}/homeworks"
+.page-chapter-show
+  = page_tile :'course-wares', @course_wares do
+    - add :to_json

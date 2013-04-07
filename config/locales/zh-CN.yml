@@ -1,11 +1,20 @@
 zh-CN:
   simple-navbar:
+    admin:
+      home: 首页
+      users_manage: 用户管理
+      categories_manage: 分类管理
+
     teacher:
       dashboard: 首页
-      disk: 资源文件夹
-      courses: 课程
+      disk: 文件夹
+      courses_manage: 课程管理
       questions: 问答
 
+    student:
+      dashboard: 首页
+      courses: 课程
+      disk: 文件夹
 
   simple_form:
     labels:
@@ -95,7 +104,7 @@ zh-CN:
         admin: EduShare Admin
 
     form:
-      cancel: 取消返回
+      cancel: 取消
 
     course:
       create_course: 创建课程
@@ -128,7 +137,18 @@ zh-CN:
         desc: 简介
         syllabus: 教学大钢
         ops: 操作
+        chapters-count: 章节数
 
+      chapters:
+        title: 标题
+        course-wares-count: 课件数
+        homeworks-count: 练习数
+
+      course-wares:
+        name: 课件名
+        kind: 类型
+        pages-count: 页数
+        duration: 时长
 
       questions:
         title: 标题

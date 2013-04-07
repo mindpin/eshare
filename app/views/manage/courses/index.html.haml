@@ -1,0 +1,19 @@
+- content_for :header do
+  %h1 课程管理
+  = page_button_group :courses do |g|
+    - g.add '创建课程', '/manage/courses/new'
+    - g.add '导入Excel', '/manage/courses/import', :success
+
+.page-admin-courses
+  = paginate @courses
+  = page_data_table(:courses, @courses, :striped, :bordered) do |table|
+    - table.add_column(:name) do |course|
+      = link_to course.name, "/manage/courses/#{course.id}"
+    - table.add_column(:cid)
+    - table.add_column(:desc) do |course|
+      = truncate_u course.desc, 20
+    - table.add_column(:'chapters-count') do |course|
+      = course.chapters.count
+    - table.add_column(:ops) do |course|
+      %a.btn.mini{:href => "/manage/courses/#{course.id}/edit"}= t('common.edit')
+      = link_to t('common.delete'), "/manage/courses/#{course.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger'

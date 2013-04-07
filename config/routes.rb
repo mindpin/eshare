@@ -14,22 +14,6 @@ Eshare::Application.routes.draw do
     put 'account/avatar' => 'account#avatar_update'
   end
 
-  # 课程
-  resources :courses, :shallow => true do
-    collection do
-      get :import
-      post :do_import
-    end
-      
-    resources :chapters, :shallow => true do
-      resources :course_wares
-      resources :homeworks do
-        member do
-          get :student
-        end
-      end
-    end
-  end
   resources :homework_requirements do
     member do
       post :upload
@@ -48,28 +32,12 @@ Eshare::Application.routes.draw do
     resources :survey_items
     resources :survey_results
   end
-  
+end
+
+# 管理员
+Eshare::Application.routes.draw do
   namespace :admin do
     root :to => 'index#index'
-
-    resources :teachers do
-      collection do
-        get :import
-        post :do_import
-      end
-      member do
-        get :password
-        put :password_submit
-        get 'course/:course_id', :action => 'course_students'
-      end
-    end
-
-    resources :students do
-      collection do
-        get :import
-        post :do_import
-      end
-    end
 
     resources :users do
       member do
@@ -91,13 +59,11 @@ Eshare::Application.routes.draw do
       end
     end 
 
-
     resources :categories do
       collection do
         post :do_import
       end
     end
-
   end
 end
 
@@ -120,6 +86,33 @@ Eshare::Application.routes.draw do
         put :vote_up
         put :vote_down
         put :vote_cancel
+      end
+    end
+  end
+end
+
+# 课程
+Eshare::Application.routes.draw do
+  namespace :manage do
+    resources :courses, :shallow => true do
+      collection do
+        get :import
+        post :do_import
+      end
+
+      resources :chapters, :shallow => true do
+        resources :course_wares, :shallow => true do
+        end
+      end
+    end
+  end
+
+  resources :courses, :shallow => true do      
+    resources :chapters, :shallow => true do
+      resources :homeworks do
+        member do
+          get :student
+        end
       end
     end
   end

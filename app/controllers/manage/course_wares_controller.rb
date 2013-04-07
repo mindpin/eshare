@@ -1,4 +1,4 @@
-class CourseWaresController < ApplicationController
+class Manage::CourseWaresController < ApplicationController
   before_filter :authenticate_user!
 
   def index

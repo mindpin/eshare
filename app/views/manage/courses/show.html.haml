@@ -1,0 +1,11 @@
+- content_for :header do
+  %h1 管理：#{@course.name}
+
+.page-manage-course-show
+  = page_data_table :chapters, @chapters, :striped, :bordered do |table|
+    - table.add_column :title do |ch|
+      %a{:href => "/manage/chapters/#{ch.id}"}= ch.title
+    - table.add_column :'course-wares-count' do |ch|
+      = ch.course_wares.count
+    - table.add_column :'homeworks-count' do |ch|
+      = ch.homeworks.count
