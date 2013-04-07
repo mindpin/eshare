@@ -409,3 +409,20 @@ ul.page-breadcrumb {
 img.page-avatar {
   @include border-radius(3px);
 }
+
+.page-manage-courses-import {
+  .download {
+    margin-bottom:20px;
+    border-bottom:solid 1px #ddd;
+    padding-bottom:20px;
+    .desc {
+      margin-bottom:10px;
+    }
+  }
+
+  form {
+    .desc {
+      margin-bottom:10px;
+    }
+  }
+}
