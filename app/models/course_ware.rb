@@ -1,5 +1,5 @@
 class CourseWare < ActiveRecord::Base
-  attr_accessible :title, :desc
+  attr_accessible :title, :desc, :url
 
   validates :title, :desc, :chapter, :creator,
             :presence => true
@@ -20,4 +20,16 @@ class CourseWare < ActiveRecord::Base
     self.save
   end
 
+  def url=(input)
+    self.kind = 'youku'
+    write_attribute :url, input.match(/id_(\w*)\.html/)[1]
+  end
+
+  def url
+    "http://player.youku.com/embed/#{read_attribute :url}" if self.youku?
+  end
+
+  def youku?
+    self.kind == 'youku'
+  end
 end

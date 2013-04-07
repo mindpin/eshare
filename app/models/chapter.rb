@@ -1,5 +1,5 @@
 class Chapter < ActiveRecord::Base
-  attr_accessible :title, :desc
+  attr_accessible :title, :desc, :creator
 
   belongs_to :course
   belongs_to :creator, :class_name => "User", :foreign_key => "creator_id"
