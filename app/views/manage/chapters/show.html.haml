@@ -1,0 +1,18 @@
+- content_for :header do
+  %h1= @course.name
+  %span.split /
+  %h1= @chapter.title
+
+  = page_button_group :courses do |g|
+    - g.add '增加课件', "/manage/chapters/#{@chapter.id}/course_wares/new", :success
+
+.page-chapter-show
+  = page_data_table :'course-wares', @course_wares, :striped, :bordered do |table|
+    - table.add_column :name do
+      = ''
+    - table.add_column :kind do |cw|
+      = cw.kind
+    - table.add_column :'pages-count' do
+      0 页
+    - table.add_column :duration do
+      00:00

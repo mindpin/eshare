@@ -20,8 +20,9 @@ SimpleNavbar::Base.config do
       controller :index, :only => :dashboard
     end
 
-    nav :courses_manage, :url => '/courses/manage' do
-      controller :courses
+    nav :courses_manage, :url => '/manage/courses' do
+      controller :'manage/courses'
+      controller :'manage/chapters'
     end
 
     nav :disk, :url => '/disk' do
@@ -36,11 +37,16 @@ SimpleNavbar::Base.config do
   # ------------------
   # 学生
   rule :student do
-    nav :dashboard, :name => '课程首页', :url => '/dashboard' do
+    nav :dashboard, :url => '/dashboard' do
       controller :index, :only => :dashboard
     end
 
-    nav :disk, :name => '我的文件夹', :url => '/disk' do
+    nav :courses, :url => '/courses' do
+      controller :courses
+      controller :chapters
+    end
+
+    nav :disk, :url => '/disk' do
       controller :disk
     end
   end

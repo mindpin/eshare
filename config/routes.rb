@@ -14,23 +14,6 @@ Eshare::Application.routes.draw do
     put 'account/avatar' => 'account#avatar_update'
   end
 
-  # 课程
-  resources :courses, :shallow => true do
-    collection do
-      get :manage
-      get :import
-      post :do_import
-    end
-      
-    resources :chapters, :shallow => true do
-      resources :course_wares
-      resources :homeworks do
-        member do
-          get :student
-        end
-      end
-    end
-  end
   resources :homework_requirements do
     member do
       post :upload
@@ -103,6 +86,33 @@ Eshare::Application.routes.draw do
         put :vote_up
         put :vote_down
         put :vote_cancel
+      end
+    end
+  end
+end
+
+# 课程
+Eshare::Application.routes.draw do
+  namespace :manage do
+    resources :courses, :shallow => true do
+      collection do
+        get :import
+        post :do_import
+      end
+
+      resources :chapters, :shallow => true do
+        resources :course_wares, :shallow => true do
+        end
+      end
+    end
+  end
+
+  resources :courses, :shallow => true do      
+    resources :chapters, :shallow => true do
+      resources :homeworks do
+        member do
+          get :student
+        end
       end
     end
   end

@@ -6,7 +6,7 @@ class Homework < ActiveRecord::Base
   belongs_to :chapter
   belongs_to :creator, :class_name => 'User'
 
-  validates :title, :content, :deadline, :chapter, :creator,
+  validates :title, :chapter, :creator,
             :presence => true
 
   has_many :homework_requirements

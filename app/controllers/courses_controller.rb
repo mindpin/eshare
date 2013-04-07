@@ -5,20 +5,19 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id]) if params[:id]
   end
 
+  def index
+    @courses = Course.page(params[:page])
+  end
+
+  def show
+    @chapters = @course.chapters.page(params[:page])
+  end
+
   def manage
     @courses = current_user.courses.page(params[:page])
   end
 
-  def new
-    @course = Course.new
-  end
-
-  def create
-    @course = current_user.courses.build(params[:course])
-    if @course.save
-      return redirect_to :action => :manage
-    end
-    render :action => :new
+  def manage_one
   end
 
   def edit
@@ -32,9 +31,6 @@ class CoursesController < ApplicationController
   end
 
   # -------------
-
-  def show
-  end
 
   def destroy
     @course.destroy

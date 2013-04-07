@@ -8,9 +8,13 @@ zh-CN:
     teacher:
       dashboard: 首页
       disk: 文件夹
-      courses: 课程
       courses_manage: 课程管理
       questions: 问答
+
+    student:
+      dashboard: 首页
+      courses: 课程
+      disk: 文件夹
 
   simple_form:
     labels:
@@ -133,7 +137,18 @@ zh-CN:
         desc: 简介
         syllabus: 教学大钢
         ops: 操作
+        chapters-count: 章节数
 
+      chapters:
+        title: 标题
+        course-wares-count: 课件数
+        homeworks-count: 练习数
+
+      course-wares:
+        name: 课件名
+        kind: 类型
+        pages-count: 页数
+        duration: 时长
 
       questions:
         title: 标题

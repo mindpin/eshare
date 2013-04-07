@@ -1,0 +1,9 @@
+- content_for :header do
+  %h1 课程
+  .page-desc 浏览系统内的课程
+
+.page-courses-index
+  = paginate @courses
+  = page_tile :courses, @courses do
+    - add :title do |course|
+      = link_to course.name, course

@@ -125,6 +125,10 @@ body.app, body.admin {
 
     height:$h;
 
+    .header-inner {
+      width:860px;
+    }
+
     h1 {
       font-size:21px;font-weight:normal;
       margin-right:20px;
@@ -137,7 +141,11 @@ body.app, body.admin {
       color:#999;
     }
     .btn-group {
+      float:right;
       margin:14px 0 0 0;
+    }
+    span.split {
+      font-size:20px;margin-right:20px;
     }
   }
 

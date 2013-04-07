@@ -15,6 +15,11 @@
     - navbar.add_item('账号设置', '/account/edit')
     - navbar.add_item('退出登录', '/account/sign_out')
 
+  .page-search-bar
+  .page-content-header
+    .header-inner
+      = yield :header
+
   .page-content
     .content-inner
       = yield

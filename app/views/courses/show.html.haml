@@ -1,12 +1,11 @@
+- content_for :header do
+  %h1= @course.name
 
-= @course.name
-
-= @course.cid
-
-= @course.desc
-
-= @course.syllabus
-
-= image_tag @course.cover.url
-
-.list= link_to "章节列表", "/courses/#{@course.id}/chapters"
+.page-course-show
+  = page_tile :chapters, @chapters do
+    - add :title do |chapter|
+      = link_to chapter.title, chapter
+    - add_foot :'course-wares-count' do |chapter|
+      #{chapter.course_wares.count} 个课件
+    - add_foot :'homeworks-count' do |chapter|
+      #{chapter.homeworks.count} 个练习
