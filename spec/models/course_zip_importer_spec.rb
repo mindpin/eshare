@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 require 'spec_helper'
 
 describe CourseZipImporter do
@@ -26,6 +25,20 @@ describe CourseZipImporter do
 
         context 'imports coursewares' do
           it {expect {subject}.to change {CourseWare.count}.by(3)}
+        end
+
+        context '类型检查' do
+          before {
+            subject
+          }
+
+          it {
+            Chapter.first.course_wares.last.kind.should == 'youku'
+          }
+
+          it {
+            Chapter.first.course_wares.first.kind.should == 'video'
+          }
         end
       end
     end

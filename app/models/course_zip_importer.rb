@@ -57,6 +57,7 @@ module CourseZipImporter
             ware.save
           elsif courseware_info[:youku]
             ware.url = courseware_info[:youku]
+            ware.kind = 'youku'
             ware.save
           end
         end

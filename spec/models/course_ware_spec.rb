@@ -22,16 +22,26 @@ describe CourseWare do
         @course_ware.reload
       end
 
-      it{
+      it {
         @course_ware.file_entity.should == @file_entity  
       }
 
-      it{
-        @course_ware.kind.should == :image  
+      it {
+        @course_ware.kind.should == 'image'
       }
 
-      it{
+      it {
         MediaResource.last.file_entity.should == @file_entity
+      }
+
+      it {
+        @course_ware.media_resource.should == MediaResource.last
+      }
+
+      it {
+        MediaResource.last.destroy
+        @course_ware.reload
+        @course_ware.media_resource.should be_blank
       }
     end
 
