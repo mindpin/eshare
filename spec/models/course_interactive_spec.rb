@@ -3,19 +3,20 @@ require 'spec_helper'
 describe CourseInteractive do
   before{
     @course = FactoryGirl.create(:course)
+    @user = FactoryGirl.create(:user)
 
     @chapter_1 = FactoryGirl.create(:chapter, :course => @course)
     @chapter_2 = FactoryGirl.create(:chapter, :course => @course)
     @chapter_3 = FactoryGirl.create(:chapter, :course => @course)
 
-    @question_1 = FactoryGirl.create(:question, :chapter => @chapter_1)
-    @question_2 = FactoryGirl.create(:question, :chapter => @chapter_2)
+    Question.create(:title=>"title_1", :content => 'content_1', :creator => @user, :chapter_id => @chapter_1.id)
+    Question.create(:title=>"title_2", :content => 'content_2', :creator => @user, :chapter_id => @chapter_2.id)
 
     Timecop.travel(Time.now - 2.day) do
-      @question_3 = FactoryGirl.create(:question, :chapter => @chapter_3)
+      Question.create(:title=>"title_3", :content => 'content_3', :creator => @user, :chapter_id => @chapter_3.id)
     end
 
-    @question_4 = FactoryGirl.create(:question)
+    Question.create(:title=>"title_4", :content => 'content_4', :creator => @user)
 
     @date = Time.now.strftime("%Y%m%d").to_i
   }
@@ -59,7 +60,8 @@ describe CourseInteractive do
     describe '创建指定了章节的问题' do
       before{
         @new_chapter = FactoryGirl.create(:chapter, :course => @course)
-        @new_question = FactoryGirl.create(:question, :chapter => @new_chapter)
+
+        Question.create(:title=>"title_new", :content => 'content_new', :creator => @user, :chapter_id => @new_chapter.id)
       }
 
       it{

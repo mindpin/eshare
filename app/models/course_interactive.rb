@@ -23,7 +23,8 @@ class CourseInteractive < ActiveRecord::Base
     end
 
     def query_interactive_sum(date)
-      self.course_interactives.by_date(date).first.sum
+      ci = self.course_interactives.by_date(date).first
+      ci.blank? ? 0 : ci.sum
     end
 
     def calculate_today_interactive_sum
