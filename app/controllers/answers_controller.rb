@@ -15,6 +15,8 @@ class AnswersController < ApplicationController
     render 'questions/show'
   end
 
+  def edit
+  end
 
   def vote_up
     @answer.vote_up_by! current_user
