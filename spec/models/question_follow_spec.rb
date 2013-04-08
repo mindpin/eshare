@@ -18,22 +18,47 @@ describe QuestionFollow do
     @question.followed_by?(@creator).should == true
   end
 
-  it "关注问题" do
-    @user.follow_question(@question)
 
-    @question.followed_by?(@user).should == true
+  context "关注问题" do
+    it "关注数量为1" do
+      expect {
+        @user.follow_question(@question)
+      }.to change {
+        @question.follows.by_user(@user).count
+      }.by(1)
+    end
+
+
+    it "已经被关注" do
+      @user.follow_question(@question)
+
+      @question.followed_by?(@user).should == true
+    end
   end
 
 
-  it "创建者取消关注" do
-    @creator.unfollow_question(@question)
+  context "取消关注" do
+    it "关注数量为0" do
+      expect {
+        @creator.follow_question(@question)
+      }.to change {
+        @question.follows.by_user(@creator).count
+      }.by(0)
+    end
 
-    @question.followed_by?(@creator).should == false
+
+    it "已经被取消" do
+      @creator.unfollow_question(@question)
+
+      @question.followed_by?(@creator).should == false
+    end
   end
+
+  
 
   it "查看记录时间" do
     @user.follow_question(@question)
-    
+
     new_time = Timecop.freeze(Time.local(2013))
     Timecop.freeze(new_time)
 
