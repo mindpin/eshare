@@ -28,9 +28,9 @@ class QuestionFollow < ActiveRecord::Base
         question.follow_by_user(self).destroy
       end
 
-      def visit_question(question)
+      def visit_question!(question)
         return if !question.followed_by?(self)
-        
+
         question_follow = question.follow_by_user(self)
 
         question_follow.last_view_time = Time.now

@@ -12,13 +12,10 @@ class Question < ActiveRecord::Base
   default_scope order('id desc')
 
 
-  after_save :update_last_view_time
+  after_save :follow_by_creator
 
-  def update_last_view_time
-    question_follow = self.follow_by_user(self.creator)
-
-    question_follow.last_view_time = Time.now
-    question_follow.save
+  def follow_by_creator
+    self.creator.follow_question(self)
   end
 
   # 记录用户活动
