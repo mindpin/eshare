@@ -51,10 +51,10 @@ describe QuestionFollow do
   context "取消关注" do
     it "关注数量为0" do
       expect {
-        @creator.follow_question(@question)
+        @creator.unfollow_question(@question)
       }.to change {
         @question.follows.by_user(@creator).count
-      }.by(0)
+      }.by(-1)
     end
 
 
