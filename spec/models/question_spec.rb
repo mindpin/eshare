@@ -39,11 +39,14 @@ describe Question do
       @question     = FactoryGirl.create(:question)
       @updated_at = @question.updated_at
 
+      sleep(1)
+
       @answer = FactoryGirl.create(:answer, :question => @question)
+
     }
 
     it "问题被创建者修改" do
-      @question.update_attributes({:title => 'test'})
+      @question.update_attributes({:title => 'test', :content => 'test'})
       @question.updated_at.should > @updated_at
     end
 

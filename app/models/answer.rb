@@ -18,9 +18,9 @@ class Answer < ActiveRecord::Base
                         :callbacks => [ :create ]
 
 
-  after_update :update_question_updated_at
+  after_save :update_question_updated_at
 
-  def update_question_updated_at
+  def update_question_updated_at 
     self.question.updated_at = Time.now
     self.question.save
   end
