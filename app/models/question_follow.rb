@@ -5,6 +5,7 @@ class QuestionFollow < ActiveRecord::Base
   belongs_to :question
 
   validates :user, :question, :last_view_time,  :presence => true
+  validates_uniqueness_of :question_id, :scope => :user_id
 
   scope :by_user, lambda { |user| where(:user_id => user.id) }
 

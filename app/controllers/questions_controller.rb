@@ -35,4 +35,14 @@ class QuestionsController < ApplicationController
     render :action => :edit
   end
 
+  def follow
+    current_user.follow_question(@question)
+    redirect_to :back
+  end
+
+  def unfollow
+    current_user.unfollow_question(@question)
+    redirect_to :back
+  end
+
 end

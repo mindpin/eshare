@@ -15,8 +15,10 @@ class Question < ActiveRecord::Base
   after_save :update_last_view_time
 
   def update_last_view_time
-    self.follow_by_user(self.creator).last_view_time = Time.now
-    self.follow_by_user(self.creator).save
+    question_follow = self.follow_by_user(self.creator)
+
+    question_follow.last_view_time = Time.now
+    question_follow.save
   end
 
   # 记录用户活动
@@ -31,6 +33,10 @@ class Question < ActiveRecord::Base
   def answer_of(user)
     return nil if user.blank?
     return self.answers.by_user(user).first
+  end
+
+  def followed_by?(user)
+    self.follow_by_user(user).persisted?
   end
 
   def follow_by_user(user)
