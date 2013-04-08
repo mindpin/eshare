@@ -53,7 +53,7 @@ describe Question do
       current_time = Time.now
       current_time.should > @updated_at
     end
-    
+
   end
 end
 
