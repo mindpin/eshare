@@ -1,5 +1,10 @@
 .page-question-show
   .question
+    - if @question.followed_by?(current_user)
+      .unfollow= link_to "取消关注", "/questions/#{@question.id}/unfollow", :method => :post
+    - else
+      .follow= link_to "关注", "/questions/#{@question.id}/follow", :method => :post
+
     %h2.title= @question.title
     .content= @question.content
 
@@ -48,6 +53,8 @@
     = simple_form_for [@question, @answer] do |f|
       .form-inputs
         = f.input :content, :as => :text, :input_html => {:rows => 4, :class => 'xxlarge'}
+      .form-inputs
+        = f.association :course_wares
       .form-actions
         = f.button :submit, :class => 'success'
 
