@@ -9,12 +9,24 @@ describe QuestionFollow do
 
   }
 
-  it "问题没被其它用户关注" do
-    @question.followed_by?(@user).should == false
+  context "问题没被其它用户关注" do
+    it {
+      @question.follow_by_user(@user).new_record?.should == true
+    }
+
+    it {
+      @question.followed_by?(@user).should == false
+    }
   end
 
-  it "问题有被自己关注" do
-    @question.followed_by?(@creator).should == true
+  context "问题有被自己关注" do
+    it {
+      @question.follow_by_user(@creator).persisted?.should == true
+    }
+
+    it {
+      @question.followed_by?(@creator).should == true
+    }
   end
 
 
