@@ -18,12 +18,11 @@ class Answer < ActiveRecord::Base
                         :callbacks => [ :create ]
 
 
-  after_save :update_question_updated_at
+  after_update :update_question_updated_at
 
   def update_question_updated_at
     self.question.updated_at = Time.now
     self.question.save
-    self.question.reload
   end
 
   def has_voted_by?(user)
