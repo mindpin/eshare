@@ -14,68 +14,30 @@ Eshare::Application.routes.draw do
     put 'account/avatar' => 'account#avatar_update'
   end
 
-  # 课程
-  resources :courses, :shallow => true do
-    collection do
-      get :import
-      post :do_import
-    end
-      
-    resources :chapters, :shallow => true do
-      resources :course_wares
-      resources :homeworks do
-        member do
-          get :student
-        end
-      end
-    end
-    # 题库
-    resources :test_questions
-    # 试卷
-    resources :test_papers do
-      resources :test_paper_items
-    end
-    # 组卷参数
-    resource :test_option, :controller => :test_option
-  end
   resources :homework_requirements do
     member do
       post :upload
     end
   end
 
-  resources :questions, :shallow => true do
-    resources :answers
+  resources :announcements
+
+  resources :tags do
+    collection do
+      put :set_tags
+    end
   end
 
-  scope '/answers/:answer_id' do
-    match "answer_votes/up" => "answer_votes#up"
-    match "answer_votes/down" => "answer_votes#down"
-    match "answer_votes/cancel" => "answer_votes#cancel"
+  resources :surveys, :shallow => true do
+    resources :survey_items
+    resources :survey_results
   end
-  
+end
 
+# 管理员
+Eshare::Application.routes.draw do
   namespace :admin do
     root :to => 'index#index'
-
-    resources :teachers do
-      collection do
-        get :import
-        post :do_import
-      end
-      member do
-        get :password
-        put :password_submit
-        get 'course/:course_id', :action => 'course_students'
-      end
-    end
-
-    resources :students do
-      collection do
-        get :import
-        post :do_import
-      end
-    end
 
     resources :users do
       member do
@@ -97,6 +59,11 @@ Eshare::Application.routes.draw do
       end
     end 
 
+    resources :categories do
+      collection do
+        post :do_import
+      end
+    end
   end
 end
 
@@ -109,4 +76,45 @@ Eshare::Application.routes.draw do
   post   '/disk/create' => 'disk#create'
   delete '/disk'        => 'disk#destroy'
   get    '/disk/file'   => 'disk#show'
+end
+
+# 问答和问答投票
+Eshare::Application.routes.draw do
+  resources :questions, :shallow => true do
+    resources :answers do
+      member do
+        put :vote_up
+        put :vote_down
+        put :vote_cancel
+      end
+    end
+  end
+end
+
+# 课程
+Eshare::Application.routes.draw do
+  namespace :manage do
+    resources :courses, :shallow => true do
+      collection do
+        get :download_import_sample
+        get :import
+        post :do_import
+      end
+
+      resources :chapters, :shallow => true do
+        resources :course_wares, :shallow => true do
+        end
+      end
+    end
+  end
+
+  resources :courses, :shallow => true do      
+    resources :chapters, :shallow => true do
+      resources :homeworks do
+        member do
+          get :student
+        end
+      end
+    end
+  end
 end

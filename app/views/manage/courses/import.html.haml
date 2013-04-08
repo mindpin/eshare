@@ -1,0 +1,20 @@
+- content_for :header do
+  .page-manage-courses-breadcrumb
+    %ul.page-breadcrumb
+      %li
+        %a{:href => '/manage/courses'} 课程管理
+        %span.divider /
+      %li.active 从 Excel 导入课程
+
+.page-manage-courses-import
+  .download
+    .desc 下载示例文件，根据示例文件内容填写课程信息
+    %a.btn.info{:href => '/manage/courses/download_import_sample'} 下载示例文件
+
+  = form_tag "/manage/courses/do_import", :method => :post, :multipart => true do
+    .desc 上传填写好的 Excel 文件，导入数据
+    .input.file.required
+      %label excel文件
+      = file_field_tag 'excel_file'
+    %input.btn.success{:name => 'commit', :type => :submit, :value => '上传文件'}
+    %a.btn.cancel{:href => '/manage/courses'}= t('common.form.cancel')

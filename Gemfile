@@ -4,6 +4,7 @@ source 'http://ruby.taobao.org'
 gem 'rails', '3.2.12' # RAILS #不要更新 3.2.13 有性能问题，等 3.2.14
 gem 'mysql2', '0.3.11' # MYSQL数据库连接
 gem 'json', '1.7.7' # JSON解析，RAILS默认引入的
+gem 'rubyzip', '0.9.9', :require => false
 
 group :assets do
   gem 'sass-rails', '~> 3.2.3'
@@ -27,6 +28,7 @@ group :examples do
 end
 
 gem 'jquery-rails', '2.2.1'
+gem 'jquery-ui-rails', '4.0.2'
 gem 'unicorn', '4.6.2'
 gem 'sidekiq', '2.8.0'
 
@@ -53,8 +55,10 @@ gem "mini_magick", "3.5.0", :require => false
 # 编码处理基础库
 gem 'iconv', '1.0.2'
 
-## tag 插件
-gem 'acts-as-taggable-on', '~> 2.3.3'
+
+# 分类目录
+gem 'awesome_nested_set'
+
 
 # 自己写的 gem，都不指定版本号，如果有重大修改，通过GIT TAG解决
 
@@ -65,7 +69,8 @@ gem 'roles-field',
 
 ## 导航栏
 gem 'simple-navbar',
-    :git => 'git://github.com/mindpin/simple-navbar.git'
+    :git => 'git://github.com/mindpin/simple-navbar.git',
+    :tag => '0.0.1'
 
 ## 页面布局辅助
 gem 'simple-page-layout',
@@ -77,7 +82,7 @@ gem 'simple-images',
 
 gem 'simple-page-compoents',
     :git => 'git://github.com/mindpin/simple-page-compoents',
-    :tag => '0.0.6.4'
+    :tag => '0.0.7.3'
     # :path => '/web/songliang/simple-page-compoents'
 
 ## 给指定 activerecord 模型动态添加属性
@@ -92,9 +97,19 @@ gem 'file-part-upload',
 ## excel导入和示例生成
 gem 'simple-excel-import',
     :git => 'git://github.com/mindpin/simple-excel-import.git',
-    :tag => '0.0.2.2'
+    :tag => '0.0.2.5'
     # :path => '/web/songliang/simple-excel-import'
+# gem 'axlsx', '1.3.5' # 上面的gem依赖它
 
 ## office文档转换
 gem 'odocuconv',
     :git => 'git://github.com/kaid/odocuconv.git'
+
+## tag
+gem 'mindpin-simple-tags',
+    :git => 'git://github.com/mindpin/mindpin-simple-tags.git',
+    :tag => '0.0.1'
+
+# feed
+gem 'mindpin-feeds',
+    :git => 'git://github.com/mindpin/mindpin-feeds'

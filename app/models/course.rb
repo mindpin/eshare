@@ -1,11 +1,16 @@
 class Course < ActiveRecord::Base
-  attr_accessible :name, :cid, :desc, :syllabus, :cover
+  include CourseZipImporter
+  include CourseSignModule
+
+  attr_accessible :name, :cid, :desc, :syllabus, :cover, :creator
 
   belongs_to :creator, :class_name => 'User', :foreign_key => :creator_id
   has_many :chapters
   has_many :course_wares, :through => :chapters
   has_many :test_questions
   has_one  :test_option
+  
+  has_many :course_signs
 
   has_many :test_papers
 

@@ -1,0 +1,8 @@
+.page-survey-index
+  .page-action
+    = link_to '新建调查问卷', '/surveys/new'
+  .page-list
+    - current_user.surveys.each do |survey|
+      .item
+        = link_to survey.title, "/surveys/#{survey.id}"
+        = link_to 'delete', "/surveys/#{survey.id}", :method => :delete, :confirm => "确定删除么"

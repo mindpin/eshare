@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -62,4 +63,8 @@ class User < ActiveRecord::Base
   include Question::UserMethods
   include Answer::UserMethods
   include AnswerVote::UserMethods
+  include Announcement::UserMethods
+  include Survey::UserMethods
+  include Follow::UserMethods
+  include UserFeedStream
 end

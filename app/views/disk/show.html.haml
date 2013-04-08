@@ -1,5 +1,24 @@
 .page-file-show
-  .file-name= @media_resource.name
+  %h1.file-name= @media_resource.name
+
+  .page-tags{:data => {:'tagable-id' => @media_resource.id, :'tagable-type' => @media_resource.class.to_s}}
+    .shower
+      %i.icon-tags
+      .tags
+        - @media_resource.private_tags(current_user).each do |tag|
+          %a.tag{:href => "/tags/file/#{tag.name}", :data => {:name => tag.name}}= tag.name
+      %a.edit{:href => 'javascript:;'}= t('common.edit')
+    .inputer{:style => 'display:none;'}
+      %ul
+        - @media_resource.private_tags(current_user).each do |tag|
+          %li= tag.name
+      .btns
+        %a.yes.btn.small.success{:href => 'javascript:;'} 确定
+        %a.no.btn.small{:href => 'javascript:;'} 取消
+
+
+        
+
   - file_entity = @media_resource.file_entity
   - if file_entity.is_ppt?
     - if file_entity.converting?
@@ -7,6 +26,4 @@
     - elsif file_entity.convert_success?
       = file_entity.convert_ppt_url
     - else
-      = link_to "重新转码","javascript:;"
-
-
+      = link_to '重新转码', 'javascript:;'

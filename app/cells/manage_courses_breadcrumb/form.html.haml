@@ -1,0 +1,45 @@
+:ruby
+  action = @model.new_record? ? '新增' : '修改'
+
+- case @model
+  - when Course
+    :ruby
+      course = @model
+    .page-manage-courses-breadcrumb
+      %ul.page-breadcrumb
+        %li
+          %a{:href => '/manage/courses'} 课程管理
+          %span.divider /
+        %li.active #{action}课程
+
+  - when Chapter
+    :ruby
+      chapter = @model
+      course = chapter.course
+    .page-manage-courses-breadcrumb
+      %ul.page-breadcrumb
+        %li
+          %a{:href => '/manage/courses'} 课程管理
+          %span.divider /
+        %li
+          %a{:href => "/manage/courses/#{course.id}"}= course.name
+          %span.divider /
+        %li.active #{action}章节
+
+  - when CourseWare
+    :ruby
+      course_ware = @model
+      chapter = course_ware.chapter
+      course = chapter.course
+    .page-manage-courses-breadcrumb
+      %ul.page-breadcrumb
+        %li
+          %a{:href => '/manage/courses'} 课程管理
+          %span.divider /
+        %li
+          %a{:href => "/manage/courses/#{course.id}"}= course.name
+          %span.divider /
+        %li
+          %a{:href => "/manage/chapters/#{chapter.id}"}= chapter.title
+          %span.divider /
+        %li.active #{action}课件

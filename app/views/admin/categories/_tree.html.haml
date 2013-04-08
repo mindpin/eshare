@@ -1,0 +1,13 @@
+%li
+  = node.name
+
+  = link_to "add", "/admin/categories/new?parent_id=#{node.id}"
+
+  = link_to "edit", "/admin/categories/#{node.id}/edit"
+
+  = link_to "delete", "/admin/categories/#{node.id}", :method => :delete, :confirm => t('common.delete_confirm')
+
+
+  %ul
+    - node.children.each do |child|
+      = render :partial => "tree", :locals => {:node => child }

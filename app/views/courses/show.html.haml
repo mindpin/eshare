@@ -1,25 +1,11 @@
+- content_for :header do
+  %h1= @course.name
 
-= @course.name
-
-= @course.cid
-
-= @course.desc
-
-= @course.syllabus
-
-= image_tag @course.cover.url
-
-.list= link_to "章节列表", "/courses/#{@course.id}/chapters"
-
-- if @course.test_option
-  .list= link_to '组卷参数调整和自动评分', course_test_option_path(@course)
-- else
-  .list= link_to '组卷参数调整和自动评分', new_course_test_option_path(@course)
-
-.list= link_to '管理题库下的题目录入', course_test_questions_path(@course)
-
-- test_paper = TestPaper.find_paper_for(@course,current_user)
-- if test_paper
-  .list= link_to '开始答题', edit_test_paper_path(test_paper) 
-- else
-  .list= link_to '开始答题', course_test_papers_path(@course), :method => :post
+.page-course-show
+  = page_tile :chapters, @chapters do
+    - add :title do |chapter|
+      = link_to chapter.title, chapter
+    - add_foot :'course-wares-count' do |chapter|
+      #{chapter.course_wares.count} 个课件
+    - add_foot :'homeworks-count' do |chapter|
+      #{chapter.homeworks.count} 个练习

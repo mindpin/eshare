@@ -2,29 +2,49 @@ require 'spec_helper'
 
 describe CourseWare do
 
-  describe '关联一个 media_resource' do
+  describe 'link_file_entity' do
     before do
       @course_ware = FactoryGirl.create(:course_ware)
       @user = FactoryGirl.create(:user)
 
-      file_entity = FileEntity.create(
+      @file_entity = FileEntity.create(
         :attach => File.new(Rails.root.join("spec/data/file_entity.jpg")))
 
-      @media_resource = MediaResource.create(
-        :name => '喜洋洋.jpg', 
-        :is_dir => false, 
-        :creator => @user,
-        :file_entity => file_entity
-        )
     end
 
     it{
-      @course_ware.link_media_resource(@media_resource)
-      @course_ware.reload
-      @course_ware.media_resource.should == @media_resource
-      @course_ware.kind.should == :image
+      @course_ware.file_entity.should == nil
     }
-    
+
+    describe 'link' do
+      before do
+        @course_ware.link_file_entity(@file_entity)
+        @course_ware.reload
+      end
+
+      it {
+        @course_ware.file_entity.should == @file_entity  
+      }
+
+      it {
+        @course_ware.kind.should == 'image'
+      }
+
+      it {
+        MediaResource.last.file_entity.should == @file_entity
+      }
+
+      it {
+        @course_ware.media_resource.should == MediaResource.last
+      }
+
+      it {
+        MediaResource.last.destroy
+        @course_ware.reload
+        @course_ware.media_resource.should be_blank
+      }
+    end
+
   end
 
 end

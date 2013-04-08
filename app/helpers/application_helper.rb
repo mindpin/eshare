@@ -26,4 +26,52 @@ module ApplicationHelper
       end
     end
   end
+
+  def avatar(user, style = :normal)
+    klass = ['page-avatar', style] * ' '
+
+    if user.blank?
+      alt   = t('common.unknown-user')
+      src   = User.new.avatar.versions[style].url
+      meta  = 'unknown-user'
+    else
+      alt   = user.name
+      src   = user.avatar.versions[style].url
+      meta  = dom_id(user)
+    end
+
+    image_tag src, :alt => alt,
+                   :class => klass,
+                   :data => {
+                      :meta => meta
+                   }
+  end
+
+  # 把 feed 信息转为页面显示的描述语句
+  def feed_desc(feed)
+    case feed.what
+      when 'create_question'
+        capture_haml {
+          haml_concat user_link(feed.who)
+          haml_concat '提了一个问题'
+        }
+      when 'create_answer'
+        capture_haml {
+          haml_concat user_link(feed.who)
+          haml_concat '回答了这个问题'
+        }
+      when 'create_answervote', 'update_answervote'
+        capture_haml {
+          haml_concat user_link(feed.who)
+          haml_concat '对这个回答表示支持'
+        }
+      else
+        feed.what
+    end
+  end
+
+  def user_link(user)
+    return '未知用户' if user.blank?
+    link_to user.name, "/users/#{user.id}", :class=>'u-name'
+  end
 end

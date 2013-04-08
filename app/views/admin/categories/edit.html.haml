@@ -1,0 +1,7 @@
+.page-admin-categories
+  = link_to 'categories', "/admin/categories"
+
+  = simple_form_for @category, :url => "/admin/categories/#{@category.id}" do |f|
+    = f.input :name
+
+    = f.button :submit

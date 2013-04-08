@@ -1,12 +1,13 @@
 class Homework < ActiveRecord::Base
   attr_accessible :title, :content, :deadline,
                   :homework_requirements_attributes,
-                  :homework_attaches_attributes
+                  :homework_attaches_attributes,
+                  :creator, :chapter
 
   belongs_to :chapter
   belongs_to :creator, :class_name => 'User'
 
-  validates :title, :content, :deadline, :chapter, :creator,
+  validates :title, :chapter, :creator,
             :presence => true
 
   has_many :homework_requirements

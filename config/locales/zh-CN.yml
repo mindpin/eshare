@@ -1,4 +1,21 @@
 zh-CN:
+  simple-navbar:
+    admin:
+      home: 首页
+      users_manage: 用户管理
+      categories_manage: 分类管理
+
+    teacher:
+      dashboard: 首页
+      disk: 文件夹
+      courses_manage: 课程管理
+      questions: 问答
+
+    student:
+      dashboard: 首页
+      courses: 课程
+      disk: 文件夹
+
   simple_form:
     labels:
       homework:
@@ -10,6 +27,15 @@ zh-CN:
     submit:
       course:
         create: 创建%{model}
+        update: 更新%{model}
+      answer:
+        create: 发布回答
+      chapter:
+        create: 创建章节
+        update: 更新章节
+      course_ware:
+        create: 创建课件
+        update: 更新课件
 
   activerecord:
     models:
@@ -29,6 +55,13 @@ zh-CN:
         desc: 课程简介
         syllabus: 课程大纲
         cover: 课程封面
+      chapter:
+        title: 章节标题
+        desc: 章节简介
+      course_ware:
+        title: 课件标题
+        desc: 课件简介
+
     errors:
       models:
         course:
@@ -44,6 +77,16 @@ zh-CN:
             syllabus:
               blank: 必须填写课程大纲
 
+        chapter:
+          attributes:
+            title:
+              blank: 必须填写章节标题
+
+        course_ware:
+          attributes:
+            title:
+              blank: 必须填写课件标题
+
 
   views:
     pagination:
@@ -55,6 +98,10 @@ zh-CN:
       next: "下一页 &raquo;"
       truncate: "..."
 
+  page:
+    questions:
+      index: 问答首页
+
   common:
     sign-in: 登录
     sign-ining: 正在登录
@@ -64,6 +111,8 @@ zh-CN:
     delete_confirm: 确定要删除吗？
     
     confirm: 确定吗？
+
+    unknown-user: 未知用户
 
     user:
       edit: 修改
@@ -78,10 +127,14 @@ zh-CN:
         admin: EduShare Admin
 
     form:
-      cancel: 取消返回
+      cancel: 取消
 
     course:
       create_course: 创建课程
+
+    question:
+      you-can-answer-only-once: 一个问题你只能回答一次，不过你可以修改 %{your-answer}
+      your-answer: 你自己的回答
 
 
   compoents:
@@ -107,13 +160,41 @@ zh-CN:
         desc: 简介
         syllabus: 教学大钢
         ops: 操作
+        chapters-count: 章节数
 
+      chapters:
+        title: 标题
+        course-wares-count: 课件数目
+        homeworks-count: 练习数目
+        updated_at: 更新时间
+        ops: 操作
+
+      course-wares:
+        title: 课件名
+        kind: 类型
+        desc: 课件简介
+        pages-count: 页数
+        duration: 时长
+        ops: 操作
 
       questions:
         title: 标题
         content: 内容
         ops: 操作
 
-      answer:
+      answers:
         content: 内容
+        ops: 操作
+
+      announcements:
+        title: 标题
+        content: 内容
+        ops: 操作
+
+
+      categories:
+        name: 菜单
+        parent: 父节点
+        lft: left
+        rgt: right
         ops: 操作

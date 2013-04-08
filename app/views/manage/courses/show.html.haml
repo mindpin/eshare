@@ -1,0 +1,17 @@
+- content_for :header do
+  = render_cell :manage_courses_breadcrumb, :display, :model => @course
+  = page_button_group :chapters do |g|
+    - g.add '增加章节', "/manage/courses/#{@course.id}/chapters/new", :success
+
+.page-manage-course-show
+  = page_data_table :chapters, @chapters, :striped, :bordered do |table|
+    - table.add_column :title do |ch|
+      %a{:href => "/manage/chapters/#{ch.id}"}= ch.title
+    - table.add_column :'course-wares-count' do |ch|
+      = ch.course_wares.count
+    - table.add_column :'homeworks-count' do |ch|
+      = ch.homeworks.count
+    - table.add_column :updated_at
+    - table.add_column(:ops) do |ch|
+      %a.btn.mini{:href => "/manage/chapters/#{ch.id}/edit"}= t('common.edit')
+      = link_to t('common.delete'), "/manage/chapters/#{ch.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger'

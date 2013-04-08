@@ -1,6 +1,13 @@
 class DiskController < ApplicationController
   before_filter :authenticate_user!
 
+  class TagMock
+    attr_reader :name
+    def initialize(name)
+      @name = name
+    end
+  end
+
   def index
     @current_dir_path = _current_dir_path
     @media_resources = MediaResource.gets(current_user, @current_dir_path).web_order

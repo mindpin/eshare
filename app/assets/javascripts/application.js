@@ -15,6 +15,10 @@
 //= require jquery.min
 //= require jquery_ujs
 
+//= require jquery.ui.all
+
+//= require tag-it/tag-it
+
 //= require part-upload/part-upload
 //= require simple-images
 //= require_tree .

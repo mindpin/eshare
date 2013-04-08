@@ -1,15 +1,12 @@
-.page-admin-courses
-  = paginate @courses
-  
-  = page_button_group :courses do |g|
-    - g.add '创建课程', '/courses/new'
-    - g.add '导入课程', '/courses/import', :success
+- content_for :header do
+  %h1 课程
+  .page-desc 浏览系统内的课程
 
-  = page_data_table(:courses, @courses, :striped, :bordered) do |table|
-    - table.add_column(:name) do |course|
-      = link_to course.name, "/courses/#{course.id}"
-    - table.add_column(:cid)
-    - table.add_column(:desc)
-    - table.add_column(:ops) do |course|
-      %a.btn.mini{:href => "/courses/#{course.id}/edit"}= t('common.edit')
-      = link_to t('common.delete'), "/courses/#{course.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger'
+.page-courses-index
+  = paginate @courses
+  = page_tile :courses, @courses do
+    - add :title do |course|
+      = link_to course.name, course
+
+.page-course-signs
+  .signs= link_to '签到', ''

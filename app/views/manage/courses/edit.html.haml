@@ -1,0 +1,12 @@
+.page-content-header
+  = render_cell :manage_courses_breadcrumb, :form, :model => @course
+
+= simple_form_for @course, :url => "/manage/courses/#{@course.id}" do |f|
+  .form-inputs
+    = f.input :name
+    = f.input :cid
+    = f.input :desc, :as => :text, :input_html => {:rows => 6}
+    = f.input :cover, :as => :file
+  .form-actions
+    = f.button :submit, :class => 'success'
+    %a.btn.cancel{:href => '/manage/courses'}= t('common.form.cancel')

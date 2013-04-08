@@ -1,6 +1,10 @@
 //=require html5-boilerplate/main
 //=require html5-boilerplate/normalize
 
+//=require jquery.ui.all
+
+//=require tag-it/jquery.tagit
+
 //=require simple-page-compoents
 
 @import 'mixins';
@@ -10,16 +14,17 @@ html{
   overflow-y:scroll;
 }
 
-body{
+body {
   font-size:14px;
-  background-color:white;
+  background-color:#f1f1f1;
   padding-top:40px;
   position:relative;
-  font-family:Helvetica,​Arial,​sans-serif;
+  font-family:arial, sans-serif;
 
   a{
     color:#0088CC;
     text-decoration:none;
+    outline:none !important;
     &:hover, &:focus{
       color:#005580;
       text-decoration:underline;
@@ -32,6 +37,7 @@ body.auth{
   background:url(wallpaper/auth-bg.png);
   color:white;
   text-shadow:0 0 3px black;
+
   .page-sign-in{
     background-color:rgba(black, 0.5);
     width:600px;
@@ -71,7 +77,7 @@ body.auth{
   }
 }
 
-body{
+body.app, body.admin {
   .page-navbar{
     a.brand{
       height:40px;line-height:40px;
@@ -84,25 +90,104 @@ body{
     }
   }
 
-  $sidebar-width:200px;  
-  .page-sidebar{
+  $sidebar-width:100px;  
+  .page-sidebar {
     position:fixed;
     width:$sidebar-width;
-    margin-left:20px;
-    margin-top:20px;
-    top:40px;left:0;
-  }
-  .page-content {
-    margin-left:20px + $sidebar-width + 20px;
     margin-top:20px;
     margin-right:20px;
+    top:40px;left:0px;bottom:0;
+    z-index:2;
+  }
+  .page-search-bar{
+    position:fixed;
+    top:40px;
+    left:0;right:0;
+    height:30px;
+    background-color:#f1f1f1;
+    z-index:1;
+  }
+  .page-content-header {
+    position:fixed;
+    right:0;
+    left:120px;
+    top:40px + 20px;
+    padding:0 20px;
+    z-index:2;
+
+    background-color:white;
+    border:solid 1px #d7d7d7;
+    border-right:0 none;
+    @include border-radius(6px 0 0 0);
+    
+    @include floatfix;
+    $h:59px;
+
+    height:$h;
+
+    .header-inner {
+      width:860px;
+    }
+
+    h1 {
+      font-size:21px;font-weight:normal;
+      margin-right:20px;
+      margin:0;height:$h;line-height:$h;
+      margin-right:20px;
+      display:inline-block;
+    }
+    .page-desc {
+      display:inline-block;height:$h;line-height:$h;
+      color:#999;
+    }
+    .btn-group {
+      float:right;
+      margin:14px 0 0 0;
+    }
+    span.split {
+      font-size:20px;margin-right:20px;
+    }
+
+    .page-breadcrumb {
+      float:left;
+      margin:0;
+      margin-top:14px;
+      font-size:21px;
+      padding:0;
+      height:30px;line-height:30px;
+      // background-color:white;
+      background-color:inherit;
+      > .active {
+        color: #222;
+      }
+    }
+  }
+
+
+  .page-content {
+    margin-left:10px + $sidebar-width + 10px;
+    margin-top:20px;
+    margin-right:0;
+    background-color:white;
+    border:solid 1px #D7D7D7;
+    border-right:0 none;
+    position:relative;
+
+    @include border-radius(6px 0 0 6px);
+    .content-inner {
+      width:860px;
+      padding:20px + 59px 20px 20px 20px;
+      min-height:500px;
+    }
   }
 }
+
+// ------------
 
 .page-files-index {
   .operatebar{
     margin-bottom:20px;
-    a.upload {
+    a.media-resource-upload {
       overflow:hidden;
       input {cursor:pointer;}
     }
@@ -126,9 +211,12 @@ body{
   }
 }
 
+.page-file-show {
+  width:700px;
+}
+
 .page-file-uploader {
   width:600px;
-
   .list {
     .item {
       border:solid 1px #E5E5E5;
@@ -184,6 +272,157 @@ ul.page-breadcrumb {
     & > .divider {
       color:#ccc;
       padding:0 5px;
+    }
+  }
+}
+
+.page-tags {
+  @include floatfix;
+  padding:0;
+  margin-bottom:20px;
+  .shower {
+    height:34px;
+    i {
+      float:left;
+      margin-right:7px;
+      opacity:0.62;
+      margin-top:(27px - 16px) / 2 + 4px;
+    }
+    .tags {
+      float:left;
+      margin-top:4px;
+      a.tag {
+        display:block;float:left;margin-right:5px;
+        @include gradient(#FDD870, #FDBD4F);
+        color:#815828;
+        height:20px;line-height:20px;
+        @include border-radius(3px);
+        padding:2px 7px;
+        border:solid 1px rgba(black, 0.2);
+        @include box-shadow((0 1px 1px rgba(white, 0.8) inset, 0 1px 2px rgba(black, 0.1)));
+        text-shadow:1px 1px 2px rgba(white, 0.5);
+        margin-bottom:1px;
+        text-decoration:none;
+        &:hover, &:active {
+          @include gradient(#FEE49B, #FDD083);
+        }
+        &:active {
+          margin-top:1px;
+          margin-bottom: 0;
+        }
+      }
+    }
+    a.edit {
+      float:left;
+      height:27px;line-height:27px;
+      margin-left:7px;
+      margin-top:4px;
+    }
+  }
+  .inputer {
+    position:relative;
+    ul {
+      // padding-right:100px;
+      margin-bottom:5px;
+    }
+    .btns {
+      // position:absolute;
+      // top:4px;right:4px;
+    }
+  }
+}
+
+.page-questions-index {
+  width:700px;
+  .questions {
+    .question {
+      border-top:solid 1px #eee;
+      padding-top:15px;
+    }
+  }
+  .feed {
+    position:relative;
+    .answer-creator {
+      color:#222;a{color:#222;}
+      margin-top:10px;
+    }
+    .time {
+      position:absolute;
+      top:10px;right:0;
+    }
+  }
+}
+
+.page-question-show{
+  width:600px;
+  $left : 34px;
+
+  .answers {
+    margin-top:20px;
+    padding-bottom:20px;
+    margin-bottom:20px;
+    border-bottom:solid 1px #eee;
+
+    .answer {
+      border:0 none;
+      margin-top:0;
+    }
+
+    $pdt : 15px;
+
+    .tile-body {
+      margin-left:$left;
+      border-top:solid 1px #eee;
+      padding-top:$pdt;
+      position:relative;
+    }
+    .avatar {
+      position:absolute;
+      width:24px;height:24px;
+      top:$pdt;right:0;
+      img{width:24px;height:24px;}
+    }
+    .vote_up a {
+      margin-top:2px + $pdt;
+    }
+    .vote_up a, .vote_down a {
+      margin-bottom:10px;
+      display:block;
+      background-color:#E7F3F9;
+      width:$left - 10px;
+      height:$left - 10px;
+      overflow:hidden;
+      font-size:0;
+      line-height:50em;
+      @include border-radius(2px);
+    }
+  }
+  form {margin-left:$left;}
+  form label {
+    display:none;
+  }
+  .you-can-answer-only-once{
+    margin-left:$left;
+  }
+}
+
+img.page-avatar {
+  @include border-radius(3px);
+}
+
+.page-manage-courses-import {
+  .download {
+    margin-bottom:20px;
+    border-bottom:solid 1px #ddd;
+    padding-bottom:20px;
+    .desc {
+      margin-bottom:10px;
+    }
+  }
+
+  form {
+    .desc {
+      margin-bottom:10px;
     }
   }
 }

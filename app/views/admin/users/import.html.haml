@@ -1,0 +1,12 @@
+.page-admin-users-import
+  = form_tag '/admin/students/do_import', :method => :post, :multipart => true do
+    .field
+      %label excel文件
+      = file_field_tag 'excel_file'
+      = submit_tag '导入'
+
+  = form_tag '/admin/teachers/do_import', :method => :post, :multipart => true do
+    .field
+      %label excel文件
+      = file_field_tag 'excel_file'
+      = submit_tag '导入'
