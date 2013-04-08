@@ -22,7 +22,10 @@ class Answer < ActiveRecord::Base
 
   def update_question_updated_at 
     self.question.updated_at = Time.now
-    self.question.save
+
+    self.question.without_feed do
+      self.question.save
+    end
   end
 
   def has_voted_by?(user)
