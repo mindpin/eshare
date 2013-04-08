@@ -43,6 +43,9 @@ RSpec.configure do |config|
   end
 
   config.after(:each) do
+    # 为了让测试中的 Time.freeze Time.travel 的改变不影响其他的测试
+    # 运行这个方法来还原时间的改变
+    Timecop.return
     DatabaseCleaner.clean
   end
 

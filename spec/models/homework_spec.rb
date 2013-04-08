@@ -2,18 +2,18 @@ require 'spec_helper'
 
 describe Homework do
   describe '创建没有要求的作业' do
+    before{
+      @user = FactoryGirl.create(:user)
+      @chapter = FactoryGirl.create(:chapter)
+    }
+
     it{
-      user = FactoryGirl.create(:user)
-      chapter = FactoryGirl.create(:chapter)
-
-      homework = chapter.homeworks.new(
-        :title => '标题', :content => "内容", 
-        :deadline => Time.now + 10.day)
-
-      homework.creator = user
-
       expect{
-          homework.save
+        @chapter.homeworks.create(
+          :title => '标题', :content => "内容", 
+          :deadline => Time.now + 10.day,
+          :creator => @user
+          )
       }.to change{Homework.count}.by(1)
     }
   end
@@ -28,17 +28,13 @@ describe Homework do
         {:content => "要求二"}
       ]
 
-      @homework = chapter.homeworks.new(
+      homework = chapter.homeworks.create(
         :title => '标题', :content => "内容", 
-        :deadline => Time.now + 10.day,
+        :deadline => Time.now + 10.day, :creator => user,
         :homework_requirements_attributes => homework_requirements_attributes
         )
 
-      @homework.creator = user
-
-      expect{
-          @homework.save
-      }.to change{Homework.count}.by(1)
+      @homework = Homework.find(homework.id)
     end
 
     it{
@@ -90,17 +86,13 @@ describe Homework do
         {:file_entity_id => @file_entity_2.id, :name => '附件二'}
       ]
 
-      @homework = chapter.homeworks.new(
+      homework = chapter.homeworks.create(
         :title => '标题', :content => "内容", 
-        :deadline => Time.now + 10.day,
+        :deadline => Time.now + 10.day, :creator => user,
         :homework_attaches_attributes => homework_attaches_attributes
         )
 
-      @homework.creator = user
-
-      expect{
-          @homework.save
-      }.to change{Homework.count}.by(1)
+      @homework = Homework.find(homework.id)
     end
 
     it{
@@ -126,29 +118,21 @@ describe Homework do
       @user = FactoryGirl.create(:user)
       chapter = FactoryGirl.create(:chapter)
 
-      @homework_1 = chapter.homeworks.new(
-        :title => '标题1', :content => "内容1", 
+      @homework_1 = chapter.homeworks.create(
+        :title => '标题1', :content => "内容1", :creator => @user,
         :deadline => Time.now + 10.day)
-      @homework_1.creator = @user
-      @homework_1.save
 
-      @homework_2 = chapter.homeworks.new(
-        :title => '标题2', :content => "内容2", 
+      @homework_2 = chapter.homeworks.create(
+        :title => '标题2', :content => "内容2", :creator => @user,
         :deadline => Time.now + 11.day)
-      @homework_2.creator = @user
-      @homework_2.save
 
-      @homework_3 = chapter.homeworks.new(
-        :title => '标题3', :content => "内容3", 
+      @homework_3 = chapter.homeworks.create(
+        :title => '标题3', :content => "内容3", :creator => @user,
         :deadline => Time.now - 10.day)
-      @homework_3.creator = @user
-      @homework_3.save
 
-      @homework_4 = chapter.homeworks.new(
-        :title => '标题4', :content => "内容4", 
+      @homework_4 = chapter.homeworks.create(
+        :title => '标题4', :content => "内容4", :creator => @user,
         :deadline => Time.now - 11.day)
-      @homework_4.creator = @user
-      @homework_4.save
     end
 
     it{

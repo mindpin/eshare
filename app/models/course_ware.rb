@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 class CourseWare < ActiveRecord::Base
+  include AnswerCourseWare::CourseWareMethods
+
   attr_accessible :title, :desc, :url, :creator
 
   validates :title, :chapter, :creator,
