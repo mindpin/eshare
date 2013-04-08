@@ -33,6 +33,28 @@ describe Question do
       @question.answer_of(@user).should == Answer.last
     }
   end
+
+  describe "修改时间" do
+    before {
+      @user         = FactoryGirl.create :user
+      @question     = FactoryGirl.create(:question, :creator => @user)
+      @updated_at = @question.updated_at
+    }
+
+    it "问题被创建者修改" do
+      @question.update_attributes({:title => 'test'})
+      current_time = Time.now
+      current_time.should > @updated_at
+    end
+
+    it "问题被任何人回答" do
+      FactoryGirl.create :answer, :question => @question,
+                                                  :creator => @user
+      current_time = Time.now
+      current_time.should > @updated_at
+    end
+    
+  end
 end
 
 describe Answer do
