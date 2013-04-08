@@ -11,6 +11,15 @@ class Question < ActiveRecord::Base
 
   default_scope order('id desc')
 
+  scope :today, :conditions => ['DATE(created_at) = ?',Time.now.to_date]
+  scope :by_course, lambda {|course|
+    ids = course.chapter_ids.to_a
+    if ids.blank?
+      {:conditions => 'chapter_id = -1'}
+    else
+      {:conditions => {:chapter_id => ids}}
+    end
+  }
 
   after_save :follow_by_creator
 

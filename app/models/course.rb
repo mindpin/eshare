@@ -1,5 +1,6 @@
 class Course < ActiveRecord::Base
   include CourseZipImporter
+  include CourseInteractive::CourseMethods
 
   attr_accessible :name, :cid, :desc, :syllabus, :cover, :creator
 
