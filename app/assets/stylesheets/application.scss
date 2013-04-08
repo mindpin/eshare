@@ -147,6 +147,20 @@ body.app, body.admin {
     span.split {
       font-size:20px;margin-right:20px;
     }
+
+    .page-breadcrumb {
+      float:left;
+      margin:0;
+      margin-top:14px;
+      font-size:21px;
+      padding:0;
+      height:30px;line-height:30px;
+      // background-color:white;
+      background-color:inherit;
+      > .active {
+        color: #222;
+      }
+    }
   }
 
 
@@ -394,4 +408,21 @@ ul.page-breadcrumb {
 
 img.page-avatar {
   @include border-radius(3px);
+}
+
+.page-manage-courses-import {
+  .download {
+    margin-bottom:20px;
+    border-bottom:solid 1px #ddd;
+    padding-bottom:20px;
+    .desc {
+      margin-bottom:10px;
+    }
+  }
+
+  form {
+    .desc {
+      margin-bottom:10px;
+    }
+  }
 }

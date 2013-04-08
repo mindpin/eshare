@@ -101,6 +101,7 @@ Eshare::Application.routes.draw do
   namespace :manage do
     resources :courses, :shallow => true do
       collection do
+        get :download_import_sample
         get :import
         post :do_import
       end

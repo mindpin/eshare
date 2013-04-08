@@ -4,6 +4,7 @@ source 'http://ruby.taobao.org'
 gem 'rails', '3.2.12' # RAILS #不要更新 3.2.13 有性能问题，等 3.2.14
 gem 'mysql2', '0.3.11' # MYSQL数据库连接
 gem 'json', '1.7.7' # JSON解析，RAILS默认引入的
+gem 'rubyzip', '0.9.9', :require => false
 
 group :assets do
   gem 'sass-rails', '~> 3.2.3'
@@ -96,8 +97,9 @@ gem 'file-part-upload',
 ## excel导入和示例生成
 gem 'simple-excel-import',
     :git => 'git://github.com/mindpin/simple-excel-import.git',
-    :tag => '0.0.2.2'
+    :tag => '0.0.2.5'
     # :path => '/web/songliang/simple-excel-import'
+# gem 'axlsx', '1.3.5' # 上面的gem依赖它
 
 ## office文档转换
 gem 'odocuconv',
