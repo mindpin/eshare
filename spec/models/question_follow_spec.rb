@@ -7,7 +7,6 @@ describe QuestionFollow do
 
     @user         = FactoryGirl.create :user
 
-    @question_follow = @question.follow_by_user(@user)
   }
 
   it "问题没被其它用户关注" do
