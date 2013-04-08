@@ -28,7 +28,11 @@ class QuestionFollow < ActiveRecord::Base
       end
 
       def visit_question(question)
-        question.update_last_view_time
+        question_follow = question.follow_by_user(self)
+
+        question_follow.last_view_time = Time.now
+        question_follow.save
+        question_follow.reload
       end
     end
 
