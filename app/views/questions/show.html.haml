@@ -1,5 +1,10 @@
 .page-question-show
   .question
+    - if @question.followed_by?(current_user)
+      .unfollow= link_to "取消关注", "/questions/#{@question.id}/unfollow", :method => :post
+    - else
+      .follow= link_to "关注", "/questions/#{@question.id}/follow", :method => :post
+
     %h2.title= @question.title
     .content= @question.content
 
