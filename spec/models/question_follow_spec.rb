@@ -11,21 +11,19 @@ describe QuestionFollow do
   }
 
   it "问题没被用户关注" do
-    @question.followed_by_user(@user).count.should == 0
+    @question.follow_by_user(@user).new_record?.should == true
   end
 
   it "关注问题" do
     @user.follow_question(@question)
 
-    @question.follow_by_user(@user).count.should == 1
+    @question.follow_by_user(@user).present?.should == true
   end
 
   it "取消问题" do
-    @question.follow_by_user(@user).count.should == 1
-
     @user.unfollow_question(@question)
 
-    @question.follow_by_user(@user).count.should == 0
+    @question.follow_by_user(@user).new_record?.should == true
   end
 
   it "查看记录时间" do

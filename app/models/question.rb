@@ -5,11 +5,19 @@ class Question < ActiveRecord::Base
   belongs_to :ask_to, :class_name => 'User', :foreign_key => :ask_to_user_id
   belongs_to :chapter
   has_many :answers
-  has_many :question_follows
+  has_many :follows, :class_name => 'QuestionFollow', :foreign_key => :question_id
 
   validates :creator, :title, :content, :presence => true
 
   default_scope order('id desc')
+
+
+  after_save :update_last_view_time
+
+  def update_last_view_time
+    self.follow_by_user(self.creator).last_view_time = Time.now
+    self.follow_by_user(self.creator).save
+  end
 
   # 记录用户活动
   record_feed :scene => :questions,
@@ -23,6 +31,10 @@ class Question < ActiveRecord::Base
   def answer_of(user)
     return nil if user.blank?
     return self.answers.by_user(user).first
+  end
+
+  def follow_by_user(user)
+    self.follows.by_user(user).first || self.follows.build(:user => user)
   end
 
   module UserMethods

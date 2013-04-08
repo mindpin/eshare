@@ -8,16 +8,8 @@ class QuestionFollow < ActiveRecord::Base
 
   scope :by_user, lambda { |user| where(:user_id => user.id) }
 
-  after_save :update_last_view_time
+  
 
-  def update_last_view_time
-    self.last_view_time = Time.now
-    self.save
-  end
-
-  def follow_by_user(user)
-    self.by_user(user).first
-  end
 
   module UserMethods
     def self.included(base)
@@ -33,6 +25,10 @@ class QuestionFollow < ActiveRecord::Base
 
       def unfollow_question(question)
         question.follow_by_user(self).destroy
+      end
+
+      def visit_question(question)
+        question.update_last_view_time
       end
     end
 
