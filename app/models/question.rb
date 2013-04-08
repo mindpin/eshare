@@ -5,6 +5,7 @@ class Question < ActiveRecord::Base
   belongs_to :ask_to, :class_name => 'User', :foreign_key => :ask_to_user_id
   belongs_to :chapter
   has_many :answers
+  has_many :question_follows
 
   validates :creator, :title, :content, :presence => true
 
