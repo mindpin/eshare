@@ -26,9 +26,6 @@ describe QuestionFollow do
 
   it "取消问题" do
     @user.follow_question(@question)
-
-    @question_follow.present?.should == true
-
     @user.unfollow_question(@question)
 
     @question_follow.new_record?.should == true
