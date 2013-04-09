@@ -1,0 +1,5 @@
+= simple_form_for @answer do |f|
+  .form-inputs
+    = f.input :content, :as => :text, :input_html => {:rows => 4, :class => 'xxlarge'}
+  .form-actions
+    = f.button :submit, :class => 'success'
