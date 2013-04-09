@@ -11,7 +11,7 @@ describe QuestionFollow do
     }
 
     it "问题有被自己关注" do
-      @question.follow_by_user(@creator).persisted?.should == true
+      @question.get_follower_by(@creator).present?.should == true
  
       @question.followed_by?(@creator).should == true
     end
@@ -19,7 +19,7 @@ describe QuestionFollow do
 
     it "关注数量为0" do
       expect {
-        @creator.unfollow_question(@question)
+        @question.unfollow_by_user(@creator)
       }.to change {
         @question.follows.by_user(@creator).count
       }.by(-1)
@@ -27,7 +27,7 @@ describe QuestionFollow do
 
 
     it "已经被取消" do
-      @creator.unfollow_question(@question)
+      @question.unfollow_by_user(@creator)
 
       @question.followed_by?(@creator).should == false
     end
@@ -44,7 +44,7 @@ describe QuestionFollow do
     }
 
     it {
-      @question.follow_by_user(@user).new_record?.should == true
+      @question.get_follower_by(@user).nil?.should == true
     }
 
     it {
@@ -54,7 +54,7 @@ describe QuestionFollow do
 
     it "关注数量为1" do
       expect {
-        @user.follow_question(@question)
+        @question.follow_by_user(@user)
       }.to change {
         @question.follows.by_user(@user).count
       }.by(1)
@@ -62,21 +62,21 @@ describe QuestionFollow do
 
 
     it "已经被关注" do
-      @user.follow_question(@question)
+      @question.follow_by_user(@user)
 
       @question.followed_by?(@user).should == true
     end
 
 
     it "查看记录时间" do
-      @user.follow_question(@question)
+      @question.follow_by_user(@user)
 
       new_time = Timecop.freeze(Time.local(2013))
       Timecop.freeze(new_time)
 
-      @user.visit_question!(@question)
+      @question.visit_by!(@user)
 
-      @question.follow_by_user(@user).last_view_time.should == new_time
+      @question.get_follower_by(@user).last_view_time.should == new_time
     end
 
   end
