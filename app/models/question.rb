@@ -40,7 +40,7 @@ class Question < ActiveRecord::Base
   after_save :follow_by_creator
 
   def follow_by_creator
-    self.creator.follow_question(self)
+    self.follow_by_user(self.creator)
   end
 
   # 记录用户活动
@@ -57,12 +57,31 @@ class Question < ActiveRecord::Base
     return self.answers.by_user(user).first
   end
 
-  def followed_by?(user)
-    self.follow_by_user(user).persisted?
+  def follow_by_user(user)
+    self.follows.create(:user => user, :question => self, :last_view_time => Time.now)
   end
 
-  def follow_by_user(user)
-    self.follows.by_user(user).first || self.follows.build(:user => user)
+  def unfollow_by_user(user)
+    self.get_follower_by(user).destroy
+  end
+
+
+  def followed_by?(user)
+    self.get_follower_by(user).present?
+  end
+
+  def get_follower_by(user)
+    self.follows.by_user(user).first
+  end
+
+  def visit_by!(user)
+    return if !self.followed_by?(user)
+
+    question_follow = self.get_follower_by(user)
+
+    question_follow.last_view_time = Time.now
+    question_follow.save
+    question_follow.reload
   end
 
   module UserMethods
