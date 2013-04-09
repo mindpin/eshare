@@ -1,5 +1,7 @@
 class Question < ActiveRecord::Base
-  attr_accessible :title, :content, :chapter_id, :ask_to_user_id
+  include CourseInteractive::QuestionMethods
+  
+  attr_accessible :title, :content, :chapter_id, :ask_to_user_id, :creator
 
   belongs_to :creator, :class_name => 'User', :foreign_key => :creator_id
   belongs_to :ask_to, :class_name => 'User', :foreign_key => :ask_to_user_id
@@ -10,6 +12,16 @@ class Question < ActiveRecord::Base
   validates :creator, :title, :content, :presence => true
 
   default_scope order('id desc')
+
+  scope :today, :conditions => ['DATE(created_at) = ?',Time.now.to_date]
+  scope :by_course, lambda {|course|
+    ids = course.chapter_ids.to_a
+    if ids.blank?
+      {:conditions => 'chapter_id = -1'}
+    else
+      {:conditions => {:chapter_id => ids}}
+    end
+  }
 
   # 记录用户活动
   record_feed :scene => :questions,
@@ -28,7 +40,7 @@ class Question < ActiveRecord::Base
   after_save :follow_by_creator
 
   def follow_by_creator
-    self.creator.follow_question(self)
+    self.follow_by_user(self.creator)
   end
 
   # 记录用户活动
@@ -45,12 +57,31 @@ class Question < ActiveRecord::Base
     return self.answers.by_user(user).first
   end
 
-  def followed_by?(user)
-    self.follow_by_user(user).persisted?
+  def follow_by_user(user)
+    self.follows.create(:user => user, :question => self, :last_view_time => Time.now)
   end
 
-  def follow_by_user(user)
-    self.follows.by_user(user).first || self.follows.build(:user => user)
+  def unfollow_by_user(user)
+    self.get_follower_by(user).destroy
+  end
+
+
+  def followed_by?(user)
+    self.get_follower_by(user).present?
+  end
+
+  def get_follower_by(user)
+    self.follows.by_user(user).first
+  end
+
+  def visit_by!(user)
+    return if !self.followed_by?(user)
+
+    question_follow = self.get_follower_by(user)
+
+    question_follow.last_view_time = Time.now
+    question_follow.save
+    question_follow.reload
   end
 
   module UserMethods
