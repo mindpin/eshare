@@ -24,7 +24,7 @@ class QuestionsController < ApplicationController
   def show
     @answer = Answer.new
 
-    current_user.visit_question!(@question)
+    @question.visit_by!(current_user)
   end
 
   def edit
@@ -38,12 +38,12 @@ class QuestionsController < ApplicationController
   end
 
   def follow
-    current_user.follow_question(@question)
+    current_user.follow(@question)
     redirect_to :back
   end
 
   def unfollow
-    current_user.unfollow_question(@question)
+    current_user.unfollow(@question)
     redirect_to :back
   end
 
