@@ -48,6 +48,6 @@ module FileEntityConvertMethods
   end
 
   def convert_ppt_url
-    "/convert_ppt/file_entities/#{self.id}.swf"
+    "/convert_ppt/file_entities/#{self.id}.html"
   end
 end
