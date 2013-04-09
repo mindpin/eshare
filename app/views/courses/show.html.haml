@@ -8,5 +8,6 @@
     - add_left :desc
     - add :items do |chapter|
       - chapter.course_wares.each do |cw|
-        %a.item{:href => 'javascript:;'}
-          .title= cw.title
+        %a.item{:href => "/course_wares/#{cw.id}"}
+          %span.title= cw.title
+          %span.kind (#{cw.kind})

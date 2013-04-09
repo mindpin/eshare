@@ -9,6 +9,7 @@ def randstr(length=8)
   re
 end
 
+# 转换文件名为 mime-type
 def file_content_type(file_name)
   MIME::Types.type_for(file_name).first.content_type
 rescue

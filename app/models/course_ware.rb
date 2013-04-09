@@ -25,19 +25,16 @@ class CourseWare < ActiveRecord::Base
     self
   end
 
-  def convert_success?
-    self.file_entity && self.file_entity.convert_success?
+  delegate :convert_success?, :to => :file_entity
+  delegate :converting?, :to => :file_entity
+  delegate :convert_failure?, :to => :file_entity
+  delegate :ppt_images, :to => :file_entity
+
+  FileEntity::EXTNAME_HASH.each do |key, value|
+    delegate "is_#{key}?", :to => :file_entity
   end
 
-  def converting?
-    self.file_entity && self.file_entity.converting?
-  end
-
-  def convert_failure?
-    self.file_entity && self.file_entity.convert_failure?
-  end
-
-  def ppt_images
-    self.file_entity && self.file_entity.ppt_images
+  def is_web_video?
+    ['youku'].include? self.kind
   end
 end

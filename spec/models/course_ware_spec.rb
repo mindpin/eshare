@@ -47,4 +47,14 @@ describe CourseWare do
 
   end
 
+  describe '网络视频类型' do
+    before {
+      @course_ware = FactoryGirl.create :course_ware, :kind => :youku
+    }
+
+    it {
+      CourseWare.last.is_web_video?.should == true
+    }
+  end
+
 end
