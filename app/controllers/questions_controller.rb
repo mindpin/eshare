@@ -24,7 +24,7 @@ class QuestionsController < ApplicationController
   def show
     @answer = Answer.new
 
-    current_user.visit_question!(@question)
+    @question.visit_by!(current_user)
   end
 
   def edit

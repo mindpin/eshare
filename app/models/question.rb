@@ -63,9 +63,9 @@ class Question < ActiveRecord::Base
   end
 
   def visit_by!(user)
-    return if !self.followed_by?(self)
+    return if !self.followed_by?(user)
 
-    question_follow = self.get_follower_by(self)
+    question_follow = self.get_follower_by(user)
 
     question_follow.last_view_time = Time.now
     question_follow.save

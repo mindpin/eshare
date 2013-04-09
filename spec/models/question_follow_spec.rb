@@ -70,13 +70,13 @@ describe QuestionFollow do
 
     it "查看记录时间" do
       @question.follow_by_user(@user)
+      last_view_time = @question.get_follower_by(@user).last_view_time
 
-      new_time = Timecop.freeze(Time.local(2013))
-      Timecop.freeze(new_time)
+      sleep(2)
 
       @question.visit_by!(@user)
 
-      @question.get_follower_by(@user).last_view_time.should == new_time
+      @question.get_follower_by(@user).last_view_time.should > last_view_time
     end
 
   end
