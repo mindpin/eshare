@@ -55,36 +55,36 @@ describe CourseInteractive do
         @course.query_interactive_sum(@date).should == 5
       end
     }
-  end
-
-  describe '逐步增加课程交互数' do
-    it{
-      @course.query_interactive_sum(@date).should == 5
-    }
-
-    describe '创建指定了章节的问题' do
-      before{
-        @new_chapter = FactoryGirl.create(:chapter, :course => @course)
-
-        Question.create(:title=>"title_new", :content => 'content_new', :creator => @user, :chapter_id => @new_chapter.id)
-      }
-
+    describe '逐步增加课程交互数' do
       it{
-        @course.query_interactive_sum(@date).should == 6
+        @course.query_interactive_sum(@date).should == 5
       }
 
-      describe '有人签到' do
+      describe '创建指定了章节的问题' do
         before{
-          user_1 = FactoryGirl.create(:user)
-          user_2 = FactoryGirl.create(:user)
-          @course.sign(user_1)
-          @course.sign(user_2)
+          @new_chapter = FactoryGirl.create(:chapter, :course => @course)
+
+          Question.create(:title=>"title_new", :content => 'content_new', :creator => @user, :chapter_id => @new_chapter.id)
         }
 
         it{
-          @course.query_interactive_sum(@date).should == 8     
+          @course.query_interactive_sum(@date).should == 6
         }
+
+        describe '有人签到' do
+          before{
+            user_1 = FactoryGirl.create(:user)
+            user_2 = FactoryGirl.create(:user)
+            @course.sign(user_1)
+            @course.sign(user_2)
+          }
+
+          it{
+            @course.query_interactive_sum(@date).should == 8     
+          }
+        end
       end
     end
   end
+
 end
