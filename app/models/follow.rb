@@ -30,12 +30,12 @@ class Follow < ActiveRecord::Base
     end
 
     module InstanceMethods
-      def follow(user)
-        self.followings << user
+      def follow_by_user(user)
+        user.followings << self
       end
 
-      def unfollow(user)
-        relation = self.forward_follows.where('following_user_id = ?', user.id)
+      def unfollow_by_user(user)
+        relation = user.forward_follows.where('following_user_id = ?', self.id)
         return false if relation.blank?
         !!relation.first.destroy 
       end
