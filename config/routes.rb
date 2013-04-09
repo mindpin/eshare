@@ -81,6 +81,11 @@ end
 # 问答和问答投票
 Eshare::Application.routes.draw do
   resources :questions, :shallow => true do
+    member do
+      post :follow
+      post :unfollow
+    end
+
     resources :answers do
       member do
         put :vote_up

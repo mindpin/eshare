@@ -8,13 +8,15 @@ module CourseZipImporter
   end
 
   class Importer
-    attr_reader :zip_path, :out_path, :info, :creator, :course, :chapters
+    attr_reader :zip_path, :out_path, :info, :creator, :course, :files
 
     def initialize(zip_path, creator)
       @zip_path = zip_path
       @out_path = File.join(OUTDIR, "course#{Time.now.utc.strftime("%Y%m%d%H%M%S")}")
       @creator  = creator
+      @files    = []
       unzip
+      @info = parse_course_yaml[:course]
     end
 
     def import
@@ -37,7 +39,7 @@ module CourseZipImporter
     end
 
     def import_chapters
-      @chapters = info[:chapters].map do |chapter_info|
+      info[:chapters].each do |chapter_info|
         chapter = course.chapters.create(:title   => chapter_info[:title],
                                          :desc    => chapter_info[:desc],
                                          :creator => creator)
@@ -54,19 +56,13 @@ module CourseZipImporter
           if courseware_info[:file]
             file = file(File.join('files', courseware_info[:file]))
             ware.link_file_entity FileEntity.create(:attach => file)
-            ware.save
           elsif courseware_info[:youku]
             ware.url = courseware_info[:youku]
             ware.kind = 'youku'
-            ware.save
           end
-        end
-      end
-    end
 
-    def import_homeworks
-      @chapters = info[:chapters].map do |chapter_info|
-        chapter
+          ware.save
+        end
       end
     end
 
@@ -78,11 +74,12 @@ module CourseZipImporter
           zip.extract(entry, dest_path)
         end
       end
-      @info = parse_course_yaml[:course]
     end
 
     def file(file_name)
-      File.open File.join(out_path, file_name)
+      file = File.open(File.join(out_path, file_name))
+      files << file
+      file
     end
 
     def parse_course_yaml
@@ -90,6 +87,7 @@ module CourseZipImporter
     end
 
     def clean
+      files.each(&:close)
       FileUtils.rm_rf out_path
     end
   end

@@ -57,8 +57,15 @@ class User < ActiveRecord::Base
   simple_excel_import :student, :fields => [:login, :name, :email, :password],
                                 :default => {:role => :student}
 
-  include Course::UserMethods
+  def follow(model)
+    model.follow_by_user self
+  end
 
+  def unfollow(model)
+    model.unfollow_by_user self
+  end
+
+  include Course::UserMethods
   include Homework::UserMethods
   include Question::UserMethods
   include Answer::UserMethods
@@ -66,5 +73,6 @@ class User < ActiveRecord::Base
   include Announcement::UserMethods
   include Survey::UserMethods
   include Follow::UserMethods
+  include QuestionFollow::UserMethods
   include UserFeedStream
 end

@@ -5,6 +5,7 @@ describe CourseZipImporter do
     let(:zip_path) {'spec/support/resources/course.zip'}
     let(:creator) {FactoryGirl.create :user}
     let(:course) {Course.find_by_name('zip导入课程')}
+    after {FileUtils.rm_rf 'tmp/courses'}
     subject {Course.import_zip_file zip_path, creator}
 
     context 'imports course' do

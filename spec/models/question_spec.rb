@@ -33,6 +33,33 @@ describe Question do
       @question.answer_of(@user).should == Answer.last
     }
   end
+
+  describe "检测 updated_at" do
+    before {
+      @question     = FactoryGirl.create(:question)
+      @updated_at = @question.updated_at
+
+      sleep(1)
+
+      @answer = FactoryGirl.create(:answer, :question => @question)
+
+    }
+
+    it "问题被创建者修改" do
+      @question.update_attributes({:title => 'test', :content => 'test'})
+      @question.updated_at.should > @updated_at
+    end
+
+    it "问题被任何人回答" do
+      @question.updated_at.should > @updated_at
+    end
+
+    it "修改回答" do
+      @answer.update_attributes({:content => 'test'})
+      @question.updated_at.should > @updated_at
+    end
+
+  end
 end
 
 describe Answer do

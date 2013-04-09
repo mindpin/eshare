@@ -1,0 +1,10 @@
+.choices{:style => 'display:none;'}
+  = f.simple_fields_for TestQuestion::ChoiceOptions.new do |choices_option|
+    - ('a'..'e').each do |option|
+      = choices_option.input option
+
+.true-false{:style => 'display:none;'}
+  = f.input :answer, :as => :radio_buttons
+
+.other{:style => 'display:none;'}
+  = f.input :answer

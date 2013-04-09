@@ -1,4 +1,7 @@
+# -*- coding: utf-8 -*-
 class Answer < ActiveRecord::Base
+  include AnswerCourseWare::AnswerMethods
+
   attr_accessible :content, :question, :creator
 
   belongs_to :creator, :class_name => 'User', :foreign_key => :creator_id
@@ -16,6 +19,17 @@ class Answer < ActiveRecord::Base
   # 记录用户活动
   record_feed :scene => :questions,
                         :callbacks => [ :create ]
+
+
+  after_save :update_question_updated_at
+
+  def update_question_updated_at 
+    self.question.updated_at = Time.now
+
+    self.question.without_feed do
+      self.question.save
+    end
+  end
 
   def has_voted_by?(user)
     self.answer_votes.by_user(user).present?

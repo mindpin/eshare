@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 class CourseWare < ActiveRecord::Base
+  include AnswerCourseWare::CourseWareMethods
+
   attr_accessible :title, :desc, :url, :creator
 
   validates :title, :chapter, :creator,
@@ -21,5 +23,21 @@ class CourseWare < ActiveRecord::Base
     self.save
 
     self
+  end
+
+  def convert_success?
+    self.file_entity && self.file_entity.convert_success?
+  end
+
+  def converting?
+    self.file_entity && self.file_entity.converting?
+  end
+
+  def convert_failure?
+    self.file_entity && self.file_entity.convert_failure?
+  end
+
+  def ppt_images
+    self.file_entity && self.file_entity.ppt_images
   end
 end

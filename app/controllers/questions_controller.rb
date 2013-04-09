@@ -23,6 +23,8 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = Answer.new
+
+    @question.visit_by!(current_user)
   end
 
   def edit
@@ -33,6 +35,16 @@ class QuestionsController < ApplicationController
       return redirect_to :action => :index
     end
     render :action => :edit
+  end
+
+  def follow
+    current_user.follow(@question)
+    redirect_to :back
+  end
+
+  def unfollow
+    current_user.unfollow(@question)
+    redirect_to :back
   end
 
 end
