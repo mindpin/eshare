@@ -39,7 +39,6 @@ module CourseZipImporter
     end
 
     def import_chapters
-      raise course.errors.messages.to_s if course.errors.any?
       info[:chapters].each do |chapter_info|
         chapter = course.chapters.create(:title   => chapter_info[:title],
                                          :desc    => chapter_info[:desc],

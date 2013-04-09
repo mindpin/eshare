@@ -1,0 +1,8 @@
+= simple_form_for @test_option, :url => "/courses/#{params[:course_id]}/test_option" do |f|
+  = f.simple_fields_for TestOption::Rule.new do |rule|
+    - [:single_choice,:multiple_choice,:fill,:true_false].each do |option|
+      = option
+      = rule.simple_fields_for option do |fields|
+        - [:count, :point].each do |field|
+          = fields.input field
+  = f.submit

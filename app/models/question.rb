@@ -21,6 +21,20 @@ class Question < ActiveRecord::Base
     end
   }
 
+  # 记录用户活动
+  record_feed :scene => :questions,
+                        :callbacks => [ :create, :update]
+
+  def answered_by?(user)
+    return false if user.blank?
+    return self.answer_of(user).present?
+  end
+
+  def answer_of(user)
+    return nil if user.blank?
+    return self.answers.by_user(user).first
+  end
+
   after_save :follow_by_creator
 
   def follow_by_creator
