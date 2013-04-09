@@ -24,6 +24,9 @@
     - if file_entity.converting?
       .info 在线浏览正在生成中
     - elsif file_entity.convert_success?
-      = file_entity.convert_ppt_url
+      - file_entity.ppt_images.each do |image|
+        .image
+          = image.id
+          = image.url
     - else
       = link_to '重新转码', 'javascript:;'

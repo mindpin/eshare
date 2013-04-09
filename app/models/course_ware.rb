@@ -24,4 +24,20 @@ class CourseWare < ActiveRecord::Base
 
     self
   end
+
+  def convert_success?
+    self.file_entity && self.file_entity.convert_success?
+  end
+
+  def converting?
+    self.file_entity && self.file_entity.converting?
+  end
+
+  def convert_failure?
+    self.file_entity && self.file_entity.convert_failure?
+  end
+
+  def ppt_images
+    self.file_entity && self.file_entity.ppt_images
+  end
 end
