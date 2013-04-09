@@ -9,11 +9,11 @@ class CourseCoverUploader < CarrierWave::Uploader::Base
   def default_url
     # For Rails 3.1+ asset pipeline compatibility:
     # asset_path("fallback/" + [version_name, "default.png"].compact.join('_'))
-    "default_course_covers/#{version_name}.png"
+    "/assets/default_course_covers/#{version_name}.png"
   end
 
   # 图片裁剪
   version :normal do
-    process :resize_to_fit => [120, 120]
+    process :resize_to_fill => [200, 200]
   end
 end

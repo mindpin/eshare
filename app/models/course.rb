@@ -31,6 +31,16 @@ class Course < ActiveRecord::Base
     end
   end
 
+  # 学习进度
+  def study_progress_by(user)
+    return 0 # TODO
+  end
+
+  # 问题数统计
+  def questions_count
+    self.chapters.map { |c| c.questions.count }.sum
+  end
+
   module UserMethods
     def self.included(base)
       base.has_many :courses, :foreign_key => 'creator_id'

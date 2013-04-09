@@ -3,9 +3,10 @@
 
 .page-course-show
   = page_tile :chapters, @chapters do
-    - add :title do |chapter|
+    - add_left :title do |chapter|
       = link_to chapter.title, chapter
-    - add_foot :'course-wares-count' do |chapter|
-      #{chapter.course_wares.count} 个课件
-    - add_foot :'homeworks-count' do |chapter|
-      #{chapter.homeworks.count} 个练习
+    - add_left :desc
+    - add :items do |chapter|
+      - chapter.course_wares.each do |cw|
+        %a.item{:href => 'javascript:;'}
+          .title= cw.title

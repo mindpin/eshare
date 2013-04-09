@@ -36,6 +36,8 @@ zh-CN:
       course_ware:
         create: 创建课件
         update: 更新课件
+      user:
+        update: 确定
 
   activerecord:
     models:
@@ -49,6 +51,7 @@ zh-CN:
         password: 密码
         password_confirmation: 确认密码
         remember_me: 记住登录状态
+        avatar: 用户头像
       course:
         name: 课程名
         cid: 课程编号
