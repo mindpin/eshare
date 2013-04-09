@@ -1,4 +1,6 @@
 class Question < ActiveRecord::Base
+  include CourseInteractive::QuestionMethods
+  
   attr_accessible :title, :content, :chapter_id, :ask_to_user_id, :creator
 
   belongs_to :creator, :class_name => 'User', :foreign_key => :creator_id

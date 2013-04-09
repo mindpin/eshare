@@ -38,7 +38,12 @@ describe CourseInteractive do
 
   describe '有人课程签到' do
     before{
-      raise "需要准备 当天签到人数是3 的数据"
+      user_1 = FactoryGirl.create(:user)
+      user_2 = FactoryGirl.create(:user)
+      user_3 = FactoryGirl.create(:user)
+      @course.sign(user_1)
+      @course.sign(user_2)
+      @course.sign(user_3)
     }
 
     it{
@@ -70,7 +75,10 @@ describe CourseInteractive do
 
       describe '有人签到' do
         before{
-          raise '有两人签到'
+          user_1 = FactoryGirl.create(:user)
+          user_2 = FactoryGirl.create(:user)
+          @course.sign(user_1)
+          @course.sign(user_2)
         }
 
         it{

@@ -29,7 +29,7 @@ class CourseInteractive < ActiveRecord::Base
 
     def calculate_today_interactive_sum
       today_chapter_question_count * Weights::TODAY_CHAPTER_QUESTION_COUNT +
-        today_sign_count * Weights::TODAY_SIGN_COUNT
+        todays_signs_count * Weights::TODAY_SIGN_COUNT
     end
 
     def _calculate_today_interactive_sum_and_save
