@@ -77,7 +77,7 @@ describe Question do
 
 
     it "非匿名数目" do
-      Question.anonymous.count.should == 2
+      Question.onymous.count.should == 2
     end
 
     it "is_anonymous 为 false" do
@@ -229,16 +229,16 @@ describe Answer do
     end
 
     it "is_anonymous 为 true" do
-      Answer.anonymous.each { |a| q.is_anonymous.should == true }
+      Answer.anonymous.each { |a| a.is_anonymous.should == true }
     end
 
 
     it "非匿名数目" do
-      Answer.anonymous.count.should == 6
+      Answer.onymous.count.should == 6
     end
 
     it "is_anonymous 为 false" do
-      Answer.onymous.each { |a| q.is_anonymous.should == false }
+      Answer.onymous.each { |a| a.is_anonymous.should == false }
     end
 
   end
