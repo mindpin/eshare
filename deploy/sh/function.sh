@@ -31,9 +31,9 @@ function get_sh_dir_path()
 function command_status()
 {
   if [ $? == 0 ];then
-    echo "success"
+    echo -e "[\e[1;32msuccess\e[0m]"
   else
-    echo "fail"
+    echo -e "[\e[1;31mfail\e[0m]"
   fi
 }
 

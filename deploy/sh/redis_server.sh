@@ -16,15 +16,13 @@ log_file=$MINDPIN_MRS_DATA_PATH/logs/redis_service.log
 case "$1" in
   start)
     assert_process_from_pid_file_not_exist $processor_pid
-    echo "redis-service start"
     redis-server 1>> $log_file 2>> $log_file &
-    command_status
     echo $! > $processor_pid
+    echo "redis-service start ............. $(command_status)"
   ;;
   stop)
-    echo "redis-service stop"
     kill -9 `cat $processor_pid`
-    command_status
+    echo "redis-service stop ............... $(command_status)"
   ;;
   restart)
     $0 stop

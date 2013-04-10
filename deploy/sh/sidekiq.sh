@@ -10,16 +10,14 @@ log_file=$MINDPIN_MRS_DATA_PATH/logs/sidekiq.log
 case "$1" in
   start)
     assert_process_from_pid_file_not_exist $processor_pid
-    echo "sidekiq start"
     cd $current_path/../../
     bundle exec sidekiq 1>> $log_file 2>> $log_file &
-    command_status
     echo $! > $processor_pid
+    echo "sidekiq start ............... $(command_status)"
   ;;
   stop)
-    echo "sidekiq stop"
     kill -9 `cat $processor_pid`
-    command_status
+    echo "sidekiq stop ................ $(command_status)"
   ;;
   restart)
     $0 stop
