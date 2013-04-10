@@ -22,9 +22,44 @@ class Homework < ActiveRecord::Base
   scope :expired,   :conditions => ['deadline <= ?', Time.now]
   scope :by_course, lambda {|course| joins(:chapter).where("chapters.course_id = ?", course.id)}
 
+  def submit_by_user(user)
+    _change_record_status(user,{
+      :status        => HomeworkRecord::STATUS_SUBMITED,
+      :submitted_at  => Time.now
+    })
+  end
+
+  def check_of_user(user)
+    _change_record_status(user,{
+      :status        => HomeworkRecord::STATUS_CHECKED,
+      :checked_at  => Time.now
+    })
+  end
+
   def is_submit_by_user?(user)
-    self.homework_uploads.by_creator(user).count ==
-      self.homework_requirements.count
+    record = self.homework_records.by_creator(user).first
+    record.present? && record.status == HomeworkRecord::STATUS_SUBMITED
+  end
+
+  def is_checked_of_user?(user)
+    record = self.homework_records.by_creator(user).first
+    record.present? && record.status == HomeworkRecord::STATUS_CHECKED
+  end
+
+  def submited_time_by_user(user)
+    record = self.homework_records.by_creator(user).first
+    record && record.submitted_at
+  end
+
+  def checked_time_of_user(user)
+    record = self.homework_records.by_creator(user).first
+    record && record.checked_at
+  end
+
+  private
+  def _change_record_status(user, attrs)
+    record = self.homework_records.by_creator(user).first || self.homework_records.build(:creator => user)
+    record.update_attributes(attrs)
   end
 
   module UserMethods

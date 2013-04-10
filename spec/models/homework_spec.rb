@@ -76,18 +76,62 @@ describe Homework do
       describe '判断一个用户是否完全提交了一个作业' do
         it{
           @homework.is_submit_by_user?(@user_1).should == false
+          @homework.is_checked_of_user?(@user_1).should == false
         }
 
         it{
           @requirement_1.homework_uploads.create(:file_entity_id => @file_entity.id, :creator => @user_1, :name => "作业提交物1")
           @homework.is_submit_by_user?(@user_1).should == false
+          @homework.is_checked_of_user?(@user_1).should == false
         }
 
-        it{
-          @requirement_1.homework_uploads.create(:file_entity_id => @file_entity.id, :creator => @user_1, :name => "作业提交物1")
-          @requirement_2.homework_uploads.create(:file_entity_id => @file_entity.id, :creator => @user_1, :name => "作业提交物2")
-          @homework.is_submit_by_user?(@user_1).should == true
-        }
+        describe '全部提交作业' do
+          before{
+            @requirement_1.homework_uploads.create(:file_entity_id => @file_entity.id, :creator => @user_1, :name => "作业提交物1")
+            @requirement_2.homework_uploads.create(:file_entity_id => @file_entity.id, :creator => @user_1, :name => "作业提交物2")
+          }
+
+          it{
+            @homework.is_submit_by_user?(@user_1).should == false
+          }
+
+          it{
+            @homework.is_checked_of_user?(@user_1).should == false
+          }
+
+          describe '确认提交' do
+            before{
+              @time = Time.now
+              Timecop.freeze(@time) do
+                @homework.submit_by_user(@user_1)
+              end
+            }
+
+            it{
+              @homework.is_submit_by_user?(@user_1).should == true 
+              @homework.submited_time_by_user(@user_1).to_i.should == @time.to_i
+            }
+
+            it{
+              @homework.is_checked_of_user?(@user_1).should == false
+            }
+
+            describe '老师检查' do
+              before{
+                @time2 = Time.now
+                Timecop.freeze(@time2) do
+                  @homework.check_of_user(@user_1)
+                end
+              }
+
+              it{
+                @homework.is_checked_of_user?(@user_1).should == true
+                @homework.checked_time_of_user(@user_1).to_i.should == @time2.to_i
+              }
+            end
+          end
+        end
+
       end
     end
   end
@@ -205,4 +249,83 @@ describe Homework do
       Homework.by_course(@course_other).should == [@homework_other]
     }
   end
+
+  # describe 'Homework.submited_with_user(user)' do
+  #   before{
+  #     @creator = FactoryGirl.create(:user)
+  #     4.times { |i|
+
+  #       chapter = FactoryGirl.create(:chapter)
+
+  #       homework_requirements_attributes = [
+  #         {:content => "要求一"},
+  #         {:content => "要求二"}
+  #       ]
+        
+  #       homework = chapter.homeworks.create(
+  #         :title => '标题', :content => "内容", 
+  #         :deadline => Time.now + i.day, :creator => @creator,
+  #         :homework_requirements_attributes => homework_requirements_attributes
+  #         )
+  #     }
+
+  #     homeworks = Homework.all
+  #     @homework_1 = homeworks[0]
+  #     @homework_2 = homeworks[1]
+  #     @homework_3 = homeworks[2]
+  #     @homework_4 = homeworks[3]
+
+  #     @user_1 = FactoryGirl.create(:user)
+  #     @user_2 = FactoryGirl.create(:user)
+  #   }
+
+  #   it{
+  #     Homework.submited_with_user(@user_1).should == []
+  #   }
+
+  #   it{
+  #     Homework.unsubmited_with_user(@user_1).should =~ Homework.all
+  #   }
+
+  #   describe 'user_1 完成一个' do
+  #     before{
+  #       @requirement_1 = @homework_1.homework_requirements.first
+  #       @requirement_2 = @homework_1.homework_requirements.last
+  #       @file_entity = FactoryGirl.create(:file_entity)
+
+  #       @requirement_1.homework_uploads.create(
+  #         :file_entity_id => @file_entity.id,
+  #         :creator => @user_1, :name => "作业提交物")
+  #       @requirement_2.homework_uploads.create(
+  #         :file_entity_id => @file_entity.id,
+  #         :creator => @user_1, :name => "作业提交物")
+
+  #       @requirement_2.homework_uploads.create(
+  #         :file_entity_id => @file_entity.id,
+  #         :creator => @user_2, :name => "作业提交物")
+  #     }
+
+  #     it{
+  #       Homework.submited_with_user(@user_1).should =~ [@homework_1]
+  #     }
+
+  #     it{
+  #       Homework.unsubmited_with_user(@user_1).should =~ [
+  #         @homework_2,
+  #         @homework_3,
+  #         @homework_4
+  #       ]
+  #     }
+
+  #     it{
+  #       Homework.submited_with_user(@user_2).should =~ []
+  #     }
+
+  #     it{
+  #       Homework.unsubmited_with_user(@user_2).should =~ Homework.all
+  #     }
+
+  #   end
+
+  # end
 end
