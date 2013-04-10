@@ -18,14 +18,12 @@ echo "############################"
 case "$1" in
   start)
     assert_process_from_pid_file_not_exist $pid
-    echo "start"
-    unicorn_rails -c config/unicorn.rb -E $rails_env -D
-    command_status  
+    bundle exec unicorn_rails -c config/unicorn.rb -E $rails_env -D
+    echo "eshare start .............$(command_status)"
   ;;
   stop)
-    echo "stop"
     kill `cat $pid`
-    command_status  
+    echo "eshare stop .............$(command_status)"
   ;;
   usr2_stop)
     echo "usr2_stop"
