@@ -5,6 +5,7 @@ gem 'rails', '3.2.12' # RAILS #不要更新 3.2.13 有性能问题，等 3.2.14
 gem 'mysql2', '0.3.11' # MYSQL数据库连接
 gem 'json', '1.7.7' # JSON解析，RAILS默认引入的
 gem 'rubyzip', '0.9.9', :require => false
+gem 'rghost', '0.9'
 
 group :assets do
   gem 'sass-rails', '~> 3.2.3'

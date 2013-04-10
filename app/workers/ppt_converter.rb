@@ -1,5 +1,5 @@
 class PPTConverter
-  include Sidekiq::Worker
+  include MindpinWorker
 
   def perform(entity_id)
     ppt_entity = FileEntity.find(entity_id)
@@ -12,9 +12,5 @@ class PPTConverter
   rescue
     ppt_entity.convert_failed!
     converter.stop
-  end
-
-  def self.sidekiq_running?
-    `ps aux | grep sidekiq`.split("\n").select {|process| process.include? 'busy'}.present?
   end
 end
