@@ -21,16 +21,25 @@ module FileEntityConvertMethods
   def convert_enqueue
     return if converting? || convert_success?
 
-    if PPTConverter.sidekiq_running?
+    if MindpinWorker.sidekiq_running?
       self.convert_status = ConvertStatus::CONVERTING
       self.save
-      PPTConverter.perform_async(self.id)      
+      converter_dispatch.perform_async(self.id)      
     else
       self.convert_status = ConvertStatus::QUEUE_DOWN
       self.save
     end
   rescue Redis::CannotConnectError
     convert_failed!
+  end
+
+  def converter_dispatch
+    case self.extname
+    when 'doc', 'ppt'
+      PPTDOCConverter
+    when 'pdf'
+      PDFConverter
+    end
   end
 
   def convert_success!
@@ -43,16 +52,16 @@ module FileEntityConvertMethods
     self.save
   end
 
-  def convert_ppt_output_dir
-    File.join(R::CONVERT_BASE_PATH, "/convert_ppt/file_entities/#{self.id}")
+  def convert_output_dir
+    File.join(R::CONVERT_BASE_PATH, "/convert_#{content_kind}/file_entities/#{self.id}")
   end
 
-  def convert_ppt_output_index_html
-    File.join(convert_ppt_output_dir,'index.html')
+  def convert_output_index_html
+    File.join(convert_output_dir,'index.html')
   end
 
   def ppt_images_base_url
-    "/convert_ppt/file_entities/#{self.id}"
+    "/convert_#{content_kind}/file_entities/#{self.id}"
   end
 
   def ppt_images

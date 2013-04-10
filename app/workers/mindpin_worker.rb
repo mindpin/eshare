@@ -9,4 +9,6 @@ module  MindpinWorker
       `ps aux | grep sidekiq`.split("\n").select {|process| process.include? 'busy'}.present?
     end
   end
+
+  extend ClassMethods
 end
