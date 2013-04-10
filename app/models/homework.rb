@@ -19,8 +19,8 @@ class Homework < ActiveRecord::Base
   accepts_nested_attributes_for :homework_attaches
 
   scope :unexpired, :conditions => ['deadline > ?', Time.now]
-  scope :expired, :conditions => ['deadline <= ?', Time.now]
-
+  scope :expired,   :conditions => ['deadline <= ?', Time.now]
+  scope :by_course, lambda {|course| joins(:chapter).where("chapters.course_id = ?", course.id)}
 
   def is_submit_by_user?(user)
     self.homework_uploads.by_creator(user).count ==

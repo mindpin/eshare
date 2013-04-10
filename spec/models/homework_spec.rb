@@ -171,4 +171,38 @@ describe Homework do
     }
   end
 
+  describe 'Homework.by_course(course)' do
+    before{
+      @course_1 = FactoryGirl.create(:course)
+
+      @chapter_1_1 = FactoryGirl.create(:chapter, :course => @course_1)
+      @homework_1_1_1 = FactoryGirl.create(:homework, :chapter => @chapter_1_1)
+      @homework_1_1_2 = FactoryGirl.create(:homework, :chapter => @chapter_1_1)
+
+      @chapter_1_2 = FactoryGirl.create(:chapter, :course => @course_1)
+      @homework_1_2_1 = FactoryGirl.create(:homework, :chapter => @chapter_1_2)
+      @homework_1_2_2 = FactoryGirl.create(:homework, :chapter => @chapter_1_2)      
+
+      @course_other = FactoryGirl.create(:course)
+      @chapter_other = FactoryGirl.create(:chapter, :course => @course_other)
+      @homework_other = FactoryGirl.create(:homework, :chapter => @chapter_other)
+    }
+
+    it{
+      Homework.by_course(@course_1).count.should == 4
+    }
+
+    it{
+      Homework.by_course(@course_1).should =~ [
+        @homework_1_1_1,
+        @homework_1_1_2,
+        @homework_1_2_1,
+        @homework_1_2_2
+      ]
+    }
+
+    it{
+      Homework.by_course(@course_other).should == [@homework_other]
+    }
+  end
 end
