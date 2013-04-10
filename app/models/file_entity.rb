@@ -41,7 +41,6 @@ class FileEntity < ActiveRecord::Base
   end
 
   def content_kind
-    p extname
     EXTNAME_HASH.each do |key, value|
       return key if value.include?(extname)
     end
