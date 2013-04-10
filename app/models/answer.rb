@@ -16,6 +16,9 @@ class Answer < ActiveRecord::Base
 
   scope :by_user, lambda { |user| where(:creator_id => user.id) }
 
+  scope :anonymous, :conditions => ['is_anonymous' = true]
+  scope :onymous, :conditions => ['is_anonymous' = false]
+
   # 记录用户活动
   record_feed :scene => :questions,
                         :callbacks => [ :create ]
