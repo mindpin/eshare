@@ -1,4 +1,5 @@
 class CourseSign < ActiveRecord::Base
+  include CourseInteractive::CourseSignMethods
   attr_accessible :course_id, :user_id, :streak
 
   belongs_to :user

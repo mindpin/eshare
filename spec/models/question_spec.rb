@@ -60,6 +60,33 @@ describe Question do
     end
 
   end
+
+  describe "匿名数据检查" do
+    before {
+      3.times { FactoryGirl.create :question, :is_anonymous => true }
+      2.times { FactoryGirl.create :question, :is_anonymous => false }
+    }
+
+    it "匿名数目" do
+      Question.anonymous.count.should == 3
+    end
+
+    it "is_anonymous 为 true" do
+      Question.anonymous.each { |q| q.is_anonymous.should == true }
+    end
+
+
+    it "非匿名数目" do
+      Question.onymous.count.should == 2
+    end
+
+    it "is_anonymous 为 false" do
+      Question.onymous.each { |q| q.is_anonymous.should == false }
+    end
+
+  end
+
+
 end
 
 describe Answer do
@@ -190,6 +217,33 @@ describe Answer do
       }
     end
   end
+
+  describe "匿名数据检查" do
+    before {
+      5.times { FactoryGirl.create :answer, :is_anonymous => true }
+      6.times { FactoryGirl.create :answer, :is_anonymous => false }
+    }
+
+    it "匿名数目" do
+      Answer.anonymous.count.should == 5
+    end
+
+    it "is_anonymous 为 true" do
+      Answer.anonymous.each { |a| a.is_anonymous.should == true }
+    end
+
+
+    it "非匿名数目" do
+      Answer.onymous.count.should == 6
+    end
+
+    it "is_anonymous 为 false" do
+      Answer.onymous.each { |a| a.is_anonymous.should == false }
+    end
+
+  end
+
+
 end
 
 describe AnswerVote do

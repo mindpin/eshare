@@ -1,5 +1,6 @@
 class Course < ActiveRecord::Base
   include CourseZipImporter
+  include CourseInteractive::CourseMethods
   include CourseSignModule
 
   attr_accessible :name, :cid, :desc, :syllabus, :cover, :creator
@@ -36,6 +37,16 @@ class Course < ActiveRecord::Base
       c.creator = creator
       c.save
     end
+  end
+
+  # 学习进度
+  def study_progress_by(user)
+    return 0 # TODO
+  end
+
+  # 问题数统计
+  def questions_count
+    self.chapters.map { |c| c.questions.count }.sum
   end
 
   module UserMethods

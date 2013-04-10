@@ -84,4 +84,16 @@ describe CourseWare do
       it    { @course_ware.readed_count.should == 5 }
     end
   end
+
+  describe '网络视频类型' do
+    before {
+      @course_ware = FactoryGirl.create :course_ware, :kind => :youku
+    }
+
+    it {
+      CourseWare.last.is_web_video?.should == true
+    }
+  end
+
+
 end

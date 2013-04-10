@@ -6,7 +6,7 @@ class PPTConverter
     @_path = ppt_entity.attach.path
     converter = Odocuconv::Converter.new(R::LIBREOFFICE_PATH)
     converter.start
-    converter.convert(@_path, ppt_entity.convert_ppt_path)
+    converter.convert(@_path, ppt_entity.convert_ppt_output_index_html)
     converter.stop
     ppt_entity.convert_success!
   rescue

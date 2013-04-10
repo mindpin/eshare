@@ -1,0 +1,14 @@
+- content_for :header do
+  %h1= @course_ware.title
+
+.page-course-ware-show
+  - if @course_ware.is_web_video?
+    = web_video_tag @course_ware
+  - else
+    - if @course_ware.is_ppt?
+      - if @course_ware.convert_success?
+        - @course_ware.ppt_images.each do |img|
+          .image{:data => {:id => img.id}}
+            %img{:src => img.url}
+      - else
+        转码没有成功
