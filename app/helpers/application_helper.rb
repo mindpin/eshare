@@ -74,4 +74,17 @@ module ApplicationHelper
     return '未知用户' if user.blank?
     link_to user.name, "/users/#{user.id}", :class=>'u-name'
   end
+
+  def web_video_tag(course_ware)
+    return '' if course_ware.kind != 'youku'
+    id = course_ware.url.split('_')[2].split('.')[0]
+
+    capture_haml {
+      haml_tag :iframe, :height => 498, 
+                        :width => 510, 
+                        :frameborder => 0,
+                        :allowfullscreen => true,
+                        :src => "http://player.youku.com/embed/#{id}"
+    }
+  end
 end

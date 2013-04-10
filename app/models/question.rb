@@ -7,6 +7,7 @@ class Question < ActiveRecord::Base
   belongs_to :ask_to, :class_name => 'User', :foreign_key => :ask_to_user_id
   belongs_to :chapter
   has_many :answers
+  has_many :question_follows
   has_many :follows, :class_name => 'QuestionFollow', :foreign_key => :question_id
 
   validates :creator, :title, :content, :presence => true
@@ -22,6 +23,9 @@ class Question < ActiveRecord::Base
       {:conditions => {:chapter_id => ids}}
     end
   }
+
+  scope :anonymous, :conditions => ['is_anonymous = ?', true]
+  scope :onymous, :conditions => ['is_anonymous = ?', false]
 
   # 记录用户活动
   record_feed :scene => :questions,
@@ -87,6 +91,25 @@ class Question < ActiveRecord::Base
   module UserMethods
     def self.included(base)
       base.has_many :questions, :foreign_key => 'creator_id'
+    end
+
+    def notice_questions
+      follows_questions = Question.joins(:question_follows).where(%`
+        question_follows.user_id = #{self.id}
+          and
+        question_follows.last_view_time < questions.updated_at
+      `)
+
+      ask_to_questions = Question.joins(%`
+        left join answers on answers.question_id = questions.id
+      `).where(%`
+        questions.ask_to_user_id = #{self.id}
+          and
+        answers.id is null
+      `)
+
+      questions = follows_questions + ask_to_questions
+      questions.sort_by(&:updated_at).reverse
     end
   end
 end

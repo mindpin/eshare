@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 class CourseWare < ActiveRecord::Base
   include AnswerCourseWare::CourseWareMethods
+  include CourseWareReadingModule
 
   attr_accessible :title, :desc, :url, :creator
 
@@ -23,5 +24,18 @@ class CourseWare < ActiveRecord::Base
     self.save
 
     self
+  end
+
+  delegate :convert_success?, :to => :file_entity
+  delegate :converting?, :to => :file_entity
+  delegate :convert_failure?, :to => :file_entity
+  delegate :ppt_images, :to => :file_entity
+
+  FileEntity::EXTNAME_HASH.each do |key, value|
+    delegate "is_#{key}?", :to => :file_entity
+  end
+
+  def is_web_video?
+    ['youku'].include? self.kind
   end
 end

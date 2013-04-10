@@ -10,4 +10,5 @@ class Chapter < ActiveRecord::Base
 
   has_many :course_wares
   has_many :homeworks
+  has_many :questions
 end
