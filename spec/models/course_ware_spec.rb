@@ -50,8 +50,8 @@ describe CourseWare do
 
   context '课程进度: 记录课件的已读状态' do
     before do
-      @course_ware = FactoryGirl.create(:course_ware)
-      @user = FactoryGirl.create(:user)
+      @course_ware  = FactoryGirl.create(:course_ware)
+      @user         = FactoryGirl.create(:user)
     end
     
     describe '#sign_reading' do
