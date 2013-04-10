@@ -1,14 +1,15 @@
 class PDFConvert
-  def initialize(pdf_path)
-    @name = File.basename(pdf_path, '.pdf')
-    @dest = File.join(File.dirname(pdf_path), @name)
+  def initialize(pdf_path, dest)
+    @dest = dest
     @converter = RGhost::Convert.new(pdf_path)
   end
 
   def convert
+    FileUtils.mkdir_p File.dirname(@dest)
     @converter.to(:png,
                   :filename   => @dest,
-                  :multiple   => true,
+                  :multipage  => true,
                   :resolution => 300)
+    FileUtils.rm @dest
   end
 end

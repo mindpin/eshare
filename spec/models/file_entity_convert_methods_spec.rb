@@ -7,12 +7,12 @@ describe FileEntityConvertMethods do
   describe '#converter_dispatch' do
     context 'when entity is a ppt' do
       before {entity.attach_file_name = 'foo.ppt'}
-      it {should be PPTDOCConverter}
+      it {should be PPTDocConverter}
     end
 
     context 'when entity is a doc' do
       before {entity.attach_file_name = 'foo.doc'}
-      it {should be PPTDOCConverter}
+      it {should be PPTDocConverter}
     end
 
     context 'when entity is a pdf' do

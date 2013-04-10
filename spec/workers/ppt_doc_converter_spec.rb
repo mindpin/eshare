@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'sidekiq/testing/inline'
 
-describe PPTDOCConverter do
+describe PPTDocConverter do
   let(:file) {FactoryGirl.create :file_entity}
   let(:converter) {double()}
   before {Odocuconv::Converter.stub(:new).and_return converter}
