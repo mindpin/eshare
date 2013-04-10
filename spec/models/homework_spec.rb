@@ -53,24 +53,42 @@ describe Homework do
 
     describe '提交作业 upload' do
       before(:each){
-        @requirement = @homework.homework_requirements.first
+        @requirement_1 = @homework.homework_requirements.first
+        @requirement_2 = @homework.homework_requirements.last
         @user_1 = FactoryGirl.create(:user)
         @file_entity = FactoryGirl.create(:file_entity)
       }
 
       it{
-        @requirement.upload_by(@user_1).blank?.should == true
-        @requirement.is_uploaded_by?(@user_1).should == false
+        @requirement_1.get_upload_by(@user_1).blank?.should == true
+        @requirement_1.is_uploaded_by?(@user_1).should == false
       }
 
       it{
-        @requirement.homework_uploads.create(:file_entity_id => @file_entity.id, :creator => @user_1, :name => "作业提交物")
+        @requirement_1.homework_uploads.create(:file_entity_id => @file_entity.id, :creator => @user_1, :name => "作业提交物")
 
-        @requirement.is_uploaded_by?(@user_1).should == true
-        upload = @requirement.upload_by(@user_1)
+        @requirement_1.is_uploaded_by?(@user_1).should == true
+        upload = @requirement_1.get_upload_by(@user_1)
         upload.file_entity_id.should == @file_entity.id
         upload.name.should == "作业提交物"
       }
+
+      describe '判断一个用户是否完全提交了一个作业' do
+        it{
+          @homework.is_submit_by_user?(@user_1).should == false
+        }
+
+        it{
+          @requirement_1.homework_uploads.create(:file_entity_id => @file_entity.id, :creator => @user_1, :name => "作业提交物1")
+          @homework.is_submit_by_user?(@user_1).should == false
+        }
+
+        it{
+          @requirement_1.homework_uploads.create(:file_entity_id => @file_entity.id, :creator => @user_1, :name => "作业提交物1")
+          @requirement_2.homework_uploads.create(:file_entity_id => @file_entity.id, :creator => @user_1, :name => "作业提交物2")
+          @homework.is_submit_by_user?(@user_1).should == true
+        }
+      end
     end
   end
 

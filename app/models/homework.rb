@@ -13,13 +13,19 @@ class Homework < ActiveRecord::Base
   has_many :homework_requirements
   has_many :homework_attaches
   has_many :homework_records
-  has_many :homework_uploads
+  has_many :homework_uploads, :through => :homework_requirements
 
   accepts_nested_attributes_for :homework_requirements
   accepts_nested_attributes_for :homework_attaches
 
   scope :unexpired, :conditions => ['deadline > ?', Time.now]
   scope :expired, :conditions => ['deadline <= ?', Time.now]
+
+
+  def is_submit_by_user?(user)
+    self.homework_uploads.by_creator(user).count ==
+      self.homework_requirements.count
+  end
 
   module UserMethods
     def self.included(base)

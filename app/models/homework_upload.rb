@@ -7,4 +7,6 @@ class HomeworkUpload < ActiveRecord::Base
 
   validates :file_entity_id, :name, :creator, :requirement,
             :presence => true
+
+  scope :by_creator, lambda {|user| {:conditions => {:creator_id => user.id}}}
 end
