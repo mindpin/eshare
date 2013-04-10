@@ -21,6 +21,13 @@ class Homework < ActiveRecord::Base
   scope :unexpired, :conditions => ['deadline > ?', Time.now]
   scope :expired,   :conditions => ['deadline <= ?', Time.now]
   scope :by_course, lambda {|course| joins(:chapter).where("chapters.course_id = ?", course.id)}
+  scope :submited_with_user, lambda {|user|
+    joins(:homework_records).where(%`
+      homework_records.status = '#{HomeworkRecord::STATUS_SUBMITED}'
+        and
+      homework_records.creator_id = #{user.id}
+    `).uniq
+  }
 
   def submit_by_user(user)
     _change_record_status(user,{

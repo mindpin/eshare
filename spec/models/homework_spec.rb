@@ -250,82 +250,67 @@ describe Homework do
     }
   end
 
-  # describe 'Homework.submited_with_user(user)' do
-  #   before{
-  #     @creator = FactoryGirl.create(:user)
-  #     4.times { |i|
+  describe 'Homework.submited_with_user(user)' do
+    before{
+      @creator = FactoryGirl.create(:user)
+      4.times { |i|
 
-  #       chapter = FactoryGirl.create(:chapter)
+        chapter = FactoryGirl.create(:chapter)
 
-  #       homework_requirements_attributes = [
-  #         {:content => "要求一"},
-  #         {:content => "要求二"}
-  #       ]
+        homework_requirements_attributes = [
+          {:content => "要求一"},
+          {:content => "要求二"}
+        ]
         
-  #       homework = chapter.homeworks.create(
-  #         :title => '标题', :content => "内容", 
-  #         :deadline => Time.now + i.day, :creator => @creator,
-  #         :homework_requirements_attributes => homework_requirements_attributes
-  #         )
-  #     }
+        homework = chapter.homeworks.create(
+          :title => '标题', :content => "内容", 
+          :deadline => Time.now + i.day, :creator => @creator,
+          :homework_requirements_attributes => homework_requirements_attributes
+          )
+      }
 
-  #     homeworks = Homework.all
-  #     @homework_1 = homeworks[0]
-  #     @homework_2 = homeworks[1]
-  #     @homework_3 = homeworks[2]
-  #     @homework_4 = homeworks[3]
+      homeworks = Homework.all
+      @homework_1 = homeworks[0]
+      @homework_2 = homeworks[1]
+      @homework_3 = homeworks[2]
+      @homework_4 = homeworks[3]
 
-  #     @user_1 = FactoryGirl.create(:user)
-  #     @user_2 = FactoryGirl.create(:user)
-  #   }
+      @user_1 = FactoryGirl.create(:user)
+      @user_2 = FactoryGirl.create(:user)
+    }
 
-  #   it{
-  #     Homework.submited_with_user(@user_1).should == []
-  #   }
+    it{
+      Homework.submited_with_user(@user_1).should == []
+    }
 
-  #   it{
-  #     Homework.unsubmited_with_user(@user_1).should =~ Homework.all
-  #   }
+    describe 'user_1 完成一个' do
+      before{
+        @requirement_1 = @homework_1.homework_requirements.first
+        @requirement_2 = @homework_1.homework_requirements.last
+        @file_entity = FactoryGirl.create(:file_entity)
 
-  #   describe 'user_1 完成一个' do
-  #     before{
-  #       @requirement_1 = @homework_1.homework_requirements.first
-  #       @requirement_2 = @homework_1.homework_requirements.last
-  #       @file_entity = FactoryGirl.create(:file_entity)
+        @requirement_1.homework_uploads.create(
+          :file_entity_id => @file_entity.id,
+          :creator => @user_1, :name => "作业提交物")
+        @requirement_2.homework_uploads.create(
+          :file_entity_id => @file_entity.id,
+          :creator => @user_1, :name => "作业提交物")
+        @homework_1.submit_by_user(@user_1)
 
-  #       @requirement_1.homework_uploads.create(
-  #         :file_entity_id => @file_entity.id,
-  #         :creator => @user_1, :name => "作业提交物")
-  #       @requirement_2.homework_uploads.create(
-  #         :file_entity_id => @file_entity.id,
-  #         :creator => @user_1, :name => "作业提交物")
+        @requirement_2.homework_uploads.create(
+          :file_entity_id => @file_entity.id,
+          :creator => @user_2, :name => "作业提交物")
+      }
 
-  #       @requirement_2.homework_uploads.create(
-  #         :file_entity_id => @file_entity.id,
-  #         :creator => @user_2, :name => "作业提交物")
-  #     }
+      it{
+        Homework.submited_with_user(@user_1).should =~ [@homework_1]
+      }
 
-  #     it{
-  #       Homework.submited_with_user(@user_1).should =~ [@homework_1]
-  #     }
+      it{
+        Homework.submited_with_user(@user_2).should =~ []
+      }
 
-  #     it{
-  #       Homework.unsubmited_with_user(@user_1).should =~ [
-  #         @homework_2,
-  #         @homework_3,
-  #         @homework_4
-  #       ]
-  #     }
+    end
 
-  #     it{
-  #       Homework.submited_with_user(@user_2).should =~ []
-  #     }
-
-  #     it{
-  #       Homework.unsubmited_with_user(@user_2).should =~ Homework.all
-  #     }
-
-  #   end
-
-  # end
+  end
 end
