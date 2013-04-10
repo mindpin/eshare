@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 class CourseWare < ActiveRecord::Base
   include AnswerCourseWare::CourseWareMethods
+  include CourseWareReadingModule
 
   attr_accessible :title, :desc, :url, :creator
 

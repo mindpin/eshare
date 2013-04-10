@@ -47,6 +47,44 @@ describe CourseWare do
 
   end
 
+
+  context '课程进度: 记录课件的已读状态' do
+    before do
+      @course_ware  = FactoryGirl.create(:course_ware)
+      @user         = FactoryGirl.create(:user)
+    end
+    
+    describe '#sign_reading' do
+      it{expect {@course_ware.sign_reading(@user)}.to change {CourseWareReading.count}.by(1)}
+    end
+
+    describe '#has_read?' do
+      context '用户未读' do
+        it    { @course_ware.has_read?(@user).should == false}
+      end
+      context '用户已经读' do
+        before{ @course_ware.sign_reading(@user) }
+        it    { @course_ware.has_read?(@user).should == true}
+      end
+    end
+
+    describe '#has_read?' do
+      let(:user1) { FactoryGirl.create(:user) }
+      let(:user2) { FactoryGirl.create(:user) }
+      let(:user3) { FactoryGirl.create(:user) }
+      let(:user4) { FactoryGirl.create(:user) }
+      let(:user5) { FactoryGirl.create(:user) }
+      before do 
+        @course_ware.sign_reading(user1)
+        @course_ware.sign_reading(user2)
+        @course_ware.sign_reading(user3)
+        @course_ware.sign_reading(user4)
+        @course_ware.sign_reading(user5)
+      end
+      it    { @course_ware.readed_count.should == 5 }
+    end
+  end
+
   describe '网络视频类型' do
     before {
       @course_ware = FactoryGirl.create :course_ware, :kind => :youku
@@ -56,5 +94,6 @@ describe CourseWare do
       CourseWare.last.is_web_video?.should == true
     }
   end
+
 
 end

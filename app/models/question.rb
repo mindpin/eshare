@@ -24,6 +24,9 @@ class Question < ActiveRecord::Base
     end
   }
 
+  scope :anonymous, :conditions => ['is_anonymous = ?', true]
+  scope :onymous, :conditions => ['is_anonymous = ?', false]
+
   # 记录用户活动
   record_feed :scene => :questions,
                         :callbacks => [ :create, :update]
