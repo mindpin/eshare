@@ -54,8 +54,15 @@ describe CourseWare do
       @user         = FactoryGirl.create(:user)
     end
     
-    describe '#sign_reading' do
-      it{expect {@course_ware.sign_reading(@user)}.to change {CourseWareReading.count}.by(1)}
+    describe '#sign_reading #sign_no_reading' do
+      context '标记为已读' do
+        it{expect {@course_ware.sign_reading(@user)}.to change {@course_ware.readed_count}.by(1)}
+      end
+
+      context '标记为未读' do
+        before    { @course_ware.sign_reading(@user) }
+        it{expect {@course_ware.sign_no_reading(@user)}.to change {@course_ware.readed_count}.by(-1)}
+      end
     end
 
     describe '#has_read?' do
