@@ -95,5 +95,32 @@ describe CourseWare do
     }
   end
 
+  describe 'by_course' do
+    before{
+      @course_1 = FactoryGirl.create(:course)
+      @chapter_1_1 = FactoryGirl.create(:chapter, :course => @course_1)
+      @course_ware_1_1_1 = FactoryGirl.create(:course_ware, :chapter => @chapter_1_1)
+      @course_ware_1_1_2 = FactoryGirl.create(:course_ware, :chapter => @chapter_1_1)
+      @chapter_1_2 = FactoryGirl.create(:chapter, :course => @course_1)
+      @course_ware_1_2_1 = FactoryGirl.create(:course_ware, :chapter => @chapter_1_2)
+
+      @course_2 = FactoryGirl.create(:course)
+      @chapter_2_1 = FactoryGirl.create(:chapter, :course => @course_2)
+      @course_ware_2_1 = FactoryGirl.create(:course_ware, :chapter => @chapter_2_1)
+    }
+
+    it{
+      CourseWare.by_course(@course_1).should =~ [
+        @course_ware_1_1_1,
+        @course_ware_1_1_2,
+        @course_ware_1_2_1
+      ]
+    }
+
+    it{
+      CourseWare.by_course(@course_2).should =~ [@course_ware_2_1]
+    }
+  end
+
 
 end

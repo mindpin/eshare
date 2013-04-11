@@ -13,6 +13,10 @@ class CourseWare < ActiveRecord::Base
   belongs_to :file_entity
   belongs_to :media_resource
 
+  scope :by_course, lambda {|course|
+    joins(:chapter).where('chapters.course_id = ?', course.id)
+  }
+
   def link_file_entity(file_entity)
     path = "/课件/#{self.chapter.course.name}/#{file_entity.attach_file_name}"
     resource = MediaResource.put_file_entity(self.creator, path, file_entity)
