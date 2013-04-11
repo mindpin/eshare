@@ -50,12 +50,29 @@ describe CourseWare do
 
   context '课程进度: 记录课件的已读状态' do
     before do
-      @course_ware  = FactoryGirl.create(:course_ware)
-      @user         = FactoryGirl.create(:user)
+      @course_ware   = FactoryGirl.create(:course_ware)
+      @course_ware1  = FactoryGirl.create(:course_ware, :total_count => 3)
+      @user          = FactoryGirl.create(:user)
     end
     
-    describe '#sign_reading' do
-      it{expect {@course_ware.sign_reading(@user)}.to change {CourseWareReading.count}.by(1)}
+    describe '#sign_read_count' do
+      context 'read_count < total_count' do
+        it{expect {@course_ware1.sign_reading_count(@user,1)}.to change {@course_ware1.readed_count}.by(0)}
+      end
+      context 'read_count = total_count' do
+        it{expect {@course_ware1.sign_reading_count(@user,3)}.to change {@course_ware1.readed_count}.by(1)}
+      end
+    end
+
+    describe '#sign_reading #sign_no_reading' do
+      context '标记为已读' do
+        it{expect {@course_ware.sign_reading(@user)}.to change {@course_ware.readed_count}.by(1)}
+      end
+
+      context '标记为未读' do
+        before    { @course_ware.sign_reading(@user) }
+        it{expect {@course_ware.sign_no_reading(@user)}.to change {@course_ware.readed_count}.by(-1)}
+      end
     end
 
     describe '#has_read?' do
