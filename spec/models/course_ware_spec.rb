@@ -122,5 +122,51 @@ describe CourseWare do
     }
   end
 
+  describe 'CourseWare.read_with_user(user)' do
+    before{
+      @course_ware_1 = FactoryGirl.create(:course_ware)
+      @course_ware_2 = FactoryGirl.create(:course_ware)
+      @course_ware_3 = FactoryGirl.create(:course_ware)
+      @course_ware_4 = FactoryGirl.create(:course_ware)
+
+      @user_1 = FactoryGirl.create(:user)
+      @user_2 = FactoryGirl.create(:user)
+    }
+
+    it{
+      CourseWare.read_with_user(@user_1).should == []
+    }
+
+    it{
+      CourseWare.read_with_user(@user_2).should == []
+    }
+
+    describe '分别进行阅读' do
+      before{
+        @course_ware_1.sign_reading(@user_1)
+        @course_ware_4.sign_reading(@user_1)
+
+        @course_ware_1.sign_reading(@user_2)
+        @course_ware_3.sign_reading(@user_2)
+      }
+
+      it{
+        CourseWare.read_with_user(@user_1).should =~ [
+          @course_ware_1,
+          @course_ware_4
+        ]
+      }
+
+      it{
+        CourseWare.read_with_user(@user_2).should =~ [
+          @course_ware_1,
+          @course_ware_3
+        ]
+      }
+    end
+
+
+  end
+
 
 end
