@@ -1,21 +1,39 @@
 module CourseWareReadingModule
+
+  def sign_reading_count(user,count)
+    update_reading(user,true,count)
+  end
+
   # 2 课件模型需要封装"被一个用户标记为已读"的方法
   def sign_reading(user)
-    update_reading(user,true)
+    update_reading(user,true,nil)
   end
   # 2 课件模型需要封装"被一个用户标记为未读"的方法
   def sign_no_reading(user)
-    update_reading(user,false)
+    update_reading(user,false,nil)
   end
 
-  def update_reading(user,read)
+  def update_reading(user,read,count)
     reading = get_readed_by_user(user)
     if reading.blank?
-      self.course_ware_readings.create(:user => user, :read => read)
+      sign_reading_create(user,read,count)
     else
-      reading.read = read
-      reading.save
+      sign_reading_update(reading,read,count)
     end
+  end
+
+  def sign_reading_create(user,read,count)
+    self.course_ware_readings.create(:user => user, :read => sign_read_count(read,count), :read_count => count)
+  end
+  def sign_reading_update(reading,read,count)
+    reading.read_count = count
+    reading.read = sign_read_count(read,count)
+    reading.save
+  end
+
+  def sign_read_count(read,count)
+    return read if self.total_count.blank?
+    return count >= self.total_count
   end
 
   def get_readed_by_user(user)

@@ -3,7 +3,7 @@ class CourseWare < ActiveRecord::Base
   include AnswerCourseWare::CourseWareMethods
   include CourseWareReadingModule
 
-  attr_accessible :title, :desc, :url, :creator
+  attr_accessible :title, :desc, :url, :creator, :total_count
 
   validates :title, :chapter, :creator,
             :presence => true

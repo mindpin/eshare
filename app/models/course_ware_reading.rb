@@ -1,5 +1,5 @@
 class CourseWareReading < ActiveRecord::Base
-  attr_accessible :user, :read
+  attr_accessible :user, :read, :read_count
 
   belongs_to :user
   belongs_to :course_ware
