@@ -10,7 +10,7 @@ module CourseWareReadingModule
   end
   # 2 课件模型需要封装"被一个用户标记为未读"的方法
   def sign_no_reading(user)
-    update_reading(user,false,nil)
+    sign_no_reading_update(user)
   end
 
   def update_reading(user,read,count)
@@ -25,9 +25,22 @@ module CourseWareReadingModule
   def sign_reading_create(user,read,count)
     self.course_ware_readings.create(:user => user, :read => sign_read_count(read,count), :read_count => count)
   end
+
   def sign_reading_update(reading,read,count)
+    read = sign_read_count(read,count)
+    reading_update(reading,count,read)
+  end
+
+  def sign_no_reading_update(user)
+    reading = get_readed_by_user(user)
+    count = self.total_count.blank? ? nil:0
+    reading_update(reading,count,false)
+  end
+
+  def reading_update(reading,count,read)
+    return if reading.blank?
     reading.read_count = count
-    reading.read = sign_read_count(read,count)
+    reading.read = read
     reading.save
   end
 
