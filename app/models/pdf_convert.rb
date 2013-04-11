@@ -10,6 +10,5 @@ class PDFConvert
                   :filename   => @dest,
                   :multipage  => true,
                   :resolution => 300)
-    FileUtils.rm @dest
   end
 end
