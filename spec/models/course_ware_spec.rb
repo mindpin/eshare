@@ -56,26 +56,42 @@ describe CourseWare do
     end
     
     describe '#sign_read_count' do
-      context 'read_count < total_count' do
+      context '验证 read_count < total_count' do
         it{expect {@course_ware1.sign_reading_count(@user,1)}.to change {@course_ware1.readed_count}.by(0)}
       end
-      context 'read_count = total_count' do
+      context '验证 read_count = total_count' do
         it{expect {@course_ware1.sign_reading_count(@user,3)}.to change {@course_ware1.readed_count}.by(1)}
       end
       context '标记为未读' do
         before    { @course_ware1.sign_reading_count(@user,3) }
         it{expect {@course_ware1.sign_no_reading(@user)}.to change {@course_ware1.readed_count}.by(-1)}
       end
+
+      context '验证 read_count > total_count' do
+        it{expect {@course_ware1.sign_reading_count(@user,4)}.to change {@course_ware1.readed_count}.by(0)}
+      end
+
+      context '验证  read_count == fotal_count && !read' do
+        before    do 
+          @reading = CourseWareReading.new(:course_ware => @course_ware1, :user => @user, :read => false, :read_count => 3) 
+        end
+        it{ @reading.valid? .should == false }
+      end
     end
 
     describe '#sign_reading #sign_no_reading' do
+      context '验证 read_count' do
+        before    { @course_ware.sign_reading(@user) }
+        it  { @course_ware.get_readed_by_user(@user).read_count == nil}
+      end
+
       context '标记为已读' do
         it{expect {@course_ware.sign_reading(@user)}.to change {@course_ware.readed_count}.by(1)}
       end
 
       context '标记为未读' do
         before    { @course_ware.sign_reading(@user) }
-        it{expect {@course_ware.sign_no_reading(@user)}.to change {@course_ware.readed_count}.by(-1)}
+        it{expect { @course_ware.sign_no_reading(@user)}.to change {@course_ware.readed_count}.by(-1)}
       end
     end
 
@@ -89,7 +105,7 @@ describe CourseWare do
       end
     end
 
-    describe '#has_read?' do
+    describe '#readed_count' do
       let(:user1) { FactoryGirl.create(:user) }
       let(:user2) { FactoryGirl.create(:user) }
       let(:user3) { FactoryGirl.create(:user) }
