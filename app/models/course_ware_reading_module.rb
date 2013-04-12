@@ -28,9 +28,14 @@ module CourseWareReadingModule
     _prepare_reading_of(user).read?
   end
 
-  # 4 课件模型需要封装"查询被读过的总数"的方法
+  # 统计已经读过这个课件的人数
   def readed_users_count
     self.course_ware_readings.by_read(true).count
+  end
+
+  # 尝试返回某个user的已读值
+  def read_count_of(user)
+    _prepare_reading_of(user).read_count || 0
   end
 
   private

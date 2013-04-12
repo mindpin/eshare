@@ -39,7 +39,17 @@ jQuery ->
     save_read_progress: (read, total)=>
       return if read >= total
       x = Math.round(read * 1000 / total)
-      jQuery('.video-stat').find('.l').html(x)
+      $stat = jQuery('.video-stat')
+      $stat.find('.l').html(x)
+      course_ware_id = $stat.data('id')
+
+      jQuery.ajax
+        url : "/course_wares/#{course_ware_id}/update_read_count"
+        type : 'put'
+        data :
+          read_count : x
+        success : (res)=>
+
 
 
   jQuery('.page-video-player.youku').each ->
