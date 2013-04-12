@@ -10,7 +10,7 @@ class Question < ActiveRecord::Base
   has_many :question_follows
   has_many :follows, :class_name => 'QuestionFollow', :foreign_key => :question_id
 
-  validates :creator, :title, :content, :presence => true
+  validates :creator, :title, :presence => true
 
   default_scope order('id desc')
 

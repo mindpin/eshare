@@ -44,6 +44,7 @@ SimpleNavbar::Base.config do
     nav :courses, :url => '/courses' do
       controller :courses
       controller :chapters
+      controller :course_wares
     end
 
     nav :disk, :url => '/disk' do

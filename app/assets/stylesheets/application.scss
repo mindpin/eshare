@@ -565,19 +565,226 @@ img.page-avatar {
         .item {
           display:block;
           padding:10px 15px;
+          padding-left:24px + 20px + 15px;
           border-bottom:solid 1px #eee;
           height:30px;line-height:30px;
           border-left:solid 1px #eee;
           text-decoration:none;
+          position:relative;
+
+          .line {
+            width:4px;
+            position:absolute;
+            top:0;bottom:0;
+            left:15px + 24px/2 - 4px/2;
+            background-color:#CDCDCD;
+          }
+          &:first-child {
+            .line { top:25px; }
+          }
+          &:last-child {
+            .line { bottom:25px; }
+          }
+
+          i {
+            height:24px;width:24px;
+            background:url(course_icons/wares.png) 0px 0px no-repeat;
+            z-index:1;
+            position:absolute;
+            left:15px;
+            top:50px/2 - 24px/2;
+            &.youku {
+              background-position: 0px -24px;
+            }
+          }
 
           &:hover {
-            background-color:#0088CC;
+            background-color:#005580;
             color:white;
             text-decoration:none;
           }
 
           &:last-child {
             border-bottom:0 none;
+          }
+        }
+      }
+    }
+  }
+}
+
+.page-video-player {
+  width:860px;
+  height:400px;
+  background-color:#f7f7f7;
+  &.youku {
+  }
+}
+
+.page-layout-course-ware-show {
+  .sidebar {
+    position:fixed;
+    width:230px;
+    margin-top:40px;
+    margin-left:20px;
+    top:40px;left:0px;bottom:0;
+
+    .back {
+      background-color:#005580;
+      a{color:white;}
+      padding:15px;
+      height:20px;line-height:20px;
+      @include border-radius(6px 0 0 0);
+    }
+
+    .items {
+      margin:0;
+      .item {
+        display:block;
+        padding:10px 15px;
+        padding-left:24px + 20px + 15px;
+        border-bottom:solid 1px #e5e5e5;
+        border-left:solid 1px #e5e5e5;
+        height:30px;line-height:30px;
+        text-decoration:none;
+        position:relative;
+        background-color:white;
+
+        .line {
+          width:4px;
+          position:absolute;
+          top:0;bottom:0;
+          left:15px + 24px/2 - 4px/2;
+          background-color:#CDCDCD;
+        }
+        &:first-child {
+          .line { top:25px; }
+        }
+        &:last-child {
+          .line { bottom:25px; }
+          @include border-radius(0 0 0 6px);
+        }
+
+        &:hover {
+          background-color:#f5f5f5;
+          text-decoration:none;
+        }
+
+        &.current {
+          background-color:#0088CC;
+          color:white;
+          border-left-color:transparent;
+        }
+
+        i {
+          height:24px;width:24px;
+          background:url(course_icons/wares.png) 0px 0px no-repeat;
+          z-index:1;
+          position:absolute;
+          left:15px;
+          top:50px/2 - 24px/2;
+          &.youku {
+            background-position: 0px -24px;
+          }
+        }
+      }
+    }
+  }
+  .content {
+    margin-left:250px;
+    background-color:white;
+    padding:20px;
+    margin-top:20px;
+    border:solid 1px #D7D7D7;
+    border-right:0 none;
+    @include border-radius(6px 0 0 6px);
+
+    .header {
+      border-bottom:solid 1px #D7D7D7;
+      margin:-20px -20px 20px;
+      padding:15px 20px;
+      h1 {
+        font-size:21px;
+        font-weight:normal;
+        margin:0;
+        margin-bottom:10px;
+      }
+      .desc {
+        color:#999;
+      }
+    }
+
+    .cbody{
+      width:860px;
+      .widget {
+        margin-bottom:20px;
+        .video {
+          margin-bottom:10px;
+        }
+        .video-stat {
+          @include floatfix;
+          .read {
+            float:right;
+            background-color:#005580;
+            @include border-radius(3px);
+            color:white;
+            font-weight:bold;
+            height:24px;line-height:24px;
+            padding:0 10px;
+            span.desc{
+              font-weight: normal;
+              margin-right:10px;
+            }
+          }
+        }
+      }
+      .infos {
+        @include floatfix;
+        .questions {
+          float:left;
+          width:580px;
+          .bar {
+            font-size:16px;
+            border-bottom:solid 1px #ccc;
+            margin-bottom:10px;
+            padding-bottom:5px;
+          }
+          .form {
+            margin-bottom: 20px;
+            label {display:none;}
+            #question_title {
+              width:580px - 2px - 12px;
+              height:20px;
+              resize:none;
+            }
+            .question-desc {
+              padding:15px;
+              background-color:#F7FFFD;
+              margin-bottom:10px;
+              @include border-radius(3px);
+              border:solid 1px #eee;
+            }
+            .form-actions {}
+          }
+          .questions-list {
+            margin-bottom:20px;
+
+            .tile-body .title {
+              font-weight:normal;
+            }
+            .tile-foot .tile-field{
+              line-height:22px;height:22px;
+              &.avatar {margin-right:5px;}
+              &.name {margin-right:4px;}
+              &.ops {
+                @include floatfix;
+                a {float:left;color:white;}
+              }
+            }
+            .tile-foot img.page-avatar {
+              width:16px;height:16px;
+              margin-bottom:2px;
+            }
           }
         }
       }

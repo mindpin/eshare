@@ -117,4 +117,52 @@ describe QuestionsController do
       }
     end
   end
+
+  context '#create' do
+    before {
+      @chapter = FactoryGirl.create :chapter
+
+      xhr :post, :create, :chapter_id => @chapter.id,
+                          :question => {
+                            :title => '这是一个问题',
+                          }
+    }
+
+    it {
+      Question.count.should == 11
+    }
+
+    it {
+      @chapter.questions.count.should == 1
+    }
+
+    it {
+      response.code.should == '200'
+    }
+
+    it {
+      response.body.should have_css('.question', :count => 1)
+    }
+  end
+
+  context '#destroy' do
+    before {
+      @question = FactoryGirl.create :question
+    }
+
+    it {
+      Question.count.should == 11
+    }
+
+    it {
+      xhr :delete, :destroy, :id => @question.id 
+      Question.count.should == 11
+    }
+
+    it {
+      sign_in @question.creator
+      xhr :delete, :destroy, :id => @question.id 
+      Question.count.should == 10
+    }
+  end
 end

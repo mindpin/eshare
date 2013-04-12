@@ -37,7 +37,6 @@ class FileEntity < ActiveRecord::Base
   # 获取资源种类
   def content_kind
     extname = File.extname(self.attach_file_name).downcase.sub('.', '')
-    p extname
     EXTNAME_HASH.each do |key, value|
       return key if value.include?(extname)
     end

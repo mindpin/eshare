@@ -107,8 +107,7 @@ Eshare::Application.routes.draw do
       end
 
       resources :chapters, :shallow => true do
-        resources :course_wares, :shallow => true do
-        end
+        resources :course_wares, :shallow => true
       end
     end
   end
@@ -116,6 +115,7 @@ Eshare::Application.routes.draw do
   resources :courses, :shallow => true do      
     resources :chapters, :shallow => true do
       resources :course_wares, :shallow => true
+      resources :questions, :shallow => true
       resources :homeworks do
         member do
           get :student

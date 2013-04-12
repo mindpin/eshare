@@ -15,10 +15,28 @@ class QuestionsController < ApplicationController
 
   def create
     @question = current_user.questions.build(params[:question])
+
+    if request.xhr? && params[:chapter_id]
+      @chapter = Chapter.find params[:chapter_id]
+      @question.chapter = @chapter
+      return render(:partial => 'course_wares/questions', :locals => {:questions => [@question]} ) if @question.save
+      return render :text => 'params invalid', :status => 500
+    end
+
     if @question.save
       return redirect_to :action => :index
     end
     render :action => :new
+  end
+
+  def destroy
+    @question = current_user.questions.find_by_id(params[:id])
+    return render :text => 'access denied.', :status => 403 if @question.blank?
+
+    if request.xhr?
+      return render :text => 'delete ok.'if @question.destroy
+      return render :text => 'delete error', :status => 500
+    end
   end
 
   def show

@@ -9,5 +9,6 @@
     - add :items do |chapter|
       - chapter.course_wares.each do |cw|
         %a.item{:href => "/course_wares/#{cw.id}"}
+          .line
+          %i{:class => cw.kind}
           %span.title= cw.title
-          %span.kind (#{cw.kind})

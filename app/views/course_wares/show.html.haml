@@ -1,14 +1,40 @@
-- content_for :header do
-  %h1= @course_ware.title
-
 .page-course-ware-show
-  - if @course_ware.is_web_video?
-    = web_video_tag @course_ware
-  - else
-    - if @course_ware.is_ppt?
-      - if @course_ware.convert_success?
-        - @course_ware.ppt_images.each do |img|
-          .image{:data => {:id => img.id}}
-            %img{:src => img.url}
+  .header
+    %h1= @course_ware.title
+    .desc= @course_ware.desc || t('common.course.course-ware-no-desc')
+
+  .cbody
+    .widget
+      - if @course_ware.is_web_video?
+        .video
+          = course_ware_web_video_tag @course_ware
+        .video-stat
+          .read 
+            %span.desc 学习完成度
+            %span.l 0
+            %span /
+            %span.r 1000
+
       - else
-        转码没有成功
+        - if @course_ware.is_ppt?
+          - if @course_ware.convert_success?
+            - @course_ware.ppt_images.each do |img|
+              .image{:data => {:id => img.id}}
+                %img{:src => img.url}
+          - else
+            转码没有成功，或正在转码
+    .infos
+      .questions
+        .bar 线上问答
+        .form
+          = simple_form_for Question.new, :url => [@chapter, :questions] do |f|
+            .question-desc{:style => 'display:none;'}
+              .p 请准确详尽的描述问题，方便他人理解你的疑问。
+              .p 提问之前可以先查找有没有类似的问题已经被解答过，尽量避免提出重复的问题。
+            .form-inputs
+              = f.input :title, :as => :text, :input_html => {:placeholder => '你可以在这里提出问题'}
+            .form-actions{:style => 'display:none;'}
+              %a.btn.submit.success{:href => 'javascript:;'}= t('helpers.submit.question.create')
+              %a.btn.cancel{:href => "javascript:;"}= t('common.form.cancel')
+
+        = render 'course_wares/questions', :questions => @questions
