@@ -1,5 +1,5 @@
 module CourseWareReadingModule
-
+  
   def sign_reading_count(user,count)
     update_reading(user,count)
   end
@@ -12,6 +12,7 @@ module CourseWareReadingModule
   def sign_no_reading(user)
     sign_no_reading_update(user)
   end
+
 
   def update_reading(user,count)
     reading = get_readed_by_user(user)
