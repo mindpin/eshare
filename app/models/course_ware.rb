@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 class CourseWare < ActiveRecord::Base
   include AnswerCourseWare::CourseWareMethods
+  include CourseWareReadingModule
 
-  attr_accessible :title, :desc, :url, :creator
+  attr_accessible :title, :desc, :url, :creator, :total_count
 
   validates :title, :chapter, :creator,
             :presence => true
@@ -11,6 +12,19 @@ class CourseWare < ActiveRecord::Base
   belongs_to :creator, :class_name => 'User'
   belongs_to :file_entity
   belongs_to :media_resource
+  has_many :course_ware_readings
+
+  scope :by_course, lambda {|course|
+    joins(:chapter).where('chapters.course_id = ?', course.id)
+  }
+
+  scope :read_with_user, lambda {|user|
+    joins(:course_ware_readings).where(%`
+      course_ware_readings.read is true
+        and
+      course_ware_readings.user_id = #{user.id}
+    `)
+  }
 
   def link_file_entity(file_entity)
     path = "/课件/#{self.chapter.course.name}/#{file_entity.attach_file_name}"

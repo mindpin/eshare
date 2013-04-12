@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class FileEntity < ActiveRecord::Base
   include FileEntityConvertMethods
 
@@ -35,8 +36,11 @@ class FileEntity < ActiveRecord::Base
   has_many :media_resources
 
   # 获取资源种类
+  def extname
+    File.extname(self.attach_file_name).downcase.sub('.', '')
+  end
+
   def content_kind
-    extname = File.extname(self.attach_file_name).downcase.sub('.', '')
     EXTNAME_HASH.each do |key, value|
       return key if value.include?(extname)
     end

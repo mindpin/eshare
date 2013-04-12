@@ -31,4 +31,4 @@ db/schema.rb
 public/assets/*
 *~
 *\#*
-public/convert_ppt/*
+public/convert_*

@@ -7,11 +7,11 @@ class HomeworkRequirement < ActiveRecord::Base
 
   has_many :homework_uploads, :foreign_key => :requirement_id
 
-  def upload_by(user)
-    self.homework_uploads.where(:creator_id => user.id).first
+  def get_upload_by(user)
+    self.homework_uploads.by_creator(user).first
   end
 
   def is_uploaded_by?(user)
-    self.upload_by(user).present?
+    self.get_upload_by(user).present?
   end
 end
