@@ -14,21 +14,74 @@ describe Course do
 
     describe '#current_streak_for' do
       context '昨天没有签到' do
-        it {@course.current_streak_for(@user) == 1}
+        it {
+          @course.current_streak_for(@user).should == 0
+        }
+
+        it {
+          @course.sign(@user)
+          @course.current_streak_for(@user).should == 1
+        }
       end
 
-      context '昨天前天连续签到了' do
+      context '昨天有签到' do
         before do
-          Timecop.travel(Date.today - 2) do
-            @course.sign(@user)
-          end
-
-          Timecop.travel(Date.today - 1) do
+          Timecop.travel(Time.now - 1.day) do
             @course.sign(@user)
           end
         end
 
-        it {@course.current_streak_for(@user) == 3}
+        it {
+          @course.course_signs.count.should == 1
+        }
+
+        it {
+          @course.sign(@user)
+          @course.current_streak_for(@user).should == 2
+        }
+
+        it {
+          @course.sign(@user)
+          @course.course_signs.count.should == 2
+        }
+      end
+
+      context '昨天前天连续签到了' do
+        before do
+          Timecop.travel(Time.now - 2.day) do
+            @course.sign(@user)
+          end
+
+          Timecop.travel(Time.now - 1.day) do
+            @course.sign(@user)
+          end
+        end
+
+        it {
+          @course.current_streak_for(@user).should == 0
+        }
+
+        it {
+          @course.sign(@user)
+          @course.current_streak_for(@user).should == 3
+        }
+      end
+
+      context '不能连续签到' do
+        before {
+          @course.sign(@user)
+          @course.sign(@user)
+          @course.sign(@user)
+          @course.sign(@user)
+        }
+
+        it {
+          @course.current_streak_for(@user).should == 1
+        }
+
+        it {
+          @course.course_signs.count.should == 1
+        }
       end
     end
 

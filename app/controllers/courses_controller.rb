@@ -19,4 +19,13 @@ class CoursesController < ApplicationController
 
   def manage_one
   end
+
+  # 签到
+  def sign
+    @course.sign current_user
+    render :json => {
+      :streak => @course.current_streak_for(current_user),
+      :order => @course.today_sign_order_of(current_user)
+    }
+  end
 end
