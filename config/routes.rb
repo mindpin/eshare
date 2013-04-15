@@ -114,7 +114,11 @@ Eshare::Application.routes.draw do
 
   resources :courses, :shallow => true do      
     resources :chapters, :shallow => true do
-      resources :course_wares, :shallow => true
+      resources :course_wares, :shallow => true do
+        member do
+          put :update_read_count
+        end
+      end
       resources :questions, :shallow => true
       resources :homeworks do
         member do

@@ -2,6 +2,8 @@
   %h1= @course.name
 
 .page-course-show
+  .user-course-sign
+    .signed
   = page_tile :chapters, @chapters do
     - add_left :title do |chapter|
       = link_to chapter.title, chapter

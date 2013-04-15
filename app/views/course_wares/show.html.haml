@@ -8,10 +8,10 @@
       - if @course_ware.is_web_video?
         .video
           = course_ware_web_video_tag @course_ware
-        .video-stat
+        .video-stat{:data => {:id => @course_ware.id}}
           .read 
             %span.desc 学习完成度
-            %span.l 0
+            %span.l= @course_ware.read_count_of(current_user)
             %span /
             %span.r 1000
 

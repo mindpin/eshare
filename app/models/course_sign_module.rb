@@ -1,39 +1,42 @@
 module CourseSignModule
-  # 2 课程模型上需要封装用户进行签到的方法
+  # 指定用户对当前课程签到
   def sign(user)
-    return if !current_sign_for_user(user,Date.today).blank?
-    CourseSign.create(:course_id => self.id, :user_id => user.id, :streak => current_streak_for(user) )
+    return if _get_course_sign_by_user_and_date(user, Date.today).present?
+    self.course_signs.create :user => user,
+                             :streak => current_streak_for(user)
   end
 
-  # 截至今天的连续签到天数
+  # 获取指定用户截至今天为止的连续签到次数
   def current_streak_for(user)
-    @yesterday = current_sign_for_user(user,Date.today-1)
+    @yesterday = _get_course_sign_by_user_and_date(user,Date.today-1)
     return 1 if @yesterday.blank?
     @yesterday.streak + 1
   end
 
-  def current_sign_for_user(user,date)
-    CourseSign.current_signs_for_user(self,date,user).first
-  end
-
-  # 3 课程模型上需要封装获取总签到数的查询方法
+  # 获取课程的总签到数
   def signs_count
-    CourseSign.where(:course_id => self.id).count
+    self.course_signs.count
   end
 
-  # 4 课程模型上需要封装某个用户今天是第几个签到的查询方法
-  def sign_number(user)
-    @course_sign = current_sign_for_user(user, Date.today)
-    index = current_signs.index(@course_sign)
-    index && index + 1 
+  # 获取指定用户今天是第几个签到
+  def today_sign_order_of(user)
+    sign = _get_course_sign_by_user_and_date(user, Date.today)
+    return nil if sign.blank?
+    course_signs.on_date(Date.today).where('created_at > ?', sign.created_at).count
   end
 
-  def current_signs
-    CourseSign.current_signs(self,Date.today).order('id asc')
+  # 获取该课程今天的总签到记录集合
+  def today_signs
+    course_signs.on_date(Date.today).order('id asc')
   end
 
-  # 6 课程模型上需要封装获取当天签到人数的查询方法
-  def current_signs_count
-    current_signs.size
+  # 获取该课程今天的总签到次数
+  def today_signs_count
+    today_signs.count
   end
+
+  private
+    def _get_course_sign_by_user_and_date(user, date)
+      course_signs.of_user(user).on_date(date).first
+    end
 end

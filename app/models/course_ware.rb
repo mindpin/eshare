@@ -26,6 +26,11 @@ class CourseWare < ActiveRecord::Base
     `)
   }
 
+  before_save :set_total_count_by_kind!
+  def set_total_count_by_kind!
+    self.total_count = 1000 if ['youku', 'video'].include? self.kind.to_s
+  end
+
   def link_file_entity(file_entity)
     path = "/课件/#{self.chapter.course.name}/#{file_entity.attach_file_name}"
     resource = MediaResource.put_file_entity(self.creator, path, file_entity)
@@ -49,6 +54,6 @@ class CourseWare < ActiveRecord::Base
   end
 
   def is_web_video?
-    ['youku'].include? self.kind
+    ['youku'].include? self.kind.to_s
   end
 end

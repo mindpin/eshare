@@ -154,6 +154,10 @@ describe CourseWare do
     it {
       CourseWare.last.is_web_video?.should == true
     }
+
+    it {
+      CourseWare.last.total_count.should == 1000
+    }
   end
 
   describe 'by_course' do
