@@ -96,8 +96,8 @@ describe Course do
         @course.sign(user2)
         @course.sign(user3)
       end
-      it{ @course.signs_count == 3 }
-      it{ course2.signs_count == 1 }
+      it{ @course.signs_count.should == 3 }
+      it{ course2.signs_count.should == 1 }
     end
 
     describe '#today_sign_order_of(user)' do
@@ -108,8 +108,8 @@ describe Course do
         @course.sign(user1)
         @course.sign(user2)
       end
-      it { @course.today_sign_order_of(user1) == 1 }
-      it { @course.today_sign_order_of(user2) == 2 }
+      it { @course.today_sign_order_of(user1).should == 1 }
+      it { @course.today_sign_order_of(user2).should == 2 }
       it { @course.today_sign_order_of(user3).should be_blank }
       it { @course.today_sign_order_of(FactoryGirl.create :user).should be_blank }
     end
@@ -127,6 +127,28 @@ describe Course do
       end
       it {@course.today_signs_count.should == 3}
       it {course2.today_signs_count.should == 1}
+    end
+
+    describe '两个不同的用户签到' do
+      before {
+        @user1 = FactoryGirl.create :user
+        @user2 = FactoryGirl.create :user
+        @course = FactoryGirl.create :course
+        @course.sign @user1
+        @course.sign @user2
+      }
+
+      it {
+        @course.course_signs.count.should == 2
+      }
+
+      it {
+        @course.today_sign_order_of(@user1).should == 1
+      }
+
+      it {
+        @course.today_sign_order_of(@user2).should == 2
+      }
     end
   end
 end
