@@ -20,11 +20,8 @@ module CourseZipImporter
     end
 
     def import
-      ActiveRecord::Base.transaction do
-        import_course
-        import_chapters
-      end
-
+      import_course
+      import_chapters
       clean
     end
 

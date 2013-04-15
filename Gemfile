@@ -32,6 +32,7 @@ gem 'jquery-rails', '2.2.1'
 gem 'jquery-ui-rails', '4.0.2'
 gem 'unicorn', '4.6.2'
 gem 'sidekiq', '2.8.0'
+gem 'sidekiq-limit_fetch', '1.4'
 
 # 登录验证
 gem 'devise', '2.2.3'

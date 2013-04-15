@@ -1,5 +1,7 @@
 class PPTDocConverter
   include MindpinWorker
+  sidekiq_options :queue => 'odocuconv'
+  Sidekiq::Queue['odocuconv'].limit = 1
 
   def perform(entity_id)
     ppt_entity = FileEntity.find(entity_id)
