@@ -1,0 +1,28 @@
+- title = t('common.site.title.app')
+- home_title = t('common.site.home_title.app')
+
+- content_for :javascript do
+  = javascript_include_tag 'youku/youku-api'
+
+!!!
+- simple_page_layout title, :html_lang => :zh, :body_class => 'app' do
+  = page_navbar(:fixed_top, :color_inverse) do |navbar|
+    - navbar.prepend link_to(home_title, '/', :class => :brand)
+    - navbar.add_item(current_user.name, '/')
+    - navbar.add_item('账号设置', '/account/edit')
+    - navbar.add_item('退出登录', '/account/sign_out')
+
+  .page-layout-course-ware-show
+    .sidebar
+      .back
+        = link_to @course.name, @course
+      .items
+        - @chapter.course_wares.each do |cw|
+          - klass = ( cw == @course_ware ? 'current' : '' )
+          %a.item{:href => "/course_wares/#{cw.id}", :class => klass}
+            .line
+            %i{:class => cw.kind}
+            %span.title= cw.title
+
+    .content
+      = yield

@@ -57,18 +57,40 @@ describe CourseWare do
     
     describe '#sign_read_count' do
       context '验证 read_count < total_count' do
-        it{expect {@course_ware1.sign_reading_count(@user,1)}.to change {@course_ware1.readed_count}.by(0)}
+        it {
+          expect {
+            @course_ware1.update_read_count_of(@user, 1)
+          }.to change {
+            @course_ware1.readed_users_count
+          }.by(0)
+        }
       end
       context '验证 read_count = total_count' do
-        it{expect {@course_ware1.sign_reading_count(@user,3)}.to change {@course_ware1.readed_count}.by(1)}
+        it{expect {@course_ware1.update_read_count_of(@user,3)}.to change {@course_ware1.readed_users_count}.by(1)}
       end
       context '标记为未读' do
-        before    { @course_ware1.sign_reading_count(@user,3) }
-        it{expect {@course_ware1.sign_no_reading(@user)}.to change {@course_ware1.readed_count}.by(-1)}
+        before    { @course_ware1.update_read_count_of(@user,3) }
+        
+        it {
+          @course_ware1.has_read?(@user).should == true
+        }
+
+        it {
+          @course_ware1.set_unread_by!(@user)
+          @course_ware1.has_read?(@user).should == false
+        }
+
+        it {
+          expect {
+            @course_ware1.set_unread_by!(@user)
+          }.to change {
+            @course_ware1.readed_users_count
+          }.by(-1)
+        }
       end
 
       context '验证 read_count > total_count' do
-        it{expect {@course_ware1.sign_reading_count(@user,4)}.to change {@course_ware1.readed_count}.by(0)}
+        it{expect {@course_ware1.update_read_count_of(@user,4)}.to change {@course_ware1.readed_users_count}.by(0)}
       end
 
       context '验证  read_count == fotal_count && !read' do
@@ -81,17 +103,19 @@ describe CourseWare do
 
     describe '#sign_reading #sign_no_reading' do
       context '验证 read_count' do
-        before    { @course_ware.sign_reading(@user) }
-        it  { @course_ware.get_readed_by_user(@user).read_count == nil}
+        before    { @course_ware.set_read_by!(@user) }
+        it  { 
+          @course_ware.course_ware_readings.by_user(@user).first.read_count == nil
+        }
       end
 
       context '标记为已读' do
-        it{expect {@course_ware.sign_reading(@user)}.to change {@course_ware.readed_count}.by(1)}
+        it{expect {@course_ware.set_read_by!(@user)}.to change {@course_ware.readed_users_count}.by(1)}
       end
 
       context '标记为未读' do
-        before    { @course_ware.sign_reading(@user) }
-        it{expect { @course_ware.sign_no_reading(@user)}.to change {@course_ware.readed_count}.by(-1)}
+        before    { @course_ware.set_read_by!(@user) }
+        it{expect { @course_ware.set_unread_by!(@user)}.to change {@course_ware.readed_users_count}.by(-1)}
       end
     end
 
@@ -100,25 +124,25 @@ describe CourseWare do
         it    { @course_ware.has_read?(@user).should == false}
       end
       context '用户已经读' do
-        before{ @course_ware.sign_reading(@user) }
+        before{ @course_ware.set_read_by!(@user) }
         it    { @course_ware.has_read?(@user).should == true}
       end
     end
 
-    describe '#readed_count' do
+    describe '#readed_users_count' do
       let(:user1) { FactoryGirl.create(:user) }
       let(:user2) { FactoryGirl.create(:user) }
       let(:user3) { FactoryGirl.create(:user) }
       let(:user4) { FactoryGirl.create(:user) }
       let(:user5) { FactoryGirl.create(:user) }
       before do 
-        @course_ware.sign_reading(user1)
-        @course_ware.sign_reading(user2)
-        @course_ware.sign_reading(user3)
-        @course_ware.sign_reading(user4)
-        @course_ware.sign_reading(user5)
+        @course_ware.set_read_by!(user1)
+        @course_ware.set_read_by!(user2)
+        @course_ware.set_read_by!(user3)
+        @course_ware.set_read_by!(user4)
+        @course_ware.set_read_by!(user5)
       end
-      it    { @course_ware.readed_count.should == 5 }
+      it    { @course_ware.readed_users_count.should == 5 }
     end
   end
 
@@ -180,11 +204,11 @@ describe CourseWare do
 
     describe '分别进行阅读' do
       before{
-        @course_ware_1.sign_reading(@user_1)
-        @course_ware_4.sign_reading(@user_1)
+        @course_ware_1.set_read_by!(@user_1)
+        @course_ware_4.set_read_by!(@user_1)
 
-        @course_ware_1.sign_reading(@user_2)
-        @course_ware_3.sign_reading(@user_2)
+        @course_ware_1.set_read_by!(@user_2)
+        @course_ware_3.set_read_by!(@user_2)
       }
 
       it{
@@ -205,5 +229,16 @@ describe CourseWare do
 
   end
 
+
+  context '#update_read_count_of(user)' do
+    before {
+      @course_ware = FactoryGirl.create :course_ware
+      @user = FactoryGirl.create :user
+    }
+
+    it {
+      @course_ware.update_read_count_of(@user, 5)
+    }
+  end
 
 end

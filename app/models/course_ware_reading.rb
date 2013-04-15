@@ -6,8 +6,8 @@ class CourseWareReading < ActiveRecord::Base
 
   validate  :validate_read_status
 
-  scope :by_user, lambda {|user| {:conditions => {:user_id => user.id}}}
-  scope :by_read, lambda {|read| {:conditions => {:read => read}}}
+  scope :by_user, lambda { |user| { :conditions => ['course_ware_readings.user_id = ?', user.id] } }
+  scope :by_read, lambda { |read| { :conditions => ['course_ware_readings.read = ?', read] } }
 
   def validate_read_status
     total_count = self.course_ware.total_count

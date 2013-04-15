@@ -75,7 +75,8 @@ gem 'simple-navbar',
 
 ## 页面布局辅助
 gem 'simple-page-layout',
-    :git => 'git://github.com/mindpin/simple-page-layout'
+    :git => 'git://github.com/mindpin/simple-page-layout',
+    :tag => '0.0.2'
 
 ## 在页面上显示图片的一些辅助方法
 gem 'simple-images',

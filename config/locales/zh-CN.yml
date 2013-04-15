@@ -38,6 +38,8 @@ zh-CN:
         update: 更新课件
       user:
         update: 确定
+      question:
+        create: 确定提问
 
   activerecord:
     models:
@@ -134,6 +136,7 @@ zh-CN:
 
     course:
       create_course: 创建课程
+      course-ware-no-desc: 当前小节还没有简介
 
     question:
       you-can-answer-only-once: 一个问题你只能回答一次，不过你可以修改 %{your-answer}
