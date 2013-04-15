@@ -539,6 +539,12 @@ img.page-avatar {
 .page-course-show {
   margin:-20px -20px 20px;
   border-right:solid 1px #D7D7D7;
+  .user-course-sign {
+    background-color:#f4f4f4;
+    border-bottom:solid 1px #d7d7d7;
+    padding:20px;
+  }
+
   .chapters .chapter {
     padding:0;
     margin:0;

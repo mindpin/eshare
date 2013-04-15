@@ -3,7 +3,11 @@
 
 .page-course-show
   .user-course-sign
-    .signed
+    - if @course.signed_today?(current_user)
+      已经签到
+    - else
+      %a.btn.primary.large{:href => 'javascript:;'} 签到
+
   = page_tile :chapters, @chapters do
     - add_left :title do |chapter|
       = link_to chapter.title, chapter
