@@ -25,7 +25,7 @@ module CourseSignModule
   def today_sign_order_of(user)
     sign = _get_course_sign_by_user_and_date(user, Date.today)
     return nil if sign.blank?
-    course_signs.on_date(Date.today).where('created_at > ?', sign.created_at).count
+    course_signs.on_date(Date.today).where('id < ?', sign.id).count + 1
   end
 
   # 获取该课程今天的总签到记录集合
