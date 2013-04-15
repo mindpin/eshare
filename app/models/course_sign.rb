@@ -1,6 +1,6 @@
 class CourseSign < ActiveRecord::Base
   include CourseInteractive::CourseSignMethods
-  attr_accessible :course_id, :user_id, :streak
+  attr_accessible :course, :user, :streak
 
   belongs_to :user
   belongs_to :course
@@ -9,11 +9,15 @@ class CourseSign < ActiveRecord::Base
   validates :course, :presence => true
   validates :user_id,   :uniqueness => {:scope => :course_id}
 
-  scope :current_signs, lambda {|course,date|{:conditions =>
-    ['course_id=? AND DATE(created_at)=?', course.id, Date.today]
-  }}
+  scope :of_course, lambda { |course|
+    { :conditions => ['course_id = ?', course.id] }
+  }
 
-  scope :current_signs_for_user, lambda {|course,date,user|
-    current_signs(course,date).where(:user_id => user.id)
+  scope :on_date, lambda { |date|
+    { :conditions => ['DATE(created_at) = ?', date] }
+  }
+
+  scope :of_user, lambda { |user|
+    { :conditions => ['user_id = ?', user.id]}
   }
 end

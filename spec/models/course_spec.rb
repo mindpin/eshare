@@ -19,10 +19,13 @@ describe Course do
 
       context '昨天前天连续签到了' do
         before do
-          Timecop.travel(Date.today - 2)
-          @course.sign(@user)
-          Timecop.travel(Date.today - 1)
-          @course.sign(@user)
+          Timecop.travel(Date.today - 2) do
+            @course.sign(@user)
+          end
+
+          Timecop.travel(Date.today - 1) do
+            @course.sign(@user)
+          end
         end
 
         it {@course.current_streak_for(@user) == 3}
@@ -44,17 +47,21 @@ describe Course do
       it{ course2.signs_count == 1 }
     end
 
-    describe '#sign_number' do
+    describe '#today_sign_order_of(user)' do
       let(:user1) {FactoryGirl.create :user}
       let(:user2) {FactoryGirl.create :user}
+      let(:user3) {FactoryGirl.create :user}
       before do 
         @course.sign(user1)
         @course.sign(user2)
       end
-      it{ @course.sign_number(user2) == 2}
+      it { @course.today_sign_order_of(user1) == 1 }
+      it { @course.today_sign_order_of(user2) == 2 }
+      it { @course.today_sign_order_of(user3).should be_blank }
+      it { @course.today_sign_order_of(FactoryGirl.create :user).should be_blank }
     end
 
-    describe '#current_signs_count' do
+    describe '#today_signs_count' do
       let(:user1) {FactoryGirl.create :user}
       let(:user2) {FactoryGirl.create :user}
       let(:user3) {FactoryGirl.create :user}
@@ -65,7 +72,8 @@ describe Course do
         @course.sign(user2)
         @course.sign(user3)
       end
-      it {@course.current_signs_count.should == 3}
+      it {@course.today_signs_count.should == 3}
+      it {course2.today_signs_count.should == 1}
     end
   end
 end
