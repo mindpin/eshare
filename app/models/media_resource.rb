@@ -3,7 +3,6 @@ class MediaResource < ActiveRecord::Base
   include MediaResourceDynatreeMethods
   include MediaResourceInfosMethods
   include MediaResourceCrudMethods
-  include MediaResourceConvertMethods
   include MediaResourceCategoryMethods
   include MediaResourceTipMethods
   simple_taggable

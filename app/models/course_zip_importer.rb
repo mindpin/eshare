@@ -20,11 +20,8 @@ module CourseZipImporter
     end
 
     def import
-      ActiveRecord::Base.transaction do
-        import_course
-        import_chapters
-      end
-
+      import_course
+      import_chapters
       clean
     end
 
@@ -55,7 +52,7 @@ module CourseZipImporter
                                           :creator => creator)
           if courseware_info[:file]
             file = file(File.join('files', courseware_info[:file]))
-            ware.link_file_entity FileEntity.create(:attach => file)
+            ware.file_entity = FileEntity.create(:attach => file)
           elsif courseware_info[:youku]
             ware.url = courseware_info[:youku]
             ware.kind = 'youku'
