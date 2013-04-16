@@ -2,7 +2,6 @@ module CourseWareMarkModule
   
   # 2 封装增加标记的方法 course.add_mark(user,position,content)
   def add_mark(user,position,content)
-    return if content.blank? || position.blank? || user.blank?
     self.course_ware_marks.create :user     => user,
                                   :position => position,
                                   :content  => content

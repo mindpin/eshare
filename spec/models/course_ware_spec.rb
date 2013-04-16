@@ -289,12 +289,12 @@ describe CourseWare do
     }
 
     describe '#add_mark' do
-      before {@positon = 12}
+      before {@position = 12}
 
       context 'content 内容为空' do
         it{
           expect { 
-            @course_ware.add_mark(@user,@positon,nil)
+            @course_ware.add_mark(@user,@position,nil)
           }.to change {
             @course_ware.course_ware_marks.count
           }.by(0)
@@ -304,7 +304,7 @@ describe CourseWare do
       context 'content 内容为不为空' do
         it{
           expect { 
-            @course_ware.add_mark(@user,@positon,'content 内容')
+            @course_ware.add_mark(@user,@position,'content 内容')
           }.to change {
             @course_ware.course_ware_marks.count
           }.by(1)
@@ -314,14 +314,22 @@ describe CourseWare do
 
     describe '#get_marks' do
       before {
-        @positon = 12
-        @course_ware.add_mark(@user,@positon,'content 内容 1')
-        @course_ware.add_mark(@user,@positon,'content 内容 2')
-        @course_ware.add_mark(@user,@positon,'content 内容 3')
+        @position = 12
+        @course_ware.add_mark(@user,@position,'content 内容 1')
+        @course_ware.add_mark(@user,@position,'content 内容 2')
+        @course_ware.add_mark(@user,@position,'content 内容 3')
       }
 
       it {
-        @course_ware.get_marks(@positon).size.should == 3
+        @course_ware.get_marks(@position).size.should == 3
+      }
+
+      it {
+        @course_ware.get_marks(@position).first.user.should == @user
+      }
+
+      it {
+        @course_ware.get_marks(@position).first.position.should == @position
       }
     end
   end
