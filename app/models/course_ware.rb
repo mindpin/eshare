@@ -47,19 +47,6 @@ class CourseWare < ActiveRecord::Base
     end
   end
 
-  def link_file_entity(file_entity)
-    path = "/课件/#{self.chapter.course.name}/#{file_entity.attach_file_name}"
-    resource = MediaResource.put_file_entity(self.creator, path, file_entity)
-    kind = file_entity.content_kind
-    
-    self.kind = kind
-    self.file_entity = file_entity
-    self.media_resource = resource
-    self.save
-
-    self
-  end
-
   delegate :convert_success?, :to => :file_entity
   delegate :converting?, :to => :file_entity
   delegate :convert_failure?, :to => :file_entity
