@@ -6,10 +6,10 @@ describe CoursesController do
     @course = FactoryGirl.create :course
   }
 
-  context '#sign' do
+  context '#checkin' do
     before {
       sign_in @user
-      xhr :post, :sign, :id => @course.id
+      xhr :post, :checkin, :id => @course.id
     }
 
     it { response.code.should == '200'}
@@ -25,7 +25,7 @@ describe CoursesController do
       
       @user1 = FactoryGirl.create :user
       sign_in @user1
-      xhr :post, :sign, :id => @course.id
+      xhr :post, :checkin, :id => @course.id
     }
 
     it {

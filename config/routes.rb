@@ -114,7 +114,7 @@ Eshare::Application.routes.draw do
 
   resources :courses, :shallow => true do
     member do
-      post :sign
+      post :checkin
     end
 
     resources :chapters, :shallow => true do

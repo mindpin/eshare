@@ -21,7 +21,7 @@ class CoursesController < ApplicationController
   end
 
   # 签到
-  def sign
+  def checkin
     @course.sign current_user
     render :json => {
       :streak => @course.current_streak_for(current_user),

@@ -4,6 +4,7 @@ class CourseWare < ActiveRecord::Base
   include CourseWareReadingModule
 
   attr_accessible :title, :desc, :url, :creator, :total_count
+  attr_accessible :title, :desc, :file_entity_id, :as => :upload
 
   validates :title, :chapter, :creator,
             :presence => true

@@ -1,10 +1,23 @@
 - content_for :header do
   = render_cell :manage_courses_breadcrumb, :form, :model => @course_ware
 
-= simple_form_for @course_ware, :url => "/manage/chapters/#{@chapter.id}/course_wares" do |f|
-  .form-inputs
-    = f.input :title
-    = f.input :desc, :input_html => {:rows => 6}
-  .form-actions
-    = f.button :submit, :class => 'success'
-    %a.btn.cancel{:href => "/manage/chapters/#{@chapter.id}"}= t('common.form.cancel')
+.page-course-ware-form
+  = simple_form_for @course_ware, :url => "/manage/chapters/#{@chapter.id}/course_wares" do |f|
+    .form-inputs
+      = f.input :title, :input_html => {:class => 'xxlarge'}
+      = f.input :desc, :input_html => {:rows => 6, :class => 'xxlarge'}
+      = f.input :file_entity_id, :as => :hidden
+
+      .file
+        .linked{:style => 'display:none;'}
+          .desc 附件文件：
+          .name
+        .upload
+          - page_file_uploader
+          %a.btn.primary.course-ware-upload{:href => 'javascript:;'} 
+            %i.icon-upload.icon-white
+            %span 上传文件
+
+    .form-actions
+      = f.button :submit, :class => 'success'
+      %a.btn.cancel{:href => "/manage/chapters/#{@chapter.id}"}= t('common.form.cancel')

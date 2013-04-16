@@ -12,7 +12,7 @@ class Manage::CourseWaresController < ApplicationController
 
   def create
     @chapter = Chapter.find(params[:chapter_id])
-    @course_ware = @chapter.course_wares.build(params[:course_ware])
+    @course_ware = @chapter.course_wares.build(params[:course_ware], :as => :upload)
     @course_ware.creator = current_user
     if @course_ware.save
       return redirect_to "/manage/chapters/#{@chapter.id}"

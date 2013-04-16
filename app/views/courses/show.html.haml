@@ -2,11 +2,28 @@
   %h1= @course.name
 
 .page-course-show
-  .user-course-sign
-    - if @course.signed_today?(current_user)
-      已经签到
-    - else
-      %a.btn.primary.large{:href => 'javascript:;'} 签到
+  - signed_today = @course.signed_today?(current_user)
+  .user-course-checkin{:class => signed_today ? 'signed' : ''}
+    .rank
+      .desc 课程排名
+      .r= @course.rank
+    .checkin-info
+      %i.checkin
+      .desc 已签到
+      .streak 
+        %span 连续签到
+        %span.count= @course.current_streak_for(current_user)
+        %span 天
+    .checkin-order
+      .desc 签到成功！
+      .ord
+        %span 你今天在本课程第
+        %span.order= @course.today_sign_order_of(current_user)
+        %soan 个签到
+
+    %a.checkin{:href => 'javascript:;', :data => {:id => @course.id}}
+      %i.checkin
+      %span 课程签到
 
   = page_tile :chapters, @chapters do
     - add_left :title do |chapter|

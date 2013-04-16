@@ -18,7 +18,7 @@ describe CourseInteractive do
 
     Question.create(:title=>"title_4", :content => 'content_4', :creator => @user)
 
-    @date = Time.now.strftime("%Y%m%d").to_i
+    @date = Date.today
   }
 
   it{
@@ -86,5 +86,46 @@ describe CourseInteractive do
       end
     end
   end
+end
 
+describe 'course.rank' do
+  before {
+    @course1 = FactoryGirl.create :course
+    @course2 = FactoryGirl.create :course
+    @course3 = FactoryGirl.create :course
+  }
+
+  it {
+    @course1.rank.should == 3
+    @course2.rank.should == 3
+    @course3.rank.should == 3
+  }
+
+  it {
+    @course1.sign(FactoryGirl.create :user)
+    @course1.rank.should == 1
+  }
+
+  context {
+    before {
+      @course2.sign(FactoryGirl.create :user)
+      @course1.sign(FactoryGirl.create :user)
+      @course2.sign(FactoryGirl.create :user)
+    }
+
+    it {@course1.rank.should == 2}
+    it {@course2.rank.should == 1}
+    it {CourseInteractive.count.should == 2}
+
+    context '过了一天之后' do
+      before {
+        Timecop.travel(Time.now + 1.day) do
+          @course1.sign(FactoryGirl.create :user)
+        end
+      }
+
+      it { @course2.rank(Date.today + 1).should == 3}
+      it { @course1.rank(Date.today + 1).should == 1}
+    end
+  }
 end
