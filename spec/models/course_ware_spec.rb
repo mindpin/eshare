@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe CourseWare do
 
-  describe 'link_file_entity' do
+  describe 'link file_entity' do
     before do
       @course_ware = FactoryGirl.create(:course_ware)
       @user = FactoryGirl.create(:user)
@@ -16,10 +16,12 @@ describe CourseWare do
       @course_ware.file_entity.should == nil
     }
 
-    describe 'link' do
+    describe 'set file_entity' do
       before do
-        @course_ware.link_file_entity(@file_entity)
+        @course_ware.file_entity = @file_entity
+        @course_ware.save
         @course_ware.reload
+        @media_resource = MediaResource.last
       end
 
       it {
@@ -35,14 +37,49 @@ describe CourseWare do
       }
 
       it {
-        @course_ware.media_resource.should == MediaResource.last
+        @course_ware.media_resource.should == @media_resource
       }
 
       it {
-        MediaResource.last.destroy
+        @media_resource.destroy
         @course_ware.reload
         @course_ware.media_resource.should be_blank
       }
+
+      describe 'update course_ware' do
+        before{
+          @course_ware.title = 'gai'
+          @course_ware.save
+          @course_ware.reload
+        }
+
+        it{
+          @course_ware.media_resource.should == @media_resource
+        }
+
+        describe 'update file_entity' do
+          before{
+            @file_entity_1 = FileEntity.create(
+              :attach => File.new(Rails.root.join("spec/data/file_entity.jpg")))
+
+            @course_ware.file_entity = @file_entity_1
+            @course_ware.save
+            @course_ware.reload
+          }
+
+          it{
+            @course_ware.media_resource.should_not == @media_resource
+          }
+
+          it{
+            @course_ware.file_entity.should == @file_entity_1
+          }
+
+          it{
+            @course_ware.media_resource.should == MediaResource.last
+          }
+        end
+      end
     end
 
   end
