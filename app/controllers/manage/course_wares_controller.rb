@@ -28,7 +28,7 @@ class Manage::CourseWaresController < ApplicationController
   def update
     @course_ware = CourseWare.find(params[:id])
     @chapter = @course_ware.chapter
-    if @course_ware.update_attributes(params[:course_ware])
+    if @course_ware.update_attributes(params[:course_ware], :as => :upload)
       return redirect_to "/manage/chapters/#{@chapter.id}"
     end
     render :action => :edit
