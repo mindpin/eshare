@@ -7,17 +7,24 @@ module FileEntityConvertMethods
   end
 
   def self.included(base)
-    base.after_create :convert_enqueue_if_needed
+    base.after_save :convert_enqueue_if_needed
   end
 
   def convert_enqueue_if_needed
-    convert_enqueue if need_convert?
+    return true if !uploaded?
+    return true if !need_convert?
+    return true if !convert_ready?
+    convert_enqueue
   end
 
   def need_convert?
     self.is_ppt? ||
     self.extname == 'pdf' ||
     self.extname == 'doc'
+  end
+
+  def convert_ready?
+    self.convert_status.blank?
   end
 
   def convert_success?
@@ -32,8 +39,11 @@ module FileEntityConvertMethods
     self.convert_status == ConvertStatus::FAILURE
   end
 
+  def convert_queue_down?
+    self.convert_status == ConvertStatus::QUEUE_DOWN
+  end
+
   def convert_enqueue
-    return if converting? || convert_success?
     if MindpinWorker.sidekiq_running?
       self.convert_status = ConvertStatus::CONVERTING
       self.save
