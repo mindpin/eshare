@@ -8,6 +8,8 @@ class Manage::CourseWaresController < ApplicationController
   def new
     @chapter = Chapter.find(params[:chapter_id])
     @course_ware = @chapter.course_wares.new
+
+    @for_web_video = params[:for] == 'web_video'
   end
 
   def create
