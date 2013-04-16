@@ -31,6 +31,22 @@ class CourseWare < ActiveRecord::Base
     self.total_count = 1000 if ['youku', 'video'].include? self.kind.to_s
   end
 
+  before_save :process_media_resource
+  def process_media_resource
+    return true if file_entity.blank?
+
+    if media_resource.blank? || media_resource.file_entity != file_entity
+
+      path = "/课件/#{chapter.course.name}/#{file_entity.attach_file_name}"
+
+      resource = MediaResource.put_file_entity(creator, path, file_entity)
+      kind = file_entity.content_kind
+      
+      self.kind = kind
+      self.media_resource = resource
+    end
+  end
+
   def link_file_entity(file_entity)
     path = "/课件/#{self.chapter.course.name}/#{file_entity.attach_file_name}"
     resource = MediaResource.put_file_entity(self.creator, path, file_entity)
