@@ -2,6 +2,7 @@
 class CourseWare < ActiveRecord::Base
   include AnswerCourseWare::CourseWareMethods
   include CourseWareReadingModule
+  include CourseWareMarkModule
 
   attr_accessible :title, :desc, :url, :creator, :total_count
   attr_accessible :title, :desc, :file_entity_id, :as => :upload
@@ -14,6 +15,7 @@ class CourseWare < ActiveRecord::Base
   belongs_to :file_entity
   belongs_to :media_resource
   has_many :course_ware_readings
+  has_many :course_ware_marks
 
   scope :by_course, lambda {|course|
     joins(:chapter).where('chapters.course_id = ?', course.id)

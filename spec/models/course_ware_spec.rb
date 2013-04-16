@@ -282,4 +282,48 @@ describe CourseWare do
     }
   end
 
+  describe '视频/ppt/pdf 的标注 CourseWareMarkModule' do
+    before {
+      @course_ware = FactoryGirl.create(:course_ware)
+      @user = FactoryGirl.create(:user)
+    }
+
+    describe '#add_mark' do
+      before {@positon = 12}
+
+      context 'content 内容为空' do
+        it{
+          expect { 
+            @course_ware.add_mark(@user,@positon,nil)
+          }.to change {
+            @course_ware.course_ware_marks.count
+          }.by(0)
+        }
+      end
+
+      context 'content 内容为不为空' do
+        it{
+          expect { 
+            @course_ware.add_mark(@user,@positon,'content 内容')
+          }.to change {
+            @course_ware.course_ware_marks.count
+          }.by(1)
+        }
+      end
+    end
+
+    describe '#get_marks' do
+      before {
+        @positon = 12
+        @course_ware.add_mark(@user,@positon,'content 内容 1')
+        @course_ware.add_mark(@user,@positon,'content 内容 2')
+        @course_ware.add_mark(@user,@positon,'content 内容 3')
+      }
+
+      it {
+        @course_ware.get_marks(@positon).size.should == 3
+      }
+    end
+  end
+
 end
