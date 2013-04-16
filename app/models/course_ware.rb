@@ -5,7 +5,7 @@ class CourseWare < ActiveRecord::Base
   include CourseWareMarkModule
 
   attr_accessible :title, :desc, :url, :creator, :total_count
-  attr_accessible :title, :desc, :file_entity_id, :as => :upload
+  attr_accessible :title, :desc, :file_entity_id, :kind, :url, :as => :upload
 
   validates :title, :chapter, :creator,
             :presence => true
