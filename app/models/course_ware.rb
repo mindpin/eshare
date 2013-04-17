@@ -62,4 +62,12 @@ class CourseWare < ActiveRecord::Base
   def is_web_video?
     ['youku'].include? self.kind.to_s
   end
+
+  def cover_url
+    if self.kind == 'youku'
+      video_id = self.url.split('_')[2].split('.')[0]
+      yvp = YoukuVideoParser.new video_id
+      return yvp.get_cover_url
+    end
+  end
 end
