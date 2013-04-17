@@ -41,4 +41,18 @@ class Manage::ChaptersController < ApplicationController
     @chapter.destroy
     redirect_to "/manage/courses/#{@course.id}"
   end
+
+  def move_up
+    @chapter = Chapter.find(params[:id])
+    @course = @chapter.course
+    @chapter.move_up
+    return redirect_to "/manage/courses/#{@course.id}"
+  end
+
+  def move_down
+    @chapter = Chapter.find(params[:id])
+    @course = @chapter.course
+    @chapter.move_down
+    return redirect_to "/manage/courses/#{@course.id}"
+  end
 end

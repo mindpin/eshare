@@ -112,7 +112,17 @@ Eshare::Application.routes.draw do
       end
 
       resources :chapters, :shallow => true do
-        resources :course_wares, :shallow => true
+        member do
+          put :move_up
+          put :move_down
+        end
+
+        resources :course_wares, :shallow => true do
+          member do
+            put :move_up
+            put :move_down
+          end
+        end
       end
     end
   end

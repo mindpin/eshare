@@ -15,3 +15,10 @@
     - table.add_column :ops do |cw|
       %a.btn.mini{:href => "/manage/course_wares/#{cw.id}/edit"}= t('common.edit')
       = link_to t('common.delete'), "/manage/course_wares/#{cw.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger'
+    - table.add_column :position do |cw|
+      - if cw.next.present?
+        = link_to "/manage/course_wares/#{cw.id}/move_down", :method => :put, :class => 'btn mini move-down primary' do
+          %i.icon-chevron-down.icon-white
+      - if cw.prev.present?
+        = link_to "/manage/course_wares/#{cw.id}/move_up", :method => :put, :class => 'btn mini move-up primary' do
+          %i.icon-chevron-up.icon-white
