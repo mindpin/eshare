@@ -51,6 +51,16 @@ class CourseWare < ActiveRecord::Base
     end
   end
 
+  # 修改后，需要重置 total_count 和 cover
+  before_update :refresh_cover_and_total_count
+  def refresh_cover_and_total_count
+    if self.file_entity_id_changed? || self.kind_changed? || self.url_changed?
+      self.set_total_count_by_kind!
+      self.cover_url_cache = nil
+    end
+    return true
+  end
+
   delegate :convert_success?, :to => :file_entity
   delegate :converting?, :to => :file_entity
   delegate :convert_failure?, :to => :file_entity

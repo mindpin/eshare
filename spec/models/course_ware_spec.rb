@@ -200,6 +200,19 @@ describe CourseWare do
     it {
       CourseWare.last.cover_url.should_not be_blank
     }
+
+    context 'update' do
+      before {
+        @url = CourseWare.last.cover_url
+        cw = CourseWare.last
+        cw.url = 'http://v.youku.com/v_show/id_XNTQzNzY4NDIw.html'
+        cw.save
+      }
+
+      it {
+        CourseWare.last.cover_url.should_not == @url
+      }
+    end
   end
 
   describe 'by_course' do
