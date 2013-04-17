@@ -356,7 +356,8 @@ describe CourseWare do
 
   describe '上下移动' do
     before {
-      3.times { FactoryGirl.create(:course_ware) }
+      @chapter = FactoryGirl.create(:chapter)
+      3.times { FactoryGirl.create(:course_ware, :chapter => @chapter) }
       @course_wares = CourseWare.all
 
       @course_ware1 = @course_wares.first
@@ -387,41 +388,57 @@ describe CourseWare do
     end
 
     it "最后一个向上移动" do
-      @course_wares.last.move_up
-
-      @course_ware2.position.should == @course_wares.last.position
-      @course_ware3.position.should == @course_wares.second.position
+      @course_ware3.move_up
+      CourseWare.all.should == [
+        @course_ware1,
+        @course_ware3,
+        @course_ware2
+      ]
     end
 
     it "最后一个上下移动" do
-      @course_wares.last.move_up.move_down
-
-      @course_ware3.position.should == @course_wares.last.position
+      @course_ware3.move_up.move_down
+      CourseWare.all.should == [
+        @course_ware1,
+        @course_ware2,
+        @course_ware3
+      ]
     end
 
     it "最后一个向上移动两次" do
-      @course_wares.last.move_up.move_up
-
-      @course_ware1.position.should == @course_wares.last.position
+      @course_ware3.move_up.move_up
+      CourseWare.all.should == [
+        @course_ware3,
+        @course_ware1,
+        @course_ware2
+      ]
     end
 
     it "第一个上下移动" do
-      @course_wares.first.move_down.move_up
-
-      @course_ware1.position.should == @course_wares.first.position
+      @course_ware1.move_down.move_up
+      CourseWare.all.should == [
+        @course_ware1,
+        @course_ware2,
+        @course_ware3
+      ]
     end
 
     it "第一个向下移动" do
-      @course_wares.first.move_down
-
-      @course_ware2.position.should == @course_wares.first.position
-      @course_ware1.position.should == @course_wares.second.position
+      @course_ware1.move_down
+      CourseWare.all.should == [
+        @course_ware2,
+        @course_ware1,
+        @course_ware3
+      ]
     end
 
     it "第一个向下移动两次" do
-      @course_wares.first.move_down.move_down
-
-      @course_ware3.position.should == @course_wares.first.position
+      @course_ware1.move_down.move_down
+      CourseWare.all.should == [
+        @course_ware2,
+        @course_ware3,
+        @course_ware1
+      ]
     end
 
   end

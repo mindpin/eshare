@@ -1,33 +1,28 @@
 module MovePosition
-  
-
 
   module ModelMethods
     def self.included(base)
-      
+      base.send(:default_scope, :order => "position ASC") 
+      base.send(:after_create, :set_position)
       base.send(:include, InstanceMethods)
     end
     
     module InstanceMethods
-      def prev   
-        self.class.last(:conditions => ['position < ?', self.position])
+      def set_position
+        self.position = self.id
+        self.save
       end
 
-      def next
-        self.class.first(:conditions => ['position > ?', self.position])
-      end
-
-  
       def move_down
         next_record = self.next
         return nil if next_record.nil?
 
-        position = self.position
+        pos = self.position
         self.position = next_record.position
-        self.save
+        self.save!
         
-        next_record.position = position
-        next_record.save
+        next_record.position = pos
+        next_record.save!
         
         self
       end
@@ -36,12 +31,12 @@ module MovePosition
         prev_record = self.prev
         return nil if prev_record.nil?
 
-        position = self.position
+        pos = self.position
         self.position = prev_record.position
-        self.save
+        self.save!
         
-        prev_record.position = position
-        prev_record.save
+        prev_record.position = pos
+        prev_record.save!
 
         self
       end

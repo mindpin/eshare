@@ -3,6 +3,7 @@ class CourseWare < ActiveRecord::Base
   include AnswerCourseWare::CourseWareMethods
   include CourseWareReadingModule
   include CourseWareMarkModule
+  include MovePosition::ModelMethods
 
   attr_accessible :title, :desc, :url, :creator, :total_count
   attr_accessible :title, :desc, :file_entity_id, :kind, :url, :as => :upload
@@ -29,6 +30,8 @@ class CourseWare < ActiveRecord::Base
       course_ware_readings.user_id = #{user.id}
     `)
   }
+
+  scope :by_chapter, lambda{|chapter| {:conditions => ['chapter_id = ?', chapter.id]} }
 
   before_save :set_total_count_by_kind!
   def set_total_count_by_kind!
@@ -74,22 +77,6 @@ class CourseWare < ActiveRecord::Base
     ['youku'].include? self.kind.to_s
   end
 
-
-
-
-  default_scope order('position ASC')
-
-  after_create :set_position
-
-
-  def set_position
-    self.position = self.id
-    self.save
-  end
-
-
-  include MovePosition::ModelMethods
-
   def cover_url
     return cover_url_cache if cover_url_cache.present?
 
@@ -100,6 +87,14 @@ class CourseWare < ActiveRecord::Base
       self.update_attributes({ :cover_url_cache => cover_url }, :as => :update_cover)
       return cover_url
     end
+  end
+
+  def prev
+    self.class.by_chapter(chapter).where('position < ?', self.position).last
+  end
+
+  def next
+    self.class.by_chapter(chapter).where('position > ?', self.position).first
   end
 
 end
