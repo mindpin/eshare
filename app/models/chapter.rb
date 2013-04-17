@@ -14,15 +14,16 @@ class Chapter < ActiveRecord::Base
 
   default_scope order('position ASC')
 
-  scope :prev, lambda { |current| { 
-    :conditions => ['position < ?', current.position], 
-    :limit => 1, :offset => 1 }}
-
-  scope :next, lambda { |current| { 
-    :conditions => ['position > ?', current.position], 
-    :limit => 1 }}
-
   after_create :set_position
+
+
+  def prev   
+    self.class.last(:conditions => ['position < ?', self.position])
+  end
+
+  def next
+    self.class.first(:conditions => ['position > ?', self.position])
+  end
 
 
   def set_position
@@ -31,7 +32,8 @@ class Chapter < ActiveRecord::Base
   end
 
   def move_down
-    next_chapter = Chapter.next(self).first
+    next_chapter = self.next
+    return nil if next_chapter.nil?
 
     position = self.position
     self.position = next_chapter.position
@@ -44,7 +46,8 @@ class Chapter < ActiveRecord::Base
   end
 
   def move_up
-    prev_chapter = Chapter.prev(self).first
+    prev_chapter = self.prev
+    return nil if prev_chapter.nil?
 
     position = self.position
     self.position = prev_chapter.position
