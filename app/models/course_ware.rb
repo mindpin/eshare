@@ -74,6 +74,22 @@ class CourseWare < ActiveRecord::Base
     ['youku'].include? self.kind.to_s
   end
 
+
+
+
+  default_scope order('position ASC')
+
+  after_create :set_position
+
+
+  def set_position
+    self.position = self.id
+    self.save
+  end
+
+
+  include MovePosition::ModelMethods
+
   def cover_url
     return cover_url_cache if cover_url_cache.present?
 
@@ -85,4 +101,5 @@ class CourseWare < ActiveRecord::Base
       return cover_url
     end
   end
+
 end

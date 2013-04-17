@@ -11,4 +11,18 @@ class Chapter < ActiveRecord::Base
   has_many :course_wares
   has_many :homeworks
   has_many :questions
+
+  default_scope order('position ASC')
+
+  after_create :set_position
+
+
+  def set_position
+    self.position = self.id
+    self.save
+  end
+
+
+  include MovePosition::ModelMethods
+
 end

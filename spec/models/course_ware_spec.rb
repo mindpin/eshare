@@ -352,4 +352,78 @@ describe CourseWare do
     end
   end
 
+
+
+  describe '上下移动' do
+    before {
+      3.times { FactoryGirl.create(:course_ware) }
+      @course_wares = CourseWare.all
+
+      @course_ware1 = @course_wares.first
+      @course_ware2 = @course_wares.second
+      @course_ware3 = @course_wares.last
+    }
+
+    it "最后上一个" do
+      @course_ware3.prev.should == @course_ware2
+    end
+
+    it "中间上一个" do
+      @course_ware2.prev.should == @course_ware1
+    end
+
+    it "第一个下一个" do
+      @course_ware1.next.should == @course_ware2
+    end
+
+    it "中间下一个" do
+      @course_ware2.next.should == @course_ware3
+    end
+
+    it "主键 id 跟 position 相等" do
+      @course_ware1.id.should == @course_ware1.position
+      @course_ware2.id.should == @course_ware2.position
+      @course_ware3.id.should == @course_ware3.position
+    end
+
+    it "最后一个向上移动" do
+      @course_wares.last.move_up
+
+      @course_ware2.position.should == @course_wares.last.position
+      @course_ware3.position.should == @course_wares.second.position
+    end
+
+    it "最后一个上下移动" do
+      @course_wares.last.move_up.move_down
+
+      @course_ware3.position.should == @course_wares.last.position
+    end
+
+    it "最后一个向上移动两次" do
+      @course_wares.last.move_up.move_up
+
+      @course_ware1.position.should == @course_wares.last.position
+    end
+
+    it "第一个上下移动" do
+      @course_wares.first.move_down.move_up
+
+      @course_ware1.position.should == @course_wares.first.position
+    end
+
+    it "第一个向下移动" do
+      @course_wares.first.move_down
+
+      @course_ware2.position.should == @course_wares.first.position
+      @course_ware1.position.should == @course_wares.second.position
+    end
+
+    it "第一个向下移动两次" do
+      @course_wares.first.move_down.move_down
+
+      @course_ware3.position.should == @course_wares.first.position
+    end
+
+  end
+
 end
