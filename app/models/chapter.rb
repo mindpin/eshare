@@ -12,17 +12,15 @@ class Chapter < ActiveRecord::Base
   has_many :homeworks
   has_many :questions
 
-  default_scope order('position ASC')
+  scope :by_course, lambda{|course| {:conditions => ['course_id = ?', course.id]} }
 
-  after_create :set_position
-
-
-  def set_position
-    self.position = self.id
-    self.save
+  def prev
+    self.class.by_course(course).where('position < ?', self.position).last
   end
 
+  def next
+    self.class.by_course(course).where('position > ?', self.position).first
+  end
 
   include MovePosition::ModelMethods
-
 end

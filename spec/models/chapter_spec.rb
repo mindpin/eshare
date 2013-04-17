@@ -3,12 +3,14 @@ require "spec_helper"
 describe Chapter do
   describe '上下移动' do
     before {
-      3.times { FactoryGirl.create(:chapter) }
-      @chapters = Chapter.all
+      @course = FactoryGirl.create(:course)
 
-      @chapter1 = @chapters.first
-      @chapter2 = @chapters.second
-      @chapter3 = @chapters.last
+      3.times { FactoryGirl.create(:chapter, :course => @course) }
+      chapters = Chapter.all
+
+      @chapter1 = chapters.first
+      @chapter2 = chapters.second
+      @chapter3 = chapters.last
     }
 
     it "最后上一个" do
@@ -34,41 +36,58 @@ describe Chapter do
     end
 
     it "最后一个向上移动" do
-      @chapters.last.move_up
+      @chapter3.move_up
 
-      @chapter2.position.should == @chapters.last.position
-      @chapter3.position.should == @chapters.second.position
+      Chapter.all.should == [
+        @chapter1,
+        @chapter3,
+        @chapter2
+      ]
     end
 
     it "最后一个上下移动" do
-      @chapters.last.move_up.move_down
-
-      @chapter3.position.should == @chapters.last.position
+      @chapter3.move_up.move_down
+      Chapter.all.should == [
+        @chapter1,  
+        @chapter2,
+        @chapter3
+      ]
     end
 
     it "最后一个向上移动两次" do
-      @chapters.last.move_up.move_up
-
-      @chapter1.position.should == @chapters.last.position
+      @chapter3.move_up.move_up
+      Chapter.all.should == [
+        @chapter3,
+        @chapter1,
+        @chapter2
+      ]
     end
 
     it "第一个上下移动" do
-      @chapters.first.move_down.move_up
-
-      @chapter1.position.should == @chapters.first.position
+      @chapter1.move_down.move_up
+      Chapter.all.should == [
+        @chapter1,
+        @chapter2,
+        @chapter3
+      ]
     end
 
     it "第一个向下移动" do
-      @chapters.first.move_down
-
-      @chapter2.position.should == @chapters.first.position
-      @chapter1.position.should == @chapters.second.position
+      @chapter1.move_down
+      Chapter.all.should == [
+        @chapter2,
+        @chapter1,
+        @chapter3
+      ]
     end
 
     it "第一个向下移动两次" do
-      @chapters.first.move_down.move_down
-
-      @chapter3.position.should == @chapters.first.position
+      @chapter1.move_down.move_down
+      Chapter.all.should == [
+        @chapter2,
+        @chapter3,
+        @chapter1
+      ]
     end
 
   end
