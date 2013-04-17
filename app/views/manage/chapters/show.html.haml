@@ -4,7 +4,7 @@
     - g.add '增加课件', "/manage/chapters/#{@chapter.id}/course_wares/new", :success
     - g.add '增加网络视频', "/manage/chapters/#{@chapter.id}/course_wares/new?for=web_video", :success
 
-.page-chapter-show
+.page-manage-chapter-show
   = page_data_table :'course-wares', @course_wares, :striped, :bordered do |table|
     - table.add_column :title do |cw|
       = link_to cw.title, 'javascript:;'
