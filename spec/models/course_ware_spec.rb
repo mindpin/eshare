@@ -185,7 +185,8 @@ describe CourseWare do
 
   describe '网络视频类型' do
     before {
-      @course_ware = FactoryGirl.create :course_ware, :kind => :youku
+      @course_ware = FactoryGirl.create :course_ware, :kind => :youku,
+                                                      :url => 'http://v.youku.com/v_show/id_XNTQ0MDM5NTY4.html'
     }
 
     it {
@@ -194,6 +195,10 @@ describe CourseWare do
 
     it {
       CourseWare.last.total_count.should == 1000
+    }
+
+    it {
+      CourseWare.last.cover_url.should_not be_blank
     }
   end
 

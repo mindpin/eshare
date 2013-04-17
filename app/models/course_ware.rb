@@ -6,6 +6,7 @@ class CourseWare < ActiveRecord::Base
 
   attr_accessible :title, :desc, :url, :creator, :total_count
   attr_accessible :title, :desc, :file_entity_id, :kind, :url, :as => :upload
+  attr_accessible :cover_url_cache, :as => :update_cover
 
   validates :title, :chapter, :creator,
             :presence => true
@@ -64,10 +65,14 @@ class CourseWare < ActiveRecord::Base
   end
 
   def cover_url
+    return cover_url_cache if cover_url_cache.present?
+
     if self.kind == 'youku'
       video_id = self.url.split('_')[2].split('.')[0]
       yvp = YoukuVideoParser.new video_id
-      return yvp.get_cover_url
+      cover_url = yvp.get_cover_url
+      self.update_attributes({ :cover_url_cache => cover_url }, :as => :update_cover)
+      return cover_url
     end
   end
 end
