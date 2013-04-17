@@ -6,27 +6,38 @@ describe Chapter do
       3.times { FactoryGirl.create(:chapter) }
       @chapters = Chapter.all
 
-      @first_chapter = @chapters.first
-      @second_chapter = @chapters.second
-      @last_chapter = @chapters.last
+      @chapter1 = @chapters.first
+      @chapter2 = @chapters.second
+      @chapter3 = @chapters.last
     }
 
+    it "上一个" do
+      Chapter.prev(@chapter3).first.should == @chapter2
+    end
+
+    it "下一个" do
+      Chapter.next(@chapter1).first.should == @chapter2
+    end
+
     it "主键 id 跟 position 相等" do
-      @first_chapter.id.should == @first_chapter.position
-      @second_chapter.id.should == @second_chapter.position
-      @last_chapter.id.should == @last_chapter.position
+      @chapter1.id.should == @chapter1.position
+      @chapter2.id.should == @chapter2.position
+      @chapter3.id.should == @chapter3.position
     end
 
     it "最后一个向上移动" do
-      @last_chapter.move_up
+      @chapters.last.move_up
 
-      @second_chapter.position.should == @last_chapter.id
+      @chapter2.position.should == @chapters.last.position
+      @chapter3.position.should == @chapters.second.position
     end
 
-    it "向下移动" do
-      @first_chapter.move_down
 
-      @first_chapter.position.should == @first_chapter.id
+    it "第一个向下移动" do
+      @chapters.first.move_down
+
+      @chapter2.position.should == @chapters.first.position
+      @chapter1.position.should == @chapters.second.position
     end
 
   end
