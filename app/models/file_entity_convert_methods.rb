@@ -47,22 +47,13 @@ module FileEntityConvertMethods
     if MindpinWorker.sidekiq_running?
       self.convert_status = ConvertStatus::CONVERTING
       self.save
-      converter_dispatch.perform_async(self.id)      
+      CourseWareConverter.perform_async(self.id)      
     else
       self.convert_status = ConvertStatus::QUEUE_DOWN
       self.save
     end
   rescue Redis::CannotConnectError
     convert_failed!
-  end
-
-  def converter_dispatch
-    case self.extname
-    when 'doc', 'ppt'
-      PPTDocConverter
-    when 'pdf'
-      PDFConverter
-    end
   end
 
   def convert_success!
@@ -76,51 +67,40 @@ module FileEntityConvertMethods
   end
 
   def convert_output_dir
-    File.join(R::CONVERT_BASE_PATH, "/convert_#{content_kind}/file_entities/#{self.id}")
-  end
-
-  def convert_output_index_html
-    File.join(convert_output_dir,'index.html')
-  end
-
-  def convert_output_index_png
-    File.join(convert_output_dir,'index.png')
+    File.join(R::CONVERT_BASE_PATH, "/convert_#{extname}/file_entities/#{self.id}")
   end
 
   def output_base_url
-    "/convert_#{content_kind}/file_entities/#{self.id}"
+    "/convert_#{extname}/file_entities/#{self.id}"
   end
 
-  def doc_html
-    File.join(convert_output_dir,"index.html")
+  def saved_name
+    File.basename(saved_file_name, ".#{extname}")
+  end
+
+  def doc_images
+    output_images
   end
 
   def pdf_images
-    match_path = File.join(convert_output_dir,"index_*.png")
-    Dir[match_path].map{|path|PDFImage.new(path, output_base_url)}.sort_by(&:id)
+    output_images
   end
 
   def ppt_images
-    match_path = File.join(convert_output_dir,"img*.jpg")
-    Dir[match_path].map{|path|PptImage.new(path, output_base_url)}
+    output_images
   end
 
-  class PDFImage
+  def output_images
+    match_path = File.join(convert_output_dir,"*.png")
+    Dir[match_path].map{|path| OutputImage.new(path, output_base_url)}.sort_by(&:id)
+  end
+
+  class OutputImage
     attr_reader :id, :url, :name
     def initialize(path, base_url)
       @name = File.basename(path)
-      @id = @name.match(/index_0*(\d*).png/)[1].to_i
+      @id = @name.match(/_(\d*).png/)[1].to_i
       @url = File.join(base_url, @name)
     end
   end
-
-  class PptImage
-    attr_reader :id, :url, :name
-    def initialize(path, base_url)
-      @name = File.basename(path)
-      @id = @name.match(/img([0-9]*).jpg/)[1]
-      @url = File.join(base_url, @name)
-    end
-  end
-
 end
