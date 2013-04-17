@@ -83,4 +83,16 @@ module ApplicationHelper
       haml_tag :div, :class => 'page-video-player youku', :id => "youku-#{id}"
     }
   end
+
+  def course_ware_read_percent(course_ware)
+    total_count = course_ware.total_count
+    if total_count.blank? || total_count == 0
+      return '100%' if course_ware.has_read?(current_user)
+      return '0%'
+    end
+
+    p = course_ware.read_count_of(current_user)
+    return "#{(p.to_f * 100 / total_count).round(1)}%"
+
+  end
 end

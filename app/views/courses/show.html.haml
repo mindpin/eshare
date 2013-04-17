@@ -31,7 +31,20 @@
     - add_left :desc
     - add :items do |chapter|
       - chapter.course_wares.each do |cw|
-        %a.item{:href => "/course_wares/#{cw.id}"}
+        - read = cw.has_read?(current_user)
+        - klass = read ? 'read' : cw.read_count_of(current_user) > 0 ? 'reading' : ''
+
+        %a.item{:href => "/course_wares/#{cw.id}", :class => klass}
           .line
           %i{:class => cw.kind}
-          %span.title= cw.title
+          .title= cw.title
+          .read-percent
+            %span= course_ware_read_percent cw
+
+          - if cw.kind == 'youku'
+            .cover.video.youku
+              = fit_image cw.cover_url, :width => 80, :height => 45
+          - if cw.kind == 'ppt'
+            .pages.ppt
+              - cw.ppt_images[0..3].compact.each do |img|
+                .page.ppt= fit_image img.url, :width => 80, :height => 45
