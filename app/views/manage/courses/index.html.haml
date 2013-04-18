@@ -16,4 +16,5 @@
       = course.chapters.count
     - table.add_column(:ops) do |course|
       %a.btn.mini{:href => "/manage/courses/#{course.id}/edit"}= t('common.edit')
+      %a.btn.mini{:href => "/manage/aj/courses/#{course.id}"} 编辑β
       = link_to t('common.delete'), "/manage/courses/#{course.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger'

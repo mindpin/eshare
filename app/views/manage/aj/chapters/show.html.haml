@@ -1,0 +1,12 @@
+.header
+  = render_cell :manage_courses_breadcrumb, :display, :model => @chapter
+
+.chapter
+  .desc
+    .inner
+      = @chapter.desc
+
+  = page_tile :'course-wares', @chapter.course_wares do
+    - add(:title)
+    - add_foot(:kind) do |cw|
+      类型：#{cw.kind}

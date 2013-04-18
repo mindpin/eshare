@@ -125,6 +125,12 @@ Eshare::Application.routes.draw do
         end
       end
     end
+
+    namespace :aj do
+      resources :courses, :shallow => true do
+        resources :chapters, :shallow => true
+      end
+    end
   end
 
   resources :courses, :shallow => true do
