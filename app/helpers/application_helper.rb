@@ -86,44 +86,16 @@ module ApplicationHelper
 
   # 获取课件的学习进度
   def course_ware_read_percent(course_ware)
-    total_count = course_ware.total_count
-    if total_count.blank? || total_count == 0
-      return '100%' if course_ware.has_read?(current_user)
-      return '0%'
-    end
-
-    p = course_ware.read_count_of(current_user)
-    return "#{(p.to_f * 100 / total_count).round}%"
-
+    course_ware.read_percent(current_user)
   end
 
   # 获取章节的学习进度
   def chapter_read_percent(chapter)
-    return 0 if chapter.course_wares.count == 0
-    
-    sum = 0
-    count = 0
-    chapter.course_wares.each do |cw|
-      sum += course_ware_read_percent(cw).to_f
-      count += 1
-    end
-
-    p = (sum / count).round
-    return "#{p}%"
+    chapter.read_percent(current_user)
   end
 
   # 获取课程的学习进度
   def course_read_percent(course)
-    return 0 if course.chapters.count == 0
-
-    sum = 0
-    count = 0
-    course.chapters.each do |ch|
-      sum += chapter_read_percent(ch).to_f
-      count += 1
-    end
-
-    p = (sum / count).round
-    return "#{p}%"
+    course.read_percent(current_user)
   end
 end

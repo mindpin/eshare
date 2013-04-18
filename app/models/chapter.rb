@@ -1,4 +1,7 @@
 class Chapter < ActiveRecord::Base
+  include MovePosition::ModelMethods
+  include CourseReadPercent::ChapterMethods
+
   attr_accessible :title, :desc, :creator
 
   belongs_to :course
@@ -22,5 +25,4 @@ class Chapter < ActiveRecord::Base
     self.class.by_course(course).where('position > ?', self.position).first
   end
 
-  include MovePosition::ModelMethods
 end
