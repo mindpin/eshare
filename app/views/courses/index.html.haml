@@ -21,7 +21,7 @@
 
     - @courses.each do |course|
       :ruby
-        progress = course.study_progress_by(current_user)
+        percent = course_read_percent course
 
       .course
         .cover
@@ -36,7 +36,7 @@
           .desc= truncate_u course.desc, 20
         .progress
           .page-progress.success.striped
-            .bar{:style => "width:#{progress}%;"}
+            .bar{:style => "width:#{percent};"}
         .foot
-          %span.percent #{progress}%
+          %span.percent= percent
           %span.percent-str 学习进度

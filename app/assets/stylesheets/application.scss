@@ -980,6 +980,9 @@ img.page-avatar {
 
 .page-manage-chapter-show, .page-manage-course-show {
   td.position {
+    a.btn {
+      float:left;margin-right:4px;
+    }
     a.btn.move-up:first-child {
       margin-left:32px;
     }

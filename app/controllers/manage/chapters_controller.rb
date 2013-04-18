@@ -1,4 +1,6 @@
 class Manage::ChaptersController < ApplicationController
+  before_filter :authenticate_user!
+  
   def show
     @chapter = Chapter.find params[:id]
     @course = @chapter.course
