@@ -4,6 +4,7 @@ class CourseWare < ActiveRecord::Base
   include CourseWareReadingModule
   include CourseWareMarkModule
   include MovePosition::ModelMethods
+  include CourseReadPercent::CourseWareMethods
 
   attr_accessible :title, :desc, :url, :creator, :total_count
   attr_accessible :title, :desc, :file_entity_id, :kind, :url, :as => :upload
