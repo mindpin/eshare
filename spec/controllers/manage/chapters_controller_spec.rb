@@ -3,6 +3,9 @@ require 'spec_helper'
 describe Manage::ChaptersController do
   context '#move_up, #move_down' do
     before {
+      @user = FactoryGirl.create :user
+      sign_in @user
+
       @course = FactoryGirl.create :course
 
       8.times do
