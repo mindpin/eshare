@@ -3,9 +3,11 @@ class FileEntity < ActiveRecord::Base
   include FileEntityConvertMethods
 
   if Rails.env == 'test'
-    file_part_upload :path => File.join(R::UPLOAD_BASE_PATH, 'files/test/:class/:id/:name')
+    file_part_upload :path => File.join(R::UPLOAD_BASE_PATH, 'files/test/:class/:id/:name'),
+                     :url  => File.join("/", R::STATIC_FILES_DIR, 'files/test/:class/:id/:name')
   else
-    file_part_upload :path => File.join(R::UPLOAD_BASE_PATH, 'files/:class/:id/:name')
+    file_part_upload :path => File.join(R::UPLOAD_BASE_PATH, 'files/:class/:id/:name'),
+                     :url  => File.join("/", R::STATIC_FILES_DIR, 'files/:class/:id/:name')
   end
 
   EXTNAME_HASH = {
