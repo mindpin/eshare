@@ -4,7 +4,7 @@
     - g.add '增加课件', "/manage/chapters/#{@chapter.id}/course_wares/new", :success
     - g.add '增加网络视频', "/manage/chapters/#{@chapter.id}/course_wares/new?for=web_video", :success
 
-.page-chapter-show
+.page-manage-chapter-show
   = page_data_table :'course-wares', @course_wares, :striped, :bordered do |table|
     - table.add_column :title do |cw|
       = link_to cw.title, 'javascript:;'
@@ -15,3 +15,18 @@
     - table.add_column :ops do |cw|
       %a.btn.mini{:href => "/manage/course_wares/#{cw.id}/edit"}= t('common.edit')
       = link_to t('common.delete'), "/manage/course_wares/#{cw.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger'
+
+    - table.add_column :position do |cw|
+      - if cw.next.present?
+        = link_to "/manage/course_wares/#{cw.id}/move_down", :method => :put, :class => 'btn mini move-down' do
+          %i.icon-arrow-down
+      - else
+        %a.btn.disabled.mini{:href=>'javascript:;'}
+          %i.icon-arrow-down
+
+      - if cw.prev.present?
+        = link_to "/manage/course_wares/#{cw.id}/move_up", :method => :put, :class => 'btn mini move-up' do
+          %i.icon-arrow-up
+      - else
+        %a.btn.disabled.mini{:href=>'javascript:;'}
+          %i.icon-arrow-up

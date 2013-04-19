@@ -43,4 +43,18 @@ class Manage::CourseWaresController < ApplicationController
     return redirect_to "/manage/chapters/#{@chapter.id}"
   end
 
+  def move_up
+    @course_ware = CourseWare.find(params[:id])
+    @chapter = @course_ware.chapter
+    @course_ware.move_up
+    return redirect_to "/manage/chapters/#{@chapter.id}"
+  end
+
+  def move_down
+    @course_ware = CourseWare.find(params[:id])
+    @chapter = @course_ware.chapter
+    @course_ware.move_down
+    return redirect_to "/manage/chapters/#{@chapter.id}"
+  end
+
 end

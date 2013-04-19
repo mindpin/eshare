@@ -185,7 +185,8 @@ describe CourseWare do
 
   describe '网络视频类型' do
     before {
-      @course_ware = FactoryGirl.create :course_ware, :kind => :youku
+      @course_ware = FactoryGirl.create :course_ware, :kind => :youku,
+                                                      :url => 'http://v.youku.com/v_show/id_XNTQ0MDM5NTY4.html'
     }
 
     it {
@@ -195,6 +196,23 @@ describe CourseWare do
     it {
       CourseWare.last.total_count.should == 1000
     }
+
+    it {
+      CourseWare.last.cover_url.should_not be_blank
+    }
+
+    context 'update' do
+      before {
+        @url = CourseWare.last.cover_url
+        cw = CourseWare.last
+        cw.url = 'http://v.youku.com/v_show/id_XNTQzNzY4NDIw.html'
+        cw.save
+      }
+
+      it {
+        CourseWare.last.cover_url.should_not == @url
+      }
+    end
   end
 
   describe 'by_course' do
@@ -332,6 +350,97 @@ describe CourseWare do
         @course_ware.get_marks(@position).first.position.should == @position
       }
     end
+  end
+
+
+
+  describe '上下移动' do
+    before {
+      @chapter = FactoryGirl.create(:chapter)
+      3.times { FactoryGirl.create(:course_ware, :chapter => @chapter) }
+      @course_wares = CourseWare.all
+
+      @course_ware1 = @course_wares.first
+      @course_ware2 = @course_wares.second
+      @course_ware3 = @course_wares.last
+    }
+
+    it "最后上一个" do
+      @course_ware3.prev.should == @course_ware2
+    end
+
+    it "中间上一个" do
+      @course_ware2.prev.should == @course_ware1
+    end
+
+    it "第一个下一个" do
+      @course_ware1.next.should == @course_ware2
+    end
+
+    it "中间下一个" do
+      @course_ware2.next.should == @course_ware3
+    end
+
+    it "主键 id 跟 position 相等" do
+      @course_ware1.id.should == @course_ware1.position
+      @course_ware2.id.should == @course_ware2.position
+      @course_ware3.id.should == @course_ware3.position
+    end
+
+    it "最后一个向上移动" do
+      @course_ware3.move_up
+      CourseWare.all.should == [
+        @course_ware1,
+        @course_ware3,
+        @course_ware2
+      ]
+    end
+
+    it "最后一个上下移动" do
+      @course_ware3.move_up.move_down
+      CourseWare.all.should == [
+        @course_ware1,
+        @course_ware2,
+        @course_ware3
+      ]
+    end
+
+    it "最后一个向上移动两次" do
+      @course_ware3.move_up.move_up
+      CourseWare.all.should == [
+        @course_ware3,
+        @course_ware1,
+        @course_ware2
+      ]
+    end
+
+    it "第一个上下移动" do
+      @course_ware1.move_down.move_up
+      CourseWare.all.should == [
+        @course_ware1,
+        @course_ware2,
+        @course_ware3
+      ]
+    end
+
+    it "第一个向下移动" do
+      @course_ware1.move_down
+      CourseWare.all.should == [
+        @course_ware2,
+        @course_ware1,
+        @course_ware3
+      ]
+    end
+
+    it "第一个向下移动两次" do
+      @course_ware1.move_down.move_down
+      CourseWare.all.should == [
+        @course_ware2,
+        @course_ware3,
+        @course_ware1
+      ]
+    end
+
   end
 
 end

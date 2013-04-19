@@ -83,4 +83,19 @@ module ApplicationHelper
       haml_tag :div, :class => 'page-video-player youku', :id => "youku-#{id}"
     }
   end
+
+  # 获取课件的学习进度
+  def course_ware_read_percent(course_ware)
+    course_ware.read_percent(current_user)
+  end
+
+  # 获取章节的学习进度
+  def chapter_read_percent(chapter)
+    chapter.read_percent(current_user)
+  end
+
+  # 获取课程的学习进度
+  def course_read_percent(course)
+    course.read_percent(current_user)
+  end
 end

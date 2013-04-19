@@ -3,9 +3,12 @@ class CourseWare < ActiveRecord::Base
   include AnswerCourseWare::CourseWareMethods
   include CourseWareReadingModule
   include CourseWareMarkModule
+  include MovePosition::ModelMethods
+  include CourseReadPercent::CourseWareMethods
 
   attr_accessible :title, :desc, :url, :creator, :total_count
   attr_accessible :title, :desc, :file_entity_id, :kind, :url, :as => :upload
+  attr_accessible :cover_url_cache, :as => :update_cover
 
   validates :title, :chapter, :creator,
             :presence => true
@@ -29,6 +32,8 @@ class CourseWare < ActiveRecord::Base
     `)
   }
 
+  scope :by_chapter, lambda{|chapter| {:conditions => ['chapter_id = ?', chapter.id]} }
+
   before_save :set_total_count_by_kind!
   def set_total_count_by_kind!
     self.total_count = 1000 if ['youku', 'video'].include? self.kind.to_s
@@ -50,6 +55,16 @@ class CourseWare < ActiveRecord::Base
     end
   end
 
+  # 修改后，需要重置 total_count 和 cover
+  before_update :refresh_cover_and_total_count
+  def refresh_cover_and_total_count
+    if self.file_entity_id_changed? || self.kind_changed? || self.url_changed?
+      self.set_total_count_by_kind!
+      self.cover_url_cache = nil
+    end
+    return true
+  end
+
   delegate :convert_success?, :to => :file_entity
   delegate :converting?, :to => :file_entity
   delegate :convert_failure?, :to => :file_entity
@@ -62,4 +77,25 @@ class CourseWare < ActiveRecord::Base
   def is_web_video?
     ['youku'].include? self.kind.to_s
   end
+
+  def cover_url
+    return cover_url_cache if cover_url_cache.present?
+
+    if self.kind == 'youku'
+      video_id = self.url.split('_')[2].split('.')[0]
+      yvp = YoukuVideoParser.new video_id
+      cover_url = yvp.get_cover_url
+      self.update_attributes({ :cover_url_cache => cover_url }, :as => :update_cover)
+      return cover_url
+    end
+  end
+
+  def prev
+    self.class.by_chapter(chapter).where('position < ?', self.position).last
+  end
+
+  def next
+    self.class.by_chapter(chapter).where('position > ?', self.position).first
+  end
+
 end

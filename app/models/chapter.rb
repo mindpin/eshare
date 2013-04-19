@@ -1,4 +1,7 @@
 class Chapter < ActiveRecord::Base
+  include MovePosition::ModelMethods
+  include CourseReadPercent::ChapterMethods
+
   attr_accessible :title, :desc, :creator
 
   belongs_to :course
@@ -11,4 +14,15 @@ class Chapter < ActiveRecord::Base
   has_many :course_wares
   has_many :homeworks
   has_many :questions
+
+  scope :by_course, lambda{|course| {:conditions => ['course_id = ?', course.id]} }
+
+  def prev
+    self.class.by_course(course).where('position < ?', self.position).last
+  end
+
+  def next
+    self.class.by_course(course).where('position > ?', self.position).first
+  end
+
 end

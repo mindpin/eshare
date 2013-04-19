@@ -653,23 +653,32 @@ img.page-avatar {
           padding:10px 15px;
           padding-left:24px + 20px + 15px;
           border-bottom:solid 1px #eee;
-          height:30px;line-height:30px;
+          line-height:30px;
           border-left:solid 1px #eee;
           text-decoration:none;
           position:relative;
 
+          .read-percent {
+            position:absolute;
+            height:30px;line-height:30px;
+            top:10px;right:15px;
+            font-size:16px;
+            color:#444;
+            font-weight:bold;
+          }
+
           .line {
             width:4px;
             position:absolute;
-            top:0;bottom:0;
+            top:0;bottom:-1px;
             left:15px + 24px/2 - 4px/2;
             background-color:#CDCDCD;
           }
           &:first-child {
-            .line { top:25px; }
+            .line { /*top:25px;*/ top:50%; }
           }
           &:last-child {
-            .line { bottom:25px; }
+            .line { /*bottom:25px;*/ bottom:50%; }
           }
 
           i {
@@ -678,9 +687,30 @@ img.page-avatar {
             z-index:1;
             position:absolute;
             left:15px;
-            top:50px/2 - 24px/2;
+            // top:50px/2 - 24px/2;
+            top:50%;margin-top:-12px;
             &.youku {
               background-position: 0px -24px;
+            }
+          }
+
+          &.read {
+            i {
+              background-position:-48px 0;
+              &.youku { background-position:-48px -24px; }
+            }
+            .line {
+              background-color:#63B4E3;
+            }
+          }
+
+          &.reading {
+            i {
+              background-position:-24px 0;
+              &.youku { background-position:-24px -24px; }
+            }
+            .line {
+              background-color:#63B4E3;
             }
           }
 
@@ -688,10 +718,50 @@ img.page-avatar {
             background-color:#005580;
             color:white;
             text-decoration:none;
+            .read-percent {
+              color:white;
+            }
           }
 
           &:last-child {
             border-bottom:0 none;
+          }
+
+          .cover {
+            margin-top:5px;
+            width:80px;height:45px;
+            position:relative;
+            border:solid 1px #eee;
+            padding:1px;
+            background-color:white;
+            .page-fit-image {
+              background-color:#f4f4f4;
+            }
+            &.video {
+              &:after {
+                content:'';
+                position:absolute;
+                width:30px;height:30px;
+                background:url(video/youku-xplayer.png) -64px -256px no-repeat;
+                top:7.5px;left:25px;
+              }
+            }
+          }
+
+          .pages {
+            margin-top:5px;
+            overflow:hidden;
+            .page {
+              float:left;
+              width:80px;height:45px;
+              border:solid 1px #eee;
+              padding:1px;
+              margin-right:10px;
+              background-color:white;
+              .page-fit-image {
+                background-color:#f4f4f4;
+              }
+            }
           }
         }
       }
@@ -904,6 +974,17 @@ img.page-avatar {
         }
       }
       .course-ware-upload{ margin-bottom:10px; }
+    }
+  }
+}
+
+.page-manage-chapter-show, .page-manage-course-show {
+  td.position {
+    a.btn {
+      float:left;margin-right:4px;
+    }
+    a.btn.move-up:first-child {
+      margin-left:32px;
     }
   }
 }
