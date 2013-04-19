@@ -9,7 +9,13 @@ set :repository, 'git://github.com/mindpin/eshare.git'
 set :branch, 'master'
 set :user, 'root'
 
-set :shared_paths, ['config/database.yml', 'log', '.ruby-version', 'deploy/sh/property.yaml', 'public/YKAuth.txt']
+set :shared_paths, [
+  'config/database.yml', 
+  'log', 
+  '.ruby-version', 
+  'deploy/sh/property.yaml', 
+  'public/YKAuth.txt', 
+  'config/r.yaml']
 
 task :environment do
 end

@@ -8,7 +8,7 @@ module ImageUploaderMethods
   end
 
   def store_dir
-    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    File.join(R::UPLOAD_BASE_PATH, "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}")
   end
 
   # 允许上传的文件类型的扩展名
