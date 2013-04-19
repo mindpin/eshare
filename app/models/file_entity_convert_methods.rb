@@ -96,11 +96,12 @@ module FileEntityConvertMethods
   end
 
   class OutputImage
-    attr_reader :id, :url, :name
+    attr_reader :id, :url, :name, :height, :width
     def initialize(path, base_url)
       @name = File.basename(path)
       @id = @name.match(/_(\d*).png/)[1].to_i
       @url = File.join(base_url, @name)
+      @width, @height = MiniMagick::Image.open(path)['dimensions']
     end
   end
 end
