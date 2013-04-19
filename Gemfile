@@ -32,7 +32,8 @@ gem 'jquery-rails', '2.2.1'
 gem 'jquery-ui-rails', '4.0.2'
 gem 'unicorn', '4.6.2'
 gem 'sidekiq', '2.8.0'
-gem 'slim', '1.3.8'
+gem 'sidekiq-limit_fetch', '1.4'
+gem 'slim', '1.3.8', :require => false
 gem 'sinatra', '1.3.0', :require => false
 
 # 登录验证
@@ -118,3 +119,7 @@ gem 'mindpin-simple-tags',
 gem 'mindpin-feeds',
     :git => 'git://github.com/mindpin/mindpin-feeds',
     :tag => '0.0.1'
+
+
+gem 'mina',
+    :git => 'git://github.com/fushang318/mina.git'
