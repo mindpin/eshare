@@ -16,7 +16,7 @@ case "$1" in
   start)
     assert_process_from_pid_file_not_exist $processor_pid
     cd $current_path/../../
-    bundle exec sidekiq -e $rails_env 1>> $log_file 2>> $log_file &
+    nohup bundle exec sidekiq -e $rails_env 1>> $log_file 2>> $log_file &
     echo $! > $processor_pid
     echo "sidekiq start ............... $(command_status)"
   ;;
