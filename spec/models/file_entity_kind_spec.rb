@@ -23,4 +23,15 @@ describe FileEntity do
       @file_entity_ppt.is_ppt?.should == true
     }
   end
+
+  context '需要转码的文件，保存时 convert_status 应该是 READY' do
+    before {
+      @file_entity_ppt = FactoryGirl.create :file_entity, :attach_file_name => 'demo.ppt',
+                                                          :merged => true
+    }
+
+    it {
+      @file_entity_ppt.convert_status.should == 'CONVERTING'
+    }
+  end
 end

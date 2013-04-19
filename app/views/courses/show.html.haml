@@ -31,10 +31,7 @@
     - add_left :desc
     - add :items do |chapter|
       - chapter.course_wares.each do |cw|
-        - read = cw.has_read?(current_user)
-        - klass = read ? 'read' : cw.read_count_of(current_user) > 0 ? 'reading' : ''
-
-        %a.item{:href => "/course_wares/#{cw.id}", :class => klass}
+        %a.item{:href => "/course_wares/#{cw.id}", :class => course_ware_reading_css_class(cw)}
           .line
           %i{:class => cw.kind}
           .title= cw.title
@@ -46,5 +43,5 @@
               = fit_image cw.cover_url, :width => 80, :height => 45
           - if cw.kind == 'ppt'
             .pages.ppt
-              - cw.ppt_images[0..3].compact.each do |img|
+              - cw.output_images[0..3].compact.each do |img|
                 .page.ppt= fit_image img.url, :width => 80, :height => 45

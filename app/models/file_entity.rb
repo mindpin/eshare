@@ -11,8 +11,7 @@ class FileEntity < ActiveRecord::Base
   EXTNAME_HASH = {
     :video => [
       'avi', 'rm',  'rmvb', 'mp4', 
-      'ogv', 'm4v', 'flv', 'mpeg',
-      '3gp'
+      'ogv', 'm4v', 'mpeg', '3gp'
     ],
     :audio => [
       'mp3', 'wma', 'm4a',  'wav', 
@@ -33,6 +32,9 @@ class FileEntity < ActiveRecord::Base
     ],
     :pdf => [
       'pdf'
+    ],
+    :flv => [
+      'flv'
     ]
   }
 

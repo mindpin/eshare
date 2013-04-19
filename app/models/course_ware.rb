@@ -86,10 +86,16 @@ class CourseWare < ActiveRecord::Base
     return file_entity.convert_status
   end
 
+  # 尝试给关联的资源进行转码
+  def do_convert_file_entity(force = false)
+    return if file_entity.blank?
+    file_entity.do_convert(force)
+  end
+
   delegate :convert_success?, :to => :file_entity
   delegate :converting?, :to => :file_entity
   delegate :convert_failure?, :to => :file_entity
-  delegate :ppt_images, :to => :file_entity
+  delegate :output_images, :to => :file_entity
 
   FileEntity::EXTNAME_HASH.each do |key, value|
     delegate "is_#{key}?", :to => :file_entity

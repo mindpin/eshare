@@ -117,6 +117,7 @@ Eshare::Application.routes.draw do
           member do
             put :move_up
             put :move_down
+            put :do_convert
           end
         end
       end

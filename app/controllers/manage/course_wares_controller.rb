@@ -57,4 +57,13 @@ class Manage::CourseWaresController < ApplicationController
     return redirect_to "/manage/chapters/#{@chapter.id}"
   end
 
+  def do_convert
+    @course_ware = CourseWare.find(params[:id])
+    @chapter = @course_ware.chapter
+    
+    @course_ware.file_entity.do_convert(true)
+
+    return redirect_to "/manage/chapters/#{@chapter.id}"
+  end
+
 end

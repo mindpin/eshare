@@ -4,6 +4,7 @@ class CourseWaresController < ApplicationController
   def show
     @course_ware = CourseWare.find params[:id]
     @course_ware.refresh_total_count!
+    
     @chapter = @course_ware.chapter
     @course = @chapter.course
     @questions = @chapter.questions.page(params[:page]).per(10)

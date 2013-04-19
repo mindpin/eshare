@@ -3,9 +3,9 @@ class CourseWareConverter
 
   def perform(entity_id)
     entity = FileEntity.find(entity_id)
+    entity.convert_converting!
     Docsplit.extract_images(entity.attach.path,
                             :output => entity.convert_output_dir,
-                            :size   => '800x',
                             :format => [:png])
     entity.convert_success!
   rescue

@@ -89,6 +89,13 @@ module ApplicationHelper
     course_ware.read_percent(current_user)
   end
 
+  def course_ware_reading_css_class(course_ware)
+    percent = course_ware.read_percent(current_user)
+    return '' if percent == '0%'
+    return 'read' if percent == '100%'
+    return 'reading'
+  end
+
   # 获取章节的学习进度
   def chapter_read_percent(chapter)
     chapter.read_percent(current_user)

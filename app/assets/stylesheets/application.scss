@@ -649,78 +649,18 @@ img.page-avatar {
       .items {
         margin:0;
         .item {
-          display:block;
-          padding:10px 15px;
-          padding-left:24px + 20px + 15px;
-          border-bottom:solid 1px #eee;
-          line-height:30px;
-          border-left:solid 1px #eee;
-          text-decoration:none;
-          position:relative;
+          .title {
+            width:400px;
+            line-height:20px;
+          }
 
           .read-percent {
             position:absolute;
-            height:30px;line-height:30px;
+            height:20px;line-height:20px;
             top:10px;right:15px;
-            font-size:16px;
+            font-size:14px;
             color:#444;
             font-weight:bold;
-          }
-
-          .line {
-            width:4px;
-            position:absolute;
-            top:0;bottom:-1px;
-            left:15px + 24px/2 - 4px/2;
-            background-color:#CDCDCD;
-          }
-          &:first-child {
-            .line { /*top:25px;*/ top:50%; }
-          }
-          &:last-child {
-            .line { /*bottom:25px;*/ bottom:50%; }
-          }
-
-          i {
-            height:24px;width:24px;
-            background:url(course_icons/wares.png) 0px 0px no-repeat;
-            z-index:1;
-            position:absolute;
-            left:15px;
-            // top:50px/2 - 24px/2;
-            top:50%;margin-top:-12px;
-            &.youku {
-              background-position: 0px -24px;
-            }
-          }
-
-          &.read {
-            i {
-              background-position:-48px 0;
-              &.youku { background-position:-48px -24px; }
-            }
-            .line {
-              background-color:#63B4E3;
-            }
-          }
-
-          &.reading {
-            i {
-              background-position:-24px 0;
-              &.youku { background-position:-24px -24px; }
-            }
-            .line {
-              background-color:#63B4E3;
-            }
-          }
-
-          &:hover {
-            background-color:#005580;
-            color:white;
-            text-decoration:none;
-            .read-percent {
-              color:white;
-            }
           }
 
           &:last-child {
@@ -796,52 +736,8 @@ img.page-avatar {
     .items {
       margin:0;
       .item {
-        display:block;
-        padding:10px 15px;
-        padding-left:24px + 20px + 15px;
-        border-bottom:solid 1px #e5e5e5;
-        border-left:solid 1px #e5e5e5;
-        height:30px;line-height:30px;
-        text-decoration:none;
-        position:relative;
-        background-color:white;
-
-        .line {
-          width:4px;
-          position:absolute;
-          top:0;bottom:0;
-          left:15px + 24px/2 - 4px/2;
-          background-color:#CDCDCD;
-        }
-        &:first-child {
-          .line { top:25px; }
-        }
         &:last-child {
-          .line { bottom:25px; }
           @include border-radius(0 0 0 6px);
-        }
-
-        &:hover {
-          background-color:#f5f5f5;
-          text-decoration:none;
-        }
-
-        &.current {
-          background-color:#0088CC;
-          color:white;
-          border-left-color:transparent;
-        }
-
-        i {
-          height:24px;width:24px;
-          background:url(course_icons/wares.png) 0px 0px no-repeat;
-          z-index:1;
-          position:absolute;
-          left:15px;
-          top:50px/2 - 24px/2;
-          &.youku {
-            background-position: 0px -24px;
-          }
         }
       }
     }
@@ -904,11 +800,18 @@ img.page-avatar {
           padding:10px;
           background-color:#f4f4f4;
           .images {
-            img {
-              width:$bodyw - 10px * 2 - 1px * 2 - 20px;
+            .image {
+              width:$bodyw - 10px * 2 - 1px * 2 - 20px; // 658
               border:solid 1px #ddd;
               margin-bottom:10px;
             }
+          }
+        }
+
+        .pdf-stat, .ppt-stat {
+          .pages {
+            float:left;
+            height:24px;line-height:24px;
           }
         }
       }
@@ -968,6 +871,78 @@ img.page-avatar {
   }
 }
 
+.page-layout-course-ware-show .sidebar .items, .page-course-show .chapters .chapter .items {
+  .item {
+    display:block;
+    padding:10px 15px;
+    padding-left:24px + 20px + 15px;
+    border-bottom:solid 1px #e5e5e5;
+    border-left:solid 1px #e5e5e5;
+    
+    text-decoration:none;
+    position:relative;
+    background-color:white;
+
+    .line {
+      width:4px;
+      position:absolute;
+      top:0;bottom:-1px;
+      left:15px + 24px/2 - 4px/2;
+      background-color:#CDCDCD;
+    }
+    &:first-child {
+      .line { /*top:25px;*/ top:50%; }
+    }
+    &:last-child {
+      .line { /*bottom:25px;*/ bottom:50%; }
+    }
+
+    &:hover {
+      background-color:#f5f5f5;
+      text-decoration:none;
+    }
+
+    &.current {
+      background-color:#0088CC;
+      color:white;
+      border-left-color:transparent;
+    }
+
+    i {
+      height:24px;width:24px;
+      background:url(course_icons/wares.png) 0px 0px no-repeat;
+      z-index:1;
+      position:absolute;
+      left:15px;
+      top:50%;
+      margin-top:-12px;
+      &.youku {
+        background-position: 0px -24px;
+      }
+    }
+
+    &.read {
+      i {
+        background-position:-48px 0;
+        &.youku { background-position:-48px -24px; }
+      }
+      .line {
+        background-color:#63B4E3;
+      }
+    }
+
+    &.reading {
+      i {
+        background-position:-24px 0;
+        &.youku { background-position:-24px -24px; }
+      }
+      .line {
+        background-color:#63B4E3;
+      }
+    }
+  }
+}
+
 .page-course-ware-form {
   .form-inputs .file {
     background-color:#FFFFDA;
@@ -1005,6 +980,23 @@ img.page-avatar {
     }
     a.btn.move-up:first-child {
       margin-left:32px;
+    }
+  }
+
+  tr.course_ware td.title {
+    width:300px;
+  }
+
+  tr.course_ware td.convert_status {
+    .status {
+      display: inline-block;
+      background-color:#333;
+      font-size:11.844px;
+      color:white;
+      height:20px;line-height:20px;
+      padding:0 3px;
+      position:relative;top:1px;
+      @include border-radius(2px);
     }
   }
 }

@@ -8,9 +8,14 @@
   = page_data_table :'course-wares', @course_wares, :striped, :bordered do |table|
     - table.add_column :title do |cw|
       = link_to cw.title, 'javascript:;'
-    - table.add_column :kind do |cw|
-      = cw.kind
-    - table.add_column :convert_status
+    - table.add_column :kind
+    - table.add_column :convert_status do |cw|
+      - if cw.convert_status.present?
+        %span.status{:class => cw.convert_status}= cw.convert_status
+        = link_to "重转码", "/manage/course_wares/#{cw.id}/do_convert", :method => :put, :class => 'btn mini convert'
+
+      - elsif cw.file_entity && cw.file_entity.can_be_converted?
+        = link_to "开始转码", "/manage/course_wares/#{cw.id}/do_convert", :method => :put, :class => 'btn mini convert'
 
     - table.add_column :ops do |cw|
       %a.btn.mini{:href => "/manage/course_wares/#{cw.id}/edit"}= t('common.edit')
