@@ -185,6 +185,7 @@ zh-CN:
         duration: 时长
         ops: 操作
         position: 排序位置
+        convert_status: 转码状态
 
       questions:
         title: 标题

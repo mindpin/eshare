@@ -148,6 +148,10 @@ jQuery ->
       if fitems.length > 2
         jQuery(fitems.get(1)).remove()
 
+      $input = jQuery('input#course_ware_title')
+      if $input.val() == ''
+        $input.val(file.file_name)
+
     on_file_success : (file) ->
       jQuery('input#course_ware_file_entity_id').val file.file_entity_id
       file.uploader_item.mark_success() if file.uploader_item

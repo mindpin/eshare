@@ -10,8 +10,8 @@
       = link_to cw.title, 'javascript:;'
     - table.add_column :kind do |cw|
       = cw.kind
-    - table.add_column :desc do |cw|
-      = truncate_u cw.desc, 20
+    - table.add_column :convert_status
+
     - table.add_column :ops do |cw|
       %a.btn.mini{:href => "/manage/course_wares/#{cw.id}/edit"}= t('common.edit')
       = link_to t('common.delete'), "/manage/course_wares/#{cw.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger'

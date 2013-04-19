@@ -34,11 +34,6 @@ class CourseWare < ActiveRecord::Base
 
   scope :by_chapter, lambda{|chapter| {:conditions => ['chapter_id = ?', chapter.id]} }
 
-  before_save :set_total_count_by_kind!
-  def set_total_count_by_kind!
-    self.total_count = 1000 if ['youku', 'video'].include? self.kind.to_s
-  end
-
   before_save :process_media_resource
   def process_media_resource
     return true if file_entity.blank?
@@ -55,6 +50,11 @@ class CourseWare < ActiveRecord::Base
     end
   end
 
+  before_save :set_total_count_by_kind!
+  def set_total_count_by_kind!
+    self.total_count = 1000 if ['youku', 'video'].include? self.kind.to_s
+  end
+
   # 修改后，需要重置 total_count 和 cover
   before_update :refresh_cover_and_total_count
   def refresh_cover_and_total_count
@@ -63,6 +63,27 @@ class CourseWare < ActiveRecord::Base
       self.cover_url_cache = nil
     end
     return true
+  end
+
+  # 刷新 total_count 值。此方法在 congtroller中被调用
+  def refresh_total_count!
+    self.total_count = 1000 if ['youku', 'video'].include? self.kind.to_s
+    if file_entity.present?
+      self.total_count = 0
+      if convert_success?
+        self.total_count = file_entity.output_images.count if file_entity.is_pdf?
+        self.total_count = file_entity.output_images.count if file_entity.is_ppt?
+      end
+    else
+      self.total_count = 0
+    end
+
+    self.save if self.total_count_changed?
+  end
+
+  def convert_status
+    return '' if file_entity.blank?
+    return file_entity.convert_status
   end
 
   delegate :convert_success?, :to => :file_entity

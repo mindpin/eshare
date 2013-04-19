@@ -23,13 +23,16 @@ class FileEntity < ActiveRecord::Base
       'png', 'svg',  'tif', 'gif'
     ],
     :document => [
-      'pdf', 'xls', 'doc', 'txt'
+      'xls', 'doc', 'txt'
     ],
     :swf => [
       'swf'
     ],
     :ppt => [
       'ppt'
+    ],
+    :pdf => [
+      'pdf'
     ]
   }
 

@@ -19,7 +19,7 @@ module FileEntityConvertMethods
 
   def need_convert?
     self.is_ppt? ||
-    self.extname == 'pdf' ||
+    self.is_pdf? ||
     self.extname == 'doc'
   end
 

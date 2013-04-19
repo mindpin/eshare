@@ -871,13 +871,15 @@ img.page-avatar {
     }
 
     .cbody{
-      width:860px;
+      $bodyw : 700px;
+      width:$bodyw;
+
       .widget {
         margin-bottom:20px;
         .video {
           margin-bottom:10px;
         }
-        .video-stat {
+        .video-stat, .pdf-stat {
           @include floatfix;
           .read {
             float:right;
@@ -893,12 +895,28 @@ img.page-avatar {
             }
           }
         }
+
+        .pdf {
+          margin-bottom:10px;
+          height:500px;
+          overflow-y:scroll;
+          border:solid 1px #ddd;
+          padding:10px;
+          background-color:#f4f4f4;
+          .images {
+            img {
+              width:$bodyw - 10px * 2 - 1px * 2 - 20px;
+              border:solid 1px #ddd;
+              margin-bottom:10px;
+            }
+          }
+        }
       }
       .infos {
         @include floatfix;
         .questions {
-          float:left;
-          width:580px;
+          // float:left;
+          
           .bar {
             font-size:16px;
             border-bottom:solid 1px #ccc;
@@ -909,7 +927,8 @@ img.page-avatar {
             margin-bottom: 20px;
             label {display:none;}
             #question_title {
-              width:580px - 2px - 12px;
+              // width:580px - 2px - 12px;
+              width:700px - 2px - 12px;
               height:20px;
               resize:none;
             }
@@ -933,6 +952,7 @@ img.page-avatar {
               &.avatar {margin-right:5px;}
               &.name {margin-right:4px;}
               &.ops {
+                float:right;margin-right:0;
                 @include floatfix;
                 a {float:left;color:white;}
               }

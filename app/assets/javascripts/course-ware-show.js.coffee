@@ -61,4 +61,8 @@ jQuery ->
 
   jQuery('.page-video-player.youku').each ->
     new YoukuVideoPlayer jQuery(this)
+
+# pdf展示
+jQuery ->
+  class PdfWidget
     
