@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-require 'sidekiq/web'
-
 Eshare::Application.routes.draw do
-  mount Sidekiq::Web => '/sidekiq'
-
   root :to => 'index#index'
   get '/dashboard' => 'index#dashboard'
 
