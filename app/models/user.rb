@@ -75,4 +75,5 @@ class User < ActiveRecord::Base
   include Follow::UserMethods
   include QuestionFollow::UserMethods
   include UserFeedStream
+  include MediaShare::UserMethods
 end
