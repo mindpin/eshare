@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   attr_accessible :login, :email, :password, :password_confirmation, :remember_me
   # attr_accessible :title, :body
 
+
   validates :login, :format => {:with => /\A\w+\z/, :message => '只允许数字、字母和下划线'},
                     :length => {:in => 3..20},
                     :presence => true,
@@ -75,4 +76,6 @@ class User < ActiveRecord::Base
   include Follow::UserMethods
   include QuestionFollow::UserMethods
   include UserFeedStream
+
+  include ActivitieModule
 end
