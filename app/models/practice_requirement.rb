@@ -3,6 +3,6 @@ class PracticeRequirement < ActiveRecord::Base
 
   belongs_to :practice
 
-  validates :practice, :content, :presence => true
+  validates :content, :presence => true
 
 end

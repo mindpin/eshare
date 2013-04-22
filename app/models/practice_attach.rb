@@ -5,6 +5,6 @@ class PracticeAttach < ActiveRecord::Base
   belongs_to :file_entity
 
 
-  validates :practice, :file_entity, :name, :presence => true
+  validates :file_entity, :name, :presence => true
 
 end
