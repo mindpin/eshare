@@ -66,8 +66,6 @@ describe Practice do
     before {
       @user = FactoryGirl.create(:user)
       @chapter = FactoryGirl.create(:chapter)
-      @file_entity_1 = FactoryGirl.create(:file_entity)
-      @file_entity_2 = FactoryGirl.create(:file_entity)
       
       requirements_attributes = [
         {:content => '要求1'},
