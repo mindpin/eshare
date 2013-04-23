@@ -14,6 +14,7 @@ class Chapter < ActiveRecord::Base
   has_many :course_wares
   has_many :homeworks
   has_many :questions
+  has_many :practices
 
   scope :by_course, lambda{|course| {:conditions => ['course_id = ?', course.id]} }
 
