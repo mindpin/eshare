@@ -54,6 +54,10 @@ describe Practice do
 
     }
 
+    it "practice 创建成功" do
+      @practice.id.blank?.should == false
+    end
+
     it "习题附件数量正确" do 
       @practice.attaches.count.should == 2    
     end
@@ -80,6 +84,10 @@ describe Practice do
       )
 
     }
+
+    it "practice 创建成功" do
+      @practice.id.blank?.should == false
+    end
 
     it "习题附件数量正确" do 
       @practice.requirements.count.should == 2    
