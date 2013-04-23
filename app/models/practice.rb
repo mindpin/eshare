@@ -17,4 +17,5 @@ class Practice < ActiveRecord::Base
 
   validates :title, :content, :chapter, :creator, :presence => true
 
+
 end
