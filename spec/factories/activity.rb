@@ -5,5 +5,6 @@ FactoryGirl.define do
     creator
     sequence(:start_time){ Time.now + 2.day }
     sequence(:end_time)  { Time.now + 4.day }
+    
   end
 end
