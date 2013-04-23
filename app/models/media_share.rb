@@ -65,6 +65,12 @@ class MediaShare < ActiveRecord::Base
       def received_media_sharers
         User.received_media_sharers_with_receiver(self)
       end
+
+      def received_media_resources_infos
+        self.received_media_sharers.map do |sharer|
+          ReceivedMediaResourcesInfo.new(self, sharer)
+        end
+      end
     end
   end
 
