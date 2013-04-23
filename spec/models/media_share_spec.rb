@@ -14,7 +14,7 @@ describe MediaShare do
     describe '#share_to' do
       context 'when media_resource hasn\'t been shared to receiver' do
         it 'shares media_resource to receiver' do
-          expect {share}.to change {@receiver.media_shares.count}.by(1)
+          expect {share}.to change {@receiver.received_media_shares.count}.by(1)
         end
       end
 
@@ -98,8 +98,8 @@ describe MediaShare do
         @resource.share_to @receiver
       end
 
-      describe '#shared_media_resources_with_receiver' do
-        subject {@sharer.shared_media_resources_with_receiver(@receiver)}
+      describe '#shared_media_resources_to_receiver' do
+        subject {@sharer.shared_media_resources_to_receiver(@receiver)}
 
         its(:count) {should be 1}
         it 'contains shared media resources from sharer to receiver' do
@@ -108,8 +108,8 @@ describe MediaShare do
         end
       end
 
-      describe '#received_media_resources_with_sharer' do
-        subject {@receiver.received_media_resources_with_sharer(@sharer)}
+      describe '#received_media_resources_from_sharer' do
+        subject {@receiver.received_media_resources_from_sharer(@sharer)}
 
         its(:count) {should be 1}
         it 'contains received media resources to receiver from sharer' do
@@ -117,16 +117,21 @@ describe MediaShare do
           @resource.shared_receivers.should include @receiver
         end
       end
+    end
 
-      describe ReceivedMediaResourceInfo do
-        describe '#sharer'do
-          
-        end
+    describe '#received_media_sharers' do
+      before do
+        @resource = FactoryGirl.create :media_resource
+        @sharer   = @resource.creator
+        @receiver = FactoryGirl.create :receiver
 
-        describe '#media_resources' do
-          
-        end
+        @resource.share_to(@receiver)
       end
+
+      subject {@receiver.received_media_sharers}
+
+      its(:count) {should be 1}
+      it {should include @sharer}
     end
   end
 end
