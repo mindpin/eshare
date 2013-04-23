@@ -75,7 +75,7 @@ class User < ActiveRecord::Base
   include Survey::UserMethods
   include Follow::UserMethods
   include QuestionFollow::UserMethods
-  include UserFeedStream
+  include Activity::UserMethods
 
-  include ActivitieModule
+  include UserFeedStream
 end
