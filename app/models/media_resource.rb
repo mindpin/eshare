@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class MediaResource < ActiveRecord::Base
   include ModelRemovable # add scope
   include MediaResourceDynatreeMethods
@@ -5,6 +6,7 @@ class MediaResource < ActiveRecord::Base
   include MediaResourceCrudMethods
   include MediaResourceCategoryMethods
   include MediaResourceTipMethods
+  include MediaShare::MediaResourceMethods
   simple_taggable
 
   attr_accessible :name,
