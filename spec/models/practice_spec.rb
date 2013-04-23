@@ -71,8 +71,6 @@ describe Practice do
 
       describe '批阅习题' do
         before {
-          sleep(1)
-
           @time = Time.now
 
           Timecop.travel(@time) do
