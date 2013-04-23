@@ -1,7 +1,8 @@
+# -*- coding: utf-8 -*-
 FactoryGirl.define do
   sequence(:num) {|n| n}
 
-  factory :user, :aliases => [:creator] do
+  factory :user, :aliases => [:creator, :receiver, :sharer] do
     login    {"user#{generate(:num)}"}
     name     {"用户#{generate(:num)}"}
     email    {"user#{generate(:num)}@edu.dev"}
