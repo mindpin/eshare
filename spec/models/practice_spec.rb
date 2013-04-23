@@ -51,6 +51,12 @@ describe Practice do
         end
       }
 
+      it "习题 && 用户唯一性" do
+        expect{
+          @practice.submit_by_user(@user)
+        }.to change{PracticeRecord.count}.by(0)
+      end
+
 
       it "已经提交" do
         @practice.in_submitted_status_of_user?(@user).should == true
