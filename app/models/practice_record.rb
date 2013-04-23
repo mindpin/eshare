@@ -11,6 +11,7 @@ class PracticeRecord < ActiveRecord::Base
 
 
   validates :practice, :user, :submitted_at, :presence => true
+  validates_uniqueness_of :practice_id, :scope => :user_id
 
 
   module UserMethods
