@@ -1,12 +1,13 @@
 require 'spec_helper'
 
 describe MediaShare do
-  describe MediaShare::MediaResourceMethods do
-    before do
-      @resource = FactoryGirl.create :media_resource
-      @receiver = FactoryGirl.create :user
-    end
+  before do
+    @resource = FactoryGirl.create :media_resource
+    @sharer   = @resource.creator
+    @receiver = FactoryGirl.create :receiver
+  end
 
+  describe MediaShare::MediaResourceMethods do
     def share
       @resource.share_to @receiver
     end
@@ -42,7 +43,7 @@ describe MediaShare do
 
   describe MediaShare::UserMethods do
     describe '#shared_media_resources' do
-      before {@creator = FactoryGirl.create :user}
+      before  {@creator = FactoryGirl.create :user}
       subject {@creator.shared_media_resources}
       context 'when user has shared media_resource to somepeole' do
         before do
@@ -71,13 +72,12 @@ describe MediaShare do
     end
 
     describe '#received_media_resources' do
-      before {@user = FactoryGirl.create :user}
-      subject {@user.received_media_resources}
+      subject {@receiver.received_media_resources}
 
-      context 'when user has received media resources' do
+      context 'when receiver has received media resources' do
         before do
           4.times do
-            FactoryGirl.create(:media_resource).share_to @user
+            FactoryGirl.create(:media_resource).share_to @receiver
           end
         end
 
@@ -85,18 +85,13 @@ describe MediaShare do
         its(:count) {should be 4}
       end
 
-      context 'when user hasn\'t received any media resources' do
+      context 'when receiver hasn\'t received any media resources' do
         its(:first) {should be nil}
       end
     end
 
     context 'from and to pairs' do
-      before do
-        @sharer   = FactoryGirl.create :sharer
-        @receiver = FactoryGirl.create :receiver
-        @resource = FactoryGirl.create :media_resource, :creator => @sharer
-        @resource.share_to @receiver
-      end
+      before {@resource.share_to @receiver}
 
       describe '#shared_media_resources_to_receiver' do
         subject {@sharer.shared_media_resources_to_receiver(@receiver)}
@@ -120,18 +115,27 @@ describe MediaShare do
     end
 
     describe '#received_media_sharers' do
-      before do
-        @resource = FactoryGirl.create :media_resource
-        @sharer   = @resource.creator
-        @receiver = FactoryGirl.create :receiver
-
-        @resource.share_to(@receiver)
-      end
-
+      before  {@resource.share_to(@receiver)}
       subject {@receiver.received_media_sharers}
 
       its(:count) {should be 1}
       it {should include @sharer}
+    end
+
+    describe '#received_media_resources_infos' do
+      before      {@resource.share_to(@receiver)}
+      let(:infos) {@receiver.received_media_resources_infos}
+      subject     {infos}
+
+      its(:count) {should be 1}
+      its(:first) {should be_a ReceivedMediaResourcesInfo}
+
+      describe ReceivedMediaResourcesInfo do
+        subject {infos.first}
+
+        its(:sharer) {should eq @sharer}
+        its(:media_resources) {should include @resource}
+      end
     end
   end
 end
