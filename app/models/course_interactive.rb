@@ -5,7 +5,12 @@ class CourseInteractive < ActiveRecord::Base
 
   validates :course, :date, :sum, :presence => true
 
-  scope :by_date, lambda {|date| {:conditions => {:date => date}}}
+  scope :by_date, lambda { |date| 
+    di = date.strftime("%Y%m%d").to_i
+    {
+      :conditions => {:date => di}
+    }
+  }
 
   module CourseMethods
 
@@ -16,6 +21,18 @@ class CourseInteractive < ActiveRecord::Base
 
     def self.included(base)
       base.has_many :course_interactives
+    end
+
+    def rank(date = nil)
+      d = date || Date.today
+
+      interactive = self.course_interactives.by_date(d).first
+
+      # 如果今天的值没有记录，直接返回最后一名
+      return Course.count if interactive.blank?
+
+      # 否则统计所有互动值较大的课程
+      return CourseInteractive.by_date(d).where('sum > ?', interactive.sum).count + 1
     end
 
     def today_chapter_question_count
@@ -35,11 +52,13 @@ class CourseInteractive < ActiveRecord::Base
     def _calculate_today_interactive_sum_and_save
       sum = calculate_today_interactive_sum
 
-      date = Time.now.strftime("%Y%m%d").to_i
-      ci = self.course_interactives.by_date(date).first
+      today = Date.today
+      di = today.strftime("%Y%m%d").to_i
+
+      ci = self.course_interactives.by_date(today).first
 
       if ci.blank?
-        self.course_interactives.create(:date => date, :sum => sum)
+        self.course_interactives.create(:date => di, :sum => sum)
       else
         ci.update_attributes(:sum => sum)
       end

@@ -2,7 +2,7 @@
 - home_title = t('common.site.home_title.app')
 
 - content_for :javascript do
-  = javascript_include_tag 'youku/youku-api'
+  = javascript_include_tag '/youku/youku-api'
 
 !!!
 - simple_page_layout title, :html_lang => :zh, :body_class => 'app' do
@@ -19,10 +19,11 @@
       .items
         - @chapter.course_wares.each do |cw|
           - klass = ( cw == @course_ware ? 'current' : '' )
+          - klass = [klass, course_ware_reading_css_class(cw)].join(' ').strip
           %a.item{:href => "/course_wares/#{cw.id}", :class => klass}
             .line
             %i{:class => cw.kind}
-            %span.title= cw.title
+            %span.title= truncate_u cw.title, 32
 
     .content
       = yield

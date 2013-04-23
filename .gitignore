@@ -21,6 +21,7 @@ config/development.sphinx.conf
 .rvmrc
 public/system/*
 public/uploads/*
+public/static_files/*
 public/file_part_upload/*
 public/files/*
 public/test/*

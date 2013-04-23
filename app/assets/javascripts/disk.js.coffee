@@ -5,6 +5,7 @@ jQuery ->
       @uploader = new PartUpload(config)
       @uploader_item_class = PageFileUploaderItem
 
+      @on_file_added = config.on_file_added || () ->
       @on_file_success = config.on_file_success || () ->
       @$button = config.button
 
@@ -17,6 +18,7 @@ jQuery ->
       @uploader.on 'fileAdded', (file) =>
         @add_file(file)
         @uploader.upload()
+        @on_file_added(file)
 
       @uploader.on 'fileProgress', (file) =>
         file.uploader_item.sync_percent() if file.uploader_item
@@ -129,4 +131,37 @@ jQuery ->
           console.log res
           file.uploader_item.mark_success() if file.uploader_item
 
+  }
+
+# ----------------------
+
+  # 课程编辑 - 课件上传
+  new PageFileUploader jQuery('.page-file-uploader'), {
+    url : '/upload'
+    multiple : false
+    button : jQuery('a.btn.course-ware-upload')
+    on_file_added : (file) ->
+      jQuery('.page-course-ware-form .linked').slideUp()
+      jQuery('.page-course-ware-form .course-ware-upload').hide()
+
+      fitems = jQuery('.page-file-uploader .item')
+      if fitems.length > 2
+        jQuery(fitems.get(1)).remove()
+
+      $input = jQuery('input#course_ware_title')
+      if $input.val() == ''
+        $input.val(file.file_name)
+
+    on_file_success : (file) ->
+      jQuery('input#course_ware_file_entity_id').val file.file_entity_id
+      file.uploader_item.mark_success() if file.uploader_item
+
+      setTimeout ->
+        jQuery('.page-course-ware-form .linked')
+          .slideDown()
+          .find('.name').html(file.file_name)
+        jQuery('.page-course-ware-form .course-ware-upload')
+          .show()
+          .find('span').html('重新上传')
+      , 700
   }

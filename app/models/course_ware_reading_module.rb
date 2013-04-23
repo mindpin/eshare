@@ -18,7 +18,7 @@ module CourseWareReadingModule
   # 则设置为已读
   def update_read_count_of(user, read_count)
     reading = _prepare_reading_of(user)
-    reading.read_count = read_count
+    reading.read_count = read_count.to_i
     reading.read = true if total_count && read_count >= total_count
     reading.save
   end

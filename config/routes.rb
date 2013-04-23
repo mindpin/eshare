@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 Eshare::Application.routes.draw do
   root :to => 'index#index'
   get '/dashboard' => 'index#dashboard'
@@ -107,14 +108,31 @@ Eshare::Application.routes.draw do
       end
 
       resources :chapters, :shallow => true do
-        resources :course_wares, :shallow => true
+        member do
+          put :move_up
+          put :move_down
+        end
+
+        resources :course_wares, :shallow => true do
+          member do
+            put :move_up
+            put :move_down
+            put :do_convert
+          end
+        end
+      end
+    end
+
+    namespace :aj do
+      resources :courses, :shallow => true do
+        resources :chapters, :shallow => true
       end
     end
   end
 
   resources :courses, :shallow => true do
     member do
-      post :sign
+      post :checkin
     end
 
     resources :chapters, :shallow => true do

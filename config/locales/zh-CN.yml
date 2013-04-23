@@ -9,6 +9,7 @@ zh-CN:
       dashboard: 首页
       disk: 文件夹
       courses_manage: 课程管理
+      courses_manage_aj: 课管理β
       questions: 问答
 
     student:
@@ -174,6 +175,7 @@ zh-CN:
         homeworks-count: 练习数目
         updated_at: 更新时间
         ops: 操作
+        position: 排序位置
 
       course-wares:
         title: 课件名
@@ -182,6 +184,8 @@ zh-CN:
         pages-count: 页数
         duration: 时长
         ops: 操作
+        position: 排序位置
+        convert_status: 转码状态
 
       questions:
         title: 标题

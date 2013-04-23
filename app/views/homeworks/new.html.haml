@@ -1,15 +1,16 @@
 .page-homework-new
   = simple_form_for @homework, :url => "/chapters/#{@chapter.id}/homeworks" do |f|
-    = f.input :title
-    = f.input :content
-    
-    = f.simple_fields_for :homework_requirements do |rf|
-      = rf.input :content
+    .form-inputs
+      = f.input :title
+      = f.input :content
+      
+      = f.simple_fields_for :homework_requirements do |rf|
+        = rf.input :content
 
-    - page_file_uploader
-    %a.btn.success.homework-attach-upload{:href => 'javascript:;'} 上传附件
+      - page_file_uploader
+      %a.btn.success.homework-attach-upload{:href => 'javascript:;'} 上传附件
+      .attaches{:data => {:count => 0}}
 
-    .attaches{:data => {:count => 0}}
-
-    = f.input :deadline, :order => [:year, :month]
-    = f.button :submit
+      = f.input :deadline, :order => [:year, :month]
+    .form-actions
+      = f.button :submit

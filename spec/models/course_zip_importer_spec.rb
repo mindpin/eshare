@@ -38,7 +38,7 @@ describe CourseZipImporter do
           }
 
           it {
-            Chapter.first.course_wares.first.kind.should == 'video'
+            Chapter.first.course_wares.first.kind.should == 'flv'
           }
         end
       end

@@ -124,7 +124,7 @@ module MediaResourceCrudMethods
       # 返回该文件夹下所有资源，包括下级文件和下级文件夹
       # 如果传入的路径并非文件夹，抛出异常 NotDirError
       def gets(creator, resource_path = '/')
-        return self.root_res if resource_path == '/' || resource_path.blank?
+        return creator.media_resources.root_res if resource_path == '/' || resource_path.blank?
 
         dir = self.get creator, resource_path
         raise MediaResource::InvalidPathError if dir.nil?

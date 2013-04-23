@@ -1,0 +1,30 @@
+- title = t('common.site.title.app')
+- home_title = t('common.site.home_title.app')
+
+- content_for :javascript do
+  = javascript_include_tag '/pjax/jquery.pjax'
+
+!!!
+- simple_page_layout title, :html_lang => :zh, :body_class => 'app' do
+  = page_navbar(:fixed_top, :color_inverse) do |navbar|
+    - navbar.prepend link_to(home_title, '/', :class => :brand)
+    - navbar.add_item(current_user.name, '/')
+    - navbar.add_item('账号设置', '/account/edit')
+    - navbar.add_item('退出登录', '/account/sign_out')
+
+  .page-course-manage-aj
+    #pjax-container
+      = yield
+
+    .chapters
+      .head
+        %a.back.btn{:href => '/manage/courses'}
+          %i.icon-chevron-left
+          返回
+        %a.add-chapter.btn.success{:href => "/manage/aj/courses/#{@course.id}/chapters/new"}
+          %i.icon-plus.icon-white
+          增加章节
+
+      - @course.chapters.all.each do |ch|
+        - klass = (ch == @chapter) ? 'current' : ''
+        %a.chapter{:href => "/manage/aj/chapters/#{ch.id}", :class => klass, :data => {:id => ch.id}}= ch.title

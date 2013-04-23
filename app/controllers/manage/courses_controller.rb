@@ -1,4 +1,6 @@
 class Manage::CoursesController < ApplicationController
+  before_filter :authenticate_user!
+  
   def index
     @courses = Course.page(params[:page])
   end

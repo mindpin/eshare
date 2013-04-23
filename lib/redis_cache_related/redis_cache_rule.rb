@@ -36,8 +36,8 @@ module RedisCacheRule
 
   # -----
   
-  def respond_to_with_redis_cache_rule?(method_id)
-    if respond_to_without_redis_cache_rule?(method_id)
+  def respond_to_with_redis_cache_rule?(method_id, include_all=false)
+    if respond_to_without_redis_cache_rule?(method_id, include_all)
       return true
     else
       return RedisCacheManagement.has_method?(self,method_id.to_sym)

@@ -5,7 +5,7 @@ gem 'rails', '3.2.12' # RAILS #不要更新 3.2.13 有性能问题，等 3.2.14
 gem 'mysql2', '0.3.11' # MYSQL数据库连接
 gem 'json', '1.7.7' # JSON解析，RAILS默认引入的
 gem 'rubyzip', '0.9.9', :require => false
-gem 'rghost', '0.9'
+gem 'docsplit', '0.7.2'
 
 group :assets do
   gem 'sass-rails', '~> 3.2.3'
@@ -33,6 +33,8 @@ gem 'jquery-ui-rails', '4.0.2'
 gem 'unicorn', '4.6.2'
 gem 'sidekiq', '2.8.0'
 gem 'sidekiq-limit_fetch', '1.4'
+gem 'slim', '1.3.8', :require => false
+gem 'sinatra', '1.3.0', :require => false
 
 # 登录验证
 gem 'devise', '2.2.3'
@@ -85,7 +87,7 @@ gem 'simple-images',
 
 gem 'simple-page-compoents',
     :git => 'git://github.com/mindpin/simple-page-compoents',
-    :tag => '0.0.7.3'
+    :tag => '0.0.7.5'
     # :path => '/web/songliang/simple-page-compoents'
 
 ## 给指定 activerecord 模型动态添加属性
@@ -117,3 +119,7 @@ gem 'mindpin-simple-tags',
 gem 'mindpin-feeds',
     :git => 'git://github.com/mindpin/mindpin-feeds',
     :tag => '0.0.1'
+
+
+gem 'mina',
+    :git => 'git://github.com/fushang318/mina.git'

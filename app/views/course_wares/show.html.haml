@@ -13,16 +13,41 @@
             %span.desc 学习完成度
             %span.l= @course_ware.read_count_of(current_user)
             %span /
-            %span.r 1000
+            %span.r= @course_ware.total_count
 
-      - else
-        - if @course_ware.is_ppt?
+      - elsif @course_ware.file_entity.present?
+        - if @course_ware.file_entity.is_flv?
+          <video controls src="#{@course_ware.file_entity.attach.url}"></video>
+
+        - if @course_ware.is_pdf? || @course_ware.is_ppt?
           - if @course_ware.convert_success?
-            - @course_ware.ppt_images.each do |img|
-              .image{:data => {:id => img.id}}
-                %img{:src => img.url}
+            .pdf
+              .images
+                :ruby
+                  images = @course_ware.output_images
+                  width = images.first.width
+                  height = images.first.height
+                  w = 658
+                  h = w * height / width
+
+                - images.each do |img|
+                  .image= fit_image img.url, :width => w, :height => h
+            .pdf-stat{:data => {:id => @course_ware.id}}
+              .pages
+                %span.desc 当前页
+                %span.current 1
+                %span /
+                %span.total= @course_ware.total_count
+
+              .read
+                %span.desc 学习完成度
+                %span.l= @course_ware.read_count_of(current_user)
+                %span /
+                %span.r= @course_ware.total_count
+
           - else
             转码没有成功，或正在转码
+
     .infos
       .questions
         .bar 线上问答
