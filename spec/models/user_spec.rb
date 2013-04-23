@@ -75,7 +75,7 @@ describe User do
         }
       end
 
-      context '传入正确数据' do
+      context '传入错误数据' do
         it {
           expect{
             creator.activities.create(hash_error)
