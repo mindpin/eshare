@@ -288,84 +288,97 @@ describe AnswerVote do
   }
 
 
-  describe "最佳答案" do
-    before {
-      @question     = FactoryGirl.create :question
-      @origin_best_answer  = @question.best_answer
-      @answer_1     = FactoryGirl.create :answer
-      @answer_2     = FactoryGirl.create :answer, :question => @question
+end
 
+
+
+
+describe "最佳答案" do
+  before {
+    @question     = FactoryGirl.create :question
+    @answer     = FactoryGirl.create :answer, :question => @question
+
+    @question.update_attribute(:best_answer, @answer)
+    @question.reload
+
+    @origin_best_answer  = @question.best_answer
+
+
+    @answer_1     = FactoryGirl.create :answer
+    @answer_2     = FactoryGirl.create :answer, :question => @question
+
+  }
+
+  describe "用其它问题答案赋值" do
+    before {
+      @question.update_attribute(:best_answer, @answer_1)
+      @question.reload
     }
 
-    describe "用其它问题答案赋值" do
-      before {
-        @question.best_answer = @answer_1
-        @question.save
-        @question.reload
-      }
-
-      it "不能是其它问题的答案" do
-        @question.best_answer.should_not == @answer_1
-      end
-      
-
-      it "应该还是原来的值" do
-        @question.best_answer.should == @origin_best_answer
-      end
-      
+    it "不能是其它问题的答案" do
+      @question.best_answer.should_not == @answer_1
     end
+    
 
-    describe "用自己问题答案赋值" do
-      before {
-        @question.best_answer = @answer_2
-        @question.save
-        @question.reload
-      }
-
-      it "应该是自己问题的答案" do
-        @question.best_answer.should == @answer_2
-      end
-      
-
-      it "应该不是原来的值" do
-        @question.best_answer.should_not == @origin_best_answer
-      end
-      
+    it "应该还是原来的值" do
+      @question.best_answer.should == @origin_best_answer
     end
+    
+  end
 
+  describe "用自己问题答案赋值" do
+    before {
+      
+      @question.update_attribute(:best_answer, @answer_2)
+      @question.reload
+    }
 
+    it "应该是自己问题的答案" do
+      @question.best_answer.should == @answer_2
+    end
+    
+
+    it "应该不是原来的值" do
+      @question.best_answer.should_not == @origin_best_answer
+    end
+    
   end
 
 
-  describe "有最佳答案的问题列表" do
-    before {
-      @question_1   = FactoryGirl.create :question
-      @answer_1     = FactoryGirl.create :answer, :question => @question_1
-      @question_1.update_attribute(:best_answer, @answer_1)
-      @question_1.reload
+end
 
-      @question_2   = FactoryGirl.create :question
-      @answer_2     = FactoryGirl.create :answer, :question => @question_2
-      @question_2.update_attribute(:best_answer, @answer_2)
-      @question_2.reload
 
-      @question_3   = FactoryGirl.create :question
-      @answer_3     = FactoryGirl.create :answer, :question => @question_3
-      @question_3.update_attribute(:best_answer, @answer_3)
-      @question_3.reload
+describe "有最佳答案的问题列表" do
+  before {
+    @question_1   = FactoryGirl.create :question
+    @answer_1     = FactoryGirl.create :answer, :question => @question_1
+    @question_1.update_attribute(:best_answer, @answer_1)
+    @question_1.reload
 
-      3.times { FactoryGirl.create :question }
+    @question_2   = FactoryGirl.create :question
+    @answer_2     = FactoryGirl.create :answer, :question => @question_2
+    @question_2.update_attribute(:best_answer, @answer_2)
+    @question_2.reload
 
-      @questions_with_best_answer = Question.has_best_answer
-    }
+    @question_3   = FactoryGirl.create :question
+    @answer_3     = FactoryGirl.create :answer, :question => @question_3
+    @question_3.update_attribute(:best_answer, @answer_3)
+    @question_3.reload
 
-    it "数量正确" do
-      @questions_with_best_answer.count.should == 3
-    end
+    3.times { FactoryGirl.create :question }
 
-    it "列表正确" do
-      @questions_with_best_answer.should == [@question_1, @question_2, @question_3]
-    end
+    @questions_with_best_answer = Question.has_best_answer
+  }
+
+  it "总的数量正确" do
+    Question.count.should == 6
   end
 
+  it "有最佳答案的问题数量正确" do
+    @questions_with_best_answer.count.should == 3
+  end
+
+  it "列表正确" do
+    @questions_with_best_answer.should == [@question_3, @question_2, @question_1]
+  end
 end

@@ -13,12 +13,13 @@ class Question < ActiveRecord::Base
 
   validates :creator, :title, :presence => true
 
-  after_save :validate_best_answer
+  before_save :validate_best_answer
   def validate_best_answer
     return true if best_answer.blank?
 
     if !answers.include?(best_answer)
-      errors.add("最佳答案需要从问题的回答列表中选择")
+      errors.add(:base, "最佳答案需要从问题的回答列表中选择")
+      return false
     end
   end
 
@@ -45,6 +46,7 @@ class Question < ActiveRecord::Base
 
   scope :anonymous, :conditions => ['is_anonymous = ?', true]
   scope :onymous, :conditions => ['is_anonymous = ?', false]
+  scope :has_best_answer, :conditions => ['best_answer_id > 0']
 
   # 记录用户活动
   record_feed :scene => :questions,
