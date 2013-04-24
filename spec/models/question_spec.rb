@@ -36,29 +36,41 @@ describe Question do
 
   describe "检测 updated_at" do
     before {
-      Timecop.travel(Time.now - 1.day) do
+      Timecop.travel(Time.now - 2.day) do
         @question     = FactoryGirl.create(:question)
       end
       
       @updated_at = @question.updated_at
 
-
-      @answer = FactoryGirl.create(:answer, :question => @question)
-
     }
+
+    it "还没更新时间" do
+      @question.updated_at.should == @updated_at
+    end
 
     it "问题被创建者修改" do
       @question.update_attributes({:title => 'test', :content => 'test'})
       @question.updated_at.should > @updated_at
     end
 
-    it "问题被任何人回答" do
-      @question.updated_at.should > @updated_at
-    end
+    describe "回答问题" do
+      before {
+        Timecop.travel(Time.now - 1.day) do
+          @answer = FactoryGirl.create(:answer, :question => @question)
+        end
 
-    it "修改回答" do
-      @answer.update_attributes({:content => 'test'})
-      @question.updated_at.should > @updated_at
+        @answered_updated_at = @question.updated_at
+      }
+
+      it "问题被任何人回答" do
+        @answered_updated_at.should > @updated_at
+      end
+
+      it "修改回答" do
+        @answer.update_attributes({:content => 'test'})
+        @question.updated_at.should > @answered_updated_at
+      end
+
     end
 
   end
