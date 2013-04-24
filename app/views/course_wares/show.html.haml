@@ -5,48 +5,16 @@
 
   .cbody
     .widget
-      - if @course_ware.is_web_video?
-        .video
-          = course_ware_web_video_tag @course_ware
-        .video-stat{:data => {:id => @course_ware.id}}
-          .read 
-            %span.desc 学习完成度
-            %span.l= @course_ware.read_count_of(current_user)
-            %span /
-            %span.r= @course_ware.total_count
+      - # 视频
+      - if @course_ware.is_video?
+        = render_cell :course_ware_widget, :video, :course_ware => @course_ware, :user => current_user
 
       - elsif @course_ware.file_entity.present?
-        - if @course_ware.file_entity.is_flv?
-          <video controls src="#{@course_ware.file_entity.attach.url}"></video>
-
         - if @course_ware.is_pdf? || @course_ware.is_ppt?
           - if @course_ware.convert_success?
-            .pdf
-              .images
-                :ruby
-                  images = @course_ware.output_images
-                  width = images.first.width
-                  height = images.first.height
-                  w = 658
-                  h = w * height / width
-
-                - images.each do |img|
-                  .image= fit_image img.url, :width => w, :height => h
-            .pdf-stat{:data => {:id => @course_ware.id}}
-              .pages
-                %span.desc 当前页
-                %span.current 1
-                %span /
-                %span.total= @course_ware.total_count
-
-              .read
-                %span.desc 学习完成度
-                %span.l= @course_ware.read_count_of(current_user)
-                %span /
-                %span.r= @course_ware.total_count
-
+            = render_cell :course_ware_widget, :pages, :course_ware => @course_ware, :user => current_user
           - else
-            转码没有成功，或正在转码
+            PPT/PDF文件格式转换没有成功，或正在进行转换
 
     .infos
       .questions

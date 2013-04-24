@@ -18,6 +18,7 @@
 //= require jquery.ui.all
 
 //= require tag-it/tag-it
+//= require ckplayer/ckplayer
 
 //= require part-upload/part-upload
 //= require simple-images

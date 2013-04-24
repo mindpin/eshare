@@ -8,7 +8,13 @@
       = f.input :desc, :input_html => {:rows => 6, :class => 'xxlarge'}
 
       - if @for_web_video # 网络视频
-        = f.select :kind, [['优酷 YOUKU', 'youku']], :label => '网络视频来源'
+        :ruby
+          s = [
+            ['优酷 YOUKU', 'youku'], 
+            ['新浪视频 SINA', 'sina']
+          ]
+
+        = f.select :kind, s, :label => '网络视频来源'
         = f.input :url, :label => '视频网址 URL', :input_html => {:class => 'xxlarge', :placeholder => 'http://'}
 
       - else

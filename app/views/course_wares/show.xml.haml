@@ -1,0 +1,18 @@
+- if @course_ware.is_youku?
+  %ckplayer
+    %flashvars
+    - @course_ware.youku_video.video_files.each do |f|
+      %video
+        %file= f.url
+        %size= f.size
+        %seconds= f.seconds
+
+- if @course_ware.is_sina?
+  %ckplayer
+    %flashvars
+    - @course_ware.sina_video.video_files.each do |f|
+      %video
+        %file
+          :cdata
+            #{f.url}
+        %seconds= f.seconds

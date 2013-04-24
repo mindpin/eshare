@@ -709,14 +709,6 @@ img.page-avatar {
   }
 }
 
-.page-video-player {
-  width:860px;
-  height:400px;
-  background-color:#f7f7f7;
-  &.youku {
-  }
-}
-
 .page-layout-course-ware-show {
   .sidebar {
     position:fixed;
@@ -774,25 +766,18 @@ img.page-avatar {
         margin-bottom:20px;
         .video {
           margin-bottom:10px;
-        }
-        .video-stat, .pdf-stat {
-          @include floatfix;
-          .read {
-            float:right;
-            background-color:#005580;
-            @include border-radius(3px);
-            color:white;
-            font-weight:bold;
-            height:24px;line-height:24px;
-            padding:0 10px;
-            span.desc{
-              font-weight: normal;
-              margin-right:10px;
+          position:relative;
+
+          .page-video-player {
+            width:$bodyw;
+            height:$bodyw * 9 / 16;
+            background-color:#f7f7f7;
+            &.youku {
             }
           }
         }
 
-        .pdf {
+        .pages {
           margin-bottom:10px;
           height:500px;
           overflow-y:scroll;
@@ -808,10 +793,27 @@ img.page-avatar {
           }
         }
 
-        .pdf-stat, .ppt-stat {
-          .pages {
-            float:left;
+        .stat {
+          @include floatfix;
+          .read {
+            float:right;
+            background-color:#005580;
+            @include border-radius(3px);
+            color:white;
+            font-weight:bold;
             height:24px;line-height:24px;
+            padding:0 10px;
+            span.desc{
+              font-weight: normal;
+              margin-right:10px;
+            }
+          }
+          
+          &.pages {
+            .page {
+              float:left;
+              height:24px;line-height:24px;
+            }
           }
         }
       }
@@ -916,7 +918,7 @@ img.page-avatar {
       left:15px;
       top:50%;
       margin-top:-12px;
-      &.youku {
+      &.youku, &.sina, &.flv {
         background-position: 0px -24px;
       }
     }
@@ -924,7 +926,7 @@ img.page-avatar {
     &.read {
       i {
         background-position:-48px 0;
-        &.youku { background-position:-48px -24px; }
+        &.youku, &.sina, &.flv { background-position:-48px -24px; }
       }
       .line {
         background-color:#63B4E3;
@@ -934,7 +936,7 @@ img.page-avatar {
     &.reading {
       i {
         background-position:-24px 0;
-        &.youku { background-position:-24px -24px; }
+        &.youku, &.sina, &.flv { background-position:-24px -24px; }
       }
       .line {
         background-color:#63B4E3;

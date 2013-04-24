@@ -1,0 +1,19 @@
+.pages
+  .images
+    :ruby
+      images = @course_ware.output_images
+      width = images.first.width
+      height = images.first.height
+      w = 658
+      h = w * height / width
+
+    - images.each do |img|
+      .image= fit_image img.url, :width => w, :height => h
+.stat.pages{:data => {:id => @course_ware.id}}
+  .pages
+    %span.desc 当前页
+    %span.current 1
+    %span /
+    %span.total= @course_ware.total_count
+
+  = course_ware_read_count_html(@course_ware, @user)

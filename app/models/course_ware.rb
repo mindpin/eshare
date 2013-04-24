@@ -5,6 +5,7 @@ class CourseWare < ActiveRecord::Base
   include CourseWareMarkModule
   include MovePosition::ModelMethods
   include CourseReadPercent::CourseWareMethods
+  include CourseWareKindMethods
 
   attr_accessible :title, :desc, :url, :creator, :total_count
   attr_accessible :title, :desc, :file_entity_id, :kind, :url, :as => :upload
@@ -52,7 +53,7 @@ class CourseWare < ActiveRecord::Base
 
   before_save :set_total_count_by_kind!
   def set_total_count_by_kind!
-    self.total_count = 1000 if ['youku', 'video'].include? self.kind.to_s
+    self.total_count = 1000 if self.is_video?
   end
 
   # 修改后，需要重置 total_count 和 cover
@@ -65,20 +66,21 @@ class CourseWare < ActiveRecord::Base
     return true
   end
 
-  # 刷新 total_count 值。此方法在 congtroller中被调用
+  # 刷新 total_count 值。此方法在 controller中被调用
   def refresh_total_count!
-    self.total_count = 1000 if ['youku', 'video'].include? self.kind.to_s
-    if file_entity.present?
-      self.total_count = 0
-      if convert_success?
-        self.total_count = file_entity.output_images.count if file_entity.is_pdf?
-        self.total_count = file_entity.output_images.count if file_entity.is_ppt?
-      end
-    else
-      self.total_count = 0
+    self.total_count = _get_total_count_by_kind
+    self.save if self.total_count_changed?
+  end
+
+  def _get_total_count_by_kind
+    return 1000 if self.is_video?
+
+    if file_entity.present? && convert_success?
+      return file_entity.output_images.count if file_entity.is_pdf?
+      return file_entity.output_images.count if file_entity.is_ppt?
     end
 
-    self.save if self.total_count_changed?
+    return 0
   end
 
   def convert_status
@@ -93,36 +95,30 @@ class CourseWare < ActiveRecord::Base
   end
 
   delegate :convert_success?, :to => :file_entity
-  delegate :converting?, :to => :file_entity
+  delegate :converting?,      :to => :file_entity
   delegate :convert_failure?, :to => :file_entity
-  delegate :output_images, :to => :file_entity
-
-  FileEntity::EXTNAME_HASH.each do |key, value|
-    delegate "is_#{key}?", :to => :file_entity
-  end
-
-  def is_web_video?
-    ['youku'].include? self.kind.to_s
-  end
+  delegate :output_images,    :to => :file_entity
 
   def cover_url
     return cover_url_cache if cover_url_cache.present?
 
-    if self.kind == 'youku'
-      video_id = self.url.split('_')[2].split('.')[0]
-      yvp = YoukuVideoParser.new video_id
-      cover_url = yvp.get_cover_url
-      self.update_attributes({ :cover_url_cache => cover_url }, :as => :update_cover)
-      return cover_url
+    if is_youku?
+      cover_url = self.youku_video.video_cover_url
     end
+
+    self.update_attributes({ :cover_url_cache => cover_url }, :as => :update_cover)
+    return cover_url
   end
 
+  # -----------
+  # 排序相关
+
   def prev
-    self.class.by_chapter(chapter).where('position < ?', self.position).last
+    chapter.course_wares.where('position < ?', position).last
   end
 
   def next
-    self.class.by_chapter(chapter).where('position > ?', self.position).first
+    chapter.course_wares.where('position > ?', position).first
   end
 
 end
