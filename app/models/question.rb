@@ -8,7 +8,6 @@ class Question < ActiveRecord::Base
   belongs_to :best_answer, :class_name => 'Answer', :foreign_key => :best_answer_id
   belongs_to :model, :polymorphic => true
   has_many :answers
-  has_many :question_follows
   has_many :follows, :class_name => 'QuestionFollow', :foreign_key => :question_id
 
   validates :creator, :title, :presence => true
@@ -96,7 +95,7 @@ class Question < ActiveRecord::Base
     end
 
     def notice_questions
-      follows_questions = Question.joins(:question_follows).where(%`
+      follows_questions = Question.joins(:follows).where(%`
         question_follows.user_id = #{self.id}
           and
         question_follows.last_view_time < questions.updated_at
