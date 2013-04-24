@@ -19,6 +19,7 @@ class CourseWare < ActiveRecord::Base
   belongs_to :media_resource
   has_many :course_ware_readings
   has_many :course_ware_marks
+  has_many :questions, :as => :model
 
   scope :by_course, lambda {|course|
     joins(:chapter).where('chapters.course_id = ?', course.id)

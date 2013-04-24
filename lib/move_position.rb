@@ -2,7 +2,7 @@ module MovePosition
 
   module ModelMethods
     def self.included(base)
-      base.send(:default_scope, :order => "position ASC") 
+      base.send(:default_scope, :order => "#{base.table_name}.position ASC") 
       base.send(:after_create, :set_position)
       base.send(:include, InstanceMethods)
     end

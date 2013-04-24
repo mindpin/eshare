@@ -1,11 +1,11 @@
 class Question < ActiveRecord::Base
   include CourseInteractive::QuestionMethods
   
-  attr_accessible :title, :content, :chapter_id, :ask_to_user_id, :creator
+  attr_accessible :title, :content, :chapter_id, :ask_to_user_id, :creator, :model
 
   belongs_to :creator, :class_name => 'User', :foreign_key => :creator_id
   belongs_to :ask_to, :class_name => 'User', :foreign_key => :ask_to_user_id
-  belongs_to :chapter
+  belongs_to :model, :polymorphic => true
   has_many :answers
   has_many :question_follows
   has_many :follows, :class_name => 'QuestionFollow', :foreign_key => :question_id
@@ -16,12 +16,20 @@ class Question < ActiveRecord::Base
 
   scope :today, :conditions => ['DATE(created_at) = ?',Time.now.to_date]
   scope :by_course, lambda {|course|
-    ids = course.chapter_ids.to_a
-    if ids.blank?
-      {:conditions => 'chapter_id = -1'}
-    else
-      {:conditions => {:chapter_id => ids}}
+
+    chapter_ids = course.chapter_ids.to_a
+    course_wares_ids = course.course_ware_ids.to_a
+     
+    wheres = ["(model_type = 'Course' and model_id = #{course.id})"]
+    if !chapter_ids.blank?
+      wheres << "(model_type = 'Chapter' and model_id in (#{chapter_ids*","}))"
     end
+     
+    if !course_wares_ids.blank?
+      wheres << "(model_type = 'CourseWare' and model_id in (#{course_wares_ids*","}))"
+    end
+     
+    {:conditions => wheres*" or "}
   }
 
   scope :anonymous, :conditions => ['is_anonymous = ?', true]
