@@ -36,10 +36,12 @@ describe Question do
 
   describe "检测 updated_at" do
     before {
-      @question     = FactoryGirl.create(:question)
+      Timecop.travel(Time.now - 1.day) do
+        @question     = FactoryGirl.create(:question)
+      end
+      
       @updated_at = @question.updated_at
 
-      sleep(1)
 
       @answer = FactoryGirl.create(:answer, :question => @question)
 
