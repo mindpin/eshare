@@ -1,7 +1,7 @@
 class Question < ActiveRecord::Base
   include CourseInteractive::QuestionMethods
   
-  attr_accessible :title, :content, :chapter_id, :ask_to_user_id, :creator, :model
+  attr_accessible :title, :content, :ask_to_user_id, :creator, :model, :best_answer
 
   belongs_to :creator, :class_name => 'User', :foreign_key => :creator_id
   belongs_to :ask_to, :class_name => 'User', :foreign_key => :ask_to_user_id
@@ -13,16 +13,14 @@ class Question < ActiveRecord::Base
 
   validates :creator, :title, :presence => true
 
-  before_save :validate_best_answer
+  validate :validate_best_answer
   def validate_best_answer
     return true if best_answer.blank?
 
     if !answers.include?(best_answer)
       errors.add(:base, "最佳答案需要从问题的回答列表中选择")
-      return false
     end
   end
-
 
   default_scope order('id desc')
 
@@ -62,7 +60,7 @@ class Question < ActiveRecord::Base
     return self.answers.by_user(user).first
   end
 
-  after_save :follow_by_creator
+  after_create :follow_by_creator
 
   def follow_by_creator
     self.follow_by_user(self.creator)

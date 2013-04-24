@@ -298,7 +298,7 @@ describe "最佳答案" do
     @question     = FactoryGirl.create :question
     @answer     = FactoryGirl.create :answer, :question => @question
 
-    @question.update_attribute(:best_answer, @answer)
+    @question.update_attributes({:best_answer => @answer})
     @question.reload
 
     @origin_best_answer  = @question.best_answer
@@ -311,7 +311,8 @@ describe "最佳答案" do
 
   describe "用其它问题答案赋值" do
     before {
-      @question.update_attribute(:best_answer, @answer_1)
+      @question.best_answer = @answer_1
+      @question.save
       @question.reload
     }
 
@@ -328,9 +329,8 @@ describe "最佳答案" do
 
   describe "用自己问题答案赋值" do
     before {
-      
-      @question.update_attribute(:best_answer, @answer_2)
-      @question.reload
+      @question.best_answer =  @answer_2
+      @question.save
     }
 
     it "应该是自己问题的答案" do
@@ -352,17 +352,21 @@ describe "有最佳答案的问题列表" do
   before {
     @question_1   = FactoryGirl.create :question
     @answer_1     = FactoryGirl.create :answer, :question => @question_1
-    @question_1.update_attribute(:best_answer, @answer_1)
+
+    @question_1.best_answer = @answer_1
+    @question_1.save
     @question_1.reload
 
     @question_2   = FactoryGirl.create :question
     @answer_2     = FactoryGirl.create :answer, :question => @question_2
-    @question_2.update_attribute(:best_answer, @answer_2)
+    @question_2.best_answer = @answer_2
+    @question_2.save
     @question_2.reload
 
     @question_3   = FactoryGirl.create :question
     @answer_3     = FactoryGirl.create :answer, :question => @question_3
-    @question_3.update_attribute(:best_answer, @answer_3)
+    @question_3.best_answer = @answer_3
+    @question_3.save
     @question_3.reload
 
     3.times { FactoryGirl.create :question }
