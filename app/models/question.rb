@@ -23,7 +23,9 @@ class Question < ActiveRecord::Base
   end
 
   default_scope order('id desc')
-
+  scope :anonymous, :conditions => ['is_anonymous = ?', true]
+  scope :onymous, :conditions => ['is_anonymous = ?', false]
+  scope :has_best_answer, :conditions => ['best_answer_id > 0']
   scope :today, :conditions => ['DATE(created_at) = ?',Time.now.to_date]
   scope :by_course, lambda {|course|
 
@@ -42,26 +44,7 @@ class Question < ActiveRecord::Base
     {:conditions => wheres*" or "}
   }
 
-  scope :anonymous, :conditions => ['is_anonymous = ?', true]
-  scope :onymous, :conditions => ['is_anonymous = ?', false]
-  scope :has_best_answer, :conditions => ['best_answer_id > 0']
-
-  # 记录用户活动
-  record_feed :scene => :questions,
-                        :callbacks => [ :create, :update]
-
-  def answered_by?(user)
-    return false if user.blank?
-    return self.answer_of(user).present?
-  end
-
-  def answer_of(user)
-    return nil if user.blank?
-    return self.answers.by_user(user).first
-  end
-
   after_create :follow_by_creator
-
   def follow_by_creator
     self.follow_by_user(self.creator)
   end
