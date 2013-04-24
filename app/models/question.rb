@@ -5,12 +5,23 @@ class Question < ActiveRecord::Base
 
   belongs_to :creator, :class_name => 'User', :foreign_key => :creator_id
   belongs_to :ask_to, :class_name => 'User', :foreign_key => :ask_to_user_id
+  belongs_to :best_answer, :class_name => 'Answer', :foreign_key => :best_answer_id
   belongs_to :model, :polymorphic => true
   has_many :answers
   has_many :question_follows
   has_many :follows, :class_name => 'QuestionFollow', :foreign_key => :question_id
 
   validates :creator, :title, :presence => true
+
+  after_save :validate_best_answer
+  def validate_best_answer
+    return true if best_answer.blank?
+
+    if !answers.include?(best_answer)
+      errors.add("最佳答案需要从问题的回答列表中选择")
+    end
+  end
+
 
   default_scope order('id desc')
 
