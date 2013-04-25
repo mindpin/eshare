@@ -1,15 +1,15 @@
 require "spec_helper"
 
 describe Question do
-  describe '不能为空较验' do
+  describe 'default_scope order id desc' do
     before {
       3.times { FactoryGirl.create(:question) }
-      @questions = Question.all
+      @ids = Question.all.map{|q|q.id}
     }
 
-    it "should order by id desc" do
-      @questions.last.id.should be < @questions.first.id
-    end
+    it{
+      @ids.should == @ids.sort.reverse
+    }
   end
 
   context '#answered_by?' do
@@ -100,7 +100,37 @@ describe Question do
 
   end
 
+  describe 'question 多态关联 课程/课件/章节' do
+    before{
+      @course = FactoryGirl.create(:course)
+      @chapter = FactoryGirl.create(:chapter, :course => @course)
+      @course_ware = FactoryGirl.create(:course_ware, :chapter => @chapter)
+    }
 
+    it{
+      question = FactoryGirl.create(:question, :model => @course)
+      question.reload
+      question.course.should == @course
+    }
+
+    it{
+      question = FactoryGirl.create(:question, :model => @chapter)
+      question.reload
+      question.course.should == @course
+    }
+
+    it{
+      question = FactoryGirl.create(:question, :model => @course_ware)
+      question.reload
+      question.course.should == @course
+    }
+
+    it{
+      question = FactoryGirl.create(:question)
+      question.reload
+      question.course.should == nil
+    }
+  end
 end
 
 describe Answer do

@@ -89,6 +89,21 @@ class Question < ActiveRecord::Base
     question_follow.reload
   end
 
+  def course
+    case self.model
+    when Chapter
+      self.model.course
+    when Course
+      self.model
+    when CourseWare
+      self.model.chapter.course
+    else
+      nil
+    end
+  rescue
+    nil
+  end
+
   module UserMethods
     def self.included(base)
       base.has_many :questions, :foreign_key => 'creator_id'
