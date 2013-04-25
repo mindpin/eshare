@@ -13,6 +13,10 @@ class PracticeRecord < ActiveRecord::Base
   validates :practice, :user, :submitted_at, :presence => true
   validates_uniqueness_of :practice_id, :scope => :user_id
 
+  # 记录用户活动
+  record_feed :scene => :practice_records,
+                        :callbacks => [ :create ]
+
 
   module UserMethods
     def self.included(base)

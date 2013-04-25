@@ -3,6 +3,7 @@ class Course < ActiveRecord::Base
   include CourseInteractive::CourseMethods
   include CourseSignModule
   include CourseReadPercent::CourseMethods
+  include CourseFeedTimelime::CourseMethods
 
   attr_accessible :name, :cid, :desc, :syllabus, :cover, :creator
 

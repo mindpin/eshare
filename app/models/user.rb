@@ -74,13 +74,10 @@ class User < ActiveRecord::Base
   include Survey::UserMethods
   include Follow::UserMethods
   include QuestionFollow::UserMethods
-
   include Practice::UserMethods
   include PracticeRecord::UserMethods
-
   include Activity::UserMethods
-
-
   include UserFeedStream
   include MediaShare::UserMethods
+  include CourseFeedTimelime::UserMethods
 end
