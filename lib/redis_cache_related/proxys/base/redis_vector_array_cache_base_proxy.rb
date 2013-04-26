@@ -1,4 +1,4 @@
-class RedisCacheBaseProxy
+class RedisVectorArrayCacheBaseProxy
 
 #两个对外公开接口
 public

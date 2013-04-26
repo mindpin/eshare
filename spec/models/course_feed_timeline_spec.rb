@@ -27,6 +27,13 @@ describe CourseFeedTimelime do
     @user_2.course_feed_timeline_db.should == []
   }
 
+  it{
+    @course_1.course_feed_timeline.should == []
+    @course_2.course_feed_timeline.should == []
+    @user_1.course_feed_timeline.should == []
+    @user_2.course_feed_timeline.should == []
+  }
+
   context 'user_1 在 course_1 操作' do
     before{
       # 学习课件
@@ -49,6 +56,11 @@ describe CourseFeedTimelime do
     }
 
     it{
+      @course_2.course_feed_timeline.should == []
+      @user_2.course_feed_timeline.should == []
+    }
+
+    it{
       @course_1.course_feed_timeline_db.map(&:to).should == [
         @practice_record_21, @practice_record_11, 
         @question_1, @course_ware_reading_21, @course_ware_reading_11
@@ -56,7 +68,21 @@ describe CourseFeedTimelime do
     }
 
     it{
+      @course_1.course_feed_timeline.map(&:to).should == [
+        @practice_record_21, @practice_record_11, 
+        @question_1, @course_ware_reading_21, @course_ware_reading_11
+      ]
+    }
+
+    it{
       @user_1.course_feed_timeline_db.map(&:to).should == [
+        @practice_record_21, @practice_record_11, 
+        @question_1, @course_ware_reading_21, @course_ware_reading_11
+      ]
+    }
+
+    it{
+      @user_1.course_feed_timeline.map(&:to).should == [
         @practice_record_21, @practice_record_11, 
         @question_1, @course_ware_reading_21, @course_ware_reading_11
       ]
@@ -151,10 +177,7 @@ describe CourseFeedTimelime do
       }
 
       it{
-        p "~~~~~~~~~~~~~~~~~~~~~~~~"
-        puts @course_2.course_feed_timeline_db.map(&:to)
-        p "~~~~~~~~~~~~~~~~~~~~~~~~"
-        puts [
+        @course_2.course_feed_timeline_db.map(&:to).should == [
           @practice_record_42, @practice_record_32,
           @question_4,
           @course_ware_reading_42, @course_ware_reading_32,
@@ -162,8 +185,43 @@ describe CourseFeedTimelime do
           @question_2,
           @course_ware_reading_41, @course_ware_reading_31
         ]
-        p "~~~~~~~~~~~~~~~~~~~~~~~~"
-        @course_2.course_feed_timeline_db.map(&:to).should == [
+      }
+      
+      it{
+        @user_1.course_feed_timeline.map(&:to).should == [
+          @practice_record_41, @practice_record_31,
+          @question_2,
+          @course_ware_reading_41, @course_ware_reading_31,
+          @practice_record_21, @practice_record_11,
+          @question_1,
+          @course_ware_reading_21, @course_ware_reading_11
+        ]
+      }
+
+      it{
+        @user_2.course_feed_timeline.map(&:to).should == [
+          @practice_record_42, @practice_record_32,
+          @question_4,
+          @course_ware_reading_42, @course_ware_reading_32,
+          @practice_record_22, @practice_record_12,
+          @question_3,
+          @course_ware_reading_22, @course_ware_reading_12
+        ]
+      }
+
+      it{
+        @course_1.course_feed_timeline.map(&:to).should == [
+          @practice_record_22, @practice_record_12,
+          @question_3,
+          @course_ware_reading_22, @course_ware_reading_12,
+          @practice_record_21, @practice_record_11,
+          @question_1, 
+          @course_ware_reading_21, @course_ware_reading_11
+        ]
+      }
+
+      it{
+        @course_2.course_feed_timeline.map(&:to).should == [
           @practice_record_42, @practice_record_32,
           @question_4,
           @course_ware_reading_42, @course_ware_reading_32,
