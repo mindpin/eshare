@@ -23,6 +23,10 @@ module CourseWareReadingModule
     reading.save
   end
 
+  def update_read_count_by(user, read_count)
+    update_read_count_of(user, read_count)
+  end
+
   # 查询指定 user 是否已经读过这个课件
   def has_read?(user)
     _prepare_reading_of(user).read?

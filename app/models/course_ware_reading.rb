@@ -1,4 +1,6 @@
 class CourseWareReading < ActiveRecord::Base
+  include CourseWareReadingDelta::CourseWareReadingMethods
+
   attr_accessible :user, :read, :read_count, :course_ware
 
   belongs_to :user
