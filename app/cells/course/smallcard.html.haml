@@ -1,0 +1,9 @@
+.course.page-course.card.small
+  .cover
+    = link_to @course do
+      = fit_image @course.cover.versions[:normal].url, :width => 190, :height => 140
+  .data
+    .title
+      = link_to @course.name, @course
+    .study
+      %a.btn.success{:href => "/courses/#{@course.id}"} 开始学习

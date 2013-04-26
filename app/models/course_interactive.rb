@@ -13,14 +13,48 @@ class CourseInteractive < ActiveRecord::Base
   }
 
   module CourseMethods
+    extend ActiveSupport::Concern
 
     class Weights
       TODAY_CHAPTER_QUESTION_COUNT = 1
       TODAY_SIGN_COUNT = 1
     end
 
-    def self.included(base)
-      base.has_many :course_interactives
+    included do
+      has_many :course_interactives
+    end
+
+    module ClassMethods
+      def top_interactive_sums(date)
+        di = date.strftime("%Y%m%d").to_i
+
+        unscoped
+          .joins(%~
+            LEFT OUTER JOIN course_interactives 
+            ON course_interactives.course_id = courses.id 
+            AND course_interactives.date = #{di}
+          ~)
+          .order('course_interactives.sum DESC')
+          .group(:id)
+      end
+
+      def top_interactive_sums_of(start_date, end_date)
+        dia = start_date.strftime("%Y%m%d").to_i
+        dib = end_date.strftime("%Y%m%d").to_i
+
+        dia, dib = dib, dia if dia > dib
+
+        unscoped
+          .select('courses.*, SUM(course_interactives.sum) suma')
+          .joins(%~
+            LEFT OUTER JOIN course_interactives 
+            ON course_interactives.course_id = courses.id 
+            AND course_interactives.date >= #{dia} 
+            AND course_interactives.date <= #{dib}
+          ~)
+          .order('suma DESC')
+          .group(:id)
+      end
     end
 
     def rank(date = nil)

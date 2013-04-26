@@ -151,4 +151,37 @@ describe Course do
       }
     end
   end
+
+  context '正在学习的课程' do
+    before {
+      @user = FactoryGirl.create :user
+      @user1 = FactoryGirl.create :user
+
+      5.times do
+        course_ware = FactoryGirl.create :course_ware, :total_count => 100
+      end
+
+      CourseWare.all[0].update_read_count_of(@user, 20)
+      CourseWare.all[1].update_read_count_of(@user, 30)
+      CourseWare.all[3].update_read_count_of(@user, 50)
+
+      CourseWare.all[2].update_read_count_of(@user1, 50)
+      CourseWare.all[4].update_read_count_of(@user1, 60)
+    }
+
+    it {
+      Course.recent_read_by(@user).should =~ [
+        CourseWare.all[0].chapter.course, 
+        CourseWare.all[1].chapter.course,
+        CourseWare.all[3].chapter.course
+      ]
+    }
+
+    it {
+      Course.recent_read_by(@user1).should =~ [
+        CourseWare.all[2].chapter.course, 
+        CourseWare.all[4].chapter.course
+      ]
+    }
+  end
 end

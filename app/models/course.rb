@@ -9,6 +9,8 @@ class Course < ActiveRecord::Base
   belongs_to :creator, :class_name => 'User', :foreign_key => :creator_id
   has_many :chapters
   has_many :course_wares, :through => :chapters
+  has_many :course_ware_readings, :through => :course_wares
+
   has_many :test_questions
   has_one  :test_option
   
@@ -26,6 +28,14 @@ class Course < ActiveRecord::Base
 
   default_scope order('id desc')
   max_paginates_per 50
+
+  # 最近被指定用户学习过的课程
+  scope :recent_read_by, lambda { |user|
+    joins(:course_ware_readings)
+      .where('course_ware_readings.user_id = ?', user.id)
+      .group(:id)
+      .order('course_ware_readings.updated_at DESC')
+  }
 
   # carrierwave
   mount_uploader :cover, CourseCoverUploader

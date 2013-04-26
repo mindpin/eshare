@@ -3,40 +3,31 @@
   .page-desc 浏览系统内的课程
 
 .page-courses-index
-  = paginate @courses
-  .courses.grid
-    .your-info
-      .user
-        .avatar= avatar current_user
-        .name= current_user.name
-      .stat
-        %span.quiet 提出问题
-        %span= current_user.questions.count
-        %span ·
-        %span.quiet 解答问题
-        %span= current_user.answers.count
+  .hot-courses.2week
+    .headline
+      %h2 近期热门课程
 
-      .desc
-        欢迎访问 EduShare 线上课程。你可以在这里浏览课程视频和文档资料，进行练习和提出问题。
+    :ruby
+      courses = Course.top_interactive_sums_of(Date.today, Date.today - 13).limit(4)
+    .courses
+      - courses.each do |course|
+        = render_cell :course, :smallcard, :course => course, :user => current_user
 
-    - @courses.each do |course|
-      :ruby
-        percent = course_read_percent course
+  .all-courses
+    .headline
+      %h2 全部课程
 
-      .course
-        .cover
-          %a{:href => "/courses/#{course.id}"}
-            = fit_image course.cover.versions[:normal].url, :width => 190, :height => 140
-        .data
-          .counts
-            %span.chapters-count #{course.chapters.count} 个章节
-            %span.questions-count #{course.questions_count} 个问答
-          .title
-            = link_to course.name, course
-          .desc= truncate_u course.desc, 20
-        .progress
-          .page-progress.success.striped
-            .bar{:style => "width:#{percent};"}
-        .foot
-          %span.percent= percent
-          %span.percent-str 学习进度
+    .courses.grid
+      .your-info
+        .user
+          .avatar= avatar current_user
+          .name= current_user.name
+        .stat
+          %span.quiet 提出问题
+          %span= current_user.questions.count
+          %span ·
+          %span.quiet 解答问题
+          %span= current_user.answers.count
+
+        .desc
+          欢迎访问 EduShare 线上课程。你可以在这里浏览课程视频和文档资料，进行练习和提出问题。

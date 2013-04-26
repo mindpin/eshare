@@ -430,7 +430,109 @@ img.page-avatar {
   }
 }
 
+.headline {
+  border-bottom:solid 1px #ccc;
+  height:20px;line-height:20px;
+  padding-bottom:5px;
+  margin-bottom:10px;
+  @include floatfix;
+
+  h2 {
+    font-size:15px;
+    color:#555;
+    font-weight:normal;
+    line-height:20px;
+    float:left;
+    margin:0;padding:0;
+  }
+}
+
+.page-course {
+  &.card {
+    float:left;
+    border:solid 1px #e5e5e5;
+    width:198px;
+    margin-right:15px;
+    margin-bottom:15px;
+    box-shadow:0 0 5px rgba(black, 0.05);
+
+    .cover {
+      font-size:0;
+      line-height:0;
+      padding:4px;
+      .page-fit-image {
+        background-color:#f7f7f7;
+      }
+    }
+    .data {
+      padding:5px 10px 10px;
+      .counts {
+        color:#999;font-size:12px;
+        margin-bottom:10px;
+        span {
+          margin-right:10px;
+        }
+      }
+      .title {
+        font-size:16px;
+        margin-bottom:10px;
+        height:22px;overflow:hidden;
+      }
+      .desc {
+        color:#999;
+        height:40px;
+      }
+    }
+    .progress {
+      border-top:solid 1px #E5E5E5;
+      padding:5px 5px 0;
+      .page-progress {
+        height: 10px;
+      }
+    }
+    .foot {
+      padding:5px;
+      @include floatfix;
+      .percent {
+        font-weight:bold;
+        color:#666;
+      }
+      .percent-str {
+        font-size:12px;
+        color:#999;
+      }
+    }
+
+    &.small {
+      // border-color:transparent;
+      box-shadow:none;
+      margin-right:20px;
+      &:nth-child(4n) {
+        margin-right:0;
+      }
+
+      .title {
+        text-align:center;
+      }
+      .title a{
+        color:#333;
+        text-decoration:none;
+      }
+      .study {
+        text-align: center;
+        a {display:block;}
+      }
+    }
+  }
+}
+
 .page-courses-index {
+  .hot-courses {
+    margin-bottom:20px;
+    .courses {
+      @include floatfix;
+    }
+  }
   .courses.grid {
     @include floatfix;
     .your-info {
@@ -456,62 +558,6 @@ img.page-avatar {
       .desc {
         border-top:solid 1px #E5E5E5;
         padding:10px;
-      }
-    }
-
-    .course {
-      float:left;
-      border:solid 1px #e5e5e5;
-      width:198px;
-      margin-right:15px;
-      margin-bottom:15px;
-      box-shadow:0 0 5px rgba(black, 0.05);
-
-      .cover {
-        font-size:0;
-        line-height:0;
-        padding:4px;
-        .page-fit-image {
-          background-color:#f7f7f7;
-        }
-      }
-      .data {
-        padding:5px 10px 10px;
-        .counts {
-          color:#999;font-size:12px;
-          margin-bottom:10px;
-          span {
-            margin-right:10px;
-          }
-        }
-        .title {
-          font-size:16px;
-          margin-bottom:10px;
-          height:22px;overflow:hidden;
-        }
-        .desc {
-          color:#999;
-          height:40px;
-        }
-      }
-      .progress {
-        border-top:solid 1px #E5E5E5;
-        padding:5px 5px 0;
-        .page-progress {
-          height: 10px;
-        }
-      }
-      .foot {
-        padding:5px;
-        @include floatfix;
-        .percent {
-          font-weight:bold;
-          color:#666;
-        }
-        .percent-str {
-          font-size:12px;
-          color:#999;
-        }
       }
     }
   }
