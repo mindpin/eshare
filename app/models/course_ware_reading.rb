@@ -31,4 +31,8 @@ class CourseWareReading < ActiveRecord::Base
   def set_default_read_count
     self.read_count = 0 if self.read_count.blank?
   end
+
+  # 记录用户活动
+  record_feed :scene => :course_ware_readings,
+                        :callbacks => [ :create, :update]
 end

@@ -106,11 +106,10 @@ class CourseInteractive < ActiveRecord::Base
     end
 
     def check_course_interactive
-      return true if self.chapter.blank?
-      course = self.chapter.course
-      return true if course.blank?
+      c = self.course
+      return true if c.blank?
 
-      course._calculate_today_interactive_sum_and_save
+      c._calculate_today_interactive_sum_and_save
     end
   end
 

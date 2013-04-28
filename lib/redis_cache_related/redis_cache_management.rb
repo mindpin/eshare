@@ -56,7 +56,11 @@ class RedisCacheManagement
   @@funcs = []
 
   # 以下声明应按照一定顺序，以保证缓存回调的先后运行
+  # 学习进度
   RedisCacheManagement.load_cache_proxy CourseWareReadPercentProxy
   RedisCacheManagement.load_cache_proxy ChapterReadPercentProxy
   RedisCacheManagement.load_cache_proxy CourseReadPercentProxy
+  # 课程学习时间线
+  RedisCacheManagement.load_cache_proxy UserCourseFeedTimelineProxy
+  RedisCacheManagement.load_cache_proxy CourseCourseFeedTimelineProxy
 end

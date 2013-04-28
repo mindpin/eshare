@@ -1,15 +1,15 @@
 require "spec_helper"
 
 describe Question do
-  describe '不能为空较验' do
+  describe 'default_scope order id desc' do
     before {
       3.times { FactoryGirl.create(:question) }
-      @questions = Question.all
+      @ids = Question.all.map{|q|q.id}
     }
 
-    it "should order by id desc" do
-      @questions.last.id.should be < @questions.first.id
-    end
+    it{
+      @ids.should == @ids.sort.reverse
+    }
   end
 
   context '#answered_by?' do
@@ -36,27 +36,41 @@ describe Question do
 
   describe "检测 updated_at" do
     before {
-      @question     = FactoryGirl.create(:question)
+      Timecop.travel(Time.now - 2.day) do
+        @question     = FactoryGirl.create(:question)
+      end
+      
       @updated_at = @question.updated_at
 
-      sleep(1)
-
-      @answer = FactoryGirl.create(:answer, :question => @question)
-
     }
+
+    it "还没更新时间" do
+      @question.updated_at.should == @updated_at
+    end
 
     it "问题被创建者修改" do
       @question.update_attributes({:title => 'test', :content => 'test'})
       @question.updated_at.should > @updated_at
     end
 
-    it "问题被任何人回答" do
-      @question.updated_at.should > @updated_at
-    end
+    describe "回答问题" do
+      before {
+        Timecop.travel(Time.now - 1.day) do
+          @answer = FactoryGirl.create(:answer, :question => @question)
+        end
 
-    it "修改回答" do
-      @answer.update_attributes({:content => 'test'})
-      @question.updated_at.should > @updated_at
+        @answered_updated_at = @question.updated_at
+      }
+
+      it "问题被任何人回答" do
+        @answered_updated_at.should > @updated_at
+      end
+
+      it "修改回答" do
+        @answer.update_attributes({:content => 'test'})
+        @question.updated_at.should > @answered_updated_at
+      end
+
     end
 
   end
@@ -86,7 +100,37 @@ describe Question do
 
   end
 
+  describe 'question 多态关联 课程/课件/章节' do
+    before{
+      @course = FactoryGirl.create(:course)
+      @chapter = FactoryGirl.create(:chapter, :course => @course)
+      @course_ware = FactoryGirl.create(:course_ware, :chapter => @chapter)
+    }
 
+    it{
+      question = FactoryGirl.create(:question, :model => @course)
+      question.reload
+      question.course.should == @course
+    }
+
+    it{
+      question = FactoryGirl.create(:question, :model => @chapter)
+      question.reload
+      question.course.should == @course
+    }
+
+    it{
+      question = FactoryGirl.create(:question, :model => @course_ware)
+      question.reload
+      question.course.should == @course
+    }
+
+    it{
+      question = FactoryGirl.create(:question)
+      question.reload
+      question.course.should == nil
+    }
+  end
 end
 
 describe Answer do
@@ -286,4 +330,103 @@ describe AnswerVote do
       it { AnswerVote.count.should == 0 }
     }
   }
+
+
+end
+
+
+
+
+describe "最佳答案" do
+  before {
+    @question     = FactoryGirl.create :question
+    @answer     = FactoryGirl.create :answer, :question => @question
+
+    @question.update_attributes({:best_answer => @answer})
+    @question.reload
+
+    @origin_best_answer  = @question.best_answer
+
+
+    @answer_1     = FactoryGirl.create :answer
+    @answer_2     = FactoryGirl.create :answer, :question => @question
+
+  }
+
+  describe "用其它问题答案赋值" do
+    before {
+      @question.best_answer = @answer_1
+      @question.save
+      @question.reload
+    }
+
+    it "不能是其它问题的答案" do
+      @question.best_answer.should_not == @answer_1
+    end
+    
+
+    it "应该还是原来的值" do
+      @question.best_answer.should == @origin_best_answer
+    end
+    
+  end
+
+  describe "用自己问题答案赋值" do
+    before {
+      @question.best_answer =  @answer_2
+      @question.save
+    }
+
+    it "应该是自己问题的答案" do
+      @question.best_answer.should == @answer_2
+    end
+    
+
+    it "应该不是原来的值" do
+      @question.best_answer.should_not == @origin_best_answer
+    end
+    
+  end
+
+
+end
+
+
+describe "有最佳答案的问题列表" do
+  before {
+    @question_1   = FactoryGirl.create :question
+    @answer_1     = FactoryGirl.create :answer, :question => @question_1
+
+    @question_1.best_answer = @answer_1
+    @question_1.save
+    @question_1.reload
+
+    @question_2   = FactoryGirl.create :question
+    @answer_2     = FactoryGirl.create :answer, :question => @question_2
+    @question_2.best_answer = @answer_2
+    @question_2.save
+    @question_2.reload
+
+    @question_3   = FactoryGirl.create :question
+    @answer_3     = FactoryGirl.create :answer, :question => @question_3
+    @question_3.best_answer = @answer_3
+    @question_3.save
+    @question_3.reload
+
+    3.times { FactoryGirl.create :question }
+
+    @questions_with_best_answer = Question.has_best_answer
+  }
+
+  it "总的数量正确" do
+    Question.count.should == 6
+  end
+
+  it "有最佳答案的问题数量正确" do
+    @questions_with_best_answer.count.should == 3
+  end
+
+  it "列表正确" do
+    @questions_with_best_answer.should == [@question_3, @question_2, @question_1]
+  end
 end

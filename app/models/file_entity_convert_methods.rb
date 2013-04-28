@@ -117,11 +117,11 @@ module FileEntityConvertMethods
   end
 
   def convert_output_dir
-    File.join(R::CONVERT_BASE_PATH, "/convert_#{extname}/file_entities/#{self.id}")
+    File.join(R::UPLOAD_BASE_PATH, "/convert_#{extname}/file_entities/#{self.id}")
   end
 
   def output_base_url
-    "/convert_#{extname}/file_entities/#{self.id}"
+    File.join("/", R::STATIC_FILES_DIR, "/convert_#{extname}/file_entities/#{self.id}")
   end
 
   def saved_name

@@ -9,11 +9,11 @@ describe CourseInteractive do
     @chapter_2 = FactoryGirl.create(:chapter, :course => @course)
     @chapter_3 = FactoryGirl.create(:chapter, :course => @course)
 
-    Question.create(:title=>"title_1", :content => 'content_1', :creator => @user, :chapter_id => @chapter_1.id)
-    Question.create(:title=>"title_2", :content => 'content_2', :creator => @user, :chapter_id => @chapter_2.id)
+    Question.create(:title=>"title_1", :content => 'content_1', :creator => @user, :model => @chapter_1)
+    Question.create(:title=>"title_2", :content => 'content_2', :creator => @user, :model => @chapter_2)
 
     Timecop.travel(Time.now - 2.day) do
-      Question.create(:title=>"title_3", :content => 'content_3', :creator => @user, :chapter_id => @chapter_3.id)
+      Question.create(:title=>"title_3", :content => 'content_3', :creator => @user, :model => @chapter_3)
     end
 
     Question.create(:title=>"title_4", :content => 'content_4', :creator => @user)
@@ -72,7 +72,7 @@ describe CourseInteractive do
         before{
           @new_chapter = FactoryGirl.create(:chapter, :course => @course)
 
-          Question.create(:title=>"title_new", :content => 'content_new', :creator => @user, :chapter_id => @new_chapter.id)
+          Question.create(:title=>"title_new", :content => 'content_new', :creator => @user, :model => @new_chapter)
         }
 
         it{

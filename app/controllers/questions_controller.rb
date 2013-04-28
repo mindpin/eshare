@@ -18,7 +18,7 @@ class QuestionsController < ApplicationController
 
     if request.xhr? && params[:chapter_id]
       @chapter = Chapter.find params[:chapter_id]
-      @question.chapter = @chapter
+      @question.model = @chapter
       return render(:partial => 'course_wares/questions', :locals => {:questions => [@question]} ) if @question.save
       return render :text => 'params invalid', :status => 500
     end
