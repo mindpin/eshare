@@ -13,6 +13,8 @@
       - courses.each do |course|
         = render_cell :course, :smallcard, :course => course, :user => current_user
 
+  .page-chart.all-course-read-pie{:data => {:url => "/charts/courses/all_courses_read_pie"}}
+
   .all-courses
     .headline
       %h2 全部课程
