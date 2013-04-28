@@ -20,14 +20,14 @@ class Youku
 
 end
 
-# =begin
+=begin
 course = Course.find_by_cid(9999999999)
 course.chapters.each do |c|
   c.course_wares.destroy_all
   c.destroy
 end
 course.destroy
-# =end
+=end
 
 # youku_page = 'http://www.youku.com/show_page/id_zb3df4274140a11e1a046.html'
 youku_page = ARGV[0]
