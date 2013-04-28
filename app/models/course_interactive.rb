@@ -70,7 +70,7 @@ class CourseInteractive < ActiveRecord::Base
     end
 
     def today_chapter_question_count
-      Question.by_course(self).today.count
+      Question.by_course(self).on_date(Date.today).count
     end
 
     def query_interactive_sum(date)

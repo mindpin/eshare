@@ -18,12 +18,18 @@ class CourseSign < ActiveRecord::Base
     return true
   end
 
+  before_create :set_date_on_create
+  def set_date_on_create
+    self.date = Time.now.strftime("%Y%m%d").to_i
+  end
+
   scope :of_course, lambda { |course|
     { :conditions => ['course_id = ?', course.id] }
   }
 
   scope :on_date, lambda { |date|
-    { :conditions => ['DATE(created_at) = ?', date] }
+    di = date.strftime("%Y%m%d").to_i
+    { :conditions => ['date = ?', di] }
   }
 
   scope :of_user, lambda { |user|

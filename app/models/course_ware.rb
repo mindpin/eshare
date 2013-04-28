@@ -55,6 +55,7 @@ class CourseWare < ActiveRecord::Base
   before_save :set_total_count_by_kind!
   def set_total_count_by_kind!
     self.total_count = 1000 if self.is_video?
+    self.total_count = 0 if self.total_count.blank?
   end
 
   # 修改后，需要重置 total_count 和 cover

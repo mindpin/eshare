@@ -91,23 +91,67 @@ describe CourseWare do
       @course_ware1  = FactoryGirl.create(:course_ware, :total_count => 3)
       @user          = FactoryGirl.create(:user)
     end
+
+    it {
+      @course_ware.reload.total_count.should == 0
+    }
+
+    it {
+      @course_ware1.reload.total_count.should == 3
+    }
+
+    it('设置为未读时，将 read_count 清零') {
+      @course_ware.set_read_by!(@user)
+      @course_ware.course_ware_readings.by_user(@user).first.read_count.should == 0
+    }
+
+    it('标记为已读'){
+      expect {
+        @course_ware.set_read_by!(@user)
+      }.to change {
+        @course_ware.readed_users_count
+      }.by(1)
+    }
+
+    it('标记为未读') {
+      @course_ware.set_read_by!(@user)
+      
+      expect { 
+        @course_ware.set_unread_by!(@user)
+      }.to change {
+        @course_ware.readed_users_count
+      }.by(-1)
+    }
     
-    describe '#sign_read_count' do
-      context '验证 read_count < total_count' do
-        it {
-          expect {
-            @course_ware1.update_read_count_of(@user, 1)
-          }.to change {
-            @course_ware1.readed_users_count
-          }.by(0)
-        }
-      end
-      context '验证 read_count = total_count' do
-        it{expect {@course_ware1.update_read_count_of(@user,3)}.to change {@course_ware1.readed_users_count}.by(1)}
-      end
+    describe 'read_count' do
+
+      it('when set read_count < total_count') {
+        expect {
+          @course_ware1.update_read_count_of(@user, 1)
+        }.to change {
+          @course_ware1.readed_users_count
+        }.by(0)
+      }
+
+      it('when set read_count = total_count') {
+        expect {
+          @course_ware1.update_read_count_of(@user, 3)
+        }.to change {
+          @course_ware1.readed_users_count
+        }.by(1)
+      }
+
+      it('when set read_count > total_count') {
+        expect {
+          @course_ware1.update_read_count_of(@user, 4)
+        }.to change {
+          @course_ware1.readed_users_count
+        }.by(0)
+      }
+
       context '标记为未读' do
-        before    { @course_ware1.update_read_count_of(@user,3) }
-        
+        before { @course_ware1.update_read_count_of(@user, 3) }
+
         it {
           @course_ware1.has_read?(@user).should == true
         }
@@ -126,35 +170,54 @@ describe CourseWare do
         }
       end
 
-      context '验证 read_count > total_count' do
-        it{expect {@course_ware1.update_read_count_of(@user,4)}.to change {@course_ware1.readed_users_count}.by(0)}
-      end
-
-      context '验证  read_count == fotal_count && !read' do
-        before    do 
-          @reading = CourseWareReading.new(:course_ware => @course_ware1, :user => @user, :read => false, :read_count => 3) 
-        end
-        it{ @reading.valid? .should == false }
-      end
-    end
-
-    describe '#sign_reading #sign_no_reading' do
-      context '验证 read_count' do
-        before    { @course_ware.set_read_by!(@user) }
-        it  { 
-          @course_ware.course_ware_readings.by_user(@user).first.read_count == nil
+      context '校验 valid' do
+        before {
+          @reading = CourseWareReading.new :course_ware => @course_ware1, 
+                                           :user        => @user, 
+                                           :read        => false, 
+                                           :read_count  => 3
         }
-      end
 
-      context '标记为已读' do
-        it{expect {@course_ware.set_read_by!(@user)}.to change {@course_ware.readed_users_count}.by(1)}
-      end
+        it {
+          @course_ware1.total_count.should == 3
+        }
 
-      context '标记为未读' do
-        before    { @course_ware.set_read_by!(@user) }
-        it{expect { @course_ware.set_unread_by!(@user)}.to change {@course_ware.readed_users_count}.by(-1)}
+        it {
+          @reading.read_count.should == 3
+        }
+
+        it('当 read_count == total_count 时，不能设置为未读') { 
+          @reading.read = false
+          @reading.valid?.should == false 
+        }
+
+        it {
+          @reading.read = true
+          @reading.valid?.should == true 
+        }
+
+        context '但是有特殊情况，当 total_count, read_count 都等于 0 时，可以设置为未读' do
+          before {
+            @course_ware2 = FactoryGirl.create :course_ware, :total_count => 0
+
+            @reading = CourseWareReading.new :course_ware => @course_ware2, 
+                                             :user        => @user, 
+                                             :read        => false, 
+                                             :read_count  => 0
+          }
+
+          it {
+            @reading.valid?.should == true
+          }
+
+          it {
+            @reading.read_count = 3
+            @reading.valid?.should == false
+          }
+        end
       end
     end
+
 
     describe '#has_read?' do
       context '用户未读' do

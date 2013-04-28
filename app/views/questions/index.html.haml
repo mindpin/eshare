@@ -19,12 +19,13 @@
 
       - if feed.what == 'create_question'
         - question = feed.to
-        - add(:title) do
-          %a{:href => "/questions/#{question.id}"}= question.title
-        - add(:content) do
-          = question.content
-        - add_foot(:answers) do
-          %a{:href => "/questions/#{question.id}"} #{question.answers.count} 个回答
+        - if question.present?
+          - add(:title) do
+            %a{:href => "/questions/#{question.id}"}= question.title
+          - add(:content) do
+            = question.content
+          - add_foot(:answers) do
+            %a{:href => "/questions/#{question.id}"} #{question.answers.count} 个回答
 
       - if feed.what == 'create_answer'
         - answer = feed.to

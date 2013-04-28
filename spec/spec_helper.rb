@@ -40,6 +40,7 @@ RSpec.configure do |config|
 
   config.before(:each) do
     DatabaseCleaner.start
+    RedisCache.flushdb
   end
 
   config.after(:each) do
@@ -47,6 +48,7 @@ RSpec.configure do |config|
     # 运行这个方法来还原时间的改变
     Timecop.return
     DatabaseCleaner.clean
+    RedisCache.flushdb
   end
 
 end

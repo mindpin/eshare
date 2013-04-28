@@ -41,7 +41,7 @@ class CourseWareReadingDelta < ActiveRecord::Base
       has_many :course_ware_reading_deltas
     end
 
-    def read_count_delta_of(user, date)
+    def read_count_change_of(user, date)
       CourseWareReadingDelta.get_record_of(self, user, date).change
     end
 
@@ -61,6 +61,22 @@ class CourseWareReadingDelta < ActiveRecord::Base
         .first
 
       return last_delta.blank? ? 0 : last_delta.value
+    end
+
+    def last_week_read_count_changes_of(user)
+      today = Date.today
+      re = []
+
+      6.downto 0 do |x|
+        date = today - x
+        re << {
+          :date => date,
+          :change => read_count_change_of(user, date),
+          :value => read_count_value_of(user, date),
+        }
+      end
+
+      return re
     end
   end
 
@@ -85,10 +101,12 @@ class CourseWareReadingDelta < ActiveRecord::Base
 
     private
       def _get_read_count_change
-        return read_count if new_record?
-          
+        return read_count || 0 if new_record?
+
         if read_count_changed?
-          before, after = read_count_change
+          before = read_count_change[0] || 0
+          after  = read_count_change[1] || 0
+
           return after - before
         end
 

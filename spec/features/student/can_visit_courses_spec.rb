@@ -34,7 +34,7 @@ describe '学生身份登录' do
       before {
         @course = Course.last
 
-        within 'div.courses' do
+        within 'div.hot-courses' do
           click_on @course.name
         end
       }

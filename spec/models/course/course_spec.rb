@@ -48,6 +48,8 @@ describe Course do
 
       context '昨天前天连续签到了' do
         before do
+          p Time.zone.now
+
           Timecop.travel(Time.now - 2.day) do
             @course.sign(@user)
           end

@@ -1,6 +1,10 @@
 - title = t('common.site.title.app')
 - home_title = t('common.site.home_title.app')
 
+- content_for :javascript do
+  = javascript_include_tag '/highcharts/js/highcharts'
+  = javascript_include_tag '/highcharts/js/modules/exporting.cn'
+
 !!!
 - simple_page_layout title, :html_lang => :zh, :body_class => 'app' do
   .page-sidebar

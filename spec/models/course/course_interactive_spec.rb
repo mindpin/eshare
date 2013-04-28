@@ -21,6 +21,14 @@ describe CourseInteractive do
     @date = Date.today
   }
 
+  it {
+    Question.by_course(@course).count.should == 3
+  }
+
+  it {
+    Question.by_course(@course).on_date(Time.now).count.should == 2
+  }
+
   it{
     @course.today_chapter_question_count.should == 2
   }

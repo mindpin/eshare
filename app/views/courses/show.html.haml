@@ -29,6 +29,13 @@
     - add_left :title do |chapter|
       = link_to chapter.title, chapter
     - add_left :desc
+    - add_left :chart do |chapter|
+      - if chapter.course_wares.count > 0
+        .page-chart-label.chapter-read-pie
+          .t 课件
+          .c= chapter.course_wares.count
+        .page-chart.chapter-read-pie{:data => {:url => "/charts/chapters/#{chapter.id}/read_pie"}}
+
     - add :items do |chapter|
       - chapter.course_wares.each do |cw|
         %a.item{:href => "/course_wares/#{cw.id}", :class => course_ware_reading_css_class(cw)}

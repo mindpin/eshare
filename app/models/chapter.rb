@@ -25,4 +25,22 @@ class Chapter < ActiveRecord::Base
     self.class.by_course(course).where('position > ?', self.position).first
   end
 
+  def course_wares_read_stat_of(user)
+    scope = self.course_wares.joins(%~
+      LEFT OUTER JOIN course_ware_readings
+      ON course_ware_readings.user_id = #{user.id}
+      AND course_ware_readings.course_ware_id = course_wares.id
+    ~)
+
+    none = scope.where('course_ware_readings.read_count = ? OR course_ware_readings.read_count IS NULL', 0).count
+    read = scope.where('course_ware_readings.read_count = course_wares.total_count').count
+    reading = self.course_wares.count - none - read
+
+    return {
+      :none => none,
+      :read => read,
+      :reading => reading
+    }
+  end
+
 end

@@ -150,3 +150,21 @@ Eshare::Application.routes.draw do
     end
   end
 end
+
+# 图表
+Eshare::Application.routes.draw do
+  namespace :charts do
+    
+    resources :chapters, :shallow => true do
+      member do
+        get :read_pie
+      end
+
+      resources :course_wares, :shallow => true do
+        member do
+          get :read_count_last_week
+        end
+      end
+    end
+  end
+end

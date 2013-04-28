@@ -959,7 +959,7 @@ img.page-avatar {
     i {
       height:24px;width:24px;
       background:url(course_icons/wares.png) 0px 0px no-repeat;
-      z-index:1;
+      // z-index:1;
       position:absolute;
       left:15px;
       top:50%;
@@ -1122,4 +1122,29 @@ img.page-avatar {
       }
     }
   }
+}
+
+.page-chart{
+  height:300px;
+  margin-bottom: 20px;
+  border:solid 1px #ddd;
+
+  &.chapter-read-pie{
+    margin:0;
+    margin-top:20px;
+    border:0 none;
+    height:240px;
+  }
+}
+
+.page-data-tile .tile-field.chart {
+  position:relative;
+}
+.page-chart-label.chapter-read-pie {
+  position:absolute;
+  z-index:1;
+  width:100px;
+  top:50%;left:50%;margin-left:-50px;margin-top:-30px;
+  .t{font-size:15px;text-align:center;height:30px;line-height:30px;}
+  .c{font-size:30px;font-weight:bold;text-align:center;height:30px;line-height:30px;}
 }
