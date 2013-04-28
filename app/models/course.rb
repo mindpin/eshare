@@ -1,9 +1,11 @@
+# -*- coding: utf-8 -*-
 class Course < ActiveRecord::Base
   include CourseZipImporter
   include CourseInteractive::CourseMethods
   include CourseSignModule
   include CourseReadPercent::CourseMethods
   include CourseFeedTimelime::CourseMethods
+  include TudouListImporter
 
   attr_accessible :name, :cid, :desc, :syllabus, :cover, :creator
 
