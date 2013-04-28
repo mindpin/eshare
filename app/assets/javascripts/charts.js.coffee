@@ -180,11 +180,11 @@ jQuery ->
                   color: '#00AA00'
                 },
 
-                # {
-                #   name: '未学习'
-                #   y: none
-                #   color: '#CDCDCD'
-                # },
+                {
+                  name: '未学习'
+                  y: none
+                  color: '#CDCDCD'
+                },
 
                 {
                   name: '正在学习'
