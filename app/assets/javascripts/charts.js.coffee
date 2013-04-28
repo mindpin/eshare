@@ -133,3 +133,66 @@ jQuery ->
           ]
 
         $chart.highcharts option
+
+jQuery ->
+  jQuery('.page-chart.all-course-read-pie').each ->
+    $chart = jQuery(this)
+
+    jQuery.ajax
+      url: $chart.data('url')
+      success: (res)->
+        none    = res.none
+        read    = res.read
+        reading = res.reading
+        
+        option =
+          chart:
+            plotBackgroundColor: null
+            plotBorderWidth: null
+            plotShadow: false
+
+          title:
+            text: null
+
+          plotOptions: 
+            pie: 
+              allowPointSelect: false
+              # cursor: 'pointer'
+
+          series: [
+            {
+              type: 'pie'
+              name: '课程数'
+              animation: false
+              innerSize: '60%'
+              dataLabels:
+                formatter: ->
+                  if @y > 0 then @y else null
+                color: 'white'
+                distance: -25
+                style:
+                  fontSize: '15px'
+                  fontWeight: 'bold'
+              data: [
+                {
+                  name: '已完成学习'
+                  y: read
+                  color: '#00AA00'
+                },
+
+                {
+                  name: '未学习'
+                  y: none
+                  color: '#CDCDCD'
+                },
+
+                {
+                  name: '正在学习'
+                  y: reading
+                  color: '#80CC00'
+                },
+              ]
+            }
+          ]
+
+        $chart.highcharts option

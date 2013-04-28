@@ -155,14 +155,20 @@ end
 Eshare::Application.routes.draw do
   namespace :charts do
     
-    resources :chapters, :shallow => true do
-      member do
-        get :read_pie
+    resources :courses, :shallow => true do
+      collection do
+        get :all_courses_read_pie
       end
 
-      resources :course_wares, :shallow => true do
+      resources :chapters, :shallow => true do
         member do
-          get :read_count_last_week
+          get :read_pie
+        end
+
+        resources :course_wares, :shallow => true do
+          member do
+            get :read_count_last_week
+          end
         end
       end
     end
