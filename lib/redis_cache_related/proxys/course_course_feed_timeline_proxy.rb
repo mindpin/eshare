@@ -11,7 +11,7 @@ class CourseCourseFeedTimelineProxy < RedisVectorArrayCacheBaseProxy
   def self.rules
     [
       {
-        :class => Feed,
+        :class => MindpinFeeds::Feed,
         :after_save => Proc.new{|feed|
           case feed.to
           when CourseWareReading
