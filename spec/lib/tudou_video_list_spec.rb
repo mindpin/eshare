@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 require "spec_helper"
 
-describe Tudou do
+describe TudouVideoList do
   let(:list_url) {"http://www.tudou.com/plcover/M9ovmjs6fkw/"}
   let(:lid)      {15632178}
   before {FactoryGirl.create :user, :teacher}
 
-  describe Tudou::Importer do
+  describe TudouVideoList::Importer do
     describe "#import" do
-      let(:importer) {Tudou::Importer.new list_url}
+      let(:importer) {TudouVideoList::Importer.new list_url}
       subject        {importer}
 
       it {expect {importer.import}.to change {Course.count}.by(1)}
@@ -17,8 +17,8 @@ describe Tudou do
     end
   end
 
-  describe Tudou::List do
-    let(:parser) {Tudou::List.new(list_url)}
+  describe TudouVideoList::List do
+    let(:parser) {TudouVideoList::List.new(list_url)}
     subject      {parser}
 
     its(:title) {should eq "法语公开课"}
@@ -29,9 +29,9 @@ describe Tudou do
       subject     {items}
 
       it {should be_an Array}
-      its(:first) {should be_an Tudou::Item}
+      its(:first) {should be_an TudouVideoList::Item}
 
-      describe Tudou::Item do
+      describe TudouVideoList::Item do
         subject {items.first}
         
         its(:code) {should eq "bOcUBCwbpbs"}

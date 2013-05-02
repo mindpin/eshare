@@ -10,7 +10,8 @@ class CourseWareConverter
                             :output => entity.convert_output_dir,
                             :format => [:png])
     entity.convert_success!
-  rescue
+  rescue Exception => ex
+    puts ex
     entity.convert_failed!
   end
 end

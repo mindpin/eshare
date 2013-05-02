@@ -4,10 +4,10 @@
       %li
         %a{:href => '/manage/courses'} 课程管理
         %span.divider /
-      %li.active 导入优酷播放列表
+      %li.active 导入土豆豆单
 
 .page-manage-courses-import-video-list.step2
-  = form_tag "/manage/courses/do_import_youku_list", :method => :post, :multipart => true do
+  = form_tag "/manage/courses/do_import_tudou_list", :method => :post, :multipart => true do
     .desc 即将导入以下内容
     
     .cname= @data[:name]
