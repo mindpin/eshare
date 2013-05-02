@@ -11,7 +11,7 @@ class UserCourseFeedTimelineProxy < RedisVectorArrayCacheBaseProxy
   def self.rules
     [
       {
-        :class => Feed,
+        :class => MindpinFeeds::Feed,
         :after_create => Proc.new{|feed|
           user = feed.who
           case feed.to
