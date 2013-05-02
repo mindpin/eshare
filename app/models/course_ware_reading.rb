@@ -27,9 +27,21 @@ class CourseWareReading < ActiveRecord::Base
   scope :by_user, lambda { |user| { :conditions => ['course_ware_readings.user_id = ?', user.id] } }
   scope :by_read, lambda { |read| { :conditions => ['course_ware_readings.read = ?', read] } }
 
-  before_save :set_default_read_count
-  def set_default_read_count
+  before_save :set_default_read_count_and_percent
+  def set_default_read_count_and_percent
     self.read_count = 0 if self.read_count.blank?
+    self.read_percent = _get_percent
+  end
+
+  def _get_percent
+    total_count = self.course_ware.total_count
+
+    if total_count.blank? || total_count == 0
+      return self.read ? '100%' : '0%'
+    end
+
+    p = [(self.read_count.to_f * 100 / total_count).round, 100].min
+    return "#{p}%"
   end
 
   # 记录用户活动

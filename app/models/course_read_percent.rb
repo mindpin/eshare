@@ -28,13 +28,9 @@ module CourseReadPercent
   module CourseWareMethods
     # 获取课件的学习进度
     def read_percent_db(user)
-      if total_count.blank? || total_count == 0
-        return has_read?(user) ? '100%' : '0%'
-      end
-
-      rc = read_count_of(user)
-      p = [(rc.to_f * 100 / total_count).round, 100].min
-      return "#{p}%"
+      cw = course_ware_readings.by_user(user).first
+      return '0%' if cw.blank?
+      return cw.read_percent
     end
   end
 
