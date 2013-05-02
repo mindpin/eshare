@@ -23,19 +23,19 @@ class AnswerVote < ActiveRecord::Base
   after_destroy :update_vote_sum
   def update_vote_sum
     self.answer.refresh_vote_sum!
-    self._clean_feeds
-  end
-
-  # Issue #31
-  def _clean_feeds
-    return if self.kind == Kind::VOTE_UP
-    MindpinFeeds::Feed.to(self).destroy_all
   end
 
   # 记录用户活动
   record_feed :scene => :questions,
-                        :callbacks => [ :create, :update ]
-  def creator; self.user; end # 供 feed 组件调用
+                        :callbacks => [ :create, :update ],
+                        :before_record_feed => lambda {|answer_vote, callback_type|
+                          if answer_vote.kind == Kind::VOTE_UP
+                            return true
+                          else
+                            MindpinFeeds::Feed.to(answer_vote).destroy_all
+                            return false
+                          end
+                        }
 
   def point
     return  1 if self.kind == Kind::VOTE_UP

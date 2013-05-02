@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Course < ActiveRecord::Base
   include CourseZipImporter
   include CourseInteractive::CourseMethods

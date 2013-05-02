@@ -118,7 +118,7 @@ gem 'mindpin-simple-tags',
 # feed
 gem 'mindpin-feeds',
     :git => 'git://github.com/mindpin/mindpin-feeds',
-    :tag => '0.0.4'
+    :tag => '0.0.7'
 
 
 gem 'mina',
