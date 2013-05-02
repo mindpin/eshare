@@ -10,7 +10,8 @@ set :branch, 'master'
 set :user, 'root'
 
 set :shared_paths, [
-  'config/database.yml', 
+  'config/database.yml',
+  'db/schema.rb',
   'log', 
   '.ruby-version', 
   'deploy/sh/property.yaml', 
@@ -29,6 +30,10 @@ task :setup => :environment do
   queue! %[touch "#{deploy_to}/shared/config/database.yml"]
   queue! %[touch "#{deploy_to}/shared/config/r.yaml"]
 
+  queue! %[mkdir -p "#{deploy_to}/shared/db"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/db"]
+  queue! %[touch "#{deploy_to}/shared/db/schema.rb"]
+
   queue! %[mkdir -p "#{deploy_to}/shared/deploy/sh"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/deploy/sh"]
   queue! %[touch "#{deploy_to}/shared/deploy/sh/property.yaml"]
@@ -40,6 +45,7 @@ task :setup => :environment do
   queue! %[touch "#{deploy_to}/shared/.ruby-version"]
 
   queue  %[echo "-----> Be sure to edit 'shared/config/database.yml'."]
+  queue  %[echo "-----> Be sure to edit 'shared/db/schema.rb'."]
   queue  %[echo "-----> Be sure to edit 'shared/config/r.yaml'."]
   queue  %[echo "-----> Be sure to edit 'shared/.ruby-version'."]
   queue  %[echo "-----> Be sure to edit 'shared/deploy/sh/property.yaml'."]
