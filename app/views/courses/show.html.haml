@@ -30,7 +30,7 @@
       = link_to chapter.title, chapter
     - add_left :desc
     - add_left :chart do |chapter|
-      - if chapter.course_wares.count > 0
+      - if chapter.course_wares.count > 1
         .page-chart-label.chapter-read-pie
           .t 课件
           .c= chapter.course_wares.count

@@ -1,0 +1,26 @@
+- content_for :header do
+  .page-manage-courses-breadcrumb
+    %ul.page-breadcrumb
+      %li
+        %a{:href => '/manage/courses'} 课程管理
+        %span.divider /
+      %li.active 导入优酷播放列表
+
+.page-manage-courses-import-youku-list.step2
+  = form_tag "/manage/courses/do_import_youku_list", :method => :post, :multipart => true do
+    .desc 即将导入以下内容
+    
+    .cname= @data[:name]
+    .cdesc= @data[:desc]
+
+    .chapters
+      - @data[:chapters].each do |c|
+        .chapter
+          .cht= c[:title]
+          .churl
+            %a{:href => c[:url], :target => '_blank'}= c[:url]
+
+    %input{:type => :hidden, :name => :url, :value => @url}
+
+    %input.btn.success{:name => 'commit', :type => :submit, :value => '确定'}
+    %a.btn.cancel{:href => '/manage/courses'}= t('common.form.cancel')

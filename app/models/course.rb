@@ -4,6 +4,7 @@ class Course < ActiveRecord::Base
   include CourseSignModule
   include CourseReadPercent::CourseMethods
   include CourseFeedTimelime::CourseMethods
+  include YoukuVideoList::CourseMethods
 
   attr_accessible :name, :cid, :desc, :syllabus, :cover, :creator
 

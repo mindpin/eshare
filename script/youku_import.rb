@@ -2,10 +2,10 @@ class Youku
 
   def parse_youku_list(url)
     id  = url.match(/^http:\/\/www\.youku\.com\/show_page\/id_(\w*)\.html$/)[1]
-
     doc = Nokogiri::XML(open(youku_list_url(id)), nil, 'utf-8')
-
-    chapters = doc.css('li a').map {|el| [el.attributes['title'].value, el.attributes['href'].value] }
+    chapters = doc.css('li a').map { |el| 
+      [el.attributes['title'].value, el.attributes['href'].value]
+    }
 
     doc = Nokogiri::XML(open(url), nil, 'utf-8')
 

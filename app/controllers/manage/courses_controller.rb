@@ -54,4 +54,19 @@ class Manage::CoursesController < ApplicationController
 
     redirect_to :action => :index
   end
+
+  def import_youku_list
+  end
+
+  def import_youku_list_2
+    @url = params[:url]
+    @data = YoukuVideoList.new(@url).parse
+  end
+
+  def do_import_youku_list
+    @url = params[:url]
+    Course.import_youku_video_list(@url, current_user)
+
+    redirect_to :action => :index
+  end
 end

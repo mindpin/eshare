@@ -105,6 +105,10 @@ Eshare::Application.routes.draw do
         get :download_import_sample
         get :import
         post :do_import
+
+        get :import_youku_list
+        post :import_youku_list_2
+        post :do_import_youku_list
       end
 
       resources :chapters, :shallow => true do

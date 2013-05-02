@@ -1148,3 +1148,29 @@ img.page-avatar {
   .t{font-size:15px;text-align:center;height:30px;line-height:30px;}
   .c{font-size:30px;font-weight:bold;text-align:center;height:30px;line-height:30px;}
 }
+
+.page-manage-courses-import-youku-list {
+  form {
+    .desc {
+      margin-bottom:5px;
+    }
+    .example {
+      margin-bottom: 20px;
+      font-size:12px;
+      color:#999;
+    }
+  }
+
+  &.step2 {
+    .desc {margin-bottom:20px;}
+    .cname {font-size:16px;font-weight:bold;margin-bottom:20px;}
+    .cdesc {margin-bottom:20px;}
+    .chapters {
+      margin-bottom:20px;
+      .churl {
+        margin-bottom:10px;
+        font-size:12px;
+      }
+    }
+  }
+}
