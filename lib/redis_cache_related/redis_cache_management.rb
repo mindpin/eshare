@@ -63,4 +63,7 @@ class RedisCacheManagement
   # 课程学习时间线
   RedisCacheManagement.load_cache_proxy UserCourseFeedTimelineProxy
   RedisCacheManagement.load_cache_proxy CourseCourseFeedTimelineProxy
+  # 问答时间线
+  RedisCacheManagement.load_cache_proxy UserQuestionFeedTimelineProxy
+  RedisCacheManagement.load_cache_proxy QuestionQuestionFeedTimelineProxy
 end

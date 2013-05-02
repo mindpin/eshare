@@ -1,5 +1,6 @@
 class Question < ActiveRecord::Base
   include CourseInteractive::QuestionMethods
+  include QuestionFeedTimelime::QuestionMethods
   
   attr_accessible :title, :content, :ask_to_user_id, :creator, :model, :best_answer
 

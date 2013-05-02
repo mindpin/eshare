@@ -2,7 +2,7 @@ class Chapter < ActiveRecord::Base
   include MovePosition::ModelMethods
   include CourseReadPercent::ChapterMethods
 
-  attr_accessible :title, :desc, :creator
+  attr_accessible :title, :desc, :creator, :course
 
   belongs_to :course
   belongs_to :creator, :class_name => "User", :foreign_key => "creator_id"

@@ -63,5 +63,39 @@ class Course < ActiveRecord::Base
     def self.included(base)
       base.has_many :courses, :foreign_key => 'creator_id'
     end
+
+    def course_read_stat
+      sql = %~
+        SELECT COUNT(*) AS C FROM
+
+        (
+          SELECT Q.id, COUNT(Q.CWID) AS COURSE_WARE_COUNT, SUM(Q.read IS TRUE) AS HAS_READ, SUM(Q.read IS NOT TRUE AND P > 0) AS READING
+          FROM
+          (
+              SELECT courses.id, course_ware_readings.id AS CWID, (course_ware_readings.read_count / course_wares.total_count) AS P, course_ware_readings.read
+              FROM courses
+              INNER JOIN chapters ON chapters.course_id = courses.id
+              INNER JOIN course_wares ON course_wares.chapter_id = chapters.id
+              LEFT OUTER JOIN course_ware_readings 
+                ON course_ware_readings.course_ware_id = course_wares.id
+                AND course_ware_readings.user_id = #{self.id}
+          ) AS Q
+          GROUP BY Q.id
+
+        ) AS Q1
+
+        ?
+      ~
+
+      read    = Course.count_by_sql sql.sub('?', 'WHERE COURSE_WARE_COUNT = HAS_READ')
+      reading = Course.count_by_sql sql.sub('?', 'WHERE READING > 0')
+      none = Course.count - reading - read
+
+      return {
+        :none => none,
+        :read => read,
+        :reading => reading
+      }
+    end
   end
 end
