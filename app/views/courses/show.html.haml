@@ -45,10 +45,10 @@
           .read-percent
             %span= course_ware_read_percent cw
 
-          - if cw.kind == 'youku'
+          - if cw.is_youku?
             .cover.video.youku
               = fit_image cw.cover_url, :width => 80, :height => 45
-          - if cw.kind == 'ppt'
+          - if cw.is_ppt? || cw.is_pdf?
             .pages.ppt
               - cw.output_images[0..3].compact.each do |img|
                 .page.ppt= fit_image img.url, :width => 80, :height => 45

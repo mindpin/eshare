@@ -102,7 +102,12 @@ class CourseWare < ActiveRecord::Base
   delegate :convert_success?, :to => :file_entity
   delegate :converting?,      :to => :file_entity
   delegate :convert_failure?, :to => :file_entity
-  delegate :output_images,    :to => :file_entity
+
+  def output_images
+    return [] if file_entity.blank?
+
+    return file_entity.output_images
+  end
 
   def cover_url
     return cover_url_cache if cover_url_cache.present?

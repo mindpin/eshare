@@ -4,15 +4,15 @@
       %li
         %a{:href => '/manage/courses'} 课程管理
         %span.divider /
-      %li.active 导入优酷播放列表
+      %li.active 导入土豆播放列表
 
 .page-manage-courses-import-video-list
-  = form_tag "/manage/courses/import_youku_list_2", :method => :post, :multipart => true do
-    .desc 填入你希望导入的优酷播放列表网址，点击下一步
-    .example 例如：http://www.youku.com/show_page/id_z7a3c4ddaaed011e1b52a.html
+  = form_tag "/manage/courses/import_tudou_list_2", :method => :post, :multipart => true do
+    .desc 填入你希望导入的土豆豆单网址，点击下一步
+    .example 例如：http://www.tudou.com/plcover/M9ovmjs6fkw/
 
     .input.string.required
-      %label 优酷播放列表网址
+      %label 土豆豆单网址
       = text_field_tag :url, '', :placeholder => 'http://', :class => 'string url optional xxlarge'
 
     %input.btn.success{:name => 'commit', :type => :submit, :value => '下一步'}

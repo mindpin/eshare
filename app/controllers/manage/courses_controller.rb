@@ -69,4 +69,19 @@ class Manage::CoursesController < ApplicationController
 
     redirect_to :action => :index
   end
+
+  def import_tudou_list
+  end
+
+  def import_tudou_list_2
+    @url = params[:url]
+    @data = TudouVideoList.new(@url).parse
+  end
+
+  def do_import_tudou_list
+    @url = params[:url]
+    Course.import_tudou_video_list(@url, current_user)
+
+    redirect_to :action => :index
+  end
 end

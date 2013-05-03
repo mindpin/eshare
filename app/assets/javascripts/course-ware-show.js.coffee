@@ -148,13 +148,13 @@ jQuery ->
 # --------------------------
 
   class PdfWidget
-    constructor: (@$elm)->
+    constructor: (@$elm, @updater)->
       @init()
 
       @current_page = 1
-      @$stat = jQuery('.pages-stat')
+      @$stat = jQuery('.stat')
 
-      @read_count = parseInt @$stat.find('.read .l').html()
+      @read_count = @updater.read_count()
 
       @readed_pages = []
 
@@ -177,30 +177,16 @@ jQuery ->
 
         # console.log scrolltop + mid_top, image_height, @current_page
         # console.log @current_page
-        @$stat.find('.pages .current').html(@current_page)
+        @$stat.find('.page .current').html(@current_page)
 
       # 每秒检查一次，如果页码有变化，就记录进度
       timer = setInterval =>
         if jQuery.inArray(@current_page, @readed_pages) == -1
           @readed_pages.push @current_page
           if @readed_pages.length > @read_count
-            @set_read_count(@readed_pages.length)
+            @updater.update(@readed_pages.length)
 
       , 3000 
-
-    set_read_count: (count)=>
-      @read_count = count
-
-      course_ware_id = @$stat
-        .find('.l').html(@read_count).end()
-        .data('id')
-
-      jQuery.ajax
-        url : "/course_wares/#{course_ware_id}/update_read_count"
-        type : 'put'
-        data :
-          read_count : @read_count
-        success : (res)=>
 
   read_count_updater = new ReadCountUpdater jQuery('.widget .stat .read')
 
@@ -217,5 +203,5 @@ jQuery ->
   #   player = new YoukuVideoPlayer jQuery(this)
   #   new MindpinVideoProgressParser player
 
-  jQuery('.page-course-ware-show .widget .pdf').each ->
-    new PdfWidget jQuery(this)
+  jQuery('.page-course-ware-show .widget .pages').each ->
+    new PdfWidget jQuery(this), read_count_updater
