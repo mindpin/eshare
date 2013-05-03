@@ -162,6 +162,8 @@ body.app, body.admin {
       background-color:inherit;
       > .active {
         color: #222;
+        white-space:nowrap;
+        max-width:300px;
       }
     }
   }
@@ -964,7 +966,7 @@ img.page-avatar {
       left:15px;
       top:50%;
       margin-top:-12px;
-      &.youku, &.sina, &.flv {
+      &.youku, &.sina, &.tudou, &.flv {
         background-position: 0px -24px;
       }
     }
@@ -972,7 +974,7 @@ img.page-avatar {
     &.read {
       i {
         background-position:-48px 0;
-        &.youku, &.sina, &.flv { background-position:-48px -24px; }
+        &.youku, &.sina, &.tudou, &.flv { background-position:-48px -24px; }
       }
       .line {
         background-color:#63B4E3;
@@ -982,7 +984,7 @@ img.page-avatar {
     &.reading {
       i {
         background-position:-24px 0;
-        &.youku, &.sina, &.flv { background-position:-24px -24px; }
+        &.youku, &.sina, &.tudou, &.flv { background-position:-24px -24px; }
       }
       .line {
         background-color:#63B4E3;
