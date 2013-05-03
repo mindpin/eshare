@@ -52,7 +52,7 @@ class TudouVideo
   attr_reader :url, :user_agent
 
   # 土豆的视频解析是区分user_agent的，所以需要从浏览器把user_agent传过来
-  def initialize(url, user_agent)
+  def initialize(url, user_agent = '')
     @url = url 
     @user_agent = user_agent
     # like http://www.tudou.com/albumplay/4NP7mtf2VYg/yqM7MXyWjPc.html
