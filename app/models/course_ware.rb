@@ -21,7 +21,13 @@ class CourseWare < ActiveRecord::Base
   belongs_to :creator, :class_name => 'User'
   belongs_to :file_entity
   belongs_to :media_resource
-  has_many :course_ware_readings
+
+  has_many :course_ware_readings,
+           :dependent => :destroy
+
+  has_many :reading_users, :through => :course_ware_readings, 
+                           :source => :user
+
   has_many :course_ware_marks
   has_many :questions, :as => :model
 
@@ -116,8 +122,16 @@ class CourseWare < ActiveRecord::Base
       cover_url = self.youku_video.video_cover_url
     end
 
+    if is_tudou?
+      cover_url = self.tudou_video.video_cover_url
+    end
+
     self.update_attributes({ :cover_url_cache => cover_url }, :as => :update_cover)
     return cover_url
+  end
+
+  def recent_reading_users(limit = 10)
+    self.reading_users.limit(10).order('course_ware_readings.updated_at desc')
   end
 
   # -----------

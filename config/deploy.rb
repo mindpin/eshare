@@ -2,8 +2,8 @@ require 'mina/bundler'
 require 'mina/rails'
 require 'mina/git'
 
-set :domain, ''
-set :deploy_to, ''
+set :domain, 'teamkn.mindpin.com'
+set :deploy_to, '/web/2013/eshare'
 set :current_path, 'current'
 set :repository, 'git://github.com/mindpin/eshare.git'
 set :branch, 'master'
@@ -59,7 +59,8 @@ task :deploy => :environment do
     invoke :'deploy:link_shared_paths'
     queue! "bundle"
     # invoke :'bundle:install'
-    invoke :'rails:db_migrate'
+    # invoke :'rails:db_migrate'
+    queue! "rake db:migrate RAILS_ENV=production"
     invoke :'rails:assets_precompile'
 
     to :launch do

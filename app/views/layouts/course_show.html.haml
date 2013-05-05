@@ -14,21 +14,16 @@
     - navbar.add_item('账号设置', '/account/edit')
     - navbar.add_item('退出登录', '/account/sign_out')
 
-  .page-layout-course-ware-show
+  .page-layout-course-show
     .sidebar
       .back
-        = link_to @course do
+        = link_to '/courses' do
           %i.icon-backward.icon-white
-          %span= @course.name
+          %span 课程浏览
 
       .items
-        - @chapter.course_wares.each do |cw|
-          - klass = ( cw == @course_ware ? 'current' : '' )
-          - klass = [klass, course_ware_reading_css_class(cw)].join(' ').strip
-          %a.item{:href => "/course_wares/#{cw.id}", :class => klass}
-            .line
-            %i{:class => cw.kind}
-            %span.title= truncate_u cw.title, 32
+
+
 
     .content
       = yield

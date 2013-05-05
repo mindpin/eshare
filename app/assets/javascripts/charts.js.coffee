@@ -18,20 +18,20 @@ jQuery ->
       chart_option = 
         chart:
           type: 'column'
-          margin: [50, 50, 50, 80]
+          margin: [20, 50, 50, 60]
         title:
-          text: '过去一周的学习完成度变化'
+          text: null
         xAxis:
           categories: dates
           labels:
             rotation: -45
             align: 'right'
             style: 
-              fontSize: '12px'
+              fontSize: '10px'
         yAxis:
           min: 0
           title:
-            text: '学习完成度'
+            text: '学习进度'
             style: 
               fontSize: '12px'
               fontWeight: 'normal'
@@ -40,7 +40,7 @@ jQuery ->
         series: [
           {
             animation: false
-            name: '进度值'
+            name: '本日新增进度'
             data: changes
             dataLabels:
               enabled: true
@@ -54,7 +54,7 @@ jQuery ->
           },
           {
             animation: false
-            name: '总完成度'
+            name: '总进度'
             data: values
             type: 'spline'
             dataLabels:

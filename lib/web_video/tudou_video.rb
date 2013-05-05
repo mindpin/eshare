@@ -63,6 +63,17 @@ class TudouVideo
     @parser = Parser.new self
   end
 
+  def video_cover_url
+    @video_cover_url ||= begin
+      match = @parser.get_page.match(/pic:(.+)/)
+      match = match[1].match /(http:\/\/[^"']+)/
+      return match[0]
+    rescue Exception => e
+      p "video_cover_url 解析错误"
+      ''
+    end
+  end
+
   def iid
     @iid ||= begin
       match = @parser.get_page.match(/iid:.+/)
@@ -72,10 +83,11 @@ class TudouVideo
 
   def vcode
     @vcode ||= begin
-      match = @parser.get_page.match(/vcode:.+/)
-      vcode = match[0].split(':').last.strip
-      vcode = JSON::parse(vcode)
+      match = @parser.get_page.match /vcode:(.+)/
+      match = match[1].match /\w+/
+      return match[0]
     rescue
+      p "vcode 解析错误"
       ''
     end
   end

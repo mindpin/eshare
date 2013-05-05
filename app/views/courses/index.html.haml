@@ -5,7 +5,7 @@
 .page-courses-index
   .hot-courses.2week
     .headline
-      %h2 近期热门课程
+      %h2 最近半个月的热门课程
 
     :ruby
       courses = Course.top_interactive_sums_of(Date.today, Date.today - 13).limit(4)
@@ -13,23 +13,27 @@
       - courses.each do |course|
         = render_cell :course, :smallcard, :course => course, :user => current_user
 
-  .page-chart.all-course-read-pie{:data => {:url => "/charts/courses/all_courses_read_pie"}}
-
   .all-courses
     .headline
-      %h2 全部课程
+      %h2 课程总清单
+    %table.courses
+      %tbody
+        - @courses.each_slice(3) do |c1, c2, c3|
+          %tr
+            - [c1, c2, c3].each do |course|
+              - if course.present?
+                %td.course= link_to course.name, course
+              - else
+                %td
+    = paginate @courses
 
-    .courses.grid
-      .your-info
-        .user
-          .avatar= avatar current_user
-          .name= current_user.name
-        .stat
-          %span.quiet 提出问题
-          %span= current_user.questions.count
-          %span ·
-          %span.quiet 解答问题
-          %span= current_user.answers.count
+  .chart
+    .headline
+      %h2 个人学习情况统计
+    .cha
+      .desc
+        .d 课程总数
+        .c= Course.count
+      .page-chart.all-course-read-pie{:data => {:url => "/charts/courses/all_courses_read_pie"}}
 
-        .desc
-          欢迎访问 EduShare 线上课程。你可以在这里浏览课程视频和文档资料，进行练习和提出问题。
+  .clearfix

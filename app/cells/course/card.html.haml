@@ -1,7 +1,7 @@
 .course.page-course.card
   .cover
     %a{:href => "/courses/#{@course.id}"}
-      = fit_image @course.cover.versions[:normal].url, :width => 190, :height => 140
+      = fit_image @course.cover.versions[:normal].url, :height => 140
   .data
     .counts
       %span.chapters-count= "#{@chapters_count} 个章节"

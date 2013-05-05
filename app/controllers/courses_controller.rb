@@ -1,12 +1,13 @@
 class CoursesController < ApplicationController
   before_filter :pre_load
+  layout 'course_show', :only => [:show]
 
   def pre_load
     @course = Course.find(params[:id]) if params[:id]
   end
 
   def index
-    @courses = Course.page(params[:page])
+    @courses = Course.page(params[:page]).per(18)
   end
 
   def show
