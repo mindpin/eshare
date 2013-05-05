@@ -22,7 +22,8 @@
           %tr
             - [c1, c2, c3].each do |course|
               - if course.present?
-                %td.course= link_to course.name, course
+                %td.course
+                  = link_to truncate_u(course.name, 16), course, :class => 'truncate-text'
               - else
                 %td
     = paginate @courses

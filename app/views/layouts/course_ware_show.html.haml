@@ -16,10 +16,10 @@
 
   .page-layout-course-ware-show
     .sidebar
-      .back
+      .back.truncate-text
         = link_to @course do
           %i.icon-backward.icon-white
-          %span= @course.name
+          %span= truncate_u @course.name, 16
 
       .items
         - @chapter.course_wares.each do |cw|

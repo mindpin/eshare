@@ -33,6 +33,11 @@ body {
   .quiet {
     color: #999;
   }
+  .truncate-text {
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
 }
 
 body.auth{
@@ -574,12 +579,15 @@ img.page-avatar {
         &.course {
           border:solid 1px #ddd;
         }
+        background-color:#F7F7F7;
+        
         a {
           display:block;
           padding:5px 10px;
-          background-color:#F7F7F7;
-          height:24px;line-height:24px;
+          height:25px;line-height:25px;
           color:#005580;
+          margin-right:-1px;
+          margin-bottom:-1px;
           &:hover {
             color:white;
             background-color: #005580;
