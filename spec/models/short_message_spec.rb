@@ -10,8 +10,7 @@ describe ShortMessage do
       @content = "content"
 
       @sender.send_message(@content, @receiver)
-      @message = ShortMessage.last
-    }
+      @message = ShortMessage.last    }
 
     it "发送者正确" do
       @message.sender.should == @sender
@@ -73,7 +72,8 @@ describe ShortMessage do
     describe "一个发送者 对 一个接收者 单方向 发送信息" do
 
       before {
-        3.times { @message = @sender_1.send_message(@content, @receiver) }
+        2.times { @sender_1.send_message(@content, @receiver) }
+        @message = @sender_1.send_message(@content, @receiver)
 
         @inbox_list = @receiver.inbox
 
@@ -127,7 +127,6 @@ describe ShortMessage do
         3.times { @message_2 = @sender_2.send_message(@content, @receiver) }
 
         @inbox_list = @receiver.inbox
-
       }
 
       it "收件箱数量正确" do

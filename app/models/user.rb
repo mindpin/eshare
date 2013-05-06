@@ -81,4 +81,5 @@ class User < ActiveRecord::Base
   include MediaShare::UserMethods
   include CourseFeedTimelime::UserMethods
   include QuestionFeedTimelime::UserMethods
+  include ShortMessage::UserMethods
 end
