@@ -53,21 +53,6 @@ class ShortMessage < ActiveRecord::Base
         order by T.id DESC
       ~
 
-=begin
-      sql = %~
-        SELECT v.*, 
-          GREATEST(sender_id, receiver_id) AS `max_user` , 
-          LEAST(sender_id, receiver_id) AS `min_user`
-        FROM short_messages AS v 
-        WHERE ( 
-          (v.receiver_id = #{self.id} and v.receiver_hide = false ) 
-          OR
-          (v.sender_id = #{self.id} and v.sender_hide = false) 
-        )
-        GROUP BY `max_user`, `min_user`  ORDER BY v.id DESC 
-      ~
-=end
-
       ShortMessage.find_by_sql(sql)
 
     end
