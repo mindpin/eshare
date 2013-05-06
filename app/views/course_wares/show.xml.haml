@@ -16,3 +16,14 @@
           :cdata
             #{f.url}
         %seconds= f.seconds
+
+- if @course_ware.is_tudou?
+  %ckplayer
+    %flashvars
+    - user_agent = request.env['HTTP_USER_AGENT']
+    - @course_ware.tudou_video(user_agent).video_files.each do |f|
+      %video
+        %file
+          :cdata
+            #{f.url}
+        %seconds= f.seconds

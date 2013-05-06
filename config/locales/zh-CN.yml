@@ -137,6 +137,7 @@ zh-CN:
 
     course:
       create_course: 创建课程
+      course-no-desc: 当前课程还没有简介
       course-ware-no-desc: 当前小节还没有简介
 
     question:

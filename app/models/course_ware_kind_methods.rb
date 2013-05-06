@@ -1,6 +1,6 @@
 module CourseWareKindMethods
   CWKINDS = [
-    'youku', 'sina',
+    'youku', 'sina', 'tudou',
     'flv', 'ppt', 'pdf'
   ]
 
@@ -15,7 +15,7 @@ module CourseWareKindMethods
   end
 
   def is_web_video?
-    web_video_kinds = ['youku', 'sina']
+    web_video_kinds = ['youku', 'sina', 'tudou']
     web_video_kinds.include? self.kind.to_s
   end
 
@@ -34,5 +34,10 @@ module CourseWareKindMethods
   def sina_video
     return nil if !self.is_sina?
     return SinaVideo.new self.url
+  end
+
+  def tudou_video(user_agent = '')
+    return nil if !self.is_tudou?
+    return TudouVideo.new self.url, user_agent
   end
 end
