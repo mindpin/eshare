@@ -7,6 +7,7 @@ class Course < ActiveRecord::Base
   include CourseFeedTimelime::CourseMethods
   include YoukuVideoList::CourseMethods
   include TudouVideoList::CourseMethods
+  include CourseFav::CourseMethods
 
   attr_accessible :name, :cid, :desc, :syllabus, :cover, :creator
 
