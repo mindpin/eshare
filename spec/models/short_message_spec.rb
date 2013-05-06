@@ -215,8 +215,22 @@ describe ShortMessage do
       describe "删除 receiver 收件箱" do
 
         describe "sender_1 删除" do
-          it "删除不是最前面的条目" do
+          it "删除不是最前面的条目1" do
+            @receiver.remove_short_message(@message_1_1)
+            @receiver_inbox_list = @receiver.inbox
+
+            @receiver_inbox_list.should == [@message_2_4, @message_1_4]
+          end
+
+          it "删除不是最前面的条目2" do
             @receiver.remove_short_message(@message_1_2)
+            @receiver_inbox_list = @receiver.inbox
+
+            @receiver_inbox_list.should == [@message_2_4, @message_1_4]
+          end
+
+          it "删除不是最前面的条目3" do
+            @receiver.remove_short_message(@message_1_3)
             @receiver_inbox_list = @receiver.inbox
 
             @receiver_inbox_list.should == [@message_2_4, @message_1_4]
@@ -234,8 +248,22 @@ describe ShortMessage do
 
 
         describe "sender_2 删除" do
-          it "删除不是最前面的条目" do
+          it "删除不是最前面的条目1" do
+            @receiver.remove_short_message(@message_2_1)
+            @receiver_inbox_list = @receiver.inbox
+
+            @receiver_inbox_list.should == [@message_2_4, @message_1_4]
+          end
+
+          it "删除不是最前面的条目2" do
             @receiver.remove_short_message(@message_2_2)
+            @receiver_inbox_list = @receiver.inbox
+
+            @receiver_inbox_list.should == [@message_2_4, @message_1_4]
+          end
+
+          it "删除不是最前面的条目3" do
+            @receiver.remove_short_message(@message_2_3)
             @receiver_inbox_list = @receiver.inbox
 
             @receiver_inbox_list.should == [@message_2_4, @message_1_4]
