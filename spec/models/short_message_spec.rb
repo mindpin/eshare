@@ -39,7 +39,7 @@ describe ShortMessage do
     end
 
     it "发送者删除信息" do
-      @sender.remove_short_message(@message)
+      @message = @sender.remove_short_message(@message)
 
       @message.sender_hide.should == true
     end
@@ -49,7 +49,7 @@ describe ShortMessage do
     end
 
     it "接收者删除信息" do
-      @receiver.remove_short_message(@message)
+      @message = @receiver.remove_short_message(@message)
 
       @message.receiver_hide.should == true
     end
@@ -72,10 +72,12 @@ describe ShortMessage do
     describe "一个发送者 对 一个接收者 单方向 发送信息" do
 
       before {
-        2.times { @sender_1.send_message(@content, @receiver) }
-        @message = @sender_1.send_message(@content, @receiver)
+        @message_1 = @sender_1.send_message(@content, @receiver)
+        @message_2 = @sender_1.send_message(@content, @receiver)
+        @message_3 = @sender_1.send_message(@content, @receiver)
 
         @inbox_list = @receiver.inbox
+        @sender_1_exchange_list = @sender_1.short_messages_of_user(@receiver)
 
       }
 
@@ -84,7 +86,11 @@ describe ShortMessage do
       end
 
       it "收件箱列表顺序正确" do
-        @inbox_list.should == [@meessage]
+        @inbox_list.should == [@message_3]
+      end
+
+      it "发送者 与 接收者 对话列表" do
+        @sender_1_exchange_list.should == [@message_3, @message_2, @message_1]
       end
 
     end
@@ -106,14 +112,14 @@ describe ShortMessage do
       end
 
       it "sender 收件箱列表顺序正确" do
-        @sender_inbox_list.should == [@message_3]
+        @sender_inbox_list.should == [@message_4]
       end
 
       it "receiver 收件箱数量正确" do
         @receiver_inbox_list.count.should == 1
       end
 
-      it "sender 收件箱列表顺序正确" do
+      it "receiver 收件箱列表顺序正确" do
         @receiver_inbox_list.should == [@message_4]
       end
 
@@ -123,8 +129,10 @@ describe ShortMessage do
     describe "二个发送者 对 一个接收者 单方向发送信息" do
 
       before {
-        3.times { @message_1 = @sender_1.send_message(@content, @receiver) }
-        3.times { @message_2 = @sender_2.send_message(@content, @receiver) }
+        2.times { @sender_1.send_message(@content, @receiver) }
+        2.times { @sender_2.send_message(@content, @receiver) }
+        @message_1 = @sender_1.send_message(@content, @receiver)
+        @message_2 = @sender_2.send_message(@content, @receiver)
 
         @inbox_list = @receiver.inbox
       }
@@ -134,7 +142,7 @@ describe ShortMessage do
       end
 
       it "收件箱列表顺序正确" do
-        @inbox_list.should == [@message_1, @message_2]
+        @inbox_list.should == [@message_2, @message_1]
       end
 
     end
@@ -143,15 +151,15 @@ describe ShortMessage do
     describe "二个发送者 和 一个接收者 互相 发送信息" do
 
       before {
-        @sender_message_1_1 = @receiver.send_message(@content, @sender_1)
-        @sender_message_1_2 = @receiver.send_message(@content, @sender_1)
-        @receiver_message_1_1 = @sender_1.send_message(@content, @receiver)
-        @receiver_message_1_2 = @sender_1.send_message(@content, @receiver)
+        @message_1_1 = @receiver.send_message(@content, @sender_1)
+        @message_1_2 = @receiver.send_message(@content, @sender_1)
+        @message_1_3 = @sender_1.send_message(@content, @receiver)
+        @message_1_4 = @sender_1.send_message(@content, @receiver)
 
-        @sender_message_2_1 = @receiver.send_message(@content, @sender_2)
-        @sender_message_2_2 = @receiver.send_message(@content, @sender_2)
-        @receiver_message_2_1 = @sender_2.send_message(@content, @receiver)
-        @receiver_message_2_2 = @sender_2.send_message(@content, @receiver)
+        @message_2_1 = @receiver.send_message(@content, @sender_2)
+        @message_2_2 = @receiver.send_message(@content, @sender_2)
+        @message_2_3 = @sender_2.send_message(@content, @receiver)
+        @message_2_4 = @sender_2.send_message(@content, @receiver)
 
         @sender_1_inbox_list = @sender_1.inbox
         @sender_2_inbox_list = @sender_2.inbox
@@ -166,7 +174,7 @@ describe ShortMessage do
       end
 
       it "sender_1 收件箱列表顺序正确" do
-        @sender_1_inbox_list.should == [@sender_message_1_2]
+        @sender_1_inbox_list.should == [@message_1_4]
       end
 
       it "sender_2 收件箱数量正确" do
@@ -174,7 +182,7 @@ describe ShortMessage do
       end
 
       it "sender_2 收件箱列表顺序正确" do
-        @sender_2_inbox_list.should == [@sender_message_2_2]
+        @sender_2_inbox_list.should == [@message_2_4]
       end
 
       it "receiver 收件箱数量正确" do
@@ -182,53 +190,63 @@ describe ShortMessage do
       end
 
       it "receiver 收件箱列表顺序正确" do
-        @receiver_inbox_list.should == [@receiver_message_1_2, @receiver_message_2_2]
+        @receiver_inbox_list.should == [@message_2_4, @message_1_4]
       end
 
       it "sender_1 与 receiver 之间信息列表" do
         @sender_1_exchange_list.should == [
-          @sender_message_1_1, 
-          @sender_message_1_2, 
-          @receiver_message_1_1,
-          @receiver_message_1_2
+          @message_1_4,
+          @message_1_3,
+          @message_1_2,
+          @message_1_1 
         ]
       end
 
       it "sender_2 与 receiver 之间信息列表" do
         @sender_2_exchange_list.should == [
-          @sender_message_2_1, 
-          @sender_message_2_2, 
-          @receiver_message_2_1,
-          @receiver_message_2_2
+          @message_2_4,
+          @message_2_3,
+          @message_2_2, 
+          @message_2_1
         ]
       end
 
 
       describe "删除 receiver 收件箱" do
 
-        it "删除 sender_1 不是最前面的条目" do
-          @receiver.remove_short_message(@sender_message_1_1)
+        describe "sender_1 删除" do
+          it "删除不是最前面的条目" do
+            @receiver.remove_short_message(@message_1_2)
+            @receiver_inbox_list = @receiver.inbox
 
-          @receiver_inbox_list.should == [@sender_message_1_2, @receiver_message_2_2]
+            @receiver_inbox_list.should == [@message_2_4, @message_1_4]
+          end
+
+          it "删除最前面的条目" do
+            @receiver.remove_short_message(@message_1_4)
+            @receiver_inbox_list = @receiver.inbox
+
+            @receiver_inbox_list.should == [@message_2_4, @message_1_3]
+          end
         end
 
-        it "删除 sender_1 最前面的条目" do
-          @receiver.remove_short_message(@sender_message_1_2)
-
-          @receiver_inbox_list.should == [@sender_message_1_1, @receiver_message_2_2]
-        end
+        
 
 
-        it "删除 sender_2 不是最前面的条目" do
-          @receiver.remove_short_message(@sender_message_2_1)
+        describe "sender_2 删除" do
+          it "删除不是最前面的条目" do
+            @receiver.remove_short_message(@message_2_2)
+            @receiver_inbox_list = @receiver.inbox
 
-          @receiver_inbox_list.should == [@sender_message_1_2, @sender_message_2_2]
-        end
+            @receiver_inbox_list.should == [@message_2_4, @message_1_4]
+          end
 
-        it "删除 sender_2 最前面的条目" do
-          @receiver.remove_short_message(@sender_message_2_2)
+          it "删除最前面的条目" do
+            @receiver.remove_short_message(@message_2_4)
+            @receiver_inbox_list = @receiver.inbox
 
-          @receiver_inbox_list.should == [@sender_message_1_2, @sender_message_2_1]
+            @receiver_inbox_list.should == [@message_2_3, @message_1_4]
+          end
         end
 
       end
@@ -236,15 +254,17 @@ describe ShortMessage do
       describe "增加 receiver 收件箱" do
 
         it "sender_1 发送给 receiver" do
-          @receiver_message_1_3 = @sender_1.send_message(@content, @receiver)
+          @message_1_5 = @sender_1.send_message(@content, @receiver)
+          @receiver_inbox_list = @receiver.inbox
 
-          @receiver_inbox_list.should == [@sender_message_1_3, @sender_message_2_2]
+          @receiver_inbox_list.should == [@message_1_5, @message_2_4]
         end
 
         it "sender_2 发送给 receiver" do
-          @receiver_message_2_3 = @sender_2.send_message(@content, @receiver)
+          @message_2_5 = @sender_2.send_message(@content, @receiver)
+          @receiver_inbox_list = @receiver.inbox
 
-          @receiver_inbox_list.should == [@sender_message_1_2, @sender_message_2_3]
+          @receiver_inbox_list.should == [@message_2_5, @message_1_4]
         end
 
       end

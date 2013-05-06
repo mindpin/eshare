@@ -31,46 +31,72 @@ class ShortMessage < ActiveRecord::Base
     end
 
     def inbox
+ 
       sql = %~
-        select id, MY_ID, CONTACT_ID, content, receiver_read, sender_hide, 
-        receiver_hide, created_at, updated_at from (
+        select T.*, T.MY_ID, T.CONTACT_ID from (
           (
-            SELECT id, sender_id AS MY_ID, receiver_id AS CONTACT_ID, content, receiver_read,  
-            sender_hide, receiver_hide, created_at, updated_at 
-            FROM short_messages
+            SELECT t1.*, sender_id AS MY_ID, receiver_id AS CONTACT_ID 
+            FROM short_messages as t1
             WHERE sender_id = #{self.id} and sender_hide = false
           ) 
 
           union
 
           (
-            SELECT id, receiver_id AS MY_ID, sender_id AS CONTACT_ID, content, receiver_read,
-            sender_hide, receiver_hide, created_at, updated_at 
-            FROM short_messages
+            SELECT t2.*, receiver_id AS MY_ID, sender_id AS CONTACT_ID 
+            FROM short_messages as t2
             WHERE receiver_id = #{self.id} and receiver_hide = false
           ) 
-          
+          order by id DESC 
         ) as T
         group by T.MY_ID, T.CONTACT_ID
-        order by id desc
+        order by T.id DESC
       ~
 
+=begin
+      sql = %~
+        SELECT v.*, 
+          GREATEST(sender_id, receiver_id) AS `max_user` , 
+          LEAST(sender_id, receiver_id) AS `min_user`
+        FROM short_messages AS v 
+        WHERE ( 
+          (v.receiver_id = #{self.id} and v.receiver_hide = false ) 
+          OR
+          (v.sender_id = #{self.id} and v.sender_hide = false) 
+        )
+        GROUP BY `max_user`, `min_user`  ORDER BY v.id DESC 
+      ~
+=end
+
       ShortMessage.find_by_sql(sql)
+
     end
 
     def short_messages_of_user(user)
-      ShortMessage.where(:sender_id => user.id, :receiver_id => self.id, :receiver_hide => false)
+      ShortMessage.find(
+        :all,
+        :order => 'id DESC',
+        :conditions => [
+          %~
+            (sender_id = ? AND receiver_id = ? AND sender_hide IS FALSE)
+            OR
+            (sender_id = ? AND receiver_id = ? AND receiver_hide IS FALSE)
+          ~,
+          self.id, user.id, # 由我发送的消息
+          user.id, self.id # 由我接收的消息
+        ]
+      )
     end
 
     def remove_short_message(message)
       message = ShortMessage.find(message.id)
-      return false if message.blank?
+      return if message.blank?
 
-      message.sender_hide = true if message.sender == self
-      message.receiver_hide = true  if message.receiver == self
-      
-      message.save
+      message.update_attributes({:sender_hide => true}) if message.sender == self
+      message.update_attributes({:receiver_hide => true}) if message.receiver == self
+  
       message.reload
+      message
 
     end
 
