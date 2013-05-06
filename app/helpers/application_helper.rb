@@ -92,6 +92,13 @@ module ApplicationHelper
       }
     end
 
+    if course_ware.is_tudou?
+      id = "tudou-#{course_ware.tudou_video.iid}"
+      return capture_haml {
+        haml_tag :div, :class => 'page-video-player web-video tudou', :id => id, :data => {:id => course_ware.id}
+      }
+    end
+
     if course_ware.is_flv?
       id = "flv-#{course_ware.id}"
       url = course_ware.file_entity.attach.url

@@ -82,4 +82,5 @@ class User < ActiveRecord::Base
   include CourseFeedTimelime::UserMethods
   include QuestionFeedTimelime::UserMethods
   include ShortMessage::UserMethods
+  include CourseFav::UserMethods
 end

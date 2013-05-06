@@ -7,6 +7,7 @@ class Course < ActiveRecord::Base
   include CourseFeedTimelime::CourseMethods
   include YoukuVideoList::CourseMethods
   include TudouVideoList::CourseMethods
+  include CourseFav::CourseMethods
 
   attr_accessible :name, :cid, :desc, :syllabus, :cover, :creator
 
@@ -74,7 +75,7 @@ class Course < ActiveRecord::Base
           SELECT Q.id, COUNT(Q.CWID) AS COURSE_WARE_COUNT, SUM(Q.read IS TRUE) AS HAS_READ, SUM(Q.read IS NOT TRUE AND P > 0) AS READING
           FROM
           (
-              SELECT courses.id, course_ware_readings.id AS CWID, (course_ware_readings.read_count / course_wares.total_count) AS P, course_ware_readings.read
+              SELECT courses.id, course_wares.id AS CWID, (course_ware_readings.read_count / course_wares.total_count) AS P, course_ware_readings.read
               FROM courses
               INNER JOIN chapters ON chapters.course_id = courses.id
               INNER JOIN course_wares ON course_wares.chapter_id = chapters.id
@@ -86,11 +87,11 @@ class Course < ActiveRecord::Base
 
         ) AS Q1
 
-        ?
+        WHERE COURSE_WARE_COUNT > 0 AND ?
       ~
 
-      read    = Course.count_by_sql sql.sub('?', 'WHERE COURSE_WARE_COUNT = HAS_READ')
-      reading = Course.count_by_sql sql.sub('?', 'WHERE READING > 0')
+      read    = Course.count_by_sql sql.sub('?', 'COURSE_WARE_COUNT = HAS_READ')
+      reading = Course.count_by_sql sql.sub('?', 'READING > 0')
       none = Course.count - reading - read
 
       return {

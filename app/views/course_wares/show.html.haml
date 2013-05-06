@@ -16,8 +16,6 @@
           - else
             PPT/PDF文件格式转换没有成功，或正在进行转换
 
-    .page-chart.course-ware.read-count-last-week{:data => {:url => "/charts/course_wares/#{@course_ware.id}/read_count_last_week"}}
-
     .infos
       .questions
         .bar 线上问答
@@ -27,9 +25,22 @@
               .p 请准确详尽的描述问题，方便他人理解你的疑问。
               .p 提问之前可以先查找有没有类似的问题已经被解答过，尽量避免提出重复的问题。
             .form-inputs
-              = f.input :title, :as => :text, :input_html => {:placeholder => '你可以在这里提出问题'}
+              = f.input :title, :as => :text, :input_html => {:placeholder => '你可以在这里提问'}
             .form-actions{:style => 'display:none;'}
               %a.btn.submit.success{:href => 'javascript:;'}= t('helpers.submit.question.create')
               %a.btn.cancel{:href => "javascript:;"}= t('common.form.cancel')
 
         = render 'course_wares/questions', :questions => @questions
+
+      .side-info
+        .chart
+          .bar 一周学习进度变化
+          .page-chart.course-ware.read-count-last-week{:data => {:url => "/charts/course_wares/#{@course_ware.id}/read_count_last_week"}}
+
+        .learners
+          .bar 这些人最近学习过这个小节
+          .users
+            - @course_ware.recent_reading_users(10).each do |user|
+              .user
+                .avatar= avatar user
+                .name= user.name

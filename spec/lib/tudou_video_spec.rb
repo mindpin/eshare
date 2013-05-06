@@ -1,6 +1,29 @@
 # -*- coding: utf-8 -*-
 require "spec_helper"
 
+describe TudouVideo do
+  before {
+    @video1 = TudouVideo.new 'http://www.tudou.com/albumplay/4NP7mtf2VYg/yqM7MXyWjPc.html'
+    @video2 = TudouVideo.new 'http://www.tudou.com/programs/view/c7Yv5D7kZew/'
+    @video3 = TudouVideo.new 'http://www.tudou.com/listplay/y_WvP2J5LuM.html'
+  }
+
+  it {
+    p iid = @video1.iid
+    iid.should_not be_blank
+  }
+
+  it {
+    p iid = @video2.iid
+    iid.should_not be_blank
+  }
+
+  it {
+    p iid = @video3.iid
+    iid.should_not be_blank
+  }
+end
+
 describe TudouVideoList do
   let(:list_url) {"http://www.tudou.com/plcover/M9ovmjs6fkw/"}
   let(:lid)      {15632178}
