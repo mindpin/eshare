@@ -6,6 +6,8 @@ class CourseSubjectCourse < ActiveRecord::Base
 
   validates :course, :course_subject, :presence => true
 
+  validates :course_id, :uniqueness => {:scope => :course_subject_id}
+
   scope :by_course, lambda{|course| {:conditions => ['course_id = ?', course.id]} }
 
   module CourseSubjectMethods
@@ -15,15 +17,13 @@ class CourseSubjectCourse < ActiveRecord::Base
     end
 
     def add_course(course, user)
-      return if !CourseSubject.by_user(user).first
-      return if self.course_subject_courses.by_course(course).first
+      return if self.creator != user || self.course_subject_courses.by_course(course).first
       self.course_subject_courses.create(:course => course)
     end
 
     def remove_course(course, user)
-      return if !CourseSubject.by_user(user).first
       course_subject_course = self.course_subject_courses.by_course(course).first
-      course_subject_course.destroy if course_subject_course
+      course_subject_course.destroy if self.creator == user && course_subject_course
     end
   end
 

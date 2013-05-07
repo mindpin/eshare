@@ -1,11 +1,10 @@
 require 'spec_helper'
 
 describe CourseSubject do
-
-  let(:user)       {FactoryGirl.create(:user)}
-  let(:user1)       {FactoryGirl.create(:user)}
   let(:course)        {FactoryGirl.create(:course)}
-  let(:course_subject){FactoryGirl.create :course_subject, :creator => user}
+  let(:course_subject){FactoryGirl.create :course_subject}
+  let(:user)          {course_subject.creator}
+  let(:user1)         {FactoryGirl.create(:user)}
   
   context '#add_course(course, user)' do
     it{
