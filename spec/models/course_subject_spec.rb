@@ -31,6 +31,15 @@ describe CourseSubject do
         CourseSubjectCourse.all.count
       }.by(1)
     }
+
+    it{
+      expect {
+        course_subject.add_manager(user1)
+        course_subject.add_course(course, user1)
+      }.to change {
+        CourseSubjectCourse.all.count
+      }.by(1)
+    }
   end
 
   context '#remove_course(course, user)' do
@@ -55,6 +64,15 @@ describe CourseSubject do
       expect {
         course_subject.remove_course(course, user)
         course_subject.remove_course(course, user)
+      }.to change {
+        CourseSubjectCourse.all.count
+      }.by(-1)
+    }
+
+    it{
+      expect {
+        course_subject.add_manager(user1)
+        course_subject.remove_course(course, user1)
       }.to change {
         CourseSubjectCourse.all.count
       }.by(-1)
