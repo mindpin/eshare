@@ -13,14 +13,14 @@ class CourseSubjectManagership < ActiveRecord::Base
 
   def user_check
     if self.user_id == self.course_subject.creator_id
-      errors.add :base, 'course_subject_managerships.user_id == course_subject.creator_id' 
+      errors.add :base, '不能把主管理员设置为副管理员'
     end
   end
 
   module CourseSubjectMethods
     def self.included(base)
       base.has_many :course_subject_managerships
-      base.has_many :managers, :through => :course_subject_managerships, :source => :user
+      base.has_many :secondary_managers, :through => :course_subject_managerships, :source => :user
     end
 
     def add_manager(user)
@@ -28,8 +28,7 @@ class CourseSubjectManagership < ActiveRecord::Base
     end
 
     def remove_manager(user)
-      course_subject_managership = self.course_subject_managerships.by_user(user).first
-      course_subject_managership.destroy if course_subject_managership
+      self.course_subject_managerships.by_user(user).destroy_all
     end
   end
 
@@ -37,7 +36,7 @@ class CourseSubjectManagership < ActiveRecord::Base
     def self.included(base)
       base.has_many :course_subject_managerships
        # user作为副管理员的课程主题
-      base.has_many :course_subjects, :through => :course_subject_managerships
+      base.has_many :manage_course_subjects, :through => :course_subject_managerships, :source => :course_subject
     end
   end
 end

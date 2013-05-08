@@ -7,9 +7,14 @@ class CourseSubject < ActiveRecord::Base
 
   scope :by_user, lambda{|user| {:conditions => ['creator_id = ?', user.id]} }
 
+  def main_manager
+    creator
+  end
+
   module UserMethods
     def self.included(base)
-      base.has_many :course_subjects
+      base.has_many :created_course_subjects, :class_name => "CourseSubject",
+                    :foreign_key => :creator_id
     end
   end
 
