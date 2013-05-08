@@ -2,6 +2,7 @@
 Eshare::Application.routes.draw do
   root :to => 'index#index'
   get '/dashboard' => 'index#dashboard'
+  get '/faye_auth' => 'index#faye_auth'
 
   # devise
   devise_for :users, :path => 'account',

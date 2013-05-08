@@ -1,4 +1,6 @@
+# -*- coding: utf-8 -*-
 class ShortMessage < ActiveRecord::Base
+  include Notifier
   attr_accessible :sender, :receiver, :content, :receiver_read, :sender_hide, :receiver_hide
 
   belongs_to :sender, :class_name => 'User', :foreign_key => :sender_id
@@ -13,6 +15,9 @@ class ShortMessage < ActiveRecord::Base
     self.reload
   end
 
+  def inbox_count
+    receiver.inbox.size
+  end
 
   module UserMethods
     def self.included(base)

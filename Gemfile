@@ -28,11 +28,16 @@ group :examples do
   gem 'ruby-progressbar', '~> 1.0.2'
 end
 
+group :development do
+  gem 'thin', '~> 1.5.1'
+end
+
 gem 'jquery-rails', '2.2.1'
 gem 'jquery-ui-rails', '4.0.2'
 gem 'unicorn', '4.6.2'
 gem 'sidekiq', '2.8.0'
 gem 'sidekiq-limit_fetch', '1.4'
+gem 'faye-rails', '~> 1.0.8'
 gem 'slim', '1.3.8', :require => false
 gem 'sinatra', '1.3.0', :require => false
 
