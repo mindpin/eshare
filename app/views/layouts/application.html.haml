@@ -8,6 +8,25 @@
 
 !!!
 - simple_page_layout title, :html_lang => :zh, :body_class => 'app' do
+  - if user_signed_in?
+    .page-chat-bar{:data => {:'user-id' => current_user.id, :'user-name' => current_user.name}}
+      .contacts
+        - User.limit(20).where('id <> ?', current_user.id).each do |user|
+          .user{:data => {:id => user.id, :name => user.name}}
+            .avatar= avatar user, :small
+      .chat-box
+        .headbar
+          .avatar
+          .contact 
+            %span 和
+            %span.name
+            %span 聊天
+        .chatlog
+        .inputer
+          %textarea.ipt
+          %a.btn.success.small.send{:href => 'javascript:;'} 发送
+
+
   .page-sidebar
     - if current_user.is_teacher?
       = simple_navbar :teacher, :as_list, :with_icon

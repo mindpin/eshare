@@ -2,7 +2,6 @@
 Eshare::Application.routes.draw do
   root :to => 'index#index'
   get '/dashboard' => 'index#dashboard'
-  get '/faye_auth' => 'index#faye_auth'
 
   # devise
   devise_for :users, :path => 'account',
@@ -33,6 +32,15 @@ Eshare::Application.routes.draw do
   resources :surveys, :shallow => true do
     resources :survey_items
     resources :survey_results
+  end
+end
+
+# 短消息
+Eshare::Application.routes.draw do
+  resources :short_messages, :shallow => true do
+    collection do
+      get :chatlog
+    end
   end
 end
 
