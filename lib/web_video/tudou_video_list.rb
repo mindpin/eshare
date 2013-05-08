@@ -83,6 +83,10 @@ class TudouVideoList
       @lid ||= response.match(/var\slid\s=\s'(\d*)';/)[1].to_i
     end
 
+    def count
+      @count ||= Nokogiri::XML(response).at_css('span.dd').content.to_i
+    end
+
     def items
       @items ||= list_json['message']['items'].map do |meta|
         Item.new(meta)
@@ -96,7 +100,7 @@ class TudouVideoList
       end
 
       def list_json_url
-        "http://www.tudou.com/plcover/coverPage/getIndexItems.html?lid=#{lid}"
+        "http://www.tudou.com/plcover/coverPage/getIndexItems.html?lid=#{lid}&pageSize=#{count}"
       end
   end
 
