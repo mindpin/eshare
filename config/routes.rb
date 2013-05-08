@@ -166,6 +166,7 @@ Eshare::Application.routes.draw do
     resources :courses, :shallow => true do
       collection do
         get :all_courses_read_pie
+        get :all_courses_punch_card
       end
 
       resources :chapters, :shallow => true do
