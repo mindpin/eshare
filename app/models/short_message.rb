@@ -84,7 +84,7 @@ class ShortMessage < ActiveRecord::Base
     end
 
     def short_messages_of_user(user)
-      ShortMessage.of_user(self, user)
+      ShortMessage.of_user(self, user).order('id DESC')
     end
 
     def remove_short_message(message)
