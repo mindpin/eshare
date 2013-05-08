@@ -18,22 +18,19 @@ class CourseSubjectCourse < ActiveRecord::Base
     end
 
     def add_course(course, user)
-      return if _check_user(user) || self.course_subject_courses.by_course(course).first
+      return if !self.is_manager?(user) || self.courses.include?(course)
       self.course_subject_courses.create(:course => course, :manager_id => user.id)
     end
 
     def remove_course(course, user)
-      return if _check_user(user)
-      course_subject_course = self.course_subject_courses.by_course(course).first
-      course_subject_course.destroy if course_subject_course
+      return if !self.is_manager?(user)
+      self.course_subject_courses.by_course(course).destroy_all
     end
 
-    private
-      def _check_user(user)
-        course_subject_course       = self.creator.id == user.id
-        course_subject_managership  = self.course_subject_managerships.by_user(user).first
-        return true if !(course_subject_course || course_subject_managership)
-      end
+    def is_manager?(user)
+      self.main_manager == user || self.secondary_managers.include?(user)
+    end
+
   end
 
 end

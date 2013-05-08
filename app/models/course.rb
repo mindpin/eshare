@@ -33,7 +33,7 @@ class Course < ActiveRecord::Base
   validates :cid, :uniqueness => {:case_sensitive => false},
                   :presence => true
 
-  default_scope order('id desc')
+  default_scope order('courses.id desc')
   max_paginates_per 50
 
   # 最近被指定用户学习过的课程
