@@ -1,0 +1,6 @@
+.messages
+  - @messages.each do |m|
+    .message
+      %span.sender>= m.sender.name
+      %span> :
+      %span.content>= m.content

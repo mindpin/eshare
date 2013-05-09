@@ -70,6 +70,7 @@ task :deploy => :environment do
         ./deploy/sh/sidekiq.sh restart
         ./deploy/sh/unicorn_eshare.sh stop
         ./deploy/sh/unicorn_eshare.sh start
+        bundle exec thin restart -f -C config/thin.yml -R faye.ru
       ]
     end
   end
@@ -84,6 +85,7 @@ task :restart => :environment do
     ./deploy/sh/sidekiq.sh restart
     ./deploy/sh/unicorn_eshare.sh stop
     ./deploy/sh/unicorn_eshare.sh start
+    bundle exec thin restart -f -C config/thin.yml -R faye.ru
   ]
 end
 # For help in making your deploy script, see the Mina documentation:

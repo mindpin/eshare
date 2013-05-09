@@ -47,7 +47,10 @@ RSpec.configure do |config|
     # 运行这个方法来还原时间的改变
     Timecop.return
     DatabaseCleaner.clean
-    RedisCache.flushdb
+  end
+
+  config.after(:all) do
+    SimpleRedisCache::RedisCache.flushdb
   end
 
 end

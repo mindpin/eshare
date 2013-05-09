@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 class ShortMessage < ActiveRecord::Base
-  include Notifier
   attr_accessible :sender, :receiver, :content, :receiver_read, :sender_hide, :receiver_hide
 
   belongs_to :sender, :class_name => 'User', :foreign_key => :sender_id
@@ -8,15 +7,38 @@ class ShortMessage < ActiveRecord::Base
 
   validates :sender, :receiver, :content, :presence => true
 
+  scope :of_user, lambda { |user1, user2|
+    {
+      :conditions => [
+        %~
+          (sender_id = ? AND receiver_id = ? AND sender_hide IS FALSE)
+          OR
+          (sender_id = ? AND receiver_id = ? AND receiver_hide IS FALSE)
+        ~,
+        user1.id, user2.id, # 由我发送的消息
+        user2.id, user1.id # 由我接收的消息
+      ]
+    }
+  }
+
+  after_save :send_faye_message
+  def send_faye_message
+    hash = {
+      :type => 'short_message',
+      :sender => {
+        :id => sender.id,
+        :name => sender.name
+      },
+      :content => content
+    }
+
+    FayeClient.publish "/users/#{receiver.id}", hash
+  end
 
   def receiver_read!
     self.receiver_read = true
     self.save
     self.reload
-  end
-
-  def inbox_count
-    receiver.inbox.size
   end
 
   module UserMethods
@@ -32,7 +54,6 @@ class ShortMessage < ActiveRecord::Base
         :receiver_hide => false,
         :sender_hide => false
       )
-
     end
 
     def inbox
@@ -63,19 +84,7 @@ class ShortMessage < ActiveRecord::Base
     end
 
     def short_messages_of_user(user)
-      ShortMessage.find(
-        :all,
-        :order => 'id DESC',
-        :conditions => [
-          %~
-            (sender_id = ? AND receiver_id = ? AND sender_hide IS FALSE)
-            OR
-            (sender_id = ? AND receiver_id = ? AND receiver_hide IS FALSE)
-          ~,
-          self.id, user.id, # 由我发送的消息
-          user.id, self.id # 由我接收的消息
-        ]
-      )
+      ShortMessage.of_user(self, user).order('id DESC')
     end
 
     def remove_short_message(message)
@@ -90,9 +99,6 @@ class ShortMessage < ActiveRecord::Base
 
     end
 
-
   end
 
-
 end
-

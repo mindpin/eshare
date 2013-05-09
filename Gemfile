@@ -125,6 +125,10 @@ gem 'mindpin-feeds',
     :git => 'git://github.com/mindpin/mindpin-feeds',
     :tag => '0.0.7'
 
+# redis-cache
+gem 'simple-redis-cache',
+    :git => 'git://github.com/mindpin/simple-redis-cache.git',
+    :tag => '0.0.1'
 
 gem 'mina',
     :git => 'git://github.com/fushang318/mina.git'
