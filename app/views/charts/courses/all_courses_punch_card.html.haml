@@ -1,0 +1,26 @@
+:ruby
+  weekdays = %w(周日 周一 周二 周三 周四 周五 周六)
+  months = %w(1月 2月 3月 4月 5月 6月 7月 8月 9月 10月 11月 12月)
+  max = @stat[:max]
+
+%table.punch-card
+  %tbody
+    - 0.upto 6 do |i|
+      - weekday = weekdays[i]
+      %tr
+        %td.wday
+          %span.wd= weekday
+        - 1.upto 12 do |m|
+          %td.v
+            .count
+              - value = @stat[m][i]
+              - if value.present?
+                - radius = (value.to_f / max) ** 0.5 * 30
+                - radius = [radius, 3].max
+                .value{:style => "width:#{radius}px;height:#{radius}px;margin-left:-#{radius/2}px;margin-top:-#{radius/2}px;"}= value
+
+    %tr
+      %td
+      - 1.upto 12 do |m|
+        - month = months[m - 1]
+        %td= month

@@ -203,46 +203,4 @@ jQuery('.page-chart.all-courses-punch-card').each ->
     jQuery.ajax
       url: $chart.data('url')
       success: (res)->
-        option =
-          chart:
-            type: 'bubble'
-            zoomType: 'xy'
-
-          xAxis:
-            categories: [
-              'Jan', 'Feb', 'Mar', 'Apr', 
-              'May', 'Jun', 'Jul', 'Aug', 
-              'Sep', 'Oct', 'Nov', 'Dec'
-            ]
-            gridLineColor: null
-
-          yAxis:
-            categories: [
-              '',
-              '周一', '周二', '周三', '周四', 
-              '周五', '周六', '周日'
-            ]
-            gridLineColor: null
-            minRange: 0
-
-          series: [
-            {
-              animation: false
-              data: [
-                [0,  1, 3],
-                [1,  1, 4],
-                [2,  2, 5],
-                [3,  3, 6],
-                [4,  4, 7],
-                [5,  5, 8],
-                [6,  6, 9],
-                [7,  1, 10],
-                [8,  1, 11],
-                [9,  2, 12],
-                [10, 3, 13],
-                [11, 4, 14],
-              ]
-            }
-          ]
-
-        $chart.highcharts option
+        $chart.html res

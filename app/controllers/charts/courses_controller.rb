@@ -6,7 +6,7 @@ class Charts::CoursesController < ApplicationController
   end
 
   def all_courses_punch_card
-    # TODO
-    render :json => 123
+    @stat = current_user.course_weekdays_stat
+    render :layout => false
   end
 end
