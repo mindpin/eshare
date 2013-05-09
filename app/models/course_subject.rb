@@ -20,4 +20,5 @@ class CourseSubject < ActiveRecord::Base
 
   include CourseSubjectCourse::CourseSubjectMethods
   include CourseSubjectManagership::CourseSubjectMethods
+  include CourseSubjectFollow::CourseSubjectMethods
 end

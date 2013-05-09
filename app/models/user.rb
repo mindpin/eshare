@@ -85,4 +85,5 @@ class User < ActiveRecord::Base
   include CourseFav::UserMethods
   include CourseSubject::UserMethods
   include CourseSubjectManagership::UserMethods
+  include CourseSubjectFollow::UserMethods
 end
