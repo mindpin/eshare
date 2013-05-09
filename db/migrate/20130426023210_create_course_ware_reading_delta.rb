@@ -1,4 +1,4 @@
-class CourseWareReadingDelta < ActiveRecord::Migration
+class CreateCourseWareReadingDelta < ActiveRecord::Migration
   def up
     create_table :course_ware_reading_delta do |t|
       t.integer :user_id

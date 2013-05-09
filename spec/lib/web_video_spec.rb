@@ -28,10 +28,6 @@ describe YoukuVideoList do
     @youku_video_list.video_list_id.should == 'z7a3c4ddaaed011e1b52a'
   }
 
-  it {
-    @youku_video_list.show_episode_url
-      .should == "http://www.youku.com/show_episode/id_z7a3c4ddaaed011e1b52a.html"
-  }
 
   it {
     p @youku_video_list.parse
