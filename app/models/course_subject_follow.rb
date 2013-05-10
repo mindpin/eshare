@@ -12,7 +12,7 @@ class CourseSubjectFollow < ActiveRecord::Base
   module UserMethods
     def self.included(base)
       base.has_many :course_subject_follows
-      base.has_many :follow_course_subject, :through => :course_subject_follows, :source => :course_subject
+      base.has_many :follow_course_subjects, :through => :course_subject_follows, :source => :course_subject
     end
   end
 
@@ -23,14 +23,14 @@ class CourseSubjectFollow < ActiveRecord::Base
     end
 
     def follow_by_user(user)
-      self.course_subject_follows.create(:user => user) if !self.is_follow(user)
+      self.course_subject_follows.create(:user => user) if !self.is_follow?(user)
     end
 
     def unfollow_by_user(user)
       self.course_subject_follows.by_user(user).destroy_all
     end
 
-    def is_follow(user)
+    def is_follow?(user)
       self.follow_users.include?(user)
     end
   end
