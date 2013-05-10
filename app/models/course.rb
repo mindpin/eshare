@@ -67,6 +67,32 @@ class Course < ActiveRecord::Base
       base.has_many :courses, :foreign_key => 'creator_id'
     end
 
+    # 统计所有年份中，按照月份和星期分布的学习进度
+    def course_weekdays_stat
+      sql = %~
+        SELECT weekday, month, SUM(percent_change) AS COUNT
+        FROM course_ware_reading_delta
+        WHERE user_id = #{self.id}
+        GROUP BY weekday, month
+      ~
+
+      result = CourseWareReadingDelta.find_by_sql sql
+      hash = Hash.new Hash.new
+
+      max = 0
+
+      result.each do |r|
+        hash[r.month] = {} if hash[r.month].blank?
+        count = r['COUNT'].to_i
+        hash[r.month][r.weekday] = count
+        max = [max, count].max
+      end
+
+      hash[:max] = max
+      hash
+    end
+
+    # 统计已学的，未学的，正在学的课程的个数
     def course_read_stat
       sql = %~
         SELECT COUNT(*) AS C FROM

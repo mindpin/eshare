@@ -27,7 +27,13 @@ class CourseWareReading < ActiveRecord::Base
   scope :by_user, lambda { |user| { :conditions => ['course_ware_readings.user_id = ?', user.id] } }
   scope :by_read, lambda { |read| { :conditions => ['course_ware_readings.read = ?', read] } }
 
-  before_save :set_default_read_count_and_percent
+  before_save :set_default_and_save_delta
+
+  def set_default_and_save_delta
+    set_default_read_count_and_percent
+    record_reading_delta
+  end
+
   def set_default_read_count_and_percent
     self.read_count = 0 if self.read_count.blank?
     self.read_percent = _get_percent
