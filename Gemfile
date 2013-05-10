@@ -118,7 +118,7 @@ gem 'odocuconv',
 ## tag
 gem 'mindpin-simple-tags',
     :git => 'git://github.com/mindpin/mindpin-simple-tags.git',
-    :tag => '0.0.1'
+    :tag => '0.0.2'
 
 # feed
 gem 'mindpin-feeds',
