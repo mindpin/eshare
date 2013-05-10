@@ -15,18 +15,9 @@
 
   .all-courses
     .headline
-      %h2 课程总清单
-    %table.courses
-      %tbody
-        - @courses.each_slice(3) do |c1, c2, c3|
-          %tr
-            - [c1, c2, c3].each do |course|
-              - if course.present?
-                %td.course
-                  = link_to truncate_u(course.name, 16), course, :class => 'truncate-text'
-              - else
-                %td
-    = paginate @courses
+      %h2 课程浏览
+    - Course::BASE_TAGS.each do |bt|
+      = render_cell :courses_of_tag, :table, :tag => bt
 
   .chart
     .headline

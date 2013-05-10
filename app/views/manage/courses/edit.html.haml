@@ -3,10 +3,21 @@
 
 = simple_form_for @course, :url => "/manage/courses/#{@course.id}" do |f|
   .form-inputs
-    = f.input :name
-    = f.input :cid
-    = f.input :desc, :as => :text, :input_html => {:rows => 6}
+    = f.input :name, :input_html => {:class => :xxlarge}
+    = f.input :cid, :input_html => {:class => :xxlarge}
+    = f.input :desc, :as => :text, :input_html => {:rows => 6, :class => :xxlarge}
     = f.input :cover, :as => :file
+
+    .input.page-form-tag-inputer
+      - tags_str = @course.public_tags.map{|x| x.name}.join(', ')
+      %label 分类标签
+      %textarea.xxlarge{:name => :course_tags, :rows => 2, :data => {:value => tags_str}}= tags_str
+
+      .tags-advice
+        .desc 常用的标签
+        - Course::BASE_TAGS.each do |tagname|
+          %a.tag{:href => 'javascript:;', :data => {:name => tagname}}= tagname
+
   .form-actions
     = f.button :submit, :class => 'success'
     %a.btn.cancel{:href => '/manage/courses'}= t('common.form.cancel')

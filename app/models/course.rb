@@ -10,6 +10,30 @@ class Course < ActiveRecord::Base
   include CourseFav::CourseMethods
 
   simple_taggable
+  BASE_TAGS = %w(
+    计算机技术
+    数学与逻辑学
+    实验与理论科学
+    机械与工程
+    历史与社会
+    哲学与伦理
+    认知与心理
+    天文与地理
+    医学与生理
+    生物与环境科学
+    经济管理与法律
+    语言文学
+    艺术审美
+    动漫创作
+    教育学
+    游戏
+    生活
+  )
+  
+  def replace_public_tags(tags_str, user)
+    self.remove_public_tag self.public_tags.map(&:name).join(' ')
+    self.set_tag_list(tags_str, :user => user, :force_public => true)
+  end
 
   attr_accessible :name, :cid, :desc, :syllabus, :cover, :creator
 
