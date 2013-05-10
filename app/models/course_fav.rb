@@ -1,5 +1,4 @@
 class CourseFav < ActiveRecord::Base
-  simple_taggable
 
   attr_accessible :course, :user, :comment_content
 
