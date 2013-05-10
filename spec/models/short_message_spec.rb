@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
 require "spec_helper"
 
 describe ShortMessage do
+  before {FayeClient.stub(:publish)}
 
   describe "发送信息" do
 
