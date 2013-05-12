@@ -355,7 +355,7 @@ ul.page-breadcrumb {
 }
 
 .page-tags {
-  @include floatfix;
+  overflow:hidden;
   padding:0;
   margin-bottom:20px;
   .shower {
@@ -916,10 +916,19 @@ img.page-avatar {
       }
     }
 
+    .course-link {
+      background-color:white;
+      border:solid 1px #ddd;
+      padding:10px;
+    }
+
     .user-card{
       background-color:white;
       padding:10px;
       @include floatfix;
+      border:solid 1px #ddd;
+      border-right:0 none;
+      border-top:0 none;
 
       .avatar {
         float:left;
@@ -941,6 +950,7 @@ img.page-avatar {
         clear:both;
         @include floatfix;
         margin-top:20px;
+        margin-bottom:5px;
 
         .d {
           font-size:12px;
@@ -957,6 +967,14 @@ img.page-avatar {
         .p {
           text-align:center;
           font-size:12px;line-height:16px;
+        }
+      }
+
+      .rank {
+        font-size:12px;
+        .r {
+          color:red;
+          margin-right:10px;
         }
       }
     }
@@ -1562,6 +1580,109 @@ form .input.page-form-tag-inputer {
         .page-progress {
           height:10px;
         }
+      }
+    }
+  }
+}
+
+.page-course-users-rank {
+  margin:-20px;
+  min-height:300px;
+
+  .stat {
+    background-color:#f7f7f7;
+    border-bottom:solid 1px #ddd;
+    padding:20px;
+    .total {margin-right:20px;}
+  }
+
+  .users-head {
+    font-weight:bold;
+    overflow:hidden;
+    padding:10px 20px;
+    background-color:#f7f7f7;
+    border-bottom:solid 1px #ddd;
+
+    span {
+      float:left;
+    }
+    .index {
+      width:72px;
+    }
+    .name {
+      width: 24px + 10px + 150px;
+    }
+  }
+
+  .users {
+    margin-bottom:40px;
+
+    .user {
+      overflow:hidden;
+      border-bottom:solid 1px #ddd;
+      padding:10px 20px;
+
+      .index {
+        float:left;
+        color:#999;
+        height:22px;line-height:22px;
+        width:22px;
+        margin-right:50px;
+        text-align:center;
+        border:solid 1px white;
+      }
+
+      &:nth-child(1) {
+        .index {
+          background-color:#FFAF32;
+          border:solid 1px #FF7E1B;
+          box-shadow:0 0 1px white inset;
+          color:white;
+        }
+        .name {
+          font-weight:bold;
+        }
+      }
+
+      &:nth-child(2) {
+        .index {
+          background-color:#FFC263;
+          border:solid 1px #FF9E54;
+          box-shadow:0 0 1px white inset;
+          color:white;
+        }
+        .name {
+          font-weight:bold;
+        }
+      }
+
+      &:nth-child(3) {
+        .index {
+          background-color:#FFD593;
+          border:solid 1px #FFBE8D;
+          box-shadow:0 0 1px white inset;
+          color:white;
+        }
+        .name {
+          font-weight:bold;
+        }
+      }
+
+      .avatar {
+        float:left;
+        margin-right:10px;
+        img {width:24px;height:24px;}
+      }
+      .name {
+        float:left;
+        height: 24px;line-height:24px;
+        width:150px;
+      }
+      .prog{
+        width:200px;
+        float:left;
+        .page-progress{margin-bottom:0;margin-top:2px;}
+        .p{text-align:center;}
       }
     }
   }

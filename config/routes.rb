@@ -156,6 +156,7 @@ Eshare::Application.routes.draw do
   resources :courses, :shallow => true do
     member do
       post :checkin
+      get :users_rank
     end
 
     resources :chapters, :shallow => true do

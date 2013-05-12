@@ -89,6 +89,43 @@ class Course < ActiveRecord::Base
     self.chapters.map { |c| c.questions.count }.sum
   end
 
+  # 用户学习进度排名
+  def users_rank
+    sql = %~
+      SELECT * FROM
+      (
+        SELECT sum(course_ware_readings.read_percent) AS SUM, course_ware_readings.user_id AS USER_ID, courses.id
+        FROM course_ware_readings
+        JOIN course_wares ON course_wares.id = course_ware_readings.course_ware_id
+        JOIN chapters ON chapters.id = course_wares.chapter_id
+        JOIN courses ON courses.id = chapters.course_id
+        WHERE courses.id = #{self.id}
+        GROUP BY course_ware_readings.user_id
+      ) AS Q
+      ORDER BY SUM DESC
+    ~
+
+    result = Course.find_by_sql sql
+
+    index = 0 
+    result.map do |r|
+      index = index + 1
+      {
+        :user => User.find_by_id(r['USER_ID']),
+        :sum => r['SUM'],
+        :index => index
+      }
+    end
+  end
+
+  def user_rank_of(user)
+    users_rank.each do |r|
+      return r[:index] if user == r[:user]
+    end
+
+    return '无'
+  end
+
   module UserMethods
     def self.included(base)
       base.has_many :courses, :foreign_key => 'creator_id'
