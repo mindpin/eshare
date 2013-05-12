@@ -1,6 +1,9 @@
 .header
   %h1= @course.name
   .desc= @course.desc || t('common.course.course-no-desc')
+  = render_cell :tags, :public, :model => @course
+
+
 .page-course-show
   - signed_today = @course.signed_today?(current_user)
   .user-course-checkin{:class => signed_today ? 'signed' : ''}

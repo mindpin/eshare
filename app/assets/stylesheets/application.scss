@@ -355,6 +355,14 @@ ul.page-breadcrumb {
   margin-bottom:20px;
   .shower {
     height:34px;
+    label {
+      float:left;
+      margin-bottom:0;
+      height:26px;line-height:26px;
+      margin-right:10px;
+      margin-top:4px;
+    }
+
     i {
       float:left;
       margin-right:7px;
@@ -934,6 +942,10 @@ img.page-avatar {
       }
       .desc {
         color:#999;
+        margin-bottom:10px;
+      }
+      .page-tags {
+        margin-bottom:0;
       }
     }
 

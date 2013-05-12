@@ -1,0 +1,8 @@
+- if @tags.present?
+  .page-tags{:data => {:'taggable-id' => @taggable_id, :'taggable-type' => @taggable_type}}
+    .shower
+      %label 公共标签
+      %i.icon-tags
+      .tags
+        - @tags.each do |tag|
+          %a.tag{:href => "/tags/#{@sub_path}/#{tag.name}", :data => {:name => tag.name}}= tag.name
