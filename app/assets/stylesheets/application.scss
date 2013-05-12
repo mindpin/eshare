@@ -916,6 +916,51 @@ img.page-avatar {
       }
     }
 
+    .user-card{
+      background-color:white;
+      padding:10px;
+      @include floatfix;
+
+      .avatar {
+        float:left;
+      }
+
+      .info {
+        margin-left:74px;
+        .name {
+          margin-bottom:10px;
+          font-size:16px;
+          font-weight:bold;
+        }
+        .desc {
+          color:#666;
+        }
+      }
+
+      .percent {
+        clear:both;
+        @include floatfix;
+        margin-top:20px;
+
+        .d {
+          font-size:12px;
+          float:left;
+          line-height:16px;
+          margin-right:5px;
+        }
+
+        .page-progress {
+          width:140px;
+          float:left;
+          height:16px;
+        }
+        .p {
+          text-align:center;
+          font-size:12px;line-height:16px;
+        }
+      }
+    }
+
     .items {
       margin:0;
     }

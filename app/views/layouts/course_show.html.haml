@@ -21,6 +21,21 @@
           %i.icon-backward.icon-white
           %span 课程浏览
 
+      - if user_signed_in?
+        .user-card
+          .avatar= avatar current_user
+          .info
+            .name= current_user.name
+            .desc 正在进行学习
+
+          .clearfix
+          .percent
+            .d 学习进度：
+            - percent = @course.read_percent(current_user)
+            .page-progress.success.striped
+              .bar{:style => "width:#{percent};"}
+              .p= percent
+
       .items
 
 
