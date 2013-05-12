@@ -1,6 +1,7 @@
 module ApplicationHelper
   def truncate_u(text, length = 30, truncate_string = "...")
     # truncate(text, :length => length, :separator => truncate_string)
+    return '' if text.blank?
 
     re = ''
     count = 0
