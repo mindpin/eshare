@@ -143,6 +143,11 @@ body.app, body.admin {
       margin:0;height:$h;line-height:$h;
       margin-right:20px;
       display:inline-block;
+
+      i {
+        margin-top:6px;
+        margin-right:3px;
+      }
     }
     .page-desc {
       display:inline-block;height:$h;line-height:$h;
@@ -1430,5 +1435,89 @@ form .input.page-form-tag-inputer {
       margin-bottom:5px;
     }
     font-size:12px;
+  }
+}
+
+.page-tag-show.courses {
+  @include floatfix;
+
+  .base-tags {
+    width: 25%;
+    float:left;
+    @include border-box;
+    padding-left:20px;
+
+    .tag {
+      height:20px;line-height:20px;
+      background-color:#F7F7F7;
+      display:block;
+      padding:10px;
+      color:#333;
+      border-top:solid 1px white;
+      border-bottom:solid 1px #ddd;
+      border-left:solid 1px #ddd;
+      border-right:solid 1px #ddd;
+
+      &:first-child{
+        border-top:solid 1px #ddd;
+      }
+
+      &:hover {
+        background-color:white;
+        text-decoration:none;
+      }
+
+      i {
+        opacity:0.6;
+      }
+    }
+  }
+
+  .show-main {
+    width: 75%;
+    float:left;
+  }
+
+  .courses {
+    margin-bottom:15px;
+
+    .course {
+      border:solid 1px #e5e5e5;
+      box-shadow:0 0 5px rgba(0, 0, 0, 0.05);
+      padding:10px;
+      position:relative;
+      margin-bottom:20px;
+
+      .tile-left {
+        margin-right:15px;
+      }
+
+      .title {
+        font-size:16px;font-weight:normal;
+        margin-bottom:15px;
+      }
+      .desc {
+        color:#666;
+        margin-bottom:15px;
+      }
+
+      .tile-field.count {
+        color:#666;
+        margin-bottom:15px;
+        i {
+          margin-top:0;
+          opacity:0.6;
+        }
+        >span {
+          margin-right:10px;
+        }
+      }
+
+      .tile-field.percent {
+        .page-progress {
+          height:10px;
+        }
+      }
+    }
   }
 }
