@@ -20,6 +20,29 @@
         = link_to '/courses' do
           %i.icon-backward.icon-white
           %span 课程浏览
+      .course-link
+        %span 正在学习：
+        = link_to @course.name, "/courses/#{@course.id}"
+
+      - if user_signed_in?
+        .user-card
+          .avatar= avatar current_user
+          .info
+            .name= current_user.name
+            .desc 正在进行学习
+
+          .clearfix
+          .percent
+            .d 学习进度：
+            - percent = @course.read_percent(current_user)
+            .page-progress.success.striped
+              .bar{:style => "width:#{percent};"}
+              .p= percent
+          .rank
+            .d 
+              %span 个人排名：
+              %span.r #{@course.user_rank_of(current_user)}
+              %span= link_to '查看详细', "/courses/#{@course.id}/users_rank"
 
       .items
 

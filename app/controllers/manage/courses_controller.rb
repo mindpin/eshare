@@ -23,7 +23,10 @@ class Manage::CoursesController < ApplicationController
 
   def update
     @course = Course.find params[:id]
-    if @course.update_attributes(params[:course])
+    tags = params[:course_tags]
+
+    if @course.update_attributes(params[:course]) && 
+       @course.replace_public_tags(tags, current_user)
       return redirect_to :action => :index
     end
     render :action => :edit

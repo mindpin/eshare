@@ -68,3 +68,24 @@ jQuery ->
 
 
   new PageTags()
+
+
+jQuery ->
+  jQuery('.input.page-form-tag-inputer').each ->
+    $inputer = jQuery(this)
+
+    $textarea = $inputer.find('textarea')
+    $textarea.val $textarea.data('value')
+
+    console.log 111
+
+    $inputer.find('.tags-advice a.tag').on 'click', (evt)->
+      tagname = jQuery(this).data('name')
+
+      val = $textarea.val()
+      if jQuery.trim(val) == ''
+        $textarea.val(tagname)
+        return
+
+      if val.indexOf(tagname) < 0
+        $textarea.val("#{val}, #{tagname}")

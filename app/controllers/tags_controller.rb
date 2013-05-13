@@ -15,4 +15,9 @@ class TagsController < ApplicationController
     tagable.set_tag_list tags, :user => current_user
     render :text => 'ok'
   end
+
+  def courses
+    @tagname = params[:tagname]
+    @courses = Course.by_tag(@tagname).page(params[:page]).per(20)
+  end
 end

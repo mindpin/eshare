@@ -1,5 +1,4 @@
 class CourseFav < ActiveRecord::Base
-  simple_taggable
 
   attr_accessible :course, :user, :comment_content
 
@@ -37,7 +36,7 @@ class CourseFav < ActiveRecord::Base
       else
         course_fav.update_attributes(:comment_content => options[:comment_content])
       end
-      course_fav.set_tag_list(options[:tags]||"")
+      self.set_tag_list(options[:tags]||"",:user => user)
     end
   end
 end
