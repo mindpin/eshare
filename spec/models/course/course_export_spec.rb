@@ -1,21 +1,159 @@
 require "spec_helper"
 
+
 describe "导出 Course 相关数据到 zip" do
 
   before {
-    @course = FactoryGirl.create(:course)
     @dir = 'tmp/export_courses'
 
-    @yaml_file =  @course.convert_into_yaml
-    # @yaml_file = YAML.load_file(File.join(@dir, 'course.yaml'))
+    file = File.new(Rails.root.join(*%w[spec fixtures files 01.ppt]))
+    @file_entity_1 = FileEntity.create(:attach => file)
+
+    file = File.new(Rails.root.join(*%w[spec fixtures files 02.ppt]))
+    @file_entity_2 = FileEntity.create(:attach => file)
+
+    @course = FactoryGirl.create(
+      :course, 
+      :name => "course name", 
+      :desc => "course desc",
+      :cover => File.new(Rails.root.join(*%w[spec fixtures files cover.png]))
+    )
+    @chapter_1 = FactoryGirl.create(
+      :chapter, 
+      :course => @course,
+      :title => "chapter title one",
+      :desc => "chapter desc one"
+    )
+
+    @ware_1_1 = FactoryGirl.create(
+      :course_ware, 
+      :chapter => @chapter_1,
+      :title => "ware one",
+      :kind => 'ppt',
+      :file_entity => @file_entity_1
+    )
+
+    @ware_1_2 = FactoryGirl.create(
+      :course_ware, 
+      :chapter => @chapter_1,
+      :title => "video one",
+      :kind => 'youku',
+      :url => "http://v.youku.com/v_show/id_XNTM5MzYxNTE2.html"
+    )
+
+    @homework_1_1 = FactoryGirl.create(
+      :homework, 
+      :chapter => @chapter_1,
+      :title => "homework title one"
+    )
+
+    @homework_1_2 = FactoryGirl.create(
+      :homework, 
+      :chapter => @chapter_1,
+      :title => "homework title two"
+    )
+
+
+    @chapter_2 = FactoryGirl.create(
+      :chapter, 
+      :course => @course,
+      :title => "chapter title two",
+      :desc => "chapter desc two"
+    )
+
+    @ware_2_1 = FactoryGirl.create(
+      :course_ware, 
+      :chapter => @chapter_2,
+      :title => "ware one",
+      :kind => 'ppt',
+      :file_entity => @file_entity_2
+    )
+
+    @ware_2_2 = FactoryGirl.create(
+      :course_ware, 
+      :chapter => @chapter_2,
+      :title => "video one",
+      :kind => 'youku',
+      :url => "http://v.youku.com/v_show/id_XNTM5MzQ2ODI0.html"
+    )
+
+    @homework_2_1 = FactoryGirl.create(
+      :homework, 
+      :chapter => @chapter_2,
+      :title => "homework title one"
+    )
+
+    
+
+    @course.prepare_zip
+    @yaml_file = YAML.load_file(File.join(@dir, 'course.yaml'))
+
   }
 
+  after {FileUtils.rm_rf 'tmp/export_courses'}
+
+
+
   it "检测 YAML 格式" do
-    @yaml_file["course"].should == {"name"=>"course name", "desc"=>"course content\n", "cover"=>"cover.png", "chapters"=>[{"title"=>"chapter title one", "desc"=>"chapter desc one\n", "wares"=>[{"name"=>"ware one", "file"=>"01.ppt"}, {"name"=>"视频一", "youku"=>"http://v.youku.com/v_show/id_XNTM5MzYxNTE2.html"}, {"name"=>"视频二", "youku"=>"http://v.youku.com/v_show/id_XNTM5MzY3Nzc2.html"}], "homeworks"=>[{"title"=>"homework title one"}, {"title"=>"homework title two"}]}, {"title"=>"chapter title two", "desc"=>"chapter desc two\n", "wares"=>[{"name"=>"ware one", "file"=>"02.ppt"}, {"name"=>"视频一", "youku"=>"http://v.youku.com/v_show/id_XNTM5MzQ2ODI0.html"}], "homeworks"=>[{"title"=>"homework title one"}, {"title"=>"homework title two"}]}]}
+
+    @yaml_file.should == {
+      "name" => @course.name, 
+      "desc" => @course.desc, 
+      "cover" => File.basename(@course.cover.path),
+      "chapters" => [
+        {
+          "title" => @chapter_1.title,
+          "desc" => @chapter_1.desc,
+          "wares" => [
+            {
+              "name" => @ware_1_1.title,
+              "kind" => @ware_1_1.kind.to_s,
+              "file" => @ware_1_1.file_entity.saved_file_name
+            },
+            {
+              "name" => @ware_1_2.title,
+              "kind" => "youku",
+              "url" => @ware_1_2.url,
+            }
+          ],
+          "homeworks" => [
+            {
+              "title" => @homework_1_1.title,
+            },
+            {
+              "title" => @homework_1_2.title
+            }
+          ]
+        },
+        {
+          "title" => @chapter_2.title,
+          "desc" => @chapter_2.desc,
+          "wares" => [
+            {
+              "name" => @ware_2_1.title,
+              "kind" => @ware_1_1.kind.to_s,
+              "file" => @ware_2_1.file_entity.saved_file_name
+            },
+            {
+              "name" => @ware_2_2.title,
+              "kind" => "youku",
+              "url" => @ware_2_2.url,
+            }
+          ],
+          "homeworks" => [
+            {
+              "title" => @homework_2_1.title,
+            }
+          ]
+        }
+      ]
+    }
+
+
   end
 
   it "封面图片" do
-    cover = File.join(@dir, @yaml_file["course"]["cover"])
+    cover = File.join(@dir, File.basename(@yaml_file["cover"]))
 
     File.exist?(cover).should == true
   end
@@ -37,7 +175,10 @@ describe "导出 Course 相关数据到 zip" do
     describe "files 目录有 PPT" do
 
       it "ppt 检测" do
-        Dir[@files_dir + '/*.ppt'].should == [@files_dir + '/01.ppt', @files_dir + '/02.ppt']
+        file1 = File.join(@dir, "files", File.basename(@file_entity_1.attach.path))
+        file2 = File.join(@dir, "files", File.basename(@file_entity_2.attach.path))
+
+        Dir[@files_dir + '/*.ppt'].should == [file1, file2]
       end
 
     end
@@ -48,7 +189,7 @@ describe "导出 Course 相关数据到 zip" do
 
   describe "检测 zip 包" do
     before {
-      @zip = Course.export_zip_file
+      @zip = @course.make_zip
     }
 
     it "zip 存在" do
@@ -56,5 +197,6 @@ describe "导出 Course 相关数据到 zip" do
     end
 
   end
+
 
 end

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 class Course < ActiveRecord::Base
   include CourseZipImporter
+  include CourseZipExporter
   include CourseInteractive::CourseMethods
   include CourseSignModule
   include CourseReadPercent::CourseMethods
