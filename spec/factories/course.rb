@@ -1,4 +1,5 @@
 FactoryGirl.define do
+
   factory :course do
     sequence(:name){|n| "course_name_#{n}" }
     sequence(:cid){|n| n }
