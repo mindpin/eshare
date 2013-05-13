@@ -178,7 +178,7 @@ describe "导出 Course 相关数据到 zip" do
         file1 = File.join(@dir, "files", File.basename(@file_entity_1.attach.path))
         file2 = File.join(@dir, "files", File.basename(@file_entity_2.attach.path))
 
-        Dir[@files_dir + '/*.ppt'].should == [file1, file2]
+        Dir[@files_dir + '/*.ppt'].should =~ [file1, file2]
       end
 
     end
