@@ -17,19 +17,16 @@ module CourseZipExporter
   end
 
   def make_zip
-
-    folder = "tmp/export_courses"
-
     input_filenames = ["course.yaml", File.basename(self.cover.path)]
 
     zipfile_name = Rails.root.join("tmp/course#{Time.now.utc.strftime("%Y%m%d%H%M%S")}.zip")
 
     Zip::ZipFile.open(zipfile_name, Zip::ZipFile::CREATE) do |zipfile|
       input_filenames.each do |filename|
-        zipfile.add(filename, folder + '/' + filename)
+        zipfile.add(filename, @@target_path + '/' + filename)
       end
 
-      files = Dir[folder + "/files" + '/*.*']
+      files = Dir[@@target_path + "/files" + '/*.*']
       files.each do |file|
         zipfile.add("files/" + File.basename(file), file)
       end

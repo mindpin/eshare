@@ -6,9 +6,6 @@ FactoryGirl.define do
     sequence(:desc){|n| "desc_#{n}" }
     sequence(:syllabus){|n| "syllabus_#{n}" }
 
-    cover {FactoryGirl.create(:cover)}
-
-
     creator
   end
 end
