@@ -7,8 +7,8 @@ describe TermOutputReporter do
     let(:html1) {"<span style='color:white;'>Foo</span><br />"}
     let(:ansi2) {"\e[31mBar"}
     let(:html2) {"<span style='color:red;'>Bar</span><br />"}
-    let(:ansi3) {"Baz"}
-    let(:html3) {"<span style='color:white;'>Baz</span><br />"}
+    let(:ansi3) {"Baz\e[32mFuu"}
+    let(:html3) {"<span style='color:white;'>Baz</span><span style='color:green;'>Fuu</span><br />"}
 
     it "converts ansi1 to html1" do
       reporter.ansi_to_html(ansi1).should eq html1

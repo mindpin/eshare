@@ -8,6 +8,10 @@ class FayeClient
     self.provision.future.publish(channel, params)
   end
 
+  def self.publish_queue(channel, params)
+    self.provision.publish(channel, params)
+  end
+
   def self.provision
     Celluloid::Actor[:faye_pool] ||= self.pool(:size => 16)
   end
