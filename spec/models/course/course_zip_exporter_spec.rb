@@ -202,6 +202,8 @@ describe "导出 Course 相关数据到 zip" do
       @zip = @course.make_zip
     }
 
+    after {FileUtils.rm @zip}
+
     it "zip 存在" do
       File.exists?(@zip).should == true
     end
