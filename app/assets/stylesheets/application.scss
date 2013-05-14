@@ -25,7 +25,7 @@ body {
     color:#0088CC;
     text-decoration:none;
     outline:none !important;
-    &:hover, &:focus{
+    &:hover{
       color:#005580;
       text-decoration:underline;
     }
@@ -143,6 +143,11 @@ body.app, body.admin {
       margin:0;height:$h;line-height:$h;
       margin-right:20px;
       display:inline-block;
+
+      i {
+        margin-top:6px;
+        margin-right:3px;
+      }
     }
     .page-desc {
       display:inline-block;height:$h;line-height:$h;
@@ -350,11 +355,19 @@ ul.page-breadcrumb {
 }
 
 .page-tags {
-  @include floatfix;
+  overflow:hidden;
   padding:0;
   margin-bottom:20px;
   .shower {
     height:34px;
+    label {
+      float:left;
+      margin-bottom:0;
+      height:26px;line-height:26px;
+      margin-right:10px;
+      margin-top:4px;
+    }
+
     i {
       float:left;
       margin-right:7px;
@@ -626,30 +639,38 @@ img.page-avatar {
   .all-courses {
     float:left;
     width:72% + 2.666666%;
-    .courses {
-      border-top:solid 5px #005580;
-      width:100%;
-      margin-bottom:10px;
+    .tag-courses{
+      margin-bottom:20px;
+      .tagname {
+        color:#005580;
+        font-size:15px;
+        margin-bottom:5px;
+      }
+      .courses {
+        border-top:solid 5px #005580;
+        width:100%;
+        margin-bottom:10px;
 
-      td {
-        width:33.3333333%;
-        padding:0;
-        &.course {
-          border:solid 1px #ddd;
-        }
-        background-color:#F7F7F7;
-        
-        a {
-          display:block;
-          padding:5px 10px;
-          height:25px;line-height:25px;
-          color:#005580;
-          margin-right:-1px;
-          margin-bottom:-1px;
-          &:hover {
-            color:white;
-            background-color: #005580;
-            text-decoration:none;
+        td {
+          width:33.3333333%;
+          padding:0;
+          &.course {
+            border:solid 1px #ddd;
+            background-color:#F7F7F7;
+          }
+          
+          a {
+            display:block;
+            padding:5px 10px;
+            height:25px;line-height:25px;
+            color:#005580;
+            margin-right:-1px;
+            margin-bottom:-1px;
+            &:hover {
+              color:white;
+              background-color: #005580;
+              text-decoration:none;
+            }
           }
         }
       }
@@ -895,6 +916,69 @@ img.page-avatar {
       }
     }
 
+    .course-link {
+      background-color:white;
+      border:solid 1px #ddd;
+      padding:10px;
+    }
+
+    .user-card{
+      background-color:white;
+      padding:10px;
+      @include floatfix;
+      border:solid 1px #ddd;
+      border-right:0 none;
+      border-top:0 none;
+
+      .avatar {
+        float:left;
+      }
+
+      .info {
+        margin-left:74px;
+        .name {
+          margin-bottom:10px;
+          font-size:16px;
+          font-weight:bold;
+        }
+        .desc {
+          color:#666;
+        }
+      }
+
+      .percent {
+        clear:both;
+        @include floatfix;
+        margin-top:20px;
+        margin-bottom:5px;
+
+        .d {
+          font-size:12px;
+          float:left;
+          line-height:16px;
+          margin-right:5px;
+        }
+
+        .page-progress {
+          width:140px;
+          float:left;
+          height:16px;
+        }
+        .p {
+          text-align:center;
+          font-size:12px;line-height:16px;
+        }
+      }
+
+      .rank {
+        font-size:12px;
+        .r {
+          color:red;
+          margin-right:10px;
+        }
+      }
+    }
+
     .items {
       margin:0;
     }
@@ -926,6 +1010,10 @@ img.page-avatar {
       }
       .desc {
         color:#999;
+        margin-bottom:10px;
+      }
+      .page-tags {
+        margin-bottom:0;
       }
     }
 
@@ -1367,7 +1455,6 @@ img.page-avatar {
 }
 .page-chart-label.chapter-read-pie {
   position:absolute;
-  z-index:1;
   width:100px;
   top:50%;left:50%;margin-left:-50px;margin-top:-30px;
   .t{font-size:14px;text-align:center;height:30px;line-height:30px;}
@@ -1395,6 +1482,207 @@ img.page-avatar {
       .churl {
         margin-bottom:10px;
         font-size:12px;
+      }
+    }
+  }
+}
+
+form .input.page-form-tag-inputer {
+  margin-bottom:20px;
+  overflow:hidden;
+  .tags-advice{
+    width:550px;
+    .desc {
+      font-size:12px;
+      color:#666;
+      margin-bottom:5px;
+    }
+    font-size:12px;
+  }
+}
+
+.page-tag-show.courses {
+  @include floatfix;
+
+  .base-tags {
+    width: 25%;
+    float:left;
+    @include border-box;
+    padding-left:20px;
+
+    .tag {
+      height:20px;line-height:20px;
+      background-color:#F7F7F7;
+      display:block;
+      padding:10px;
+      color:#333;
+      border-top:solid 1px white;
+      border-bottom:solid 1px #ddd;
+      border-left:solid 1px #ddd;
+      border-right:solid 1px #ddd;
+
+      &:first-child{
+        border-top:solid 1px #ddd;
+      }
+
+      &:hover {
+        background-color:white;
+        text-decoration:none;
+      }
+
+      i {
+        opacity:0.6;
+      }
+    }
+  }
+
+  .show-main {
+    width: 75%;
+    float:left;
+  }
+
+  .courses {
+    margin-bottom:15px;
+
+    .course {
+      border:solid 1px #e5e5e5;
+      box-shadow:0 0 5px rgba(0, 0, 0, 0.05);
+      padding:10px;
+      position:relative;
+      margin-bottom:20px;
+
+      .tile-left {
+        margin-right:15px;
+      }
+
+      .title {
+        font-size:16px;font-weight:normal;
+        margin-bottom:15px;
+      }
+      .desc {
+        color:#666;
+        margin-bottom:15px;
+      }
+
+      .tile-field.count {
+        color:#666;
+        margin-bottom:15px;
+        i {
+          margin-top:0;
+          opacity:0.6;
+        }
+        >span {
+          margin-right:10px;
+        }
+      }
+
+      .tile-field.percent {
+        .page-progress {
+          height:10px;
+        }
+      }
+    }
+  }
+}
+
+.page-course-users-rank {
+  margin:-20px;
+  min-height:300px;
+
+  .stat {
+    background-color:#f7f7f7;
+    border-bottom:solid 1px #ddd;
+    padding:20px;
+    .total {margin-right:20px;}
+  }
+
+  .users-head {
+    font-weight:bold;
+    overflow:hidden;
+    padding:10px 20px;
+    background-color:#f7f7f7;
+    border-bottom:solid 1px #ddd;
+
+    span {
+      float:left;
+    }
+    .index {
+      width:72px;
+    }
+    .name {
+      width: 24px + 10px + 150px;
+    }
+  }
+
+  .users {
+    margin-bottom:40px;
+
+    .user {
+      overflow:hidden;
+      border-bottom:solid 1px #ddd;
+      padding:10px 20px;
+
+      .index {
+        float:left;
+        color:#999;
+        height:22px;line-height:22px;
+        width:22px;
+        margin-right:50px;
+        text-align:center;
+        border:solid 1px white;
+      }
+
+      &:nth-child(1) {
+        .index {
+          background-color:#FFAF32;
+          border:solid 1px #FF7E1B;
+          box-shadow:0 0 1px white inset;
+          color:white;
+        }
+        .name {
+          font-weight:bold;
+        }
+      }
+
+      &:nth-child(2) {
+        .index {
+          background-color:#FFC263;
+          border:solid 1px #FF9E54;
+          box-shadow:0 0 1px white inset;
+          color:white;
+        }
+        .name {
+          font-weight:bold;
+        }
+      }
+
+      &:nth-child(3) {
+        .index {
+          background-color:#FFD593;
+          border:solid 1px #FFBE8D;
+          box-shadow:0 0 1px white inset;
+          color:white;
+        }
+        .name {
+          font-weight:bold;
+        }
+      }
+
+      .avatar {
+        float:left;
+        margin-right:10px;
+        img {width:24px;height:24px;}
+      }
+      .name {
+        float:left;
+        height: 24px;line-height:24px;
+        width:150px;
+      }
+      .prog{
+        width:200px;
+        float:left;
+        .page-progress{margin-bottom:0;margin-top:2px;}
+        .p{text-align:center;}
       }
     }
   }

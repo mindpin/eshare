@@ -23,16 +23,22 @@ Eshare::Application.routes.draw do
 
   resources :announcements
 
-  resources :tags do
-    collection do
-      put :set_tags
-    end
-  end
-
   resources :surveys, :shallow => true do
     resources :survey_items
     resources :survey_results
   end
+end
+
+# 标签
+Eshare::Application.routes.draw do
+  resources :tags do
+    collection do
+      put :set_tags
+    end
+
+  end
+
+  get '/tags/courses/:tagname' => 'tags#courses'
 end
 
 # 短消息
@@ -150,6 +156,7 @@ Eshare::Application.routes.draw do
   resources :courses, :shallow => true do
     member do
       post :checkin
+      get :users_rank
     end
 
     resources :chapters, :shallow => true do

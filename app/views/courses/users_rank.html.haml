@@ -1,0 +1,27 @@
+.header
+  %h1 学习排行榜：#{@course.name}
+  .desc 这里显示了所有人的学习进度排名
+
+.page-course-users-rank
+  .stat
+    %span.total 总共 #{@rank.count} 人学习本课程
+    - if user_signed_in?
+      %span.mine 我的排名：#{@course.user_rank_of(current_user)}
+  .users-head
+    %span.index 排名
+    %span.name 学友
+    %span.percent 学习进度
+
+  .users
+    - @rank.each do |r|
+      - user = r[:user]
+      - index = r[:index]
+      - percent = @course.read_percent(user)
+      .user
+        .index= index
+        .avatar= avatar user, :small
+        .name= user.name
+        .prog
+          .page-progress.success.striped
+            .bar{:style => "width:#{percent};"}
+            .p= percent

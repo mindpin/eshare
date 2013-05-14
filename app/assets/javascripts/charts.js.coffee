@@ -87,6 +87,7 @@ jQuery ->
             plotBackgroundColor: null
             plotBorderWidth: null
             plotShadow: false
+            backgroundColor: null
 
           title:
             text: null

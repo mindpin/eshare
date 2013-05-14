@@ -1,6 +1,17 @@
 module ApplicationHelper
   def truncate_u(text, length = 30, truncate_string = "...")
-    truncate(text, :length => length, :separator => truncate_string)
+    # truncate(text, :length => length, :separator => truncate_string)
+    return '' if text.blank?
+
+    re = ''
+    count = 0
+    text.chars.each do |char|
+      re = re + char
+      count = count + (char.ascii_only? ? 0.5 : 1)
+      return "#{re}#{truncate_string}" if count >= length
+    end
+
+    return re
   end
 
   def page_file_uploader

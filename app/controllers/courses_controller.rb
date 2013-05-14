@@ -1,6 +1,6 @@
 class CoursesController < ApplicationController
   before_filter :pre_load
-  layout 'course_show', :only => [:show]
+  layout 'course_show', :only => [:show, :users_rank]
 
   def pre_load
     @course = Course.find(params[:id]) if params[:id]
@@ -28,5 +28,10 @@ class CoursesController < ApplicationController
       :streak => @course.current_streak_for(current_user),
       :order => @course.today_sign_order_of(current_user)
     }
+  end
+
+  # 用户排名
+  def users_rank
+    @rank = @course.users_rank
   end
 end

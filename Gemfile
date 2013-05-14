@@ -15,6 +15,7 @@ group :assets do
 end
 
 group :test do
+  gem "awesome_print"
   gem 'rspec-rails', '2.13.0'
   gem 'database_cleaner', '0.9.1' # 加速测试时数据库清理
   gem 'factory_girl_rails', '~> 4.2.1'
@@ -118,7 +119,7 @@ gem 'odocuconv',
 ## tag
 gem 'mindpin-simple-tags',
     :git => 'git://github.com/mindpin/mindpin-simple-tags.git',
-    :tag => '0.0.2'
+    :tag => '0.0.3'
 
 # feed
 gem 'mindpin-feeds',
