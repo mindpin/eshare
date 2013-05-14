@@ -59,9 +59,7 @@ describe MediaResource do
     before do
       @ben7th = FactoryGirl.create :user, :teacher, :login => 'ben7th', :name => '宋亮'
       @lifei = FactoryGirl.create :user, :teacher, :login => 'lifei', :name => '李飞'
-      # 先清空预设数据
-      @ben7th.media_resources.destroy_all
-      @lifei.media_resources.destroy_all
+      
       MediaResource.create(
         :name    => '北极熊',
         :is_dir  => true,
@@ -908,7 +906,9 @@ describe MediaResource do
                    :role => 'admin'
 
       dir_names = YAML.load_file(Rails.root.join('config/default_media_resource_dir.yaml'))["default_dir"]
-
+      user.media_resources.root_res.dir_res.should =~ []
+      user.set_default_media_resource_dirs
+      user.set_default_media_resource_dirs
       user.media_resources.root_res.dir_res.map(&:name).should =~ dir_names
     }
       
