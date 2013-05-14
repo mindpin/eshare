@@ -2,6 +2,7 @@ require 'zip/zip'
 
 module CourseZipExporter
   @@target_path = 'tmp/export_courses'
+  @@target_zip = "tmp/course#{Time.now.utc.strftime("%Y%m%d%H%M%S")}.zip"
 
   def generate_yaml_file
     FileUtils.mkdir_p(Rails.root.join(@@target_path))
@@ -106,7 +107,7 @@ module CourseZipExporter
     def do_zip
       input_filenames = ["course.yaml", File.basename(self.cover.path)]
 
-      zipfile_name = Rails.root.join("tmp/course#{Time.now.utc.strftime("%Y%m%d%H%M%S")}.zip")
+      zipfile_name = Rails.root.join(@@target_zip)
 
       Zip::ZipFile.open(zipfile_name, Zip::ZipFile::CREATE) do |zipfile|
         input_filenames.each do |filename|
