@@ -59,6 +59,7 @@ class SelectCourseApply < ActiveRecord::Base
   module UserMethods
     def self.included(base)
       base.has_many :select_course_applies
+      base.has_many :apply_courses, :through => :select_course_applies, :source => :course
       base.extend ClassMethods
     end
 
@@ -72,7 +73,7 @@ class SelectCourseApply < ActiveRecord::Base
     # 7 用户发起一个选课请求
     def select_course(course)
       return if course.is_apply_select?(self) || course.is_selected?(self)
-      if self.courses.include?(course)
+      if self.apply_courses.include?(course)
         self.select_course_applies.by_course(course).first.update_attributes :status => STATUS_REQUEST
       else
         self.select_course_applies.create(:course => course, :status => STATUS_REQUEST)
