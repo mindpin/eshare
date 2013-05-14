@@ -19,14 +19,7 @@ class SelectCourseApply < ActiveRecord::Base
   module CourseMethods
     def self.included(base)
       base.has_many :select_course_applies
-      base.extend ClassMethods 
-    end
-
-    module ClassMethods
-      def by_status_and_user(status,user)
-        Course.joins(:select_course_applies).where(
-        'select_course_applies.status = ? AND select_course_applies.user_id = ?',status, user.id)
-      end
+      base.has_many :apply_users, :through => :select_course_applies, :source => :user
     end
 
     # 8 查询一个课程的所有”没有处理“的选课请求(status == REQUEST)
@@ -36,12 +29,12 @@ class SelectCourseApply < ActiveRecord::Base
 
     # 6 查询课程被哪些用户“选中”（status == ACCEPT 的情况）
     def selected_users
-      User.by_status_and_course(STATUS_ACCEPT,self)
+      _apply_users_by_status(STATUS_ACCEPT)
     end
 
     # 5 查询课程被哪些用户“选了”（status == REQUEST 的情况）
     def apply_select_users
-      User.by_status_and_course(STATUS_REQUEST,self)
+      _apply_users_by_status(STATUS_REQUEST)
     end
 
     # 4 判断一个用户是否"选中"某门课（status == ACCEPT 的情况）
@@ -51,23 +44,19 @@ class SelectCourseApply < ActiveRecord::Base
 
     #3 判断一个用户是否“选了”某门课（status == REQUEST 的情况）
     def is_apply_select?(user)
-      # user.apply_select_courses.include?(SelectCourseApply.find_by_course_id_and_user_id(self.id, user.id))
       user.apply_select_courses.include?(self)
     end
+
+    private
+      def _apply_users_by_status(status)
+        self.apply_users.where('select_course_applies.status = ?', status)
+      end
   end
 
   module UserMethods
     def self.included(base)
       base.has_many :select_course_applies
       base.has_many :apply_courses, :through => :select_course_applies, :source => :course
-      base.extend ClassMethods
-    end
-
-    module ClassMethods
-      def by_status_and_course(status,course)
-        User.joins(:select_course_applies).where(
-        'select_course_applies.status = ? AND select_course_applies.course_id = ?',status, course.id)
-      end
     end
 
     # 7 用户发起一个选课请求
@@ -82,13 +71,20 @@ class SelectCourseApply < ActiveRecord::Base
 
     # 2 查询用户“选中”的课程列表（status == ACCEPT 的情况）
     def selected_courses
-      Course.by_status_and_user(STATUS_ACCEPT,self)
+      _apply_courses_by_status(STATUS_ACCEPT)
     end
 
     # 1 查询用户"选了"的课程列表（status == REQUEST 的情况）
     def apply_select_courses
-      Course.by_status_and_user(STATUS_REQUEST,self)
+      _apply_courses_by_status(STATUS_REQUEST)
     end
+
+    private
+      def _apply_courses_by_status(status)
+        self.apply_courses.where(
+          'select_course_applies.status = ?', status
+        )
+      end
   end
 
 end
