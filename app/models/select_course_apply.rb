@@ -73,7 +73,7 @@ class SelectCourseApply < ActiveRecord::Base
     # 7 用户发起一个选课请求
     def select_course(course)
       return if course.is_apply_select?(self) || course.is_selected?(self)
-      if self.courses.include?(courses)
+      if self.courses.include?(course)
         self.select_course_applies.by_course(course).first.update_attributes :status => STATUS_REQUEST
       else
         self.select_course_applies.create(:course => course, :status => STATUS_REQUEST)

@@ -112,6 +112,16 @@ describe SelectCourseApply do
         SelectCourseApply.all.count
       }.by(1) 
     }
+
+    it { 
+      expect {
+        user.select_course(course)
+        user.select_course_applies.by_course(course).first.update_attributes :status => 'REJECT'
+        user.select_course(course)
+      }.to change {
+        user.apply_select_courses.all.count
+      }.by(1)
+    }
   end
 
 
