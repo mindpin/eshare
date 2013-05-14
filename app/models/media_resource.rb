@@ -133,6 +133,18 @@ class MediaResource < ActiveRecord::Base
     included do
       has_many :media_resources, :foreign_key => 'creator_id'
     end
+
+    def set_default_media_resource_dirs
+      return true if !self.media_resources.root_res.dir_res.blank?
+      
+      names = YAML.load_file(Rails.root.join('config/default_media_resource_dir.yaml'))["default_dir"]
+      names.each do |name|
+        MediaResource.create_folder(self, File.join('/', name))
+      end
+      return true
+    rescue
+      true
+    end
   end
 
 end
