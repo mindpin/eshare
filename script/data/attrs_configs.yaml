@@ -1,0 +1,77 @@
+---
+- attrs_config
+- - role: student
+    field: 身份证号
+    field_type: string
+  - role: student
+    field: 性别
+    field_type: string
+  - role: student
+    field: 出生日期
+    field_type: datetime
+  - role: student
+    field: 籍贯
+    field_type: string
+  - role: student
+    field: 出生地
+    field_type: string
+  - role: student
+    field: 民族
+    field_type: string
+  - role: student
+    field: 宗教信仰
+    field_type: string
+  - role: student
+    field: 国籍
+    field_type: string
+  - role: student
+    field: 港澳台侨
+    field_type: string
+  - role: student
+    field: 户口性质
+    field_type: string
+  - role: student
+    field: 户口所在地
+    field_type: string
+  - role: student
+    field: 户口所在区县
+    field_type: string
+  - role: student
+    field: 现住址
+    field_type: string
+  - role: student
+    field: 现住址所在区县
+    field_type: string
+  - role: student
+    field: 联系电话
+    field_type: string
+  - role: student
+    field: 通信地址
+    field_type: string
+  - role: student
+    field: 邮政编码
+    field_type: string
+  - role: student
+    field: 电子信箱
+    field_type: string
+  - role: student
+    field: 主页地址
+    field_type: string
+  - role: student
+    field: 特长
+    field_type: string
+  - role: student
+    field: 家庭住址
+    field_type: string
+  - role: student
+    field: 家庭邮政编码
+    field_type: string
+  - role: student
+    field: 家庭电话
+    field_type: string
+  - role: student
+    field: 家庭联系人
+    field_type: string
+  - role: student
+    field: 家庭电子信箱
+    field_type: string
