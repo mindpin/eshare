@@ -47,16 +47,20 @@ module CourseZipImporter
                                    :creator => creator)
         end
 
-        chapter_info[:wares].each do |courseware_info|
-          ware = chapter.course_wares.new(:title   => courseware_info[:name],
-                                          :creator => creator)
-          if courseware_info[:file]
-            file = file(File.join('files', courseware_info[:file]))
+        chapter_info[:wares].each do |courseware|
+          ware = chapter.course_wares.new(
+            :title => courseware[:name],
+            :creator => creator
+          )
+
+          case courseware[:kind]
+          when 'youku'
+            ware.url = courseware[:url]
+          else
+            file = file(File.join('files', courseware[:file]))
             ware.file_entity = FileEntity.create(:attach => file)
-          elsif courseware_info[:youku]
-            ware.url = courseware_info[:youku]
-            ware.kind = 'youku'
           end
+          ware.kind = courseware[:kind]
 
           ware.save
         end
