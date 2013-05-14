@@ -2,6 +2,8 @@
 class Course < ActiveRecord::Base
   include CourseZipImporter
   include CourseZipExporter
+  include YamlCoursesExporter
+  include YamlCoursesImporter
   include CourseInteractive::CourseMethods
   include CourseSignModule
   include CourseReadPercent::CourseMethods
