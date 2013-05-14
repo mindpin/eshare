@@ -8,6 +8,7 @@ class Course < ActiveRecord::Base
   include YoukuVideoList::CourseMethods
   include TudouVideoList::CourseMethods
   include CourseFav::CourseMethods
+  include SelectCourseApply::CourseMethods
 
   simple_taggable
 
