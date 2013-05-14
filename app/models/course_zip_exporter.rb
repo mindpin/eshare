@@ -11,30 +11,16 @@ module CourseZipExporter
   end
 
 
-  def prepare_zip
+  def build_zip_dir
     generate_yaml_file
     copy_cover
   end
 
   def make_zip
-    input_filenames = ["course.yaml", File.basename(self.cover.path)]
-
-    zipfile_name = Rails.root.join("tmp/course#{Time.now.utc.strftime("%Y%m%d%H%M%S")}.zip")
-
-    Zip::ZipFile.open(zipfile_name, Zip::ZipFile::CREATE) do |zipfile|
-      input_filenames.each do |filename|
-        zipfile.add(filename, @@target_path + '/' + filename)
-      end
-
-      files = Dir[@@target_path + "/files" + '/*.*']
-      files.each do |file|
-        zipfile.add("files/" + File.basename(file), file)
-      end
-    end
-
-    zipfile_name
-
+    build_zip_dir
+    do_zip
   end
+  
 
   private
 
@@ -43,13 +29,13 @@ module CourseZipExporter
       cover_name = File.basename(self.cover.path)
 
       course_hash = {
-        "name" => self.name, 
-        "desc" => self.desc, 
-        "cover" => cover_name,
-        "chapters" => build_chapters
+        :name => self.name, 
+        :desc => self.desc, 
+        :cover => cover_name,
+        :chapters => build_chapters
       }
 
-      course_hash.to_yaml
+      {:course => course_hash}.to_yaml
       
     end
 
@@ -67,10 +53,10 @@ module CourseZipExporter
         homeworks = build_homeworks(chapter)
 
         chapters_arr << {
-          "title" => chapter.title,
-          "desc" => chapter.desc,
-          "wares" => wares,
-          "homeworks" => homeworks
+          :title => chapter.title,
+          :desc => chapter.desc,
+          :wares => wares,
+          :homeworks => homeworks
         }
       end
 
@@ -79,12 +65,12 @@ module CourseZipExporter
 
     def build_wares(ware)
       if ware.is_web_video?
-        return {"name" => ware.title, "kind" => "youku", "url" => ware.url}
+        return {:name => ware.title, :kind => "youku", :url => ware.url}
       end
       
-      return {"name" => ware.title} if ware.file_entity.nil?
+      return {:name => ware.title} if ware.file_entity.nil?
 
-      {"name" => ware.title, "kind" => ware.kind, "file" => ware.file_entity.saved_file_name}
+      {:name => ware.title, :kind => ware.kind, :file => ware.file_entity.saved_file_name}
        
     end
 
@@ -94,7 +80,7 @@ module CourseZipExporter
       homeworks = []
 
       chapter.homeworks.each do |homework|
-        homeworks << {"title" => homework.title}
+        homeworks << {:title => homework.title}
       end
       homeworks
     end
@@ -115,6 +101,25 @@ module CourseZipExporter
 
       filename = File.basename(ware.file_entity.attach.path)
       FileUtils.copy_file(ware.file_entity.attach.path, File.join(files_dir, filename))
+    end
+
+    def do_zip
+      input_filenames = ["course.yaml", File.basename(self.cover.path)]
+
+      zipfile_name = Rails.root.join("tmp/course#{Time.now.utc.strftime("%Y%m%d%H%M%S")}.zip")
+
+      Zip::ZipFile.open(zipfile_name, Zip::ZipFile::CREATE) do |zipfile|
+        input_filenames.each do |filename|
+          zipfile.add(filename, @@target_path + '/' + filename)
+        end
+
+        files = Dir[@@target_path + "/files" + '/*.*']
+        files.each do |file|
+          zipfile.add("files/" + File.basename(file), file)
+        end
+      end
+
+      zipfile_name
     end
 
 
