@@ -59,7 +59,6 @@ class SelectCourseApply < ActiveRecord::Base
   module UserMethods
     def self.included(base)
       base.has_many :select_course_applies
-      base.has_many :courses, :through => :select_course_applies
       base.extend ClassMethods
     end
 
