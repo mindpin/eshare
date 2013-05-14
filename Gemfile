@@ -69,6 +69,8 @@ gem 'iconv', '1.0.2'
 # 分类目录
 gem 'awesome_nested_set'
 
+# 权限管理
+gem "cancan", "~> 1.6.10"
 
 # 自己写的 gem，都不指定版本号，如果有重大修改，通过GIT TAG解决
 
@@ -130,6 +132,9 @@ gem 'mindpin-feeds',
 gem 'simple-redis-cache',
     :git => 'git://github.com/mindpin/simple-redis-cache.git',
     :tag => '0.0.1'
+
+gem 'simple_comment',
+    :git => 'git://github.com/kaid/simple_comment.git'
 
 gem 'mina',
     :git => 'git://github.com/fushang318/mina.git'
