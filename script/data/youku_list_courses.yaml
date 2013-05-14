@@ -1,0 +1,498 @@
+---
+- course
+- - url: http://www.youku.com/show_page/id_zaa64880eccaa11e1b356.html
+    tags: 动画 转载 动漫创作
+  - url: http://www.youku.com/show_page/id_zaac1c4d2ade811e1b356.html
+    tags: 人物 转载 经济管理与法律
+  - url: http://www.youku.com/show_page/id_z9aaa774e219a11e2b52a.html
+    tags: 外语 转载 语言文学
+  - url: http://www.youku.com/show_page/id_z20f219d82fb011e2b356.html
+    tags: 国际关系 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_zf2652bc46f3211e2b16f.html
+    tags: 时尚 转载 生活
+  - url: http://www.youku.com/show_page/id_zc275ad0ca30e11e2b356.html
+    tags: 外语 转载 语言文学
+  - url: http://www.youku.com/show_page/id_zf9104dacccab11e19013.html
+    tags: 外语 转载 语言文学
+  - url: http://www.youku.com/show_page/id_z1c50ebdea30f11e2b16f.html
+    tags: 外语 转载 语言文学
+  - url: http://www.youku.com/show_page/id_zb6a0978844e711e2b16f.html
+    tags: ted 转载 生活
+  - url: http://www.youku.com/show_page/id_z7f9fabdce5ad11e1b52a.html
+    tags: ted 转载 生活
+  - url: http://www.youku.com/show_page/id_zd6d898b8e5ae11e1b16f.html
+    tags: ted 转载 教育学
+  - url: http://www.youku.com/show_page/id_z24651c3ce5af11e1b52a.html
+    tags: ted 转载 艺术审美
+  - url: http://www.youku.com/show_page/id_z503dc0f2136811e2b2ac.html
+    tags: ted 转载 生活
+  - url: http://www.youku.com/show_page/id_z0221e5b4b12b11e1b16f.html
+    tags: ted 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_zeb07b5e26e9f11e2b16f.html
+    tags: ted 转载 生活
+  - url: http://www.youku.com/show_page/id_z184701a244e811e2b2ac.html
+    tags: ted 转载 医学
+  - url: http://www.youku.com/show_page/id_z51a291eab12d11e196ac.html
+    tags: ted 转载 计算机技术
+  - url: http://www.youku.com/show_page/id_z34ec37506ea011e2b16f.html
+    tags: ted 转载 哲学与伦理
+  - url: http://www.youku.com/show_page/id_z46dc7968a31411e299f6.html
+    tags: ted 转载 生活
+  - url: http://www.youku.com/show_page/id_z932145286e9f11e29498.html
+    tags: ted 转载 认知与心理
+  - url: http://www.youku.com/show_page/id_z01257956a31411e2a19e.html
+    tags: ted 转载 认知与心理
+  - url: http://www.youku.com/show_page/id_zff5d3d46137311e2b2ac.html
+    tags: ted 转载 生活
+  - url: http://www.youku.com/show_page/id_z6f8e356c44e711e2b356.html
+    tags: ted 转载 艺术审美
+  - url: http://www.youku.com/show_page/id_z93eece4aa31411e296ac.html
+    tags: ted 转载 生物与环境科学
+  - url: http://www.youku.com/show_page/id_z403e2d26137811e2b52a.html
+    tags: ted 转载 生物与环境科学
+  - url: http://www.youku.com/show_page/id_zb96ff31eb13011e1b52a.html
+    tags: ted 转载 计算机技术
+  - url: http://www.youku.com/show_page/id_z5f90ac54b12f11e1b16f.html
+    tags: ted 转载 天文与地理
+  - url: http://www.youku.com/show_page/id_zbf00dc5ea31411e296ac.html
+    tags: ted 转载 医学
+  - url: http://www.youku.com/show_page/id_zdd2f02d244e611e29013.html
+    tags: ted 转载 认知与心理
+  - url: http://www.youku.com/show_page/id_zd2a17e68b12e11e1b52a.html
+    tags: ted 转载 生物与环境科学
+  - url: http://www.youku.com/show_page/id_z8977ea26b12c11e1b16f.html
+    tags: ted 转载 生物与环境科学
+  - url: http://www.youku.com/show_page/id_z7d1adf34e5ae11e1b356.html
+    tags: ted 转载 艺术审美
+  - url: http://www.youku.com/show_page/id_zf1e76964b12d11e1b16f.html
+    tags: ted 转载 艺术审美
+  - url: http://www.youku.com/show_page/id_z7d19086a136e11e2b52a.html
+    tags: ted 转载 教育学
+  - url: http://www.youku.com/show_page/id_z2c8625e06e9f11e2b2ac.html
+    tags: ted 转载 机械与工程
+  - url: http://www.youku.com/show_page/id_z1e6a30b4b13011e1b16f.html
+    tags: ted 转载 经济管理与法律
+  - url: http://www.youku.com/show_page/id_z0a49f8622ecb11e2b356.html
+    tags: 思维 转载 数学与逻辑学
+  - url: http://www.youku.com/show_page/id_z3f176034a31011e2a19e.html
+    tags: 计算机理论 转载 计算机技术
+  - url: http://www.youku.com/show_page/id_z7ca9263aa31011e2b356.html
+    tags: 互联网开发 转载 计算机技术
+  - url: http://www.youku.com/show_page/id_zc0c47b58a31011e29498.html
+    tags: 软件开发 转载 计算机技术
+  - url: http://www.youku.com/show_page/id_zf876d3f2a31011e2b356.html
+    tags: 软件开发 转载 计算机技术
+  - url: http://www.youku.com/show_page/id_z2d051bb0a31111e2b2ac.html
+    tags: 人工智能 转载 计算机技术
+  - url: http://www.youku.com/show_page/id_z68a8a1a0a31111e2be40.html
+    tags: 商业 转载 经济管理与法律
+  - url: http://www.youku.com/show_page/id_z994c2552a31111e2b356.html
+    tags: 数学 转载 数学与逻辑学
+  - url: http://www.youku.com/show_page/id_z9a0b6580dc6411e1b52a.html
+    tags: 电影 转载 艺术审美
+  - url: http://www.youku.com/show_page/id_z20283d1e668f11e2b356.html
+    tags: 心理 转载 认知与心理 生活
+  - url: http://www.youku.com/show_page/id_zbe5d2dc6669111e2b16f.html
+    tags: 商业 转载 经济管理与法律 认知与心理
+  - url: http://www.youku.com/show_page/id_zcd1e73e08c6811e2a19e.html
+    tags: 商业 转载 经济管理与法律
+  - url: http://www.youku.com/show_page/id_z4e3168f8611111e2b16f.html
+    tags: 商业 转载 经济管理与法律
+  - url: http://www.youku.com/show_page/id_zedd12142611011e2b356.html
+    tags: 商业 转载 经济管理与法律
+  - url: http://www.youku.com/show_page/id_ze9449aa8ab1d11e29498.html
+    tags: 文艺 转载 历史与社会 生活
+  - url: http://www.youku.com/show_page/id_z204f695c347611e29498.html
+    tags: 商业 转载 经济管理与法律
+  - url: http://www.youku.com/show_page/id_zded8ca0e2ec611e296ac.html
+    tags: 商业 转载 经济管理与法律
+  - url: http://www.youku.com/show_page/id_z0029ef34610e11e2b2ac.html
+    tags: 商业 转载 经济管理与法律
+  - url: http://www.youku.com/show_page/id_zbdc2699c611111e2b356.html
+    tags: 商业 转载 经济管理与法律
+  - url: http://www.youku.com/show_page/id_z4f7c726c611011e29498.html
+    tags: 商业 转载 经济管理与法律
+  - url: http://www.youku.com/show_page/id_z77153314adeb11e1b52a.html
+    tags: 商业 转载 经济管理与法律
+  - url: http://www.youku.com/show_page/id_z85cb97fecca911e1a19e.html
+    tags: 动画 转载 动漫创作 艺术审美
+  - url: http://www.youku.com/show_page/id_z98efc6cc2fad11e29498.html
+    tags: 励志 转载 生活
+  - url: http://www.youku.com/show_page/id_z0155ffa22fad11e2b16f.html
+    tags: 励志 转载 生活
+  - url: http://www.youku.com/show_page/id_z4117ad0648b311e2b2ac.html
+    tags: 法律 转载 经济管理与法律 历史与社会
+  - url: http://www.youku.com/show_page/id_zdf8e40a2610f11e2b2ac.html
+    tags: 商业 转载 经济管理与法律
+  - url: http://www.youku.com/show_page/id_z60408de04a7711e296ac.html
+    tags: 其它 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_za49a03cc2fb011e2b52a.html
+    tags: 媒体 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_z5caf53bcab1d11e2be40.html
+    tags: 生物 转载 生物与环境科学
+  - url: http://www.youku.com/show_page/id_za4b7e104321611e2b52a.html
+    tags: 曲艺 转载 艺术审美
+  - url: http://www.youku.com/show_page/id_zc4432264140c11e1a046.html
+    tags: 道德伦理 转载 哲学与伦理
+  - url: http://www.youku.com/show_page/id_z3528b0d0ab1e11e2b16f.html
+    tags: 励志 转载 生活
+  - url: http://www.youku.com/show_page/id_z450949602ec311e2a19e.html
+    tags: 天文 转载 天文与地理
+  - url: http://www.youku.com/show_page/id_zfbee1e6c2ec811e29498.html
+    tags: 认知 转载 认知与心理
+  - url: http://www.youku.com/show_page/id_z20925120cca911e1a19e.html
+    tags: 媒体 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_zb3df4274140a11e1a046.html
+    tags: 心理 转载 认知与心理
+  - url: http://www.youku.com/show_page/id_zcde0cacef89011e1b356.html
+    tags: 文化 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_zf9499794cca911e1a19e.html
+    tags: 电影 转载 艺术审美
+  - url: http://www.youku.com/show_page/id_zb953e21c48b311e2b16f.html
+    tags: 社会 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_z2ca1577048b111e29498.html
+    tags: 认知 转载 认知与心理
+  - url: http://www.youku.com/show_page/id_z7f621cec48b111e2a19e.html
+    tags: 心理 转载 认知与心理
+  - url: http://www.youku.com/show_page/id_zd927656a9b2e11e196ac.html
+    tags: 心理 转载 认知与心理 生活
+  - url: http://www.youku.com/show_page/id_zc1f3fa10ab1e11e296da.html
+    tags: 艺术 转载 艺术审美
+  - url: http://www.youku.com/show_page/id_z64f3c5e04a7811e296ac.html
+    tags: 艺术 转载 艺术审美
+  - url: http://www.youku.com/show_page/id_z7facab7844d711e29498.html
+    tags: 幼教早教 转载 教育学
+  - url: http://www.youku.com/show_page/id_z5c9bfed444d411e2b2ac.html
+    tags: 幼教早教 转载 教育学
+  - url: http://www.youku.com/show_page/id_zb7a9afa844d711e2a19e.html
+    tags: 幼教早教 转载 教育学
+  - url: http://www.youku.com/show_page/id_z356d7c9e44d811e296ac.html
+    tags: 幼教早教 转载 教育学
+  - url: http://www.youku.com/show_page/id_z998eda9c44d811e29498.html
+    tags: 幼教早教 转载 教育学
+  - url: http://www.youku.com/show_page/id_z8b7797ea44d411e296ac.html
+    tags: 幼教早教 转载 教育学
+  - url: http://www.youku.com/show_page/id_zf5d0fa9244d811e29498.html
+    tags: 幼教早教 转载 教育学
+  - url: http://www.youku.com/show_page/id_z668662a044d811e2a19e.html
+    tags: 幼教早教 转载 教育学
+  - url: http://www.youku.com/show_page/id_z7b66458c44d311e2b2ac.html
+    tags: 幼教早教 转载 教育学
+  - url: http://www.youku.com/show_page/id_zcf5dc5ca44d311e2b356.html
+    tags: 幼教早教 转载 教育学
+  - url: http://www.youku.com/show_page/id_z2a4ba56044d411e2b16f.html
+    tags: 幼教早教 转载 教育学
+  - url: http://www.youku.com/show_page/id_zeac56dfa44d711e29013.html
+    tags: 幼教早教 转载 教育学
+  - url: http://www.youku.com/show_page/id_z6db7e3b644d611e29498.html
+    tags: 幼教早教 转载 教育学
+  - url: http://www.youku.com/show_page/id_ze7be3ab644d611e2b2ac.html
+    tags: 幼教早教 转载 教育学
+  - url: http://www.youku.com/show_page/id_zc45b61dc44d811e29013.html
+    tags: 幼教早教 转载 教育学
+  - url: http://www.youku.com/show_page/id_z444bcd7a44d711e29498.html
+    tags: 幼教早教 转载 教育学
+  - url: http://www.youku.com/show_page/id_z60b28236347611e296ac.html
+    tags: 美学 转载 艺术审美
+  - url: http://www.youku.com/show_page/id_z934466248c5a11e29498.html
+    tags: 天文 转载 天文与地理
+  - url: http://www.youku.com/show_page/id_z88d3d7dc2ec811e2b356.html
+    tags: 人类学 转载 历史与社会 哲学与伦理
+  - url: http://www.youku.com/show_page/id_z1a67e432669011e2a19e.html
+    tags: 生物 转载 生物与环境科学
+  - url: http://www.youku.com/show_page/id_z154d2fb0610f11e296ac.html
+    tags: 艺术 转载 艺术审美
+  - url: http://www.youku.com/show_page/id_zfdcd8f28442c11e2a19e.html
+    tags: 其它 转载 生活
+  - url: http://www.youku.com/show_page/id_zbee7aba0912911e2b16f.html
+    tags: 其它 转载 生活
+  - url: http://www.youku.com/show_page/id_zb2d9f7fc391b11e2b356.html
+    tags: 其它 转载 生活
+  - url: http://www.youku.com/show_page/id_z8d3d7012ab1e11e299f6.html
+    tags: 数学 转载 数学与逻辑学
+  - url: http://www.youku.com/show_page/id_z5d3dd55aab1e11e2b356.html
+    tags: 生活 转载 生活
+  - url: http://www.youku.com/show_page/id_zdc5ea77ecd7f11e1b2ac.html
+    tags: 物理 转载 实验与理论科学
+  - url: http://www.youku.com/show_page/id_z80f1ae0a48b211e2b2ac.html
+    tags: 认知 转载 认知与心理
+  - url: http://www.youku.com/show_page/id_z551f40ba2faf11e296ac.html
+    tags: 外语 转载 语言文学
+  - url: http://www.youku.com/show_page/id_zce9c55f2d20f11e1b356.html
+    tags: 其它 转载 生活
+  - url: http://www.youku.com/show_page/id_z143dfec2aebf11e1b356.html
+    tags: 物理 转载 实验与理论科学
+  - url: http://www.youku.com/show_page/id_zfab4a3a8a61611e19498.html
+    tags: 物理 转载 实验与理论科学
+  - url: http://www.youku.com/show_page/id_ze57d4e4aaebd11e1b16f.html
+    tags: 数学 转载 数学与逻辑学
+  - url: http://www.youku.com/show_page/id_zf068e118a54711e19013.html
+    tags: 计算机理论 转载 计算机技术
+  - url: http://www.youku.com/show_page/id_z06589b48a56211e1b356.html
+    tags: 物理 转载 实验与理论科学
+  - url: http://www.youku.com/show_page/id_z2da9ebf8aed011e196ac.html
+    tags: 计算机理论 转载 计算机技术
+  - url: http://www.youku.com/show_page/id_z0fb027aca54311e1b52a.html
+    tags: 数学 转载 数学与逻辑学
+  - url: http://www.youku.com/show_page/id_z46136e60aecd11e19013.html
+    tags: 数学 转载 数学与逻辑学
+  - url: http://www.youku.com/show_page/id_z7f9ee5f4aeb611e19498.html
+    tags: 数学 转载 数学与逻辑学
+  - url: http://www.youku.com/show_page/id_z7d3823862fb011e2b16f.html
+    tags: 媒体 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_z5f8e5f9eab1b11e299f6.html
+    tags: 社会 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_zb80834a4dc6511e1b2ac.html
+    tags: 电影 转载 艺术审美
+  - url: http://www.youku.com/show_page/id_z0e3512eeab1d11e2be40.html
+    tags: 物理 转载 实验与理论科学
+  - url: http://www.youku.com/show_page/id_z6a737b222ec711e2b52a.html
+    tags: 媒体 转载 历史与社会 教育学
+  - url: http://www.youku.com/show_page/id_z630202fc8c6711e2b16f.html
+    tags: 宇宙学 转载 天文与地理
+  - url: http://www.youku.com/show_page/id_z6828c26c610f11e29013.html
+    tags: 艺术 转载 生活 经济管理与法律
+  - url: http://www.youku.com/show_page/id_ze76b79a8ab1e11e299f6.html
+    tags: 文艺 转载 历史与社会 生活
+  - url: http://www.youku.com/show_page/id_z233f4df8dc6511e19013.html
+    tags: 艺术 转载 艺术审美
+  - url: http://www.youku.com/show_page/id_zcbf34cb648b111e2b2ac.html
+    tags: 心理 转载 认知与心理
+  - url: http://www.youku.com/show_page/id_zdc737e1cdc6411e1b356.html
+    tags: 认知 转载 认知与心理
+  - url: http://www.youku.com/show_page/id_z5c82cef4610e11e2b16f.html
+    tags: 音乐 转载 艺术审美
+  - url: http://www.youku.com/show_page/id_zb73d87686f3111e2b2ac.html
+    tags: 其它 转载 生活
+  - url: http://www.youku.com/show_page/id_z770584fc6f3111e2b2ac.html
+    tags: 其它 转载 生活
+  - url: http://www.youku.com/show_page/id_z379c90ee611211e2b16f.html
+    tags: 社会 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_z0e5f6728ab1e11e2a19e.html
+    tags: 文艺 转载 历史与社会 生活
+  - url: http://www.youku.com/show_page/id_z345ce4e2ab1d11e2b2ac.html
+    tags: 文艺 转载 语言文学 生活
+  - url: http://www.youku.com/show_page/id_za194aed448b011e2b356.html
+    tags: 道德伦理 转载 哲学与伦理
+  - url: http://www.youku.com/show_page/id_zdf57e4eedc6211e1b356.html
+    tags: 哲学 转载 哲学与伦理
+  - url: http://www.youku.com/show_page/id_z7a3c4ddaaed011e1b52a.html
+    tags: 逻辑推理 转载 数学与逻辑学
+  - url: http://www.youku.com/show_page/id_z9def281a2ec311e2b52a.html
+    tags: 哲学 转载 哲学与伦理
+  - url: http://www.youku.com/show_page/id_ze65c824a2ec911e2b52a.html
+    tags: 国际关系 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_zd80accaa8c6711e2b16f.html
+    tags: 商业 转载 经济管理与法律 生活
+  - url: http://www.youku.com/show_page/id_zd4489e54ab1a11e2be40.html
+    tags: 文艺 转载 语言文学
+  - url: http://www.youku.com/show_page/id_zcd1af3382fb011e2b52a.html
+    tags: 社会 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_zaa669556669011e29013.html
+    tags: 化学 转载 实验与理论科学
+  - url: http://www.youku.com/show_page/id_zdd5a8b882faf11e29498.html
+    tags: 国际关系 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_zcbda5a6648b211e2b16f.html
+    tags: 商业 转载 经济管理与法律 计算机技术
+  - url: http://www.youku.com/show_page/id_z08d97aa02ec811e2a19e.html
+    tags: 商业 转载 经济管理与法律
+  - url: http://www.youku.com/show_page/id_z12adb95a8c6611e2b16f.html
+    tags: 生态 转载 生物与环境科学
+  - url: http://www.youku.com/show_page/id_zb26456a22faf11e29498.html
+    tags: 人类学 转载 历史与社会 哲学与伦理
+  - url: http://www.youku.com/show_page/id_z48a2f590ccac11e19013.html
+    tags: 生活 转载 生活
+  - url: http://www.youku.com/show_page/id_za9a75086611011e296ac.html
+    tags: 国际关系 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_zada9c6cadc6611e1b16f.html
+    tags: 励志 转载 生活
+  - url: http://www.youku.com/show_page/id_z21b1a63a4a7811e29498.html
+    tags: 外语 转载 语言文学
+  - url: http://www.youku.com/show_page/id_z806c4ad848b411e2a19e.html
+    tags: 国际关系 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_zde27a82ec9a311e1a19e.html
+    tags: 艺术 转载 生活
+  - url: http://www.youku.com/show_page/id_z9fd8ce02347611e2b356.html
+    tags: 文艺 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_z6be9b1a2347511e2b52a.html
+    tags: 励志 转载 生活
+  - url: http://www.youku.com/show_page/id_z9186a6846f3211e296ac.html
+    tags: 生活 转载 生活
+  - url: http://www.youku.com/show_page/id_z75c46b58dc6511e1b16f.html
+    tags: 地理学 转载 历史与社会 天文与地理
+  - url: http://www.youku.com/show_page/id_z0b669a30ab1b11e296ac.html
+    tags: 人工智能 转载 计算机技术
+  - url: http://www.youku.com/show_page/id_z96a66542ab1d11e299f6.html
+    tags: 商业 转载 经济管理与法律
+  - url: http://www.youku.com/show_page/id_zb2a3ea0aab1b11e2be40.html
+    tags: 商业 转载 经济管理与法律 计算机技术
+  - url: http://www.youku.com/show_page/id_z83383e008c6811e296ac.html
+    tags: 软件开发 转载 计算机技术
+  - url: http://www.youku.com/show_page/id_z2b485cc2a0b711e196ac.html
+    tags: 软件开发 转载 计算机技术 生活
+  - url: http://www.youku.com/show_page/id_z9f2f75c2610e11e2b2ac.html
+    tags: 艺术 转载 艺术审美
+  - url: http://www.youku.com/show_page/id_z26472edc8c6711e296ac.html
+    tags: 生物 转载 生物与环境科学
+  - url: http://www.youku.com/show_page/id_z7fbd07382ec611e296ac.html
+    tags: 历史 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_z9dbc2aa24a7811e2a19e.html
+    tags: 其它 转载 生活
+  - url: http://www.youku.com/show_page/id_z762ceffa8c6611e29498.html
+    tags: 其它 转载 生活
+  - url: http://www.youku.com/show_page/id_zb91f1c80cc9e11e1b52a.html
+    tags: 文化 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_zb4e59ca82ec711e2b356.html
+    tags: 商业 转载 经济管理与法律
+  - url: http://www.youku.com/show_page/id_zef5b508a8c5a11e2b16f.html
+    tags: 生态 转载 生物与环境科学
+  - url: http://www.youku.com/show_page/id_z36c50ddc8c6811e296da.html
+    tags: 互联网开发 转载 计算机技术
+  - url: http://www.youku.com/show_page/id_z13cdf6646e9911e296ac.html
+    tags: 文化 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_zc3dd544e3d0911e2b356.html
+    tags: 文化 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_z585acb0e669711e29498.html
+    tags: 文化 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_zc12be280669211e2b16f.html
+    tags: 历史 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_zece00f24669611e29013.html
+    tags: 历史 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_z3b733f3e669311e29498.html
+    tags: 历史 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_zba8ae02a669711e2b2ac.html
+    tags: 历史 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_zfaef25866e9911e29013.html
+    tags: 文化 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_z169e2fc86f3211e2b2ac.html
+    tags: 外语 转载 语言文学
+  - url: http://www.youku.com/show_page/id_z824b0adcdc6311e1b356.html
+    tags: 社会 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_z9ff6665c443811e2b16f.html
+    tags: 其它 转载 生活
+  - url: http://www.youku.com/show_page/id_zf862a34c2fb011e2b2ac.html
+    tags: 教育 转载 教育学
+  - url: http://www.youku.com/show_page/id_z3ee126ce2ec911e2b16f.html
+    tags: 职场 转载 经济管理与法律
+  - url: http://www.youku.com/show_page/id_z64aafaac669011e2b356.html
+    tags: 认知 转载 认知与心理
+  - url: http://www.youku.com/show_page/id_ze4a4920e669011e296ac.html
+    tags: 宇宙学 转载 天文与地理
+  - url: http://www.youku.com/show_page/id_z04ea4fca143b11e296ac.html
+    tags: 教育 转载 教育学
+  - url: http://www.youku.com/show_page/id_zaf0d77c6143a11e2b2ac.html
+    tags: 教育 转载 教育学
+  - url: http://www.youku.com/show_page/id_z87b9185c143911e296ac.html
+    tags: 外语 转载 语言文学
+  - url: http://www.youku.com/show_page/id_z307842b4143b11e2b52a.html
+    tags: 外语 转载 语言文学
+  - url: http://www.youku.com/show_page/id_z734d8266143b11e2a19e.html
+    tags: 外语 转载 语言文学
+  - url: http://www.youku.com/show_page/id_z1a75ec44cc9e11e1b16f.html
+    tags: 机械制造 转载 机械与工程
+  - url: http://www.youku.com/show_page/id_zd33f7ca0668f11e2b2ac.html
+    tags: 心理 转载 认知与心理 医学
+  - url: http://www.youku.com/show_page/id_z1a0bdb82669111e2b356.html
+    tags: 宇宙学 转载 天文与地理
+  - url: http://www.youku.com/show_page/id_zc1fb570cab1d11e2a19e.html
+    tags: 商业 转载 经济管理与法律
+  - url: http://www.youku.com/show_page/id_z403d03b2eb5311e1a19e.html
+    tags: 宗教 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_zd272f01e347511e2a19e.html
+    tags: 宗教 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_z4eb5e48a1ca111e1a046.html
+    tags: 历史 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_zecd478b8101a11e1a046.html
+    tags: 文艺 转载 语言文学
+  - url: http://www.youku.com/show_page/id_zad182622198211e1a046.html
+    tags: 数学 转载 数学与逻辑学
+  - url: http://www.youku.com/show_page/id_z957ae4701ca011e1a046.html
+    tags: 历史 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_z360b5478101811e1a046.html
+    tags: 历史 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_zb8794dee4a7711e29498.html
+    tags: 文艺 转载 语言文学
+  - url: http://www.youku.com/show_page/id_z298b5f54167611e1a046.html
+    tags: 法律 转载 生物与环境科学 经济管理与法律
+  - url: http://www.youku.com/show_page/id_zaa18c294140d11e1a046.html
+    tags: 物理 转载 实验与理论科学
+  - url: http://www.youku.com/show_page/id_z1da70792ab1c11e2b2ac.html
+    tags: 物理 转载 实验与理论科学
+  - url: http://www.youku.com/show_page/id_z29b456c62ec511e29013.html
+    tags: 文艺 转载 语言文学
+  - url: http://www.youku.com/show_page/id_z9d10ee68140e11e1a046.html
+    tags: 商业 转载 经济管理与法律
+  - url: http://www.youku.com/show_page/id_z0c3b03561ca111e1a046.html
+    tags: 商业 转载 经济管理与法律
+  - url: http://www.youku.com/show_page/id_z8b89a740197f11e1a046.html
+    tags: 社会 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_ze5c1ab162ec511e29013.html
+    tags: 宗教 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_z320b0f68101c11e1a046.html
+    tags: 音乐 转载 艺术审美
+  - url: http://www.youku.com/show_page/id_z7734b58aae1911e19498.html
+    tags: 艺术 转载 艺术审美
+  - url: http://www.youku.com/show_page/id_zea90d55ea09a11e1b356.html
+    tags: 历史 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_ze905dc6a167611e1a046.html
+    tags: 历史 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_z6777d7c22ec411e2b52a.html
+    tags: 文艺 转载 语言文学
+  - url: http://www.youku.com/show_page/id_zdbe054f0167811e1a046.html
+    tags: 文化 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_z2d63aed4a08b11e19498.html
+    tags: 社会 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_zed0533e8ab1b11e296da.html
+    tags: 人类学 转载 历史与社会 哲学与伦理
+  - url: http://www.youku.com/show_page/id_z68163f562ec511e29498.html
+    tags: 文艺 转载 语言文学
+  - url: http://www.youku.com/show_page/id_z2c498f7a198411e1a046.html
+    tags: 医学 转载 生物与环境科学 医学
+  - url: http://www.youku.com/show_page/id_z22404b92a09111e1b356.html
+    tags: 物理 转载 天文与地理
+  - url: http://www.youku.com/show_page/id_zd80c9fe02ec411e2a19e.html
+    tags: 文艺 转载 语言文学
+  - url: http://www.youku.com/show_page/id_zfcb7eef42ec311e2a19e.html
+    tags: 文艺 转载 语言文学
+  - url: http://www.youku.com/show_page/id_zcd889574101111e1a046.html
+    tags: 心理 转载 认知与心理
+  - url: http://www.youku.com/show_page/id_z9de2c326ae1311e196ac.html
+    tags: 化学 转载 实验与理论科学
+  - url: http://www.youku.com/show_page/id_ze0fc82b41ca011e1a046.html
+    tags: 宗教 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_za334cef0101611e1a046.html
+    tags: 心理 转载 认知与心理 生活
+  - url: http://www.youku.com/show_page/id_z3460dcb09b3211e1b52a.html
+    tags: 历史 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_z40fd49061ca011e1a046.html
+    tags: 哲学 转载 哲学与伦理
+  - url: http://www.youku.com/show_page/id_zfcfb4020ae0611e19498.html
+    tags: 道德伦理 转载 哲学与伦理
+  - url: http://www.youku.com/show_page/id_za7fae0e8ae0c11e1b52a.html
+    tags: 道德伦理 转载 历史与社会 哲学与伦理
+  - url: http://www.youku.com/show_page/id_z83de6c00ab1a11e2b356.html
+    tags: 历史 转载 历史与社会
+  - url: http://www.youku.com/show_page/id_z804a75ba198111e1a046.html
+    tags: 历史 转载 经济管理与法律
+  - url: http://www.youku.com/show_page/id_zcb8c79c08c6611e2b2ac.html
+    tags: 认知 转载 认知与心理
+  - url: http://www.youku.com/show_page/id_z2c9b63e691e611e2b356.html
+    tags: 其它 转载 生活
+  - url: http://www.youku.com/show_page/id_z1d6be33a48b411e2a19e.html
+    tags: 生态 转载 生物与环境科学
+  - url: http://www.youku.com/show_page/id_z8be501f22faf11e29498.html
+    tags: 商业 转载 经济管理与法律
+  - url: http://www.youku.com/show_page/id_zdd7a43a0dc6311e1b2ac.html
+    tags: 外语 转载 语言文学
+  - url: http://www.youku.com/show_page/id_z4269640a219a11e29013.html
+    tags: 外语 转载 语言文学
+  - url: http://www.youku.com/show_page/id_zc90bc0a04d9811e296ac.html
+    tags: 其它 转载 生活
+  - url: http://www.youku.com/show_page/id_z98001e4cd21011e19498.html
+    tags: 励志 转载 生活
+  - url: http://www.youku.com/show_page/id_z9d98aabc168111e2b2ac.html
+    tags: 幼教早教 转载 教育学
+  - url: http://www.youku.com/show_page/id_z5a54a3f4669111e29013.html
+    tags: 国际关系 转载 历史与社会 经济管理与法律
+  - url: http://www.youku.com/show_page/id_z1ca2a4f4879111e2b356.html
+    tags: 地理学 转载 天文与地理 

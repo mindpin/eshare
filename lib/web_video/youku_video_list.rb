@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'open-uri'
 
 class YoukuVideoList
@@ -96,7 +97,7 @@ class YoukuVideoList
             }, { :as => :import }
           )
         end
-
+        course
       end
     end
   end

@@ -2,22 +2,12 @@ require 'spec_helper'
 require './script/makers/user_maker'
 
 describe UserMaker do
-  let(:user_maker) {UserMaker.load_yaml('teachers')}
+  let(:user_maker) {UserMaker.new('teachers')}
   subject {user_maker}
 
-  context 'class methods' do
-    describe '.load_yaml' do
-      it {should be_a UserMaker}
-    end
-  end
-
   context 'instance methods' do
-    describe '#real_names' do
-      its(:real_names) {should be_an Array}
-    end
-
     describe '#produce' do
-      let(:count) {user_maker.real_names.count}
+      let(:count) {user_maker.data.count}
 
       it 'produces users and their attached roles' do
         expect {user_maker.produce}.to change{User.count}.by(count)
