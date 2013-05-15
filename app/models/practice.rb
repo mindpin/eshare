@@ -16,7 +16,7 @@ class Practice < ActiveRecord::Base
   accepts_nested_attributes_for :requirements
 
 
-  validates :title, :content, :chapter, :creator, :presence => true
+  validates :title, :chapter, :creator, :presence => true
 
 
   def submit_by_user(user)

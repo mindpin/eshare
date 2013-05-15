@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require "spec_helper"
 
 
@@ -41,16 +42,16 @@ describe "导出 Course 相关数据到 zip" do
       :url => "http://v.youku.com/v_show/id_XNTM5MzYxNTE2.html"
     )
 
-    @homework_1_1 = FactoryGirl.create(
-      :homework, 
+    @practice_1_1 = FactoryGirl.create(
+      :practice, 
       :chapter => @chapter_1,
-      :title => "homework title one"
+      :title => "practice title one"
     )
 
-    @homework_1_2 = FactoryGirl.create(
-      :homework, 
+    @practice_1_2 = FactoryGirl.create(
+      :practice, 
       :chapter => @chapter_1,
-      :title => "homework title two"
+      :title => "practice title two"
     )
 
 
@@ -77,10 +78,10 @@ describe "导出 Course 相关数据到 zip" do
       :url => "http://v.youku.com/v_show/id_XNTM5MzQ2ODI0.html"
     )
 
-    @homework_2_1 = FactoryGirl.create(
-      :homework, 
+    @practice_2_1 = FactoryGirl.create(
+      :practice, 
       :chapter => @chapter_2,
-      :title => "homework title one"
+      :title => "practice title one"
     )
 
   }
@@ -122,12 +123,12 @@ describe "导出 Course 相关数据到 zip" do
                 :url => @ware_1_2.url,
               }
             ],
-            :homeworks => [
+            :practices => [
               {
-                :title => @homework_1_1.title,
+                :title => @practice_1_1.title,
               },
               {
-                :title => @homework_1_2.title
+                :title => @practice_1_2.title
               }
             ]
           },
@@ -146,9 +147,9 @@ describe "导出 Course 相关数据到 zip" do
                 :url => @ware_2_2.url,
               }
             ],
-            :homeworks => [
+            :practices => [
               {
-                :title => @homework_2_1.title,
+                :title => @practice_2_1.title,
               }
             ]
           }
