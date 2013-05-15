@@ -66,7 +66,6 @@ class User < ActiveRecord::Base
   end
 
   include Course::UserMethods
-  include Homework::UserMethods
   include Question::UserMethods
   include Answer::UserMethods
   include AnswerVote::UserMethods

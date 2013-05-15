@@ -87,54 +87,6 @@ jQuery ->
 
 # ----------------------
 
-  # 作业附件
-  new PageFileUploader jQuery('.page-file-uploader'), {
-    url : '/upload'
-    multiple : true
-    button : jQuery('a.btn.homework-attach-upload')
-    on_file_success : (file) ->
-      $attaches = jQuery('.page-homework-new form .attaches')
-      count = $attaches.data('count')
-
-      $f_id   = jQuery("<input type='text' />")
-                 .attr('name', "homework[homework_attaches_attributes][#{count}][file_entity_id]")
-                 .val(file.file_entity_id)
-      $f_name = jQuery("<input type='text' />")
-                 .attr('name', "homework[homework_attaches_attributes][#{count}][name]")
-                 .val(file.file_name)
-
-      $attaches
-        .append($f_id)
-        .append($f_name)
-        .data('count', count + 1)
-
-      file.uploader_item.mark_success() if file.uploader_item
-  }
-
-# ----------------------
-
-  # 作业提交
-  new PageFileUploader jQuery('.page-file-uploader'), {
-    url : '/upload'
-    multiple : false
-    button : jQuery('a.btn.homework-requirement-upload')
-    on_file_success : (file) ->
-      param_id = jQuery(file.input_target).closest('.item').data('id')
-
-      jQuery.ajax
-        url : "/homework_requirements/#{param_id}/upload"
-        type : 'POST'
-        data :
-          'homework_upload[file_entity_id]' : file.file_entity_id
-          'homework_upload[name]' : file.file_name
-        success : (res) ->
-          console.log res
-          file.uploader_item.mark_success() if file.uploader_item
-
-  }
-
-# ----------------------
-
   # 课程编辑 - 课件上传
   new PageFileUploader jQuery('.page-file-uploader'), {
     url : '/upload'

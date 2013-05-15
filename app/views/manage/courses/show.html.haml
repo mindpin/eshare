@@ -9,8 +9,8 @@
       %a{:href => "/manage/chapters/#{ch.id}"}= ch.title
     - table.add_column :'course-wares-count' do |ch|
       = ch.course_wares.count
-    - table.add_column :'homeworks-count' do |ch|
-      = ch.homeworks.count
+    - table.add_column :'practices-count' do |ch|
+      = ch.practices.count
     - table.add_column :updated_at
     - table.add_column(:ops) do |ch|
       %a.btn.mini{:href => "/manage/chapters/#{ch.id}/edit"}= t('common.edit')
