@@ -15,11 +15,13 @@ class AccountController < Devise::RegistrationsController
   end
 
   def avatar_update
-    current_user.update_attributes(params[:user])
+    user = User.find(current_user.id)
+    user.avatar = params[:user][:avatar]
+    user.save
     redirect_to :action => :avatar
-  rescue Exception => ex
-    flash[:error] = ex.message
-    return redirect_to :action => :avatar
+  # rescue Exception => ex
+  #   flash[:error] = ex.message
+  #   return redirect_to :action => :avatar
   end
 
   protected
