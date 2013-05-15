@@ -137,4 +137,5 @@ gem 'simple_comment',
     :git => 'git://github.com/kaid/simple_comment.git'
 
 gem 'mina',
-    :git => 'git://github.com/fushang318/mina.git'
+    :git => 'git://github.com/fushang318/mina.git',
+    :tag => 'v0.2.0fix'
