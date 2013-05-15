@@ -723,6 +723,8 @@ img.page-avatar {
 .page-course-show {
   margin:-20px -20px 20px;
   border-right:solid 1px #D7D7D7;
+  min-height:300px;
+
   .user-course-checkin {
     background-color:#f7f7f7;
     border-bottom:solid 1px #d7d7d7;
@@ -913,6 +915,10 @@ img.page-avatar {
         display:block;
         padding:15px;
         height:20px;line-height:20px;
+        &:hover {
+          background-color:lighten(#005580, 10%);
+          text-decoration:none;
+        }
       }
     }
 
@@ -1027,9 +1033,67 @@ img.page-avatar {
           .page-video-player {
             height:480px;
             background-color:#f7f7f7;
-            &.youku {
+          }
+
+          .marks {
+            position:absolute;
+            top:20px;left:20px;right:20px;
+            pointer-events:none;
+            
+            .mark {
+              padding:8px;
+              font-size:18px;
+              font-weight:bold;
+              color:white;
+              height:24px; // 总高度 40px
+              // margin-bottom:10px;
+              overflow:hidden;
+              text-shadow:-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+              .avatar {
+                float:left;
+                margin-right:10px;
+                font-size:0;line-height:0;
+                img {height:24px;width:24px;}
+              }
+              .ct {
+                float:left;
+                height:24px;line-height:24px;
+              }
             }
           }
+
+          .mark-inputer {
+            overflow:hidden;
+            background-color:#F7F7F7;
+            border-bottom:solid 1px #ddd;
+            position:relative;
+            padding:5px;
+
+            .desc {
+              float:left;
+              width:70px;
+              padding-left:10px;
+              height:30px;line-height:30px;
+            }
+            .ipt {
+              position:absolute;
+              top:0;left:85px;right:65px;
+              height:30px;
+              padding:5px;
+              input{
+                @include border-box;
+                width:100%;
+                margin:0;
+                resize:none;
+                height:30px;
+              }
+            }
+            a.send {
+              float:right;
+              width:34px;
+            }
+          }
+
         }
 
         .pages {

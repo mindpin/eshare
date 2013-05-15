@@ -163,6 +163,7 @@ Eshare::Application.routes.draw do
       resources :course_wares, :shallow => true do
         member do
           put :update_read_count
+          post :add_video_mark
         end
       end
       resources :questions, :shallow => true

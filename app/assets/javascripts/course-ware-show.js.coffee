@@ -17,65 +17,106 @@ jQuery ->
     read_count: ->
       parseInt @$rc.html()
 
-  class YoukuVideoPlayer
-    constructor: (@$elm)->
-      @init()
+  class VideoMarker
+    constructor: (@player)->
+      @$inputer = jQuery('.widget .video .mark-inputer')
+      @$send = @$inputer.find('a.send')
+      @$input = @$inputer.find('input')
+      @$marks = jQuery('.widget .video .marks')
 
-    init: ->
-      html_id = @$elm.attr('id')
-      @video_id = html_id.split('-')[1]
+      @bind_send_event()
+      @set_timer()
 
-      @player = new YKU.Player html_id, {
-        vid : @video_id,
-        client_id : 'youkuind_'
-      }
+    bind_send_event: ->
+      @$input.keydown (evt)=>
+        if evt.keyCode == 13
+          @send_mark()
 
-    total_time: ->
-      try
-        return parseInt @player.totalTime()
-      catch e
-        return -1
 
-    current_time: ->
-      try
-        return parseInt @player.currentTime()
-      catch e
-        return -1
+      @$send.on 'click', @send_mark
 
-  class MindpinFlvVideoPlayer
-    constructor: (@$elm)->
-      @video_url = @$elm.data('url')
-      @elm_id = @$elm.attr('id')
 
-      @init()
+    send_mark: =>
+      content = jQuery.trim @$input.val()
+      position = @player.current_time()
 
-    init: ->
-      flashvars =
-        f : @video_url
-        p : '0' # 不自动播放
-        x : '/' # 必须写成 '/' 才会加载 js 里的配置，为什么不能写成 '' ? 我也不知道为什么
-        my_url : encodeURIComponent(window.location.href)
-        m : '1'
+      if content
+        course_ware_id = @$send.data('id')
 
-      params =
-        bgcolor : '#FFF'
-        allowFullScreen : true
-        allowScriptAccess : 'always'
+        @$input.prop('disabled', true)
+        jQuery.ajax
+          url : "/course_wares/#{course_ware_id}/add_video_mark"
+          type : 'post'
+          data :
+            content : content
+            position : position
+          success : (res)=>
+            content = res.content
+            user_name = res.user_name
+            position = res.position
+            avatar_url = res.avatar_url
 
-      CKobject.embedSWF('/ckplayer/ckplayer.swf', @elm_id, 'mindpin_ckplayer', '100%', '100%', flashvars, params)
-      @player = CKobject.getObjectById('mindpin_ckplayer')
+            $mk = jQuery "<div class='mark' data-position=#{position}>" +
+                           "<div class='avatar'>" +
+                             "<img class='page-avatar small' src='#{avatar_url}' />" +
+                           "</div>" +
+                           "<div class='ct'>#{user_name} : #{content}</div>" +
+                         "</div>"
+            @append_mark($mk)
 
-    total_time: ->
-      try
-        return parseInt @player.ckplayer_getstatus().totaltime
-      catch e
-        return -1
+            @$input.prop('disabled', false).val('')
 
-    current_time: ->
-      try
-        return parseInt @player.ckplayer_getstatus().time
-      catch e
-        return -1
+    set_timer: ->
+      last_position = -1
+      markstimer = setInterval =>
+        position = @player.current_time()
+        if position != last_position
+          last_position = position
+
+          # 隐藏该隐藏的
+          @hide_marks(position)
+
+
+          # 显示该显示的
+          @get_marks_of(position).each (index, elm)=>
+            $mk = jQuery(elm)
+            @append_mark($mk)
+      , 500
+
+    append_mark: ($mk)->
+      top = @get_fit_top()
+
+      @$marks.append(
+        $mk.show().attr('data-top', top).css
+          position : 'absolute'
+          top : top
+      )
+
+    hide_marks: (current_position)->
+      return if current_position < 0
+
+      jQuery(@$marks.find('.mark')).each ->
+        $m = jQuery(this)
+        mark_position = parseInt $m.data('position')
+        $m.fadeOut(500) if current_position < mark_position
+        $m.fadeOut(500) if current_position > mark_position + 5
+
+    get_marks_of: (position)->
+      return @$marks.find(".mark[data-position=#{position}]")
+
+    get_fit_top: ->
+      top = 0
+      $visible_marks = @$marks.find('.mark:visible')
+
+      loop
+        $showing_mark = @$marks.find(".mark:visible[data-top=#{top}]")
+        top = top + 40
+        break if $showing_mark.length == 0
+
+      top = top - 40
+      top = 360 if top > 360
+
+      return top
 
   class WebVideoCkPlayer
     constructor: (@$elm)->
@@ -95,9 +136,12 @@ jQuery ->
         bgcolor : '#FFF'
         allowFullScreen : true
         allowScriptAccess : 'always'
+        wmode : 'opaque'
 
       CKobject.embedSWF('/ckplayer/ckplayer.swf', @$elm.attr('id'), 'mindpin_ckplayer', '100%', '100%', flashvars, params)
       @player = CKobject.getObjectById('mindpin_ckplayer')
+
+      new VideoMarker(this)
 
     total_time: ->
       try
@@ -110,6 +154,10 @@ jQuery ->
         return parseInt @player.ckplayer_getstatus().time
       catch e
         return -1
+
+    init_marks_inputer: ->
+
+
 
   # 此类用来对各种视频源的播放进度记录做一个统一整合
   class MindpinVideoProgressParser
@@ -195,13 +243,10 @@ jQuery ->
     if elm.hasClass('web-video')
       player = new WebVideoCkPlayer elm
 
-    if elm.hasClass('flv')
-      player = new MindpinFlvVideoPlayer elm
+    if elm.hasClass('local-video')
+      player = new WebVideoCkPlayer elm
 
-    new MindpinVideoProgressParser player, read_count_updater
-
-  #   player = new YoukuVideoPlayer jQuery(this)
-  #   new MindpinVideoProgressParser player
+    new MindpinVideoProgressParser(player, read_count_updater)
 
   jQuery('.page-course-ware-show .widget .pages').each ->
     new PdfWidget jQuery(this), read_count_updater

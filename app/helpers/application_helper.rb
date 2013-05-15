@@ -86,42 +86,6 @@ module ApplicationHelper
     link_to user.name, "/users/#{user.id}", :class=>'u-name'
   end
 
-  def course_ware_web_video_tag(course_ware)
-    return '' if !course_ware.is_video?
-
-    if course_ware.is_youku?
-      id = "youku-#{course_ware.youku_video.video_id}"
-      return capture_haml {
-        haml_tag :div, :class => 'page-video-player web-video youku', :id => id, :data => {:id => course_ware.id}
-      }
-    end
-
-    if course_ware.is_sina?
-      id = "sina-#{course_ware.sina_video.video_id}"
-      return capture_haml {
-        haml_tag :div, :class => 'page-video-player web-video sina', :id => id, :data => {:id => course_ware.id}
-      }
-    end
-
-    if course_ware.is_tudou?
-      id = "tudou-#{course_ware.tudou_video.iid}"
-      return capture_haml {
-        haml_tag :div, :class => 'page-video-player web-video tudou', :id => id, :data => {:id => course_ware.id}
-      }
-    end
-
-    if course_ware.is_flv?
-      id = "flv-#{course_ware.id}"
-      url = course_ware.file_entity.attach.url
-
-      return capture_haml {
-        haml_tag :div, :class => 'page-video-player flv', :id => id, :data => {:url => url}
-      }
-    end
-
-    return ''
-  end
-
   def course_ware_read_count_html(course_ware, user)
     # .read
     #   %span.desc 学习完成度

@@ -2,7 +2,6 @@
 - home_title = t('common.site.home_title.app')
 
 - content_for :javascript do
-  = #javascript_include_tag '/youku/youku-api'
   = javascript_include_tag '/highcharts/js/highcharts'
   = javascript_include_tag '/highcharts/js/modules/exporting.cn'
 
@@ -19,7 +18,7 @@
       .back.truncate-text
         = link_to @course do
           %i.icon-backward.icon-white
-          %span= truncate_u @course.name, 16
+          %span= truncate_u @course.name, 12
 
       .items
         - @chapter.course_wares.each do |cw|

@@ -27,3 +27,9 @@
           :cdata
             #{f.url}
         %seconds= f.seconds
+
+- if @course_ware.is_local_video?
+  %ckplayer
+    %flashvars
+    %video
+      %file= @course_ware.file_entity.attach.url

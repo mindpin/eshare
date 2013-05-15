@@ -1,4 +1,20 @@
 .video
-  = course_ware_web_video_tag @course_ware
+  - if @course_ware.is_web_video?
+    .page-video-player.web-video{:class => @course_ware.kind, :id => "course-ware-#{@course_ware.id}-#{@course_ware.kind}", :data => {:id => @course_ware.id}}
+  - if @course_ware.is_local_video?
+    .page-video-player.local-video{:class => @course_ware.kind, :id => "course-ware-#{@course_ware.id}-#{@course_ware.kind}", :data => {:id => @course_ware.id}}
+
+  .marks
+    - @course_ware.course_ware_marks.each do |mark|
+      .mark{:style => 'display:none;', :data => {:position => mark.position}} 
+        .avatar= avatar mark.user, :small
+        .ct #{mark.user.name} : #{mark.content}
+
+  .mark-inputer
+    .desc 浮动弹幕
+    .ipt
+      %input{:type => :text}
+    %a.btn.success.send{:href => 'javascript:;', :data => {:id => @course_ware.id}} 发送
+
 .stat.stat-video
   = course_ware_read_count_html(@course_ware, @user)
