@@ -32,9 +32,10 @@ module CourseZipExporter
       course_hash = {
         :name => self.name, 
         :desc => self.desc, 
-        :cover => cover_name,
-        :chapters => build_chapters
+        :cover => cover_name
       }
+
+      course_hash.merge!(:chapters => build_chapters) if !build_chapters.blank?
 
       {:course => course_hash}.to_yaml
       
@@ -51,14 +52,17 @@ module CourseZipExporter
           copy_ware_files(ware)
         end
 
-        homeworks = build_homeworks(chapter)
+        practices = build_practices(chapter)
 
-        chapters_arr << {
+        hash = {
           :title => chapter.title,
           :desc => chapter.desc,
           :wares => wares,
-          :homeworks => homeworks
         }
+
+        hash.merge!(:practices => practices) if !practices.blank?
+
+        chapters_arr << hash
       end
 
       chapters_arr
@@ -77,13 +81,13 @@ module CourseZipExporter
 
 
 
-    def build_homeworks(chapter)
-      homeworks = []
+    def build_practices(chapter)
+      practices = []
 
-      chapter.homeworks.each do |homework|
-        homeworks << {:title => homework.title}
+      chapter.practices.each do |practice|
+        practices << {:title => practice.title}
       end
-      homeworks
+      practices
     end
 
     def copy_cover
@@ -95,7 +99,7 @@ module CourseZipExporter
     def copy_ware_files(ware)
       files_dir = Rails.root.join(@@target_path, "files")
       if !File.directory?(files_dir)
-        FileUtils.mkdir(files_dir)
+        FileUtils.mkdir_p(files_dir)
       end
 
       return if ware.file_entity.nil?

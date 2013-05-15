@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'spec_helper'
 
 describe CourseZipImporter do
@@ -74,14 +75,14 @@ describe CourseZipImporter do
           end
         end
 
-        describe "检查 homeworks" do
+        describe "检查 practices" do
           before {
-            @homeworks = @chapter_1.homeworks
-            @homework_1 = @homeworks.first
+            @practices = @chapter_1.practices
+            @practice_1 = @practices.first
           }
 
           it "title 正确" do
-            @homework_1.title.should == '章节1作业1'
+            @practice_1.title.should == '章节1作业1'
           end
         end
       end
