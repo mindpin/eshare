@@ -15,6 +15,7 @@ group :assets do
 end
 
 group :test do
+  gem "awesome_print"
   gem 'rspec-rails', '2.13.0'
   gem 'database_cleaner', '0.9.1' # 加速测试时数据库清理
   gem 'factory_girl_rails', '~> 4.2.1'
@@ -68,6 +69,8 @@ gem 'iconv', '1.0.2'
 # 分类目录
 gem 'awesome_nested_set'
 
+# 权限管理
+gem "cancan", "~> 1.6.10"
 
 # 自己写的 gem，都不指定版本号，如果有重大修改，通过GIT TAG解决
 
@@ -130,5 +133,9 @@ gem 'simple-redis-cache',
     :git => 'git://github.com/mindpin/simple-redis-cache.git',
     :tag => '0.0.1'
 
+gem 'simple_comment',
+    :git => 'git://github.com/kaid/simple_comment.git'
+
 gem 'mina',
-    :git => 'git://github.com/fushang318/mina.git'
+    :git => 'git://github.com/fushang318/mina.git',
+    :tag => 'v0.2.0fix'

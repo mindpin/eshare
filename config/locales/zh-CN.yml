@@ -17,13 +17,6 @@ zh-CN:
       courses: 课程
       disk: 文件夹
 
-  simple_form:
-    labels:
-      homework:
-        title: 作业标题
-        content: 作业内容
-        homework_requirements:
-          content: 作业提交物要求
   helpers:
     submit:
       course:
@@ -173,7 +166,7 @@ zh-CN:
       chapters:
         title: 标题
         course-wares-count: 课件数目
-        homeworks-count: 练习数目
+        practice-count: 练习数目
         updated_at: 更新时间
         ops: 操作
         position: 排序位置

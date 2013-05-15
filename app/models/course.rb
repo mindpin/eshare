@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 class Course < ActiveRecord::Base
   include CourseZipImporter
+  include CourseZipExporter
+  include YamlCoursesExporter
+  include YamlCoursesImporter
   include CourseInteractive::CourseMethods
   include CourseSignModule
   include CourseReadPercent::CourseMethods
@@ -8,6 +11,7 @@ class Course < ActiveRecord::Base
   include YoukuVideoList::CourseMethods
   include TudouVideoList::CourseMethods
   include CourseFav::CourseMethods
+  include SelectCourseApply::CourseMethods
 
   simple_taggable
   BASE_TAGS = %w(

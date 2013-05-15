@@ -15,12 +15,6 @@ Eshare::Application.routes.draw do
     put 'account/avatar' => 'account#avatar_update'
   end
 
-  resources :homework_requirements do
-    member do
-      post :upload
-    end
-  end
-
   resources :announcements
 
   resources :surveys, :shallow => true do
@@ -167,11 +161,6 @@ Eshare::Application.routes.draw do
         end
       end
       resources :questions, :shallow => true
-      resources :homeworks do
-        member do
-          get :student
-        end
-      end
     end
   end
 end

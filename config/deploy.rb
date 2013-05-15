@@ -60,12 +60,12 @@ task :deploy => :environment do
     queue! "bundle"
     # invoke :'bundle:install'
     # invoke :'rails:db_migrate'
+    queue! "rake db:create RAILS_ENV=production"
     queue! "rake db:migrate RAILS_ENV=production"
     invoke :'rails:assets_precompile'
 
     to :launch do
       queue %[
-        source /etc/profile
         ./deploy/sh/redis_server.sh restart
         ./deploy/sh/sidekiq.sh restart
         ./deploy/sh/unicorn_eshare.sh stop
@@ -79,7 +79,6 @@ end
 desc "restart server"
 task :restart => :environment do
   queue %[
-    source /etc/profile
     cd #{deploy_to}/#{current_path}
     ./deploy/sh/redis_server.sh restart
     ./deploy/sh/sidekiq.sh restart
