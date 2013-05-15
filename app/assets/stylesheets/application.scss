@@ -38,6 +38,21 @@ body {
     overflow:hidden;
     text-overflow:ellipsis;
   }
+  table.page-data-table {
+    @include border-radius(0 !important);
+    th, td{
+      @include border-radius(0 !important);
+    }
+  }
+  .page-navlist {
+    .nav {
+      @include border-radius(0 !important);
+      a {
+        @include border-radius(0 !important);
+        border-color:#ddd !important;
+      }
+    }
+  }
 }
 
 body.auth{
@@ -120,7 +135,7 @@ body.app, body.admin {
     right:0;
     left:120px;
     top:40px + 20px;
-    padding:0 20px;
+    padding:0;
     z-index:2;
 
     background-color:white;
@@ -134,7 +149,11 @@ body.app, body.admin {
     height:$h;
 
     .header-inner {
-      width:860px;
+      min-width:860px;
+      max-width:1160px;
+      padding:0 20px;
+      margin-right:20px;
+      overflow:hidden;
     }
 
     h1 {
@@ -817,6 +836,11 @@ img.page-avatar {
     margin:0;
     border:0 none;
     border-bottom:solid 1px #d7d7d7;
+    overflow:hidden;
+    &:after{
+      display:none;
+    }
+
     .tile-left {
       width:320px;
       border-right:solid 1px #eee;
@@ -877,9 +901,9 @@ img.page-avatar {
           }
 
           .pages {
-            margin-top:5px;
             overflow:hidden;
             .page {
+              margin-top:5px;
               float:left;
               width:80px;height:45px;
               border:solid 1px #eee;
