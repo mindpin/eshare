@@ -59,7 +59,7 @@ module CourseZipImporter
           chapter.practices.create(:title   => practice_info[:title],
                                    :chapter => chapter,
                                    :creator => creator)
-        end
+        end if chapter_info[:practices]
 
         chapter_info[:wares].each do |courseware|
           ware = chapter.course_wares.new(
@@ -77,8 +77,8 @@ module CourseZipImporter
           ware.kind = courseware[:kind]
 
           ware.save
-        end
-      end
+        end if chapter_info[:wares]
+      end if info[:chapters]
     end
 
     def unzip
