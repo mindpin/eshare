@@ -1045,7 +1045,7 @@ img.page-avatar {
               font-size:18px;
               font-weight:bold;
               color:white;
-              height:24px; // 总高度 40px
+              line-height:24px; // 总高度 40px
               // margin-bottom:10px;
               overflow:hidden;
               text-shadow:-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
@@ -1056,8 +1056,8 @@ img.page-avatar {
                 img {height:24px;width:24px;}
               }
               .ct {
-                float:left;
-                height:24px;line-height:24px;
+                margin-left:34px;
+                line-height:24px;
               }
             }
           }
