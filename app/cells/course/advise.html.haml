@@ -1,0 +1,17 @@
+.cpart.advise-courses
+  %h3 可能感兴趣的课程
+  - if @courses.blank?
+    .no-course
+      %span> 学习过的课程太少，没有合适的推荐，
+      %a{:href => '/courses'} 去课程列表看看吧
+  - else
+    .courses
+      - @courses.each do |course|
+        %a.course{:href => "/courses/#{course.id}"}
+          .name
+            %i.icon-book
+            %span= truncate_u course.name, 10
+          .percent
+            %span= course.read_percent @user
+            %i.icon-chevron-right
+  

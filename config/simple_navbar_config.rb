@@ -41,6 +41,10 @@ SimpleNavbar::Base.config do
       controller :index, :only => :dashboard
     end
 
+    nav :learning_plan, :url => '/plan' do
+      controller :index, :only => :plan
+    end
+
     nav :courses, :url => '/courses' do
       controller :courses
       controller :chapters

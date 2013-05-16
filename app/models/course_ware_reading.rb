@@ -94,5 +94,107 @@ class CourseWareReading < ActiveRecord::Base
     def learning_courses
       Course.joins(:course_ware_readings).where('course_ware_readings.user_id = ?', self.id).group('courses.id')
     end
+
+    # 正在学习的课程中最常用的tag
+    def learning_tags(count = 5)
+      sql = %~
+        SELECT tags.* 
+        FROM 
+        (
+          SELECT courses.* 
+          FROM courses 
+          INNER JOIN chapters ON chapters.course_id = courses.id 
+          INNER JOIN course_wares ON course_wares.chapter_id = chapters.id 
+          INNER JOIN course_ware_readings ON course_ware_readings.course_ware_id = course_wares.id 
+          WHERE (course_ware_readings.user_id = #{self.id}) 
+          GROUP BY courses.id 
+          ORDER BY courses.id desc
+        ) AS Q
+
+        JOIN taggings ON taggings.taggable_id = Q.id AND taggings.taggable_type = 'Course'
+        JOIN tags ON taggings.tag_id = tags.id
+        GROUP by tags.id
+        LIMIT #{count}
+      ~
+
+      # 这个SQL和上面的区别是，这个是RIGHT JOIN以补全指定数量
+      sql2 = %~
+        SELECT tags.*, COUNT(tags.id) as C
+
+        FROM 
+
+        (
+        SELECT courses.* 
+        FROM courses 
+        INNER JOIN chapters ON chapters.course_id = courses.id 
+        INNER JOIN course_wares ON course_wares.chapter_id = chapters.id 
+        INNER JOIN course_ware_readings ON course_ware_readings.course_ware_id = course_wares.id 
+        WHERE (course_ware_readings.user_id = #{self.id}) 
+        GROUP BY courses.id 
+        ORDER BY courses.id desc
+        ) AS Q
+
+        JOIN taggings ON taggings.taggable_id = Q.id AND taggings.taggable_type = 'Course'
+        RIGHT JOIN tags ON taggings.tag_id = tags.id
+        GROUP BY tags.id
+        ORDER BY C DESC
+        LIMIT #{count}
+      ~
+
+      Tag.find_by_sql sql2
+    end
+
+    def advise_courses(count = 5)
+      sql = %~
+        SELECT NSC.* 
+        FROM
+        (
+          SELECT tags.*, COUNT(tags.id) as C
+          FROM 
+          (
+            SELECT courses.* 
+            FROM courses 
+            INNER JOIN chapters ON chapters.course_id = courses.id 
+            INNER JOIN course_wares ON course_wares.chapter_id = chapters.id 
+            INNER JOIN course_ware_readings ON course_ware_readings.course_ware_id = course_wares.id 
+            WHERE (course_ware_readings.user_id = #{self.id}) 
+            GROUP BY courses.id
+          ) AS Q
+          # 学过的课程
+
+          JOIN taggings ON taggings.taggable_id = Q.id AND taggings.taggable_type = 'Course'
+          RIGHT JOIN tags ON taggings.tag_id = tags.id
+          GROUP BY tags.id
+          ORDER BY C DESC
+        ) AS QQ
+        # 常学习的关键词
+
+        JOIN taggings ON taggings.tag_id = QQ.id
+        JOIN (
+          SELECT courses.* 
+          FROM
+          (
+            SELECT courses.* 
+            FROM courses INNER JOIN chapters ON chapters.course_id = courses.id 
+            INNER JOIN course_wares ON course_wares.chapter_id = chapters.id 
+            INNER JOIN course_ware_readings ON course_ware_readings.course_ware_id = course_wares.id 
+            WHERE (course_ware_readings.user_id = #{self.id}) 
+            GROUP BY courses.id 
+          ) AS SC
+          # 学过的课程
+
+          JOIN courses ON courses.id <> SC.id
+          GROUP BY courses.id 
+        ) AS NSC
+        # 没学过的课程
+
+        ON taggings.taggable_id = NSC.id AND taggings.taggable_type = 'Course'
+        GROUP BY NSC.id
+        ORDER BY QQ.C DESC
+        LIMIT #{count}
+      ~
+
+      Course.find_by_sql sql
+    end
   end
 end

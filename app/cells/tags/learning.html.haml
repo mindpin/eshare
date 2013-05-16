@@ -1,0 +1,8 @@
+.cpart.learning-tags
+  %h3 感兴趣的标签
+  .tags
+    - @tags.each do |tag|
+      %a.tag{:href => "/tags/#{@sub_path}/#{tag.name}", :data => {:name => tag.name}}
+        %i.icon-tag
+        %span= tag.name
+        .courses-count #{Course.by_tag(tag.name).count} 项课程

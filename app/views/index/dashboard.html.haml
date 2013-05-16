@@ -6,10 +6,11 @@
   .mainp66
     - if current_user.followers.blank?
       = render_cell :follow, :no_follow, :user => current_user
-      / = render_cell :timeline, :public
-
-    .dashborad-stats
-      .page-chart.all-courses-punch-card{:data => {:url => '/charts/courses/all_courses_punch_card'}}
+      = render_cell :timeline, :public
 
   .sidep33
+    = render_cell :course, :recent_learning, :user => current_user
+    = render_cell :tags, :learning, :user => current_user
+    = render_cell :course, :advise, :user => current_user
+
   .clearfix

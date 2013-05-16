@@ -1,0 +1,17 @@
+.cpart.recent-learning-courses
+  %h3 最近学习的课程
+  - if @courses.blank?
+    .no-course
+      %span> 还没有学习任何课程，
+      %a{:href => '/courses'} 去课程列表看看吧
+  - else
+    .courses
+      - @courses.each do |course|
+        %a.course{:href => "/courses/#{course.id}"}
+          .name
+            %i.icon-book
+            %span= truncate_u course.name, 10
+          .percent
+            %span= course.read_percent @user
+            %i.icon-chevron-right
+  

@@ -20,4 +20,16 @@ class CourseCell < Cell::Rails
 
     render
   end
+
+  def recent_learning(opts = {})
+    @user = opts[:user]
+    @courses = @user.learning_courses.limit(20)
+    render
+  end
+
+  def advise(opts = {})
+    @user = opts[:user]
+    @courses = @user.advise_courses
+    render
+  end
 end

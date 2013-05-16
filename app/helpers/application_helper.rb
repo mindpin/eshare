@@ -125,4 +125,14 @@ module ApplicationHelper
       haml_tag 'a.page-follow.follow.btn.small', '关注', :data => {:id => user.id}
     }
   end
+
+  def page_tag(tag, sub_path)
+    # %a.tag{:href => "/tags/#{@sub_path}/#{tag.name}", :data => {:name => tag.name}}= tag.name
+    capture_haml {
+      haml_tag 'a.page-tag.tag', :href => "/tags/#{sub_path}/#{tag.name}", :data => {:name => tag.name} do
+        haml_tag 'i.icon-tag'
+        haml_tag 'span', tag.name
+      end
+    }
+  end
 end
