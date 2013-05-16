@@ -44,6 +44,16 @@ Eshare::Application.routes.draw do
   end
 end
 
+# 用户关系
+Eshare::Application.routes.draw do
+  resources :friends, :shallow => true do
+    collection do
+      post :follow
+      post :unfollow
+    end
+  end
+end
+
 # 管理员
 Eshare::Application.routes.draw do
   namespace :admin do

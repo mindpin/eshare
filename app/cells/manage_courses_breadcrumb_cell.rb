@@ -1,5 +1,4 @@
 class ManageCoursesBreadcrumbCell < Cell::Rails
-
   def display(opts = {})
     @model = opts[:model]
     render
@@ -9,5 +8,4 @@ class ManageCoursesBreadcrumbCell < Cell::Rails
     @model = opts[:model]
     render
   end
-
 end

@@ -53,6 +53,25 @@ body {
       }
     }
   }
+
+  .mainp75 {
+    width:75%;float:left;
+    min-height:400px;
+  }
+  .mainp66 {
+    width:66.66666%;float:left;
+    min-height:400px;
+  }
+
+  .sidep25 {
+    width:25%;float:left;
+    min-height:400px;
+  }
+  .sidep33 {
+    width:33.33333%;float:left;
+    min-height:400px;
+  }
+
 }
 
 body.auth{
@@ -218,6 +237,25 @@ body.app, body.admin {
       min-height:500px;
       margin-right:20px;
     }
+  }
+}
+
+.btn {
+  &.follow {
+    @include gradient(#AAD74C, #87B946);
+    background-color: #9ACA4A;
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    color: #3E5E00;
+    // text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    text-shadow:none;
+    &:hover, &:focus, &:active, &.active, &.disabled, &[disabled] {
+      background-color: #87B946;
+      color:#fff;
+    }
+  }
+  &.unfollow {
+    background-color:#e6e6e6;
   }
 }
 
@@ -1486,7 +1524,6 @@ img.page-avatar {
 
 .page-chart.all-courses-punch-card{
   height:500px;
-  width:60%;
 
   table.punch-card {
     width:100%;
@@ -1771,6 +1808,70 @@ form .input.page-form-tag-inputer {
         float:left;
         .page-progress{margin-bottom:0;margin-top:2px;}
         .p{text-align:center;}
+      }
+    }
+  }
+}
+
+.page-cell-no-follow {
+  .in-house.no-users {
+    border:solid 1px #ddd;
+    padding:20px;
+    background-color:#f7f7f7;
+    margin-bottom:20px;
+  }
+
+  .desc {
+    text-align:center;
+    margin-bottom:20px;
+    font-size:15px;
+    color:#666;
+  }
+  .users {
+    overflow:hidden;
+    margin-bottom:20px;
+
+    .user {
+      @include border-box;
+      float:left;
+      border:solid 1px #ddd;
+      border-right:none 0;
+      width:25%;
+      padding:15px;
+      
+      &:last-child {
+        border-right:solid 1px #ddd;
+      }
+
+      .avatar {
+        float:left;
+        margin-top:2px;
+        width:40px;height:40px;
+        img {width:40px;height:40px;}
+      }
+
+      .name, .course-count {
+        margin-left:50px;
+      }
+
+      .name {
+        font-weight:bold;
+        margin-bottom:5px;
+      }
+
+      .course-count {
+        font-size:12px;
+        color:#999;
+      }
+
+      .ffollow {
+        border-top:solid 1px #ddd;
+        padding-top:15px;
+        overflow:hidden;
+        margin-top:15px;
+        a.btn {
+          float:right;width:50px;
+        }
       }
     }
   }

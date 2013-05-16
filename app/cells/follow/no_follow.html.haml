@@ -1,0 +1,13 @@
+.page-cell-no-follow
+  - if User.count < 6
+    .in-house.no-users 系统内还没有足够的用户信息，需要添加一定数量的用户。
+  - else
+    .desc 你还没有关注任何人，首页空空的，多关注一些吧。
+    .users
+      - @user.advise_friends(4).each do |user|
+        .user
+          .avatar= avatar user
+          .name= user.name
+          .course-count 正在学习#{user.learning_courses.length}项课程
+          .ffollow
+            = follow_button user

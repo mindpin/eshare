@@ -53,4 +53,46 @@ class CourseWareReading < ActiveRecord::Base
   # 记录用户活动
   record_feed :scene => :course_ware_readings,
                         :callbacks => [ :create, :update]
+
+  module UserMethods
+    extend ActiveSupport::Concern
+
+    module ClassMethods
+      # 返回综合学习进度最多的前若干名用户
+      def top_study_users(count = 3)
+        sql = %~
+          SELECT users.*, SUM(course_ware_readings.read_percent) AS SUM
+          FROM users
+          LEFT JOIN course_ware_readings
+          ON users.id = course_ware_readings.user_id
+          WHERE users.roles_mask <> 1
+          GROUP BY users.id
+          ORDER BY SUM DESC
+          LIMIT #{count}
+        ~
+
+        return User.find_by_sql sql
+      end
+    end
+
+    def advise_friends(count = 3)
+        sql = %~
+          SELECT users.*, SUM(course_ware_readings.read_percent) AS SUM
+          FROM users
+          LEFT JOIN course_ware_readings
+          ON users.id = course_ware_readings.user_id
+          WHERE users.roles_mask <> 1 AND users.id <> #{self.id}
+          GROUP BY users.id
+          ORDER BY SUM DESC
+          LIMIT #{count}
+        ~
+
+        return User.find_by_sql sql
+    end
+
+    # 正在学习的课程
+    def learning_courses
+      Course.joins(:course_ware_readings).where('course_ware_readings.user_id = ?', self.id).group('courses.id')
+    end
+  end
 end
