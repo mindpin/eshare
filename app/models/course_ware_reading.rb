@@ -52,7 +52,16 @@ class CourseWareReading < ActiveRecord::Base
 
   # 记录用户活动
   record_feed :scene => :course_ware_readings,
-                        :callbacks => [ :create, :update]
+                        :callbacks => [:create, :update],
+                        :before_record_feed => lambda { |course_ware_reading, callback_type|
+                          if callback_type == :update
+                            last_feed = Feed.by_user(course_ware_reading.user).first
+                            return true if last_feed.blank?
+                            return false if last_feed.to == self.to
+                          end
+
+                          return true
+                        }
 
   module UserMethods
     extend ActiveSupport::Concern
@@ -91,8 +100,8 @@ class CourseWareReading < ActiveRecord::Base
     end
 
     # 正在学习的课程
-    def learning_courses
-      Course.joins(:course_ware_readings).where('course_ware_readings.user_id = ?', self.id).group('courses.id')
+    def learning_courses(count = 10)
+      Course.joins(:course_ware_readings).where('course_ware_readings.user_id = ?', self.id).group('courses.id').limit(count)
     end
 
     # 正在学习的课程中最常用的tag
@@ -183,7 +192,8 @@ class CourseWareReading < ActiveRecord::Base
           ) AS SC
           # 学过的课程
 
-          JOIN courses ON courses.id <> SC.id
+          RIGHT JOIN courses ON courses.id = SC.id
+          WHERE SC.id IS NULL
           GROUP BY courses.id 
         ) AS NSC
         # 没学过的课程
