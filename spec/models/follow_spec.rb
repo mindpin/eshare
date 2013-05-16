@@ -17,6 +17,14 @@ describe Follow do
         it 'adds user1 to user2\'s followers' do
           expect {subject}.to change {user2.followers.count}.by(1)
         end
+
+        context 'when user try to follow him/herself' do
+          subject {user2.follow_by_user user2}
+
+          it 'won\'t be valid' do
+            expect {subject}.to raise_error {ActiveRecord::RecordInvalid}
+          end
+        end
       end
     end
 
