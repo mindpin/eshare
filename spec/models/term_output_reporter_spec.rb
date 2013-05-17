@@ -25,11 +25,14 @@ describe TermOutputReporter do
 
   describe "#run" do
     let(:reporter) {TermOutputReporter.new("echo '\e[31mHello'")}
-    let(:message)  {{:output => "<span style='color:red;'>Hello</span><br />"}}
+    let(:message)  {{
+      :output => "<span style='color:red;'>Hello</span><br />",
+      :job_id => reporter.job_id
+    }}
     before {FayeClient.stub(:publish_queue)}
 
     it "sends converted terminal output to a faye channel" do
-      FayeClient.should_receive(:publish_queue).with("/cmd/#{reporter.job_id}", message)
+      FayeClient.should_receive(:publish_queue).with("/cmd", message)
       reporter.run
     end
   end
