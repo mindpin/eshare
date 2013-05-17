@@ -6,7 +6,8 @@ class BaseMaker
 
   def initialize(yaml=nil)
     load_yaml(yaml)
-    @progressbar = _make_progressbar
+    @simple_progress = 0
+    @progressbar = _make_progress
   end
 
   def load_yaml(yaml=nil)
@@ -32,6 +33,10 @@ class BaseMaker
   end
 
 private
+
+  def _make_progress
+    SimpleProgress.create data.count
+  end
 
   def _make_progressbar
     ProgressBar.create(title:  type.pluralize.capitalize,

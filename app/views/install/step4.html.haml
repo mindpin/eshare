@@ -1,0 +1,9 @@
+.page-import.page-step4{:data=>{:importurl => '/install/submit/step4'}}
+  .tip
+    %label 准备导入通识类课程
+    .import-action
+      %a.import{:href=>"javascript:;"} 导入
+      %a.skip{:href=>"/install/submit/step4?skip=true", :'data-method' => 'post'} 跳过
+    %a.submit{:href=>'/', :style=>"display:none;"} 完成
+  .import-info{:style=>"display:none;background:black;height:600px;overflow:scroll;"}
+

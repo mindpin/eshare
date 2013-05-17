@@ -33,4 +33,5 @@ public/assets/*
 *~
 *\#*
 public/convert_*
+public/install_*
 script/data/video_courses.yaml

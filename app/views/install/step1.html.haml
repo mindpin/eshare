@@ -1,0 +1,9 @@
+= form_tag "/install/submit/step1" do
+  %label 管理员用户名: admin
+  %label 管理员邮箱
+  = text_field_tag 'email'
+  %label 管理员密码
+  = password_field_tag 'password'
+  %label 再次输入管理员密码
+  = password_field_tag 'password_confirm'
+  = submit_tag '确认'

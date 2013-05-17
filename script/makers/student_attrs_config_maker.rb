@@ -1,5 +1,5 @@
 require './script/makers/base_maker.rb'
 
-class AttrsConfigMaker < BaseMaker
+class StudentAttrsConfigMaker < BaseMaker
   set_producer {|data, _| AttrsConfig.create data}
 end
