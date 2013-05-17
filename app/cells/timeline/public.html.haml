@@ -1,5 +1,5 @@
 .page-feeds.list
-  = page_tile(:'questions-feeds', @feeds) do
+  = page_tile(:'public-feeds', @feeds) do
     - add_left(:avatar) do |feed|
       - if feed.to
         = avatar feed.to.creator

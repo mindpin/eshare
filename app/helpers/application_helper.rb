@@ -119,8 +119,14 @@ module ApplicationHelper
     chapter.read_percent(current_user)
   end
 
-  def follow_button(user)
+  def follow_button(cur_user, user)
     # %a.page-follow.follow.btn.success{:data => {:id => user.id}}
+    if cur_user.has_follow? user
+      return capture_haml {
+        haml_tag 'a.page-follow.unfollow.btn.small', '取消关注', :data => {:id => user.id}
+      }
+    end
+
     capture_haml {
       haml_tag 'a.page-follow.follow.btn.small', '关注', :data => {:id => user.id}
     }

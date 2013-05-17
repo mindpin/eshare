@@ -57,7 +57,7 @@ class CourseWareReading < ActiveRecord::Base
                           if callback_type == :update
                             last_feed = Feed.by_user(course_ware_reading.user).first
                             return true if last_feed.blank?
-                            return false if last_feed.to == self.to
+                            return false if last_feed.to == course_ware_reading
                           end
 
                           return true

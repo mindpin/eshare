@@ -54,5 +54,17 @@ describe Follow do
         end
       end
     end
+
+    describe '反复follow' do
+      before {
+        user1.follow user2
+        user1.follow user2
+        user1.follow user2
+      }
+
+      it {
+        Follow.count.should == 1
+      }
+    end
   end
 end
