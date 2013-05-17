@@ -14,6 +14,7 @@ zh-CN:
 
     student:
       dashboard: 首页
+      learning_plan: 学习计划
       courses: 课程
       disk: 文件夹
 

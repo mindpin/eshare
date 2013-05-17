@@ -11,7 +11,6 @@ class Follow < ActiveRecord::Base
   validates :follower,  :presence => true 
   validates :following, :presence => true
   validate :no_follow_self
-
   def no_follow_self
     errors.add(:base, '不能关注自己') if self.follower == self.following
   end

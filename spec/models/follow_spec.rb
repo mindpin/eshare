@@ -32,6 +32,7 @@ describe Follow do
       context 'user1 unfollows user2' do
         subject {user2.unfollow_by_user user1}
 
+        # forward_follows 是用户关注的人相关的中间表对象
         context 'when user1 is not following user2' do
           before {user1.forward_follows.destroy_all}
 

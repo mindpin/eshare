@@ -2,6 +2,7 @@
 Eshare::Application.routes.draw do
   root :to => 'index#index'
   get '/dashboard' => 'index#dashboard'
+  get '/plan' => 'index#plan'
 
   # devise
   devise_for :users, :path => 'account',
@@ -40,6 +41,16 @@ Eshare::Application.routes.draw do
   resources :short_messages, :shallow => true do
     collection do
       get :chatlog
+    end
+  end
+end
+
+# 用户关系
+Eshare::Application.routes.draw do
+  resources :friends, :shallow => true do
+    collection do
+      post :follow
+      post :unfollow
     end
   end
 end

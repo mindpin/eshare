@@ -15,4 +15,8 @@ class IndexController < ApplicationController
   def dashboard
     # 教师和学生的工作台页面
   end
+
+  def plan
+    # 学习计划和教学计划页面
+  end
 end

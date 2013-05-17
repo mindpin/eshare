@@ -53,6 +53,45 @@ body {
       }
     }
   }
+
+  .mainp75 {
+    width:75%;float:left;
+    min-height:400px;
+    padding-right:40px;
+    @include border-box;
+  }
+  .mainp66 {
+    width:66.66666%;float:left;
+    min-height:400px;
+    padding-right:40px;
+    @include border-box;
+  }
+
+  .sidep25 {
+    width:25%;float:left;
+    min-height:400px;
+    @include border-box;
+  }
+  .sidep33 {
+    width:33.33333%;float:left;
+    min-height:400px;
+    @include border-box;
+  }
+
+  .mainp75, .mainp66, .sidep25, .sidep33 {
+    .cpart {
+      border-bottom:solid 1px #ddd;
+      margin-bottom:20px;
+      &:last-child {
+        border-bottom: 0 none;
+      }
+      h3 {
+        font-size:15px;
+        margin:0 0 20px 0;
+        font-weight:bold;
+      }
+    }
+  }
 }
 
 body.auth{
@@ -218,6 +257,25 @@ body.app, body.admin {
       min-height:500px;
       margin-right:20px;
     }
+  }
+}
+
+.btn {
+  &.follow {
+    @include gradient(#AAD74C, #87B946);
+    background-color: #9ACA4A;
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    color: #3E5E00;
+    // text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    text-shadow:none;
+    &:hover, &:focus, &:active, &.active, &.disabled, &[disabled] {
+      background-color: #87B946;
+      color:#fff;
+    }
+  }
+  &.unfollow {
+    background-color:#e6e6e6;
   }
 }
 
@@ -1486,7 +1544,6 @@ img.page-avatar {
 
 .page-chart.all-courses-punch-card{
   height:500px;
-  width:60%;
 
   table.punch-card {
     width:100%;
@@ -1773,5 +1830,160 @@ form .input.page-form-tag-inputer {
         .p{text-align:center;}
       }
     }
+  }
+}
+
+.page-cell-no-follow {
+  .in-house.no-users {
+    border:solid 1px #ddd;
+    padding:20px;
+    background-color:#f7f7f7;
+    margin-bottom:20px;
+  }
+
+  .desc {
+    text-align:center;
+    margin-bottom:20px;
+    font-size:15px;
+    color:#666;
+  }
+  .users {
+    overflow:hidden;
+    margin-bottom:20px;
+
+    .user {
+      @include border-box;
+      float:left;
+      border:solid 1px #ddd;
+      border-right:none 0;
+      width:25%;
+      padding:15px;
+      
+      &:last-child {
+        border-right:solid 1px #ddd;
+      }
+
+      .avatar {
+        float:left;
+        margin-top:2px;
+        width:40px;height:40px;
+        img {width:40px;height:40px;}
+      }
+
+      .name, .course-count {
+        margin-left:50px;
+      }
+
+      .name {
+        font-weight:bold;
+        margin-bottom:5px;
+      }
+
+      .course-count {
+        font-size:12px;
+        color:#999;
+      }
+
+      .ffollow {
+        border-top:solid 1px #ddd;
+        padding-top:15px;
+        overflow:hidden;
+        margin-top:15px;
+        a.btn {
+          float:right;width:50px;
+        }
+      }
+    }
+  }
+}
+
+.cpart {
+  &.recent-learning-courses, &.advise-courses {
+    .no-course {
+      background-color:#f7f7f7;
+      border:solid 1px #ddd;
+      padding:15px;
+      margin-bottom: 20px;
+    }
+
+    .courses {
+      margin-bottom:20px;
+      border:solid 1px #ddd;
+      .course {
+        display:block;
+        border-bottom:solid 1px #ddd;
+        padding:10px;
+        position:relative;
+        height:20px;line-height:20px;
+        text-decoration:none;
+
+        &:last-child {
+          border:none;
+        }
+
+        .name {
+          i {
+            opacity:0.6;
+            margin-right:5px;
+          }
+        }
+
+        .percent{
+          position:absolute;
+          color:#666;
+          font-weight:bold;
+          right:10px;top:10px;
+          height:20px;line-height:20px;
+          i {
+            opacity:0.3;
+          }
+        }
+        &:hover {
+          background-color:#f7f7f7;
+          .name i {
+            opacity:1;
+          }
+          .percent i {
+            opacity: 0.6;
+          }
+        }
+      }
+    }
+  }
+  &.learning-tags {
+    .tags {
+      border:solid 1px #ddd;
+      margin-bottom:20px;
+      .tag {
+        display:block;height:20px;line-height:20px;
+        padding:10px;
+        border-bottom:solid 1px #ddd;
+        position:relative;
+        text-decoration:none;
+        &:last-child{border-bottom:0 none;}
+        &:hover {background-color:#f7f7f7;}
+
+        i {opacity:0.6;margin-right:5px;}
+
+        .courses-count {
+          position:absolute;
+          right:10px;top:10px;
+          font-size:12px;
+          color:#999;
+        }
+        &:hover .courses-count {
+          color:#333;
+        }
+        &:hover i{
+          opacity:1;
+        }
+      }
+    }
+  }
+}
+
+.page-feeds {
+  &.list {
+
   }
 }
