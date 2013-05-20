@@ -103,17 +103,45 @@ class CourseWareReading < ActiveRecord::Base
     end
 
     # 推荐关注的用户，优先feed比较多的用户
-    def advise_friends(count = 3)
+    def recommend_friends(count = 3)
         sql = %~
-          SELECT users.*
+          SELECT NF.*
           FROM
+
           (
-            SELECT feeds.user_id, COUNT(1) AS C
-            FROM feeds
-            GROUP BY feeds.user_id
-          ) AS Q
-          RIGHT JOIN users ON users.id = Q.user_id
-          ORDER BY Q.C DESC
+            SELECT users.*, Q.C AS C
+            FROM
+            (
+              SELECT feeds.user_id, COUNT(1) AS C
+              FROM feeds
+              GROUP BY feeds.user_id
+            ) AS Q
+
+            RIGHT JOIN users ON users.id = Q.user_id
+            WHERE users.roles_mask <> 1 AND users.id <> #{self.id}
+            # 发过 feed 的人，不是管理员，不是本人的人
+          ) AS R
+
+          JOIN 
+
+          (
+            SELECT users.*
+            FROM
+            (
+              SELECT users.* 
+              FROM users 
+              INNER JOIN follows ON users.id = follows.following_user_id 
+              WHERE follows.user_id = #{self.id}
+            ) AS F
+            # 关注的人
+
+            RIGHT JOIN users ON users.id = F.id
+            WHERE F.id IS NULL
+            # 尚未关注的人
+          ) AS NF
+
+          ON R.id = NF.id
+          ORDER BY R.C DESC
           LIMIT #{count}
         ~
 

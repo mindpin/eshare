@@ -1834,15 +1834,19 @@ form .input.page-form-tag-inputer {
 }
 
 .page-cell-no-follow {
+  border-top:solid 1px #ddd;
+
   .in-house.no-users {
     border:solid 1px #ddd;
     padding:20px;
     background-color:#f7f7f7;
+    margin-top: 20px;
     margin-bottom:20px;
   }
 
   .desc {
     text-align:center;
+    margin-top:20px;
     margin-bottom:20px;
     font-size:15px;
     color:#666;

@@ -2,9 +2,12 @@
   - if User.count < 6
     .in-house.no-users 系统内还没有足够的用户信息，需要添加一定数量的用户。
   - else
-    .desc 你还没有关注任何人，首页空空的，多关注一些吧。
+    - if @user.followings.count == 0
+      .desc 你还没有关注任何人，首页空空的，多关注一些吧。
+    - else
+      .desc 推荐你关注这些人
     .users
-      - @user.advise_friends(4).each do |user|
+      - @user.recommend_friends(4).each do |user|
         .user
           .avatar= avatar user
           .name= user.name

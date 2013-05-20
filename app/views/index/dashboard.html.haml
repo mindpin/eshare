@@ -4,11 +4,16 @@
 
 .page-dashboard
   .mainp66
-    - if current_user.followings.blank?
-      = render_cell :follow, :no_follow, :user => current_user
-      = render_cell :timeline, :public
-    - else
-      = render_cell :timeline, :public
+    .cpart.timeline
+      %h3 最新动态
+      - if current_user.followings.count == 0
+        = render_cell :follow, :recommend, :user => current_user
+        = render_cell :timeline, :public
+      - elsif current_user.followings.count < 10
+        = render_cell :follow, :recommend, :user => current_user
+        = render_cell :timeline, :home_timeline, :user => current_user
+      - else
+        = render_cell :timeline, :home_timeline, :user => current_user
 
   .sidep33
     = render_cell :course, :recent_learning, :user => current_user

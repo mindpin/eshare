@@ -1,7 +1,7 @@
 class FollowCell < Cell::Rails
   helper :application
 
-  def no_follow(opts = {})
+  def recommend(opts = {})
     @user = opts[:user]
     render
   end
