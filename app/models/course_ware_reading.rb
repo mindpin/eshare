@@ -5,6 +5,8 @@ class CourseWareReading < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :course_ware
+  belongs_to :chapter # 为了查询方便，冗余存储了
+  belongs_to :course # 为了查询方便，冗余存储了
 
   validate  :validate_read_status
   def validate_read_status
@@ -32,11 +34,25 @@ class CourseWareReading < ActiveRecord::Base
   def set_default_and_save_delta
     set_default_read_count_and_percent
     record_reading_delta
+    set_chapter_and_course
   end
 
   def set_default_read_count_and_percent
     self.read_count = 0 if self.read_count.blank?
     self.read_percent = _get_percent
+  end
+
+  # 冗余地保存课程和章节
+  def set_chapter_and_course
+    return true if self.course_ware.blank?
+    if (chapter = self.course_ware.chapter).present?
+      self.chapter = chapter
+      if (course = chapter.course).present?
+        self.course = course
+      end
+    end
+
+    return true
   end
 
   def _get_percent
@@ -54,6 +70,8 @@ class CourseWareReading < ActiveRecord::Base
   record_feed :scene => :course_ware_readings,
                         :callbacks => [:create, :update],
                         :before_record_feed => lambda { |course_ware_reading, callback_type|
+                          return false if !course_ware_reading.read_count_changed?
+
                           if callback_type == :update
                             last_feed = Feed.by_user(course_ware_reading.user).first
                             return true if last_feed.blank?
@@ -84,15 +102,18 @@ class CourseWareReading < ActiveRecord::Base
       end
     end
 
+    # 推荐关注的用户，优先feed比较多的用户
     def advise_friends(count = 3)
         sql = %~
-          SELECT users.*, SUM(course_ware_readings.read_percent) AS SUM
-          FROM users
-          LEFT JOIN course_ware_readings
-          ON users.id = course_ware_readings.user_id
-          WHERE users.roles_mask <> 1 AND users.id <> #{self.id}
-          GROUP BY users.id
-          ORDER BY SUM DESC
+          SELECT users.*
+          FROM
+          (
+            SELECT feeds.user_id, COUNT(1) AS C
+            FROM feeds
+            GROUP BY feeds.user_id
+          ) AS Q
+          RIGHT JOIN users ON users.id = Q.user_id
+          ORDER BY Q.C DESC
           LIMIT #{count}
         ~
 
@@ -112,9 +133,7 @@ class CourseWareReading < ActiveRecord::Base
         (
           SELECT courses.* 
           FROM courses 
-          INNER JOIN chapters ON chapters.course_id = courses.id 
-          INNER JOIN course_wares ON course_wares.chapter_id = chapters.id 
-          INNER JOIN course_ware_readings ON course_ware_readings.course_ware_id = course_wares.id 
+          INNER JOIN course_ware_readings ON course_ware_readings.course_id = courses.id
           WHERE (course_ware_readings.user_id = #{self.id}) 
           GROUP BY courses.id 
           ORDER BY courses.id desc
@@ -135,9 +154,7 @@ class CourseWareReading < ActiveRecord::Base
         (
         SELECT courses.* 
         FROM courses 
-        INNER JOIN chapters ON chapters.course_id = courses.id 
-        INNER JOIN course_wares ON course_wares.chapter_id = chapters.id 
-        INNER JOIN course_ware_readings ON course_ware_readings.course_ware_id = course_wares.id 
+        INNER JOIN course_ware_readings ON course_ware_readings.course_id = courses.id
         WHERE (course_ware_readings.user_id = #{self.id}) 
         GROUP BY courses.id 
         ORDER BY courses.id desc
@@ -163,9 +180,7 @@ class CourseWareReading < ActiveRecord::Base
           (
             SELECT courses.* 
             FROM courses 
-            INNER JOIN chapters ON chapters.course_id = courses.id 
-            INNER JOIN course_wares ON course_wares.chapter_id = chapters.id 
-            INNER JOIN course_ware_readings ON course_ware_readings.course_ware_id = course_wares.id 
+            INNER JOIN course_ware_readings ON course_ware_readings.course_id = courses.id 
             WHERE (course_ware_readings.user_id = #{self.id}) 
             GROUP BY courses.id
           ) AS Q
@@ -184,9 +199,8 @@ class CourseWareReading < ActiveRecord::Base
           FROM
           (
             SELECT courses.* 
-            FROM courses INNER JOIN chapters ON chapters.course_id = courses.id 
-            INNER JOIN course_wares ON course_wares.chapter_id = chapters.id 
-            INNER JOIN course_ware_readings ON course_ware_readings.course_ware_id = course_wares.id 
+            FROM courses
+            INNER JOIN course_ware_readings ON course_ware_readings.course_id = courses.id
             WHERE (course_ware_readings.user_id = #{self.id}) 
             GROUP BY courses.id 
           ) AS SC

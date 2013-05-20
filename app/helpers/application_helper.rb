@@ -58,32 +58,19 @@ module ApplicationHelper
                    }
   end
 
-  # 把 feed 信息转为页面显示的描述语句
-  def feed_desc(feed)
-    case feed.what
-      when 'create_question'
-        capture_haml {
-          haml_concat user_link(feed.who)
-          haml_concat '提了一个问题'
-        }
-      when 'create_answer'
-        capture_haml {
-          haml_concat user_link(feed.who)
-          haml_concat '回答了这个问题'
-        }
-      when 'create_answervote', 'update_answervote'
-        capture_haml {
-          haml_concat user_link(feed.who)
-          haml_concat '对这个回答表示支持'
-        }
-      else
-        feed.what
-    end
-  end
-
   def user_link(user)
     return '未知用户' if user.blank?
     link_to user.name, "/users/#{user.id}", :class=>'u-name'
+  end
+
+  def course_link(course)
+    return '<s class="quiet">课程已删除</s>'.html_safe if course.blank?
+    link_to course.name, "/courses/#{course.id}", :title => course.name
+  end
+
+  def course_ware_link(course_ware)
+    return '<s class="quiet">小节已删除</s>'.html_safe if course_ware.blank?
+    link_to course_ware.title, "/course_wares/#{course_ware.id}", :title => course_ware.title
   end
 
   def course_ware_read_count_html(course_ware, user)
@@ -141,4 +128,89 @@ module ApplicationHelper
       end
     }
   end
+
+  module FeedHelper
+    def feed_icon(feed)
+      capture_haml {
+        case feed.what
+        when 'create_course_ware_reading', 'update_course_ware_reading'
+          haml_tag 'div.feed-icon.course_ware_reading'
+        end
+      }
+    end
+
+    # 把 feed 信息转为页面显示的描述语句
+    def feed_desc(feed)
+      capture_haml {
+        haml_tag 'span.feed-desc', :class => feed.what do
+          case feed.what
+            when 'create_question'
+              haml_concat user_link(feed.who)
+              haml_concat '提了一个问题'
+            when 'create_answer'
+              haml_concat user_link(feed.who)
+              haml_concat '回答了这个问题'
+            when 'create_answervote', 'update_answervote'
+              haml_concat user_link(feed.who)
+              haml_concat '对这个回答表示支持'
+
+            when 'create_course_ware_reading', 'update_course_ware_reading'
+              if (course_ware_reading = feed.to).present?
+                course = course_ware_reading.course
+                chapter = course_ware_reading.chapter
+                course_ware = course_ware_reading.course_ware
+
+                haml_concat user_link(feed.who)
+                haml_concat '学习了' if feed.what == 'update_course_ware_reading'
+                haml_concat '开始学习' if feed.what == 'create_course_ware_reading'
+                haml_concat course_link(course)
+                haml_concat '课程下的'
+                haml_concat course_ware_link(course_ware)
+              end
+            else
+              haml_concat feed.what
+          end
+        end
+      }
+    end
+
+    def feed_content(feed)
+      capture_haml {
+        case feed.what
+        when 'create_course_ware_reading', 'update_course_ware_reading'
+          if (course_ware_reading = feed.to).present?
+            haml_concat '目前学习进度'
+            haml_concat course_ware_reading.read_percent
+          end
+        end
+      }
+    end
+  end
+
+  module TimeHelper
+    def timeago(time)
+      return content_tag(:span, '未知', :class=>'date') if time.blank?
+      
+      local_time = time.localtime
+      content_tag(:span, _friendly_relative_time(local_time), :class=>'date', :'data-date'=>local_time.to_i)
+    end
+
+    private
+      # 根据当前时间与time的间隔距离，返回时间的显示格式
+      # 李飞编写
+      def _friendly_relative_time(time)
+        current_time = Time.now
+        seconds = (current_time - time).to_i
+        
+        return '片刻前' if seconds < 0
+        return "#{seconds}秒前" if seconds < 60        
+        return "#{seconds/60}分钟前" if seconds < 3600
+        return time.strftime('%H:%M') if seconds < 86400 && current_time.day == time.day
+        return time.strftime("#{time.month}月#{time.day}日 %H:%M") if current_time.year == time.year
+        return time.strftime("%Y年#{time.month}月#{time.day}日 %H:%M")
+      end
+  end
+
+  include FeedHelper
+  include TimeHelper
 end

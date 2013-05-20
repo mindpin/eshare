@@ -4,8 +4,10 @@
 
 .page-dashboard
   .mainp66
-    - if true #current_user.followings.blank?
+    - if current_user.followings.blank?
       = render_cell :follow, :no_follow, :user => current_user
+      = render_cell :timeline, :public
+    - else
       = render_cell :timeline, :public
 
   .sidep33

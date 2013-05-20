@@ -1,41 +1,25 @@
 .page-feeds.list
   = page_tile(:'public-feeds', @feeds) do
-    - add_left(:avatar) do |feed|
-      - if feed.to
-        = avatar feed.to.creator
+    - add_left(:icon) do |feed|
+      = feed_icon feed
+
+    - add(:time, :quiet) do |feed|
+      = timeago feed.created_at
+
     - add(:desc) do |feed|
       = feed_desc feed
-    - add(:time, :quiet) do |feed|
-      = feed.created_at
+
+    - add(:'avatar-and-content') do |feed|
+      .avatar= avatar feed.who, :small
+      .content= feed_content feed
 
     - context do |feed|
-
-      - if feed.what == 'create_question'
-        - question = feed.to
-        - if question.present?
+      - if false#feed.what == 'update_course_ware_reading'
+        - if (course_ware_reading = feed.to).present?
+          - course = course_ware_reading.course
           - add(:title) do
-            %a{:href => "/questions/#{question.id}"}= question.title
+            %a{:href => "/courses/#{course.id}"}= course.name
           - add(:content) do
-            = question.content
+            = 'aaaa'
           - add_foot(:answers) do
-            %a{:href => "/questions/#{question.id}"} #{question.answers.count} 个回答
-
-      - if feed.what == 'create_answer'
-        - answer = feed.to
-        - question = answer.question
-        - add(:title) do
-          %a{:href => "/questions/#{question.id}"}= question.title
-        - add(:'answer-content') do
-          = answer.content
-
-      - if ['update_answervote', 'create_answervote'].include? feed.what
-        - vote = feed.to
-        - answer = vote.answer
-        - question = answer.question
-        - add(:title) do
-          %a{:href => "/questions/#{question.id}"}= question.title
-        - add(:'answer-creator', :bold) do
-          %span>= user_link answer.creator
-          %span> ：
-        - add(:'answer-content') do
-          = answer.content
+            %a{:href => "/courses/#{course.id}"} #{course.chapters.count} 个章节
