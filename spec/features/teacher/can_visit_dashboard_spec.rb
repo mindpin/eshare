@@ -22,7 +22,7 @@ feature '教师身份登录' do
   }
 
   it {
-    page.should have_content '工作面板'
+    page.should have_content '首页'
   }
 
 end

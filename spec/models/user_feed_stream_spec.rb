@@ -4,6 +4,7 @@ describe UserFeedStream do
   describe 'db' do
     let(:user1) {FactoryGirl.create :user}
     let(:user2) {FactoryGirl.create :user}
+    let(:user3) {FactoryGirl.create :user}
     let(:homeline_db) {user1.homeline_db}
     let(:timeline_db) {user1.timeline_db}
 
@@ -11,6 +12,7 @@ describe UserFeedStream do
       user1.follow user2
       8.times {FactoryGirl.create :feed, :who => user1}
       8.times {FactoryGirl.create :feed, :who => user2}
+      8.times {FactoryGirl.create :feed, :who => user3}
     end
 
     describe '#homeline_db' do
