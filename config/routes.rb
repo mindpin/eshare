@@ -3,6 +3,9 @@ Eshare::Application.routes.draw do
   root :to => 'index#index'
   get '/dashboard' => 'index#dashboard'
   get '/plan' => 'index#plan'
+  get '/install' => 'install#index'
+  get '/install/:step' => 'install#step'
+  post '/install/submit/:step' => 'install#step_submit'
 
   # devise
   devise_for :users, :path => 'account',

@@ -24,7 +24,10 @@ class TermOutputReporter
   def run
     IO.popen(cmd) do |io|
       io.each do |line|
-        FayeClient.publish_queue "/cmd/#{job_id}", {:output => ansi_to_html(line)}
+        FayeClient.publish_queue "/cmd", {
+          :output => ansi_to_html(line), 
+          :job_id => job_id
+        }
       end
     end
   end

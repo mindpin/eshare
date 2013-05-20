@@ -217,5 +217,36 @@ SimpleRedisCache.config do
   end
 
 
+  # user.timeline
+  vector_cache  :name => :timeline, 
+                :params => [], :caller => User, 
+                :model => MindpinFeeds::Feed do
+
+    rules do
+      after_create MindpinFeeds::Feed do |feed|
+        user = feed.who
+        add_to_cache(feed.id, user)
+        user.followers.each do |f_user|
+          add_to_cache(feed.id, f_user)
+        end
+      end
+    end
+
+  end
+
+
+  # user.homeline
+  vector_cache  :name => :homeline, 
+                :params => [], :caller => User, 
+                :model => MindpinFeeds::Feed do
+  
+    rules do
+      after_create MindpinFeeds::Feed do |feed|
+        user = feed.who
+        add_to_cache(feed.id, user)
+      end
+    end
+
+  end
 
 end
