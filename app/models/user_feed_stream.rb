@@ -4,11 +4,11 @@ module UserFeedStream
   end
 
   module InstanceMethods
-    def homeline
+    def homeline_db
       MindpinFeeds::Feed.by_user(self).order('id desc')
     end
 
-    def timeline
+    def timeline_db
       MindpinFeeds::Feed.find_by_sql(%`
         SELECT feeds.* FROM feeds
         WHERE feeds.user_id IN (
@@ -22,6 +22,8 @@ module UserFeedStream
 
           SELECT #{self.id}
         )
+
+        order by feeds.id desc
       `
       )
     end
