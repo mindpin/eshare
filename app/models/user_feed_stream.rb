@@ -9,7 +9,21 @@ module UserFeedStream
     end
 
     def timeline
-      MindpinFeeds::Feed.where(:user_id => self.following_ids + [self.id]).order('id desc')
+      MindpinFeeds::Feed.find_by_sql(%`
+        SELECT feeds.* FROM feeds
+        WHERE feeds.user_id IN (
+          SELECT
+            follows.following_user_id
+          FROM
+            follows
+          WHERE follows.user_id = #{self.id}
+
+          UNION
+
+          SELECT #{self.id}
+        )
+      `
+      )
     end
   end
 end
