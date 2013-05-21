@@ -25,8 +25,22 @@ SimpleNavbar::Base.config do
       controller :'manage/chapters'
     end
 
+    nav :user, :url => '/users/me' do
+      controller :users
+    end
+
+    nav :courses, :url => '/courses' do
+      controller :courses
+      controller :chapters
+      controller :course_wares
+    end
+
     nav :disk, :url => '/disk' do
       controller :disk
+    end
+
+    nav :tags, :url => '/tags' do
+      controller :tags
     end
 
     nav :questions, :url => '/questions' do

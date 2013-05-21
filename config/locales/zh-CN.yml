@@ -6,20 +6,26 @@ zh-CN:
       categories_manage: 分类管理
 
     teacher:
-      dashboard: 首页
-      disk: 文件夹
-      courses_manage: 课程管理
-      courses_manage_aj: 课管理β
-      questions: 问答
-
-    student:
       dashboard: 动态
-      learning_plan: 计划
       courses: 课程
       disk: 文件
       tags: 标签
-      friends: 朋友
       user: 个人
+      questions: 问答
+      
+      courses_manage: 课程管理
+      courses_manage_aj: 课管理β
+
+
+    student:
+      dashboard: 动态
+      courses: 课程
+      disk: 文件
+      tags: 标签
+      user: 个人
+      questions: 问答
+
+      learning_plan: 计划
 
   helpers:
     submit:
