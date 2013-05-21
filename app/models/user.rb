@@ -87,4 +87,5 @@ class User < ActiveRecord::Base
   include CourseSubjectFollow::UserMethods
   include SelectCourseApply::UserMethods
   include CourseWareReading::UserMethods
+  include TagFollow::UserMethods
 end
