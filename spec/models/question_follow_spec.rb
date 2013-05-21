@@ -11,29 +11,41 @@ describe QuestionFollow do
     }
 
     it "问题有被自己关注" do
-      @question.get_follower_by(@creator).present?.should == true
- 
       @question.followed_by?(@creator).should == true
     end
 
+    it {
+      @question.last_view_time_of(@creator).should_not == nil
+    }
 
-    it "关注数量为0" do
-      expect {
+    it {
+      @question.follow_users.should == [@creator]
+    }
+
+    it {
+      @creator.follow_questions.should == [@question]
+    }
+
+    context '取消关注' do
+      before{
         @question.unfollow_by_user(@creator)
-      }.to change {
-        @question.follows.by_user(@creator).count
-      }.by(-1)
-    end
+      }
 
+      it {
+        @question.follow_users.should == []
+      }
 
-    it "已经被取消" do
-      @question.unfollow_by_user(@creator)
+      it {
+        @creator.follow_questions.should == []
+      }
 
-      @question.followed_by?(@creator).should == false
+      it{
+        @question.followed_by?(@creator).should == false
+      }
+
     end
 
   end
-
 
 
   describe "其它用户" do
@@ -44,40 +56,37 @@ describe QuestionFollow do
     }
 
     it {
-      @question.get_follower_by(@user).nil?.should == true
-    }
-
-    it {
       @question.followed_by?(@user).should == false
     }
 
-
-    it "关注数量为1" do
-      expect {
+    context 'follow_by_user' do
+      before{
         @question.follow_by_user(@user)
-      }.to change {
-        @question.follows.by_user(@user).count
-      }.by(1)
+      }
+
+      it{
+        @question.follow_users.should == [@user, @question.creator]
+      }
+
+      it{
+        @user.follow_questions.should == [@question]
+      }
+
+      it{
+        @question.followed_by?(@user).should == true
+      }
+
+      it "查看记录时间" do
+        last_view_time = @question.last_view_time_of(@user)
+
+        Timecop.travel(Time.now + 1.seconds) do
+          @question.visit_by!(@user)
+        end
+
+        @question.last_view_time_of(@user).should > last_view_time
+      end
     end
 
-
-    it "已经被关注" do
-      @question.follow_by_user(@user)
-
-      @question.followed_by?(@user).should == true
-    end
-
-
-    it "查看记录时间" do
-      @question.follow_by_user(@user)
-      last_view_time = @question.get_follower_by(@user).last_view_time
-
-      sleep(2)
-
-      @question.visit_by!(@user)
-
-      @question.get_follower_by(@user).last_view_time.should > last_view_time
-    end
 
   end
 

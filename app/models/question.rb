@@ -1,6 +1,7 @@
 class Question < ActiveRecord::Base
   include CourseInteractive::QuestionMethods
   include QuestionFeedTimelime::QuestionMethods
+  include QuestionFollow::QuestionMethods
   
   attr_accessible :title, :content, :ask_to_user_id, :creator, :model, :best_answer
 
@@ -9,7 +10,6 @@ class Question < ActiveRecord::Base
   belongs_to :best_answer, :class_name => 'Answer', :foreign_key => :best_answer_id
   belongs_to :model, :polymorphic => true
   has_many :answers
-  has_many :follows, :class_name => 'QuestionFollow', :foreign_key => :question_id
 
   validates :creator, :title, :presence => true
 
@@ -52,11 +52,6 @@ class Question < ActiveRecord::Base
     }
   }
 
-  after_create :follow_by_creator
-  def follow_by_creator
-    self.follow_by_user(self.creator)
-  end
-
   # 记录用户活动
   record_feed :scene => :questions,
                         :callbacks => [ :create, :update]
@@ -69,33 +64,6 @@ class Question < ActiveRecord::Base
   def answer_of(user)
     return nil if user.blank?
     return self.answers.by_user(user).first
-  end
-
-  def follow_by_user(user)
-    self.follows.create(:user => user, :question => self, :last_view_time => Time.now)
-  end
-
-  def unfollow_by_user(user)
-    self.get_follower_by(user).destroy
-  end
-
-
-  def followed_by?(user)
-    self.get_follower_by(user).present?
-  end
-
-  def get_follower_by(user)
-    self.follows.by_user(user).first
-  end
-
-  def visit_by!(user)
-    return if !self.followed_by?(user)
-
-    question_follow = self.get_follower_by(user)
-
-    question_follow.last_view_time = Time.now
-    question_follow.save
-    question_follow.reload
   end
 
   def course
