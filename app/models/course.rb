@@ -58,9 +58,6 @@ class Course < ActiveRecord::Base
 
   validates :creator, :presence => true
 
-  validates :name, :uniqueness => {:case_sensitive => false},
-                   :presence => true
-
   validates :cid, :uniqueness => {:case_sensitive => false},
                   :presence => true
 

@@ -66,6 +66,7 @@ task :deploy => :environment do
 
     to :launch do
       queue %[
+        source /etc/profile
         ./deploy/sh/redis_server.sh restart
         ./deploy/sh/sidekiq.sh restart
         ./deploy/sh/unicorn_eshare.sh stop
