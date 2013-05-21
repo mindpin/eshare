@@ -1,4 +1,7 @@
 class TagsController < ApplicationController
+  def index
+  end
+
   def set_tags
     tagable_id   = params[:tagable_id]
     tagable_type = params[:tagable_type]

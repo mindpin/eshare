@@ -1,0 +1,11 @@
+.page-user-show-stat
+  / .a 关注的关键词
+  .courses
+    %span 学习的课程
+    %a{:href => "/users/#{@user.id}/courses"}= 1
+  .questions
+    %span 提出的问题
+    %a{:href => "/users/#{@user.id}/questions"}= @user.questions.count
+  .answers
+    %span 回答的问题
+    %a{:href => "/users/#{@user.id}/answers"}= @user.answers.count

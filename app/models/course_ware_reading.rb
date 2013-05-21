@@ -149,8 +149,8 @@ class CourseWareReading < ActiveRecord::Base
     end
 
     # 正在学习的课程
-    def learning_courses(count = 10)
-      Course.joins(:course_ware_readings).where('course_ware_readings.user_id = ?', self.id).group('courses.id').limit(count)
+    def learning_courses
+      Course.joins(:course_ware_readings).where('course_ware_readings.user_id = ?', self.id).group('courses.id')
     end
 
     # 正在学习的课程中最常用的tag

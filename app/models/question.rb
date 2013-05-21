@@ -59,7 +59,7 @@ class Question < ActiveRecord::Base
 
   # 记录用户活动
   record_feed :scene => :questions,
-                        :callbacks => [ :create, :update]
+                        :callbacks => [:create, :update]
 
   def answered_by?(user)
     return false if user.blank?

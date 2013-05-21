@@ -256,6 +256,10 @@ body.app, body.admin {
       padding:20px + 59px 20px 20px 20px;
       min-height:500px;
       margin-right:20px;
+      &.user-page {
+        padding:20px;
+        overflow:hidden;
+      }
     }
   }
 }
@@ -1543,7 +1547,7 @@ img.page-avatar {
 }
 
 .page-chart.all-courses-punch-card{
-  height:500px;
+  height:300px;
 
   table.punch-card {
     width:100%;
@@ -1649,49 +1653,12 @@ form .input.page-form-tag-inputer {
 .page-tag-show.courses {
   @include floatfix;
 
-  .base-tags {
-    width: 25%;
-    float:left;
-    @include border-box;
-    padding-left:20px;
-
-    .tag {
-      height:20px;line-height:20px;
-      background-color:#F7F7F7;
-      display:block;
-      padding:10px;
-      color:#333;
-      border-top:solid 1px white;
-      border-bottom:solid 1px #ddd;
-      border-left:solid 1px #ddd;
-      border-right:solid 1px #ddd;
-
-      &:first-child{
-        border-top:solid 1px #ddd;
-      }
-
-      &:hover {
-        background-color:white;
-        text-decoration:none;
-      }
-
-      i {
-        opacity:0.6;
-      }
-    }
-  }
-
-  .show-main {
-    width: 75%;
-    float:left;
-  }
-
   .courses {
     margin-bottom:15px;
 
     .course {
       border:solid 1px #e5e5e5;
-      box-shadow:0 0 5px rgba(0, 0, 0, 0.05);
+      // box-shadow:0 0 5px rgba(0, 0, 0, 0.05);
       padding:10px;
       position:relative;
       margin-bottom:20px;
@@ -1954,7 +1921,7 @@ form .input.page-form-tag-inputer {
       }
     }
   }
-  &.learning-tags {
+  &.learning-tags, &.course-base-tags {
     .tags {
       border:solid 1px #ddd;
       margin-bottom:20px;
@@ -1989,8 +1956,9 @@ form .input.page-form-tag-inputer {
 .page-feeds {
   &.list {
     .public-feeds {
-      .feed-icon {margin-top:5px;opacity:0.618;}
+      .feed-icon {margin-top:5px;opacity:0.382;}
       .tile-body {
+        max-width:500px;
         margin-left:50px;
         .avatar-and-content {
           overflow:hidden;
@@ -2010,8 +1978,113 @@ form .input.page-form-tag-inputer {
 }
 .feed-icon {
   width:32px;height:32px;
-  background:url(feed_icons/feed_icons.png);
+  background:url(feed_icons/feed_icons.png) no-repeat;
   &.course_ware_reading {
     background-position: 0 0;
+  }
+  &.question {
+    background-position: 0 -33px;
+  }
+  &.answer {
+    background-position: 0 -66px;
+  }
+  &.vote-up {
+    background-position: 0 -99px;
+  }
+}
+
+.page-user-page-head {
+  border:solid 1px #ddd;
+  padding:20px;
+  overflow:hidden;
+  margin-bottom:20px;
+
+  .avatar {
+    float:left;
+  }
+  .ct {
+    margin-left:200px;
+    h2.name {
+      margin:0;margin-bottom:10px;
+      font-size:16px;font-weight:bold;
+    }
+    .joined{margin-bottom:10px;}
+  }
+}
+
+.page-user-page-friends-stat {
+  border-bottom:solid 1px #ddd;
+  margin-bottom: 20px;
+  overflow:hidden;
+  .fo, .fr{
+    padding:20px;
+    float:left;
+    display:block;
+    text-decoration:none;
+    .de {
+      color:#999;margin-bottom:5px;
+    }
+    .c .n {
+      font-weight:bold;
+    }
+    .c {
+      color:#555;
+    }
+    &:hover {
+      .c, .de{color:#005580 !important;};
+    }
+  }
+  .fr {
+    border-left:solid 1px #ddd;
+  }
+}
+
+.page-friends-followings, .page-friends-followers{
+  border:solid 1px #ddd;
+  .stat {
+    padding:10px 15px;
+    border-bottom:solid 1px #ddd;
+    span {font-weight: bold;}
+    position: relative;
+    a.back {
+      position:absolute;
+      top:10px;right:15px;
+    }
+  }
+  .users {
+    padding:15px;
+    .user {
+      border-bottom:solid 1px #eee;
+      padding:15px 0;
+      overflow:hidden;
+      position:relative;
+
+      &:first-child{
+        padding-top:0;
+        .ffollow {
+          top:0 !important;
+        }
+      }
+      &:last-child{
+        border:none 0;
+        padding-bottom:0;
+      }
+
+      .avatar{
+        float:left;
+        img {
+          width:50px;height:50px;
+        }
+      }
+      .data {
+        margin-left:65px;
+        .name {font-weight:bold;}
+        .ffollow{
+          position: absolute;
+          top:15px;right:0px;
+          a {width:50px;}
+        }
+      }
+    }
   }
 }

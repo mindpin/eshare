@@ -15,7 +15,7 @@
             .count
               - value = @stat[m][i]
               - if value.present?
-                - radius = (value.to_f / max) ** 0.5 * 30
+                - radius = (value.to_f / max) ** 0.5 * 24
                 - radius = [radius, 3].max
                 .value{:style => "width:#{radius}px;height:#{radius}px;margin-left:-#{radius/2}px;margin-top:-#{radius/2}px;"}= value
 

@@ -1,0 +1,11 @@
+.page-user-page-friends-stat
+  %a.fo{:href => "/friends/#{@user.id}/followings"} 
+    .de 关注
+    .c 
+      %span.n #{@user.followings.count}
+      %span人
+  %a.fr{:href => "/friends/#{@user.id}/followers"}
+    .de 关注者
+    .c 
+      %span.n #{@user.followers.count}
+      %span 人

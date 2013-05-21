@@ -23,7 +23,7 @@ class CourseCell < Cell::Rails
 
   def recent_learning(opts = {})
     @user = opts[:user]
-    @courses = @user.learning_courses
+    @courses = @user.learning_courses.limit(5)
     render
   end
 

@@ -12,14 +12,3 @@
     - add(:'avatar-and-content') do |feed|
       .avatar= avatar feed.who, :small
       .content= feed_content feed
-
-    - context do |feed|
-      - if false#feed.what == 'update_course_ware_reading'
-        - if (course_ware_reading = feed.to).present?
-          - course = course_ware_reading.course
-          - add(:title) do
-            %a{:href => "/courses/#{course.id}"}= course.name
-          - add(:content) do
-            = 'aaaa'
-          - add_foot(:answers) do
-            %a{:href => "/courses/#{course.id}"} #{course.chapters.count} 个章节

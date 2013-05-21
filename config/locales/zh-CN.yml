@@ -13,10 +13,13 @@ zh-CN:
       questions: 问答
 
     student:
-      dashboard: 首页
-      learning_plan: 学习计划
+      dashboard: 动态
+      learning_plan: 计划
       courses: 课程
-      disk: 文件夹
+      disk: 文件
+      tags: 标签
+      friends: 朋友
+      user: 个人
 
   helpers:
     submit:

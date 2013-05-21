@@ -55,6 +55,26 @@ Eshare::Application.routes.draw do
       post :follow
       post :unfollow
     end
+
+    member do
+      get :followings
+      get :followers
+    end
+  end
+end
+
+# 个人页
+Eshare::Application.routes.draw do
+  resources :users, :shallow => true do
+    collection do
+      get :me
+    end
+
+    member do
+      get :courses
+      get :questions
+      get :answers
+    end
   end
 end
 

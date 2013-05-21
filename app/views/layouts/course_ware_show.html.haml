@@ -1,5 +1,4 @@
 - title = t('common.site.title.app')
-- home_title = t('common.site.home_title.app')
 
 - content_for :javascript do
   = javascript_include_tag '/highcharts/js/highcharts'
@@ -7,11 +6,7 @@
 
 !!!
 - simple_page_layout title, :html_lang => :zh, :body_class => 'app' do
-  = page_navbar(:fixed_top, :color_inverse) do |navbar|
-    - navbar.prepend link_to(home_title, '/', :class => :brand)
-    - navbar.add_item(current_user.name, '/')
-    - navbar.add_item('账号设置', '/account/edit')
-    - navbar.add_item('退出登录', '/account/sign_out')
+  = render_cell :layout, :topnav, :user => current_user
 
   .page-layout-course-ware-show
     .sidebar

@@ -1,4 +1,16 @@
 class FriendsController < ApplicationController
+  layout 'user_page', :only => [:followings, :followers]
+
+  def followings
+    @user = User.find(params[:id])
+    @followings = @user.followings.page(1)
+  end
+
+  def followers
+    @user = User.find(params[:id])
+    @followers = @user.followers.page(1)
+  end
+
   def follow
     user = User.find(params[:user_id])
     if user != current_user

@@ -11,4 +11,10 @@ class TimelineCell < Cell::Rails
     @feeds = @user.home_timeline(:page => 1, :count => 30)
     render :view => :public
   end
+
+  def user_timeline(opts = {})
+    @user = opts[:user]
+    @feeds = @user.user_timeline(:page => 1, :count => 30)
+    render :view => :public
+  end
 end

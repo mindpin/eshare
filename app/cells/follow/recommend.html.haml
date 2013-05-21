@@ -9,8 +9,7 @@
     .users
       - @user.recommend_friends(4).each do |user|
         .user
-          .avatar= avatar user
-          .name= user.name
+          .avatar= avatar_link user
+          .name= user_link user
           .course-count 正在学习#{user.learning_courses.length}项课程
-          .ffollow
-            = follow_button @user, user
+          .ffollow= follow_button @user, user

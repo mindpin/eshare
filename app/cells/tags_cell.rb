@@ -14,6 +14,11 @@ class TagsCell < Cell::Rails
   def learning(opts = {})
     @user = opts[:user]
     @tags = @user.learning_tags
+    @sub_path = 'courses'
+    render
+  end
+
+  def course_base(opts = {})
     render
   end
 end

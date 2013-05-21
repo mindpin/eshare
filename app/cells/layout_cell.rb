@@ -1,12 +1,12 @@
-class FollowCell < Cell::Rails
+class LayoutCell < Cell::Rails
   helper :application
 
-  def recommend(opts = {})
+  def topnav(opts = {})
     @user = opts[:user]
     render
   end
 
-  def stat(opts = {})
+  def sidebar(opts = {})
     @user = opts[:user]
     render
   end

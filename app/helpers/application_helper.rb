@@ -58,6 +58,18 @@ module ApplicationHelper
                    }
   end
 
+  def avatar_link(user, style = :normal)
+    if user.blank?
+      return link_to 'javascript:;', :class => 'u-avatar' do
+        avatar user, style
+      end
+    end
+
+    link_to "/users/#{user.id}", :class => 'u-avatar' do
+      avatar user, style
+    end
+  end
+
   def user_link(user)
     return '未知用户' if user.blank?
     link_to user.name, "/users/#{user.id}", :class=>'u-name'
@@ -71,6 +83,11 @@ module ApplicationHelper
   def course_ware_link(course_ware)
     return '<s class="quiet">小节已删除</s>'.html_safe if course_ware.blank?
     link_to course_ware.title, "/course_wares/#{course_ware.id}", :title => course_ware.title
+  end
+
+  def question_link(question)
+    return '<s class="quiet">问题已删除</s>'.html_safe if question.blank?
+    link_to "“#{truncate_u(question.title, 32)}”", "/questions/#{question.id}", :title => question.title 
   end
 
   def course_ware_read_count_html(course_ware, user)
@@ -135,6 +152,14 @@ module ApplicationHelper
         case feed.what
         when 'create_course_ware_reading', 'update_course_ware_reading'
           haml_tag 'div.feed-icon.course_ware_reading'
+        when 'create_question', 'update_question'
+          haml_tag 'div.feed-icon.question'
+        when 'create_answer', 'update_answer'
+          haml_tag 'div.feed-icon.answer'
+        when 'create_answer_vote', 'update_answer_vote'
+          haml_tag 'div.feed-icon.vote-up'
+        else
+          haml_tag 'div.feed-icon.common'
         end
       }
     end
@@ -147,13 +172,22 @@ module ApplicationHelper
             when 'create_question'
               haml_concat user_link(feed.who)
               haml_concat '提了一个问题'
+              haml_concat question_link(feed.to)
             when 'create_answer'
               haml_concat user_link(feed.who)
-              haml_concat '回答了这个问题'
-            when 'create_answervote', 'update_answervote'
-              haml_concat user_link(feed.who)
-              haml_concat '对这个回答表示支持'
-
+              haml_concat '回答了问题'
+              haml_concat question_link(feed.to.question)
+            when 'create_answer_vote', 'update_answer_vote'
+              if (answer_vote = feed.to).present?
+                if (answer = answer_vote.answer).present?
+                  haml_concat user_link(feed.who)
+                  haml_concat '赞成了'
+                  haml_concat user_link(answer.creator)
+                  haml_concat '在问题'
+                  haml_concat question_link(answer.question)
+                  haml_concat '中的回答'
+                end
+              end
             when 'create_course_ware_reading', 'update_course_ware_reading'
               if (course_ware_reading = feed.to).present?
                 course = course_ware_reading.course
@@ -181,6 +215,20 @@ module ApplicationHelper
           if (course_ware_reading = feed.to).present?
             haml_concat '目前学习进度'
             haml_concat course_ware_reading.read_percent
+          end
+        when 'create_question', 'update_question'
+          if (question = feed.to).present?
+            haml_concat truncate_u(question.content, 140)
+          end
+        when 'create_answer', 'update_answer'
+          if (answer = feed.to).present?
+            haml_concat truncate_u(answer.content, 140)
+          end
+        when 'create_answer_voto', 'update_answer_vote'
+          if (answer_vote = feed.to).present?
+            if (answer = answer_vote.answer).present?
+              haml_concat truncate_u(answer.content, 140)
+            end
           end
         end
       }

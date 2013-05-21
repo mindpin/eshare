@@ -1,0 +1,14 @@
+.page-friends-followers
+  .stat
+    %span= user_link @user
+    %span 被
+    %span= @user.followers.count
+    %span 人关注
+    %a.back{:href => "/users/#{@user.id}"} 返回个人主页
+  .users
+    - @followers.each do |user|
+      .user
+        .avatar= avatar_link user
+        .data
+          .name= user_link user
+          .ffollow= follow_button current_user, user

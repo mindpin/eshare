@@ -53,8 +53,6 @@
     = simple_form_for [@question, @answer] do |f|
       .form-inputs
         = f.input :content, :as => :text, :input_html => {:rows => 4, :class => 'xxlarge'}
-      .form-inputs
-        = f.association :course_wares
       .form-actions
         = f.button :submit, :class => 'success'
 

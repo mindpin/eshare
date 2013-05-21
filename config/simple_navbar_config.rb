@@ -45,6 +45,10 @@ SimpleNavbar::Base.config do
       controller :index, :only => :plan
     end
 
+    nav :user, :url => '/users/me' do
+      controller :users
+    end
+
     nav :courses, :url => '/courses' do
       controller :courses
       controller :chapters
@@ -54,6 +58,11 @@ SimpleNavbar::Base.config do
     nav :disk, :url => '/disk' do
       controller :disk
     end
+
+    nav :tags, :url => '/tags' do
+      controller :tags
+    end
+
   end
 
 end

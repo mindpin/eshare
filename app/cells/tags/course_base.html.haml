@@ -1,0 +1,8 @@
+.cpart.course-base-tags
+  %h3 课程常用标签
+  .tags
+    - Course::BASE_TAGS.each do |tagname|
+      %a.tag{:href => "/tags/courses/#{tagname}", :data => {:name => tagname}}
+        %i.icon-tag
+        %span= tagname
+        .courses-count #{Course.by_tag(tagname).count} 项课程
