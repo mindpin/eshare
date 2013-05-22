@@ -24,6 +24,7 @@ group :test do
   gem 'capybara', '2.0.2' # 集成测试框架
   gem 'timecop', '0.6.1' # 用于在测试中调整时间
   gem 'rspec-cells', '0.1.7' # 用于测试 cells
+  gem 'sunspot-rails-tester', '1.0.0'
 end
 
 group :examples do
