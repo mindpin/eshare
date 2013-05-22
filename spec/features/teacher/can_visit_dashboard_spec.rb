@@ -14,7 +14,7 @@ feature '教师身份登录' do
   end
 
   scenario '登录' do
-    current_path.should == '/dashboard'
+    current_path.should == '/courses'
   end
 
   it {
@@ -22,7 +22,7 @@ feature '教师身份登录' do
   }
 
   it {
-    page.should have_content '首页'
+    page.should have_content '动态'
   }
 
 end
