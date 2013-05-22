@@ -1,0 +1,10 @@
+.page-account-sync
+  %label 新浪微博
+  - if !current_user.is_binded_weibo?
+    = link_to '绑定', '/auth/weibo'
+  - else
+    - if current_user.binded_weibo_is_expired?
+      .expired (认证过期)
+      = link_to '绑定', '/auth/weibo'
+    - else
+      = link_to '解除绑定', '/auth/weibo/unbind', :method => :post

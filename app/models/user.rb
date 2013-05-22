@@ -88,4 +88,5 @@ class User < ActiveRecord::Base
   include SelectCourseApply::UserMethods
   include CourseWareReading::UserMethods
   include TagFollow::UserMethods
+  include Omniauth::UserMethods
 end
