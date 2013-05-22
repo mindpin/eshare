@@ -72,6 +72,10 @@ gem 'awesome_nested_set'
 # 权限管理
 gem "cancan", "~> 1.6.10"
 
+# weibo oauth2
+gem 'omniauth-weibo-oauth2'
+gem "weibo2", "~> 0.1.0"
+
 # 自己写的 gem，都不指定版本号，如果有重大修改，通过GIT TAG解决
 
 ## 用户角色
