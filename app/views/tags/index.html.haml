@@ -1,0 +1,12 @@
+- content_for :header do
+  %h1 常用课程标签
+
+.page-tags-index
+  .page-popular-tags-grid
+    - Tag.popular_tags(:count => 30).each do |tag|
+      :ruby
+        name = tag.name
+        count = tag.taggings.count
+      %a.tag{:href => "/tags/courses/#{tag.name}", :style => 'display:none;', :data => {:weight => count}}
+        .name= name
+        .count (#{count})

@@ -1,11 +1,11 @@
 - content_for :header do
   %h1 课程
-  .page-desc 浏览系统内的课程
+  .page-desc 浏览全部课程
 
 .page-courses-index
   .hot-courses.2week
     .headline
-      %h2 最近半个月的热门课程
+      %h2 最近两周的热门课程
 
     :ruby
       courses = Course.top_interactive_sums_of(Date.today, Date.today - 13).limit(4)
