@@ -16,7 +16,7 @@ set :shared_paths, [
   '.ruby-version', 
   'deploy/sh/property.yaml', 
   'public/YKAuth.txt', 
-  'config/r.yaml']
+  'config/initializers/r.rb']
 
 task :environment do
 end
@@ -25,10 +25,10 @@ task :setup => :environment do
   queue! %[mkdir -p "#{deploy_to}/shared/log"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/log"]
 
-  queue! %[mkdir -p "#{deploy_to}/shared/config"]
+  queue! %[mkdir -p "#{deploy_to}/shared/config/initializers"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/config"]
   queue! %[touch "#{deploy_to}/shared/config/database.yml"]
-  queue! %[touch "#{deploy_to}/shared/config/r.yaml"]
+  queue! %[touch "#{deploy_to}/shared/config/initializers/r.rb"]
 
   queue! %[mkdir -p "#{deploy_to}/shared/db"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/db"]
@@ -46,7 +46,7 @@ task :setup => :environment do
 
   queue  %[echo "-----> Be sure to edit 'shared/config/database.yml'."]
   queue  %[echo "-----> Be sure to edit 'shared/db/schema.rb'."]
-  queue  %[echo "-----> Be sure to edit 'shared/config/r.yaml'."]
+  queue  %[echo "-----> Be sure to edit 'shared/config/initializers/r.rb'."]
   queue  %[echo "-----> Be sure to edit 'shared/.ruby-version'."]
   queue  %[echo "-----> Be sure to edit 'shared/deploy/sh/property.yaml'."]
   queue  %[echo "-----> Be sure to edit 'shared/public/YKAuth.txt'."]
