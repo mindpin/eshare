@@ -745,12 +745,24 @@ img.page-avatar {
             padding:5px 10px;
             height:25px;line-height:25px;
             color:#005580;
+            margin-left:-1px;
             margin-right:-1px;
             margin-bottom:-1px;
+            position:relative;
+
+            i{
+              position:absolute;
+              top:10px;right:10px;
+              display:none;
+            }
+
             &:hover {
               color:white;
               background-color: #005580;
               text-decoration:none;
+              i {
+                display:block;
+              }
             }
           }
         }
@@ -834,8 +846,10 @@ img.page-avatar {
       float:left;
       display:none;
       width:150px;height:$h;
-      color:white;background-color:#81B0F6;
+      color:white;background-color:#8CBAFF;
       position:relative;
+      text-shadow:0 0 1px rgba(black, 0.618);
+
       .desc {
         height:$h/2;line-height:$h/2;
         margin-left:52px;
@@ -988,7 +1002,7 @@ img.page-avatar {
 {
   .sidebar {
     width:230px;
-    margin-top:40px;
+    margin-top:20px;
     margin-left:20px;
     float:left;
     // position:fixed;
@@ -996,27 +1010,34 @@ img.page-avatar {
 
     .back {
       a{
-        background-color:#005580;
+        background-color:#0088CC;
         color:white;
         display:block;
         padding:15px;
         height:20px;line-height:20px;
         &:hover {
-          background-color:lighten(#005580, 10%);
+          background-color:lighten(#0088CC, 10%);
           text-decoration:none;
         }
       }
     }
 
     .course-link {
-      background-color:white;
-      border:solid 1px #ddd;
-      padding:10px;
+      display:block;
+      background-color:#00699e;
+      color:white;
+      .info {
+        padding:15px;
+      }
+      &:hover {
+        background-color:lighten(#0088CC, 10%);
+        text-decoration:none;
+      }
     }
 
     .user-card{
       background-color:white;
-      padding:10px;
+      padding:15px;
       @include floatfix;
       border:solid 1px #ddd;
       border-right:0 none;
@@ -1052,7 +1073,7 @@ img.page-avatar {
         }
 
         .page-progress {
-          width:140px;
+          width:130px;
           float:left;
           height:16px;
         }
@@ -1065,7 +1086,7 @@ img.page-avatar {
       .rank {
         font-size:12px;
         .r {
-          color:red;
+          color:#DD0000;
           margin-right:10px;
         }
       }
@@ -2086,5 +2107,45 @@ form .input.page-form-tag-inputer {
         }
       }
     }
+  }
+}
+
+.page-popular-tags-grid{
+  position:relative;
+  width:100%;
+  height:600px;
+
+  .tag {
+    display:block;
+    background-color:#f7f7f7;
+    border:solid 1px #fff;
+    @include border-box;
+    position:absolute;
+    padding:15px;
+    overflow:hidden;
+    word-break:break-all;
+    color:#555;
+
+    .name {
+      font-weight:bold;
+      font-size:16px;
+    }
+
+    .count {
+      color:#666;
+    }
+
+
+    &:hover {
+      background-color:#0088CC;
+      color:white;
+      text-decoration:none;
+      z-index:3;
+      box-shadow:0 0 3px black;
+      .count {
+        color:rgba(white, 0.8);
+      }
+    }
+    // @include transition((width ease-out 0.3s, height ease-out 0.3s))
   }
 }

@@ -60,7 +60,8 @@ feature '创建课程' do
 
         it {
           click_on '创建课程'
-          page.should have_css('.field_with_errors input#course_name', :count => 1)
+          # page.should have_css('.field_with_errors input#course_name', :count => 1)
+          # 同名校验已经去掉了
           page.should have_css('.field_with_errors input#course_cid', :count => 1)
         }
 

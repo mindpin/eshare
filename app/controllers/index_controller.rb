@@ -9,7 +9,7 @@ class IndexController < ApplicationController
       return redirect_to "/admin"
     end
     
-    redirect_to '/dashboard'
+    redirect_to '/courses'
   end
 
   def dashboard

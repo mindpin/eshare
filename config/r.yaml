@@ -1,5 +1,0 @@
-libreoffice_path: /opt/libreoffice3.6
-convert_base_path: ../public
-weibo_key: 1103608069
-weibo_secret: 0696537464f5b61247411f8a32b60fe5
-weibo_redirect_uri: http://192.168.1.38:3000/auth/weibo/callback

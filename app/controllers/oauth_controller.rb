@@ -6,16 +6,7 @@ class OauthController < ApplicationController
 
   def callback
     auth_hash = request.env['omniauth.auth']
-
-    provider = auth_hash['provider']
-    token = auth_hash['credentials']['token']
-    expires = auth_hash['credentials']['expires']
-    expires_at = auth_hash['credentials']['expires_at']
-
-    current_user.create_or_update_omniauth(
-      provider, token, expires, expires_at
-    )
-
+    current_user.create_or_update_omniauth(auth_hash)
     redirect_to '/account/sync'
   end
 

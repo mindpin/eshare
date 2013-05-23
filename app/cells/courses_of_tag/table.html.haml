@@ -8,6 +8,8 @@
             - [c1, c2, c3].each do |course|
               - if course.present?
                 %td.course
-                  = link_to truncate_u(course.name, 16), course, :class => 'truncate-text'
+                  = link_to course, :class => 'truncate-text' do
+                    %span= truncate_u(course.name, 16)
+                    %i.icon-book.icon-white
               - else
                 %td

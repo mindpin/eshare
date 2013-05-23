@@ -16,7 +16,7 @@ describe '学生身份登录' do
   }
 
   it {
-    current_path.should == '/dashboard'
+    current_path.should == '/courses'
   }
 
   context '访问课程页' do

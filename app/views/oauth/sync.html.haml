@@ -8,3 +8,13 @@
       = link_to '绑定', '/auth/weibo'
     - else
       = link_to '解除绑定', '/auth/weibo/unbind', :method => :post
+
+  %label Github
+  - if !current_user.is_binded_github?
+    = link_to '绑定', '/auth/github'
+  - else
+    - if current_user.binded_github_is_expired?
+      .expired (认证过期)
+      = link_to '绑定', '/auth/github'
+    - else
+      = link_to '解除绑定', '/auth/github/unbind', :method => :post
