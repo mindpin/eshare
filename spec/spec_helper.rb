@@ -42,7 +42,6 @@ RSpec.configure do |config|
 
   # solr设置
   config.before(:each) do
-    Sunspot.session = Sunspot::Rails::StubSessionProxy.new($original_sunspot_session)
     DatabaseCleaner.start
   end
 
@@ -61,6 +60,10 @@ RSpec.configure do |config|
 
   config.after(:all) do
     SimpleRedisCache::RedisCache.flushdb
+  end
+
+  config.before(:all) do
+    Sunspot.session = Sunspot::Rails::StubSessionProxy.new($original_sunspot_session)
   end
 
 end
