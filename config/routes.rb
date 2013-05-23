@@ -34,6 +34,11 @@ Eshare::Application.routes.draw do
   end
 end
 
+# 搜索
+Eshare::Application.routes.draw do
+  get 'search/:query' => 'search#search'
+end
+
 # 标签
 Eshare::Application.routes.draw do
   resources :tags do

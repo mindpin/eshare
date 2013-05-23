@@ -11,5 +11,7 @@
 
   .page-layout-application
     .page-content
-      .content-header= yield :header
+      - header_content = yield :header
+      - if header_content.present?
+        .content-header= header_content
       = yield
