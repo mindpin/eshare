@@ -6,6 +6,7 @@ gem 'mysql2', '0.3.11' # MYSQL数据库连接
 gem 'json', '1.7.7' # JSON解析，RAILS默认引入的
 gem 'rubyzip', '0.9.9', :require => false
 gem 'docsplit', '0.7.2'
+gem 'sunspot_rails', '2.0.0'
 
 group :assets do
   gem 'sass-rails', '~> 3.2.3'
@@ -23,6 +24,7 @@ group :test do
   gem 'capybara', '2.0.2' # 集成测试框架
   gem 'timecop', '0.6.1' # 用于在测试中调整时间
   gem 'rspec-cells', '0.1.7' # 用于测试 cells
+  gem 'sunspot-rails-tester', '1.0.0'
 end
 
 group :examples do
