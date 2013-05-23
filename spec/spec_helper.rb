@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'coveralls'
 Coveralls.wear!('rails')
 
@@ -13,6 +14,7 @@ require 'capybara/rspec'
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
+$original_sunspot_session = Sunspot.session
 RSpec.configure do |config|
   # config.mock_with :mocha
   # config.mock_with :flexmock
@@ -38,8 +40,15 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with(:truncation)
   end
 
+  # solr设置
   config.before(:each) do
     DatabaseCleaner.start
+  end
+
+  config.before :each, :solr => true do
+    Sunspot::Rails::Tester.start_original_sunspot_session
+    Sunspot.session = $original_sunspot_session
+    Sunspot.remove_all!
   end
 
   config.after(:each) do
@@ -51,6 +60,10 @@ RSpec.configure do |config|
 
   config.after(:all) do
     SimpleRedisCache::RedisCache.flushdb
+  end
+
+  config.before(:all) do
+    Sunspot.session = Sunspot::Rails::StubSessionProxy.new($original_sunspot_session)
   end
 
 end

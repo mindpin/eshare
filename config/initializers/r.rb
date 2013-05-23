@@ -3,7 +3,10 @@ HASH = {
   :convert_base_path => '../public',
 
   :weibo_key => 4271779692,
-  :weibo_secret => '96371b3a41daaca4cec23e3e8d31018e'
+  :weibo_secret => '96371b3a41daaca4cec23e3e8d31018e',
+
+  :github_key => 'c759c6d54e5a91ea0510',
+  :github_secret => '90fb53f99cdd15e73c820a5365678dbda8e706c4'
 }
 
 class R
@@ -15,8 +18,10 @@ class R
 
   WEIBO_KEY = HASH[:weibo_key]
   WEIBO_SECRET = HASH[:weibo_secret]
-end
 
-Weibo2::Config.api_key = R::WEIBO_KEY
-Weibo2::Config.api_secret = R::WEIBO_SECRET
-Weibo2::Config.redirect_uri = ''
+  GITHUB_KEY = HASH[:github_key]
+  GITHUB_SECRET = HASH[:github_secret]
+end
+WeiboOAuth2::Config.api_key = R::WEIBO_KEY
+WeiboOAuth2::Config.api_secret = R::WEIBO_SECRET
+WeiboOAuth2::Config.redirect_uri = ''
