@@ -75,8 +75,9 @@ gem 'awesome_nested_set'
 gem "cancan", "~> 1.6.10"
 
 # weibo oauth2
+gem "omniauth-github", "~> 1.1.0"
 gem 'omniauth-weibo-oauth2'
-gem "weibo2", "~> 0.1.0"
+gem "weibo_2", "~> 0.1.1"
 
 # 自己写的 gem，都不指定版本号，如果有重大修改，通过GIT TAG解决
 

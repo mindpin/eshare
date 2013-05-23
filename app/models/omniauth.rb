@@ -1,10 +1,14 @@
 class Omniauth < ActiveRecord::Base
   PROVIDER_WEIBO = 'weibo'
+  PROVIDER_GITHUB = 'github'
+
+  PROVIDERS = [PROVIDER_WEIBO, PROVIDER_GITHUB]
   attr_accessible :provider, :token, :expires_at, :expires, :info_json
   
   belongs_to :user
-  validates :user, :provider, :token, :expires_at, :expires, :presence => true
-  validates :provider, :inclusion => [PROVIDER_WEIBO]
+  validates :user, :provider, :token, :presence => true
+  validates :expires_at, :presence => {:if => :expires? }
+  validates :provider, :inclusion => PROVIDERS
   validates :user_id, :uniqueness => {:scope => :provider}
 
   scope :by_provider, lambda {|provider| {:conditions => ['omniauths.provider = ?', provider]} }
@@ -21,7 +25,7 @@ class Omniauth < ActiveRecord::Base
       expires_at = auth_hash['credentials']['expires_at']
       info = auth_hash['info']
 
-      omniauth = get_omniauth(provider)
+      omniauth = _get_omniauth(provider)
 
       if omniauth.blank?
         self.omniauths.create(
@@ -41,34 +45,35 @@ class Omniauth < ActiveRecord::Base
       end
     end
 
-    def get_omniauth(provider)
-      self.omniauths.by_provider(provider).first
-    end
+    Omniauth::PROVIDERS.each do |provider|
 
-    def get_weibo_omniauth
-      get_omniauth(Omniauth::PROVIDER_WEIBO)
-    end
+      define_method "get_#{provider}_bind_info" do
+        JSON::parse _get_omniauth(provider).info_json
+      end
 
-    def get_weibo_bind_info
-      JSON::parse get_omniauth(Omniauth::PROVIDER_WEIBO).info_json
-    end
+      define_method "is_binded_#{provider}?" do
+        omniauths.by_provider(provider).present?
+      end
 
-    def is_binded_weibo?
-      self.omniauths.by_provider(Omniauth::PROVIDER_WEIBO).present?
-    end
+      define_method "binded_#{provider}_is_expired?" do
+        return true if omniauths.by_provider(provider).blank?
 
-    def binded_weibo_is_expired?
-      return true if !is_binded_weibo?
+        omniauth = _get_omniauth(provider)
+        return false if !omniauth.expires
 
-      omniauth = self.get_weibo_omniauth
-      return false if !omniauth.expires
-
-      omniauth.expires_at.to_i <= Time.now.to_i
+        omniauth.expires_at.to_i <= Time.now.to_i
+      end
+      
     end
 
     def unbind_omniauth(provider)
-      get_omniauth(provider).destroy
+      _get_omniauth(provider).destroy
     end
+
+    private
+      def _get_omniauth(provider)
+        self.omniauths.by_provider(provider).first
+      end
 
   end
 end
