@@ -2,7 +2,6 @@
 
 - content_for :javascript do
   = javascript_include_tag '/highcharts/js/highcharts'
-  / = javascript_include_tag '/highcharts/js/modules/exporting.cn'
 
 !!!
 - simple_page_layout title, :html_lang => :zh, :body_class => 'app' do
@@ -10,14 +9,12 @@
 
   .page-layout-course-show
     .sidebar
-      .back
-        = link_to '/courses' do
-          %i.icon-backward.icon-white
-          %span 课程浏览
+      %a.back{:href => '/courses'}
+        %i.icon-chevron-left
+        %span 课程浏览
       %a.course-link{:href => "/courses/#{@course.id}"}
-        .info
-          %i.icon-book.icon-white
-          %span.name= @course.name
+        %i.icon-book.icon-white
+        %span.name= @course.name
 
       - if user_signed_in?
         .user-card

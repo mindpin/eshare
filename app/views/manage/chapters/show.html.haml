@@ -18,8 +18,14 @@
         = link_to "开始转码", "/manage/course_wares/#{cw.id}/do_convert", :method => :put, :class => 'btn mini convert'
 
     - table.add_column :ops do |cw|
-      %a.btn.mini{:href => "/manage/course_wares/#{cw.id}/edit"}= t('common.edit')
-      = link_to t('common.delete'), "/manage/course_wares/#{cw.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger'
+
+      %a.btn.mini.inverse{:href => "/manage/course_wares/#{cw.id}/edit"}
+        %i.icon-edit.icon-white
+        %span= t('common.edit')
+
+      = link_to "/manage/course_wares/#{cw.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger' do
+        %i.icon-remove-sign.icon-white
+        %span= t('common.delete')
 
     - table.add_column :position do |cw|
       - if cw.next.present?

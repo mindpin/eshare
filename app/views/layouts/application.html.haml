@@ -2,38 +2,14 @@
 
 - content_for :javascript do
   = javascript_include_tag '/highcharts/js/highcharts'
-  / = javascript_include_tag '/highcharts/js/highcharts-more'
-  / = javascript_include_tag '/highcharts/js/modules/exporting.cn'
 
 !!!
 - simple_page_layout title, :html_lang => :zh, :body_class => 'app' do
   = render_cell :layout, :topnav, :user => current_user
+  = render_cell :layout, :searchbar, :user => current_user
   = render_cell :layout, :sidebar, :user => current_user
 
-
-  - if false
-    .page-chat-bar{:data => {:'user-id' => current_user.id, :'user-name' => current_user.name}}
-      .contacts
-        - User.limit(20).where('id <> ?', current_user.id).each do |user|
-          .user{:data => {:id => user.id, :name => user.name}}
-            .avatar= avatar user, :small
-      .chat-box
-        .headbar
-          .avatar
-          .contact 
-            %span 和
-            %span.name
-            %span 聊天
-        .chatlog
-        .inputer
-          %textarea.ipt
-          %a.btn.success.small.send{:href => 'javascript:;'} 发送
-
-  .page-search-bar
-  .page-content-header
-    .header-inner
-      = yield :header
-
-  .page-content
-    .content-inner
+  .page-layout-application
+    .page-content
+      .content-header= yield :header
       = yield

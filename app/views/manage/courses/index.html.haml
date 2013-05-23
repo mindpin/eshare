@@ -2,9 +2,9 @@
   = render_cell :manage_courses_breadcrumb, :display
   = page_button_group :courses do |g|
     - g.add '创建课程', '/manage/courses/new', :success
-    - g.add '导入Excel', '/manage/courses/import'
-    - g.add '导入优酷播放列表', '/manage/courses/import_youku_list'
-    - g.add '导入土豆豆单', '/manage/courses/import_tudou_list'
+    - g.add '导入Excel', '/manage/courses/import', :success
+    - g.add '导入优酷播放列表', '/manage/courses/import_youku_list', :success
+    - g.add '导入土豆豆单', '/manage/courses/import_tudou_list', :success
 
 .page-admin-courses
   = paginate @courses
@@ -16,7 +16,13 @@
       = truncate_u course.desc, 20
     - table.add_column(:'chapters-count') do |course|
       = course.chapters.count
+      
     - table.add_column(:ops) do |course|
-      %a.btn.mini{:href => "/manage/courses/#{course.id}/edit"}= t('common.edit')
-      %a.btn.mini{:href => "/manage/aj/courses/#{course.id}"} 编辑β
-      = link_to t('common.delete'), "/manage/courses/#{course.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger'
+
+      %a.btn.mini.inverse{:href => "/manage/courses/#{course.id}/edit"}
+        %i.icon-edit.icon-white
+        %span= t('common.edit')
+
+      = link_to "/manage/courses/#{course.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger' do
+        %i.icon-remove-sign.icon-white
+        %span= t('common.delete')

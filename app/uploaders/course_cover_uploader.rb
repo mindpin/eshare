@@ -14,6 +14,10 @@ class CourseCoverUploader < CarrierWave::Uploader::Base
 
   # 图片裁剪
   version :normal do
-    process :resize_to_fill => [200, 200]
+    process :resize_to_fill => [300, 300]
+  end
+
+  version :small do
+    process :resize_to_fill => [100, 100]
   end
 end
