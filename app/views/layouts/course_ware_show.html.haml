@@ -2,11 +2,11 @@
 
 - content_for :javascript do
   = javascript_include_tag '/highcharts/js/highcharts'
-  / = javascript_include_tag '/highcharts/js/modules/exporting.cn'
 
 !!!
 - simple_page_layout title, :html_lang => :zh, :body_class => 'app' do
   = render_cell :layout, :topnav, :user => current_user
+  = render_cell :layout, :searchbar, :user => current_user
 
   .page-layout-course-ware-show
     .sidebar

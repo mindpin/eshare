@@ -1040,7 +1040,7 @@ img.page-avatar {
       display:block;
       border:solid 1px #ddd;
       border-left:none;
-      border-bottom:none;
+      // border-bottom:none;
       background-color:white;
       padding:15px;
       height:20px;line-height:20px;
@@ -1453,7 +1453,14 @@ img.page-avatar {
 }
 .page-course-show .chapters .chapter .items {
   .item {
-    border-top:solid 1px transparent;
+    // border-top:solid 1px transparent;
+  }
+}
+.page-layout-course-ware-show .sidebar .items {
+  border-top:solid 1px #ddd;
+  .item {
+    border-left:none;
+    border-right:solid 1px #ddd;
   }
 }
 
