@@ -4,5 +4,8 @@
     - g.add '发起提问', '/questions/new', :success
 
 .page-questions-index
-  = paginate @feeds
-  = render_cell :timeline, :render_feeds, :user => current_user, :feeds => @feeds
+  .mainp66
+    .cpart
+      %h3 最新动态
+      = paginate @feeds
+      = render_cell :timeline, :render_feeds, :user => current_user, :feeds => @feeds

@@ -169,6 +169,17 @@ body.auth{
         left:0;
       }
 
+      .version {
+        font-size:20px;
+        font-weight:bold;
+        position:absolute;
+        color:white;
+        text-shadow:0 0 1px black;
+        position:absolute;
+        top:-45px;
+        right:30px;
+      }
+
       .BK-logo {
         width:120px;
         height:120px;
@@ -405,6 +416,10 @@ body.error {
   margin-top:0 !important;
 }
 .btn {
+  &.danger {
+    color:#fff !important;
+  }
+
   &.follow{
     @include gradient(#AAD74C, #87B946);
     background-color: #9ACA4A;
@@ -2326,5 +2341,11 @@ form .input.page-form-tag-inputer {
       margin-bottom:20px;
       font-size:16px;
     }
+  }
+}
+
+.page-user-page-answers, .page-user-page-questions {
+  .btn.danger {
+    display:none;
   }
 }

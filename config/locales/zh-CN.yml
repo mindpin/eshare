@@ -119,6 +119,10 @@ zh-CN:
             current_password:
               blank: 必须填写当前密码
               invalid: 当前密码填写不正确
+        question:
+          attributes:
+            title:
+              blank: 必须填写问题
 
 
   views:
@@ -197,6 +201,7 @@ zh-CN:
         syllabus: 教学大钢
         ops: 操作
         chapters-count: 章节数
+        creator: 创建者
 
       chapters:
         title: 标题

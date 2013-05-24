@@ -1,5 +1,6 @@
-= page_tile :'questions-list', questions do
-  - add :title
+= page_tile :'questions-list', @questions do
+  - add :title do |qu|
+    = link_to truncate_u(qu.title, 140), qu
   - add_foot :avatar do |qu|
     = avatar qu.creator, :small
   - add_foot :name do |qu|
@@ -9,9 +10,5 @@
   - add_foot :answers do |qu|
     #{qu.answers.count}个回答
   - add_foot :ops do |qu|
-    - if qu.creator == current_user
+    - if qu.creator == @user
       %a.btn.danger.delete.mini{:href => 'javascript:;', :data => {:id => qu.id}} 删除问题
-
-
-- if questions.length > 1
-  = paginate questions

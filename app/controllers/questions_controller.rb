@@ -19,7 +19,8 @@ class QuestionsController < ApplicationController
     if request.xhr? && params[:chapter_id]
       @chapter = Chapter.find params[:chapter_id]
       @question.model = @chapter
-      return render(:partial => 'course_wares/questions', :locals => {:questions => [@question]} ) if @question.save
+      # return render(:partial => 'course_wares/questions', :locals => {:questions => [@question]} ) if @question.save
+      return render :text => (render_cell :questions, :list, :questions => [@question], :user => current_user)
       return render :text => 'params invalid', :status => 500
     end
 

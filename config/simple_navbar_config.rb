@@ -27,9 +27,9 @@ SimpleNavbar::Base.config do
       controller :users
     end
 
-    nav :disk, :url => '/disk' do
-      controller :disk
-    end
+    # nav :disk, :url => '/disk' do
+    #   controller :disk
+    # end
 
     nav :tags, :url => '/tags' do
       controller :tags
@@ -66,9 +66,9 @@ SimpleNavbar::Base.config do
       controller :users
     end
 
-    nav :disk, :url => '/disk' do
-      controller :disk
-    end
+    # nav :disk, :url => '/disk' do
+    #   controller :disk
+    # end
 
     nav :tags, :url => '/tags' do
       controller :tags
@@ -78,6 +78,8 @@ SimpleNavbar::Base.config do
       controller :questions
     end
   end
+
+  # ------------------------
 
   rule :account do
     nav :password, :url => '/account/edit' do

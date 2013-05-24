@@ -16,6 +16,8 @@
     - table.add_column(:name) do |course|
       = link_to course.name, "/manage/courses/#{course.id}"
     - table.add_column(:cid)
+    - table.add_column(:creator) do |course|
+      = user_link course.creator
     - table.add_column(:desc) do |course|
       = truncate_u course.desc, 20
     - table.add_column(:'chapters-count') do |course|
