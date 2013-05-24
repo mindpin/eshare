@@ -32,7 +32,6 @@ jQuery ->
         if evt.keyCode == 13
           @send_mark()
 
-
       @$send.on 'click', @send_mark
 
 

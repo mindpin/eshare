@@ -67,6 +67,21 @@ class User < ActiveRecord::Base
     end
   end
 
+  scope :like_filter, lambda { |query|
+    if query.blank?
+      {
+        :conditions => ['TRUE']
+      }
+    else
+      {
+        :conditions => [
+          'login like ? OR name like ? OR email = ? OR id = ?',
+          "%#{query}%", "%#{query}%", query, query
+        ]
+      }
+    end
+  }
+
   def follow(model)
     model.follow_by_user self
   end

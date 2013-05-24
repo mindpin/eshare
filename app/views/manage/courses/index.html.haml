@@ -6,9 +6,13 @@
     - g.add '导入优酷播放列表', '/manage/courses/import_youku_list', :success
     - g.add '导入土豆豆单', '/manage/courses/import_tudou_list', :success
 
+= render_cell :layout, :manage_courses_filter, :query => @query
+
 .page-admin-courses
   = paginate @courses
   = page_data_table(:courses, @courses, :striped, :bordered) do |table|
+    - table.add_column(:id) do |course|
+      = "##{course.id}"
     - table.add_column(:name) do |course|
       = link_to course.name, "/manage/courses/#{course.id}"
     - table.add_column(:cid)

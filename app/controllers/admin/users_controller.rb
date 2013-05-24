@@ -3,7 +3,7 @@ class Admin::UsersController < ApplicationController
   layout 'admin'
 
   def index
-    @users = User.page(params[:page]).order('id DESC')
+    @users = User.page(params[:page]).order('id DESC').like_filter(@query = params[:q])
   end
 
   def edit

@@ -79,4 +79,20 @@ SimpleNavbar::Base.config do
     end
   end
 
+  rule :account do
+    nav :password, :url => '/account/edit' do
+      controller :account, :only => :edit
+    end
+    
+    nav :avatar, :url => '/account/avatar' do
+      controller :account, :only => :avatar
+    end
+  end
+
+  rule :admin_account do
+    nav :password, :url => '/account/edit' do
+      controller :account, :only => :edit
+    end
+  end
+
 end

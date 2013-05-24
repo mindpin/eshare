@@ -7,7 +7,13 @@ class Manage::CoursesController < ApplicationController
   end
   
   def index
-    @courses = Course.page(params[:page])
+    if (query = @query = params[:q]).blank?
+      @courses = Course.page(params[:page])
+    else
+      @courses = @search = Course.search {
+        fulltext query
+      }.results
+    end
   end
 
   def new

@@ -1,6 +1,15 @@
 class AccountController < Devise::RegistrationsController
   layout 'auth', :only => [:new]
 
+  layout :get_edit_method_layout, :only => [:edit]
+  def get_edit_method_layout
+    if current_user.is_admin?
+      return 'account'
+    else
+      return 'account'
+    end
+  end
+
   def new
     super
     # 在这里添加其他逻辑

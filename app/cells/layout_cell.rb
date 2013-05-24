@@ -20,4 +20,19 @@ class LayoutCell < Cell::Rails
     @user = opts[:user]
     render
   end
+
+  def account_sidebar(opts = {})
+    @user = opts[:user]
+    render
+  end
+
+  def admin_users_filter(opts = {})
+    @query = opts[:query]
+    render
+  end
+
+  def manage_courses_filter(opts = {})
+    @query = opts[:query]
+    render
+  end
 end

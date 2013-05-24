@@ -17,7 +17,6 @@ zh-CN:
       courses_manage: 课程管理
       courses_manage_aj: 课管理β
 
-
     student:
       dashboard: 动态
       courses: 课程
@@ -27,6 +26,12 @@ zh-CN:
       questions: 问答
 
       learning_plan: 计划
+
+    account:
+      password: 修改密码
+      avatar: 修改头像
+    admin_account:
+      password: 修改密码
 
   helpers:
     submit:
@@ -56,6 +61,7 @@ zh-CN:
       user:
         login: 用户名
         name: 姓名
+        current_password: 当前密码
         password: 密码
         password_confirmation: 确认密码
         remember_me: 记住登录状态
@@ -105,10 +111,14 @@ zh-CN:
             email:
               blank: 必须填写邮箱
             password:
-              blank: 必须同时填写密码和确认密码
-              confirmation: 必须同时填写密码和确认密码
+              blank: 必须同时正确填写密码和确认密码
+              confirmation: 必须同时正确填写密码和确认密码
+              too_short: 密码太短
             name:
               blank: 必须填写姓名
+            current_password:
+              blank: 必须填写当前密码
+              invalid: 当前密码填写不正确
 
 
   views:
@@ -180,7 +190,7 @@ zh-CN:
         ops: 操作
 
       courses:
-        role: 角色
+        id: ID
         name: 课程名称
         cid: 课程编号
         desc: 简介

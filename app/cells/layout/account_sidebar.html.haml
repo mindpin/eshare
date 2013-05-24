@@ -1,0 +1,8 @@
+.sidebar
+  %a.back{:href => '/'}
+    %i.icon-chevron-left
+    %span 返回
+  - if @user.is_admin?
+    = simple_navbar :admin_account, :as_list, :with_icon
+  - else
+    = simple_navbar :account, :as_list, :with_icon

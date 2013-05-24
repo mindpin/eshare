@@ -4,6 +4,8 @@
     - g.add '新增用户', '/admin/users/new', :success
     - g.add '导入Excel', '/admin/users/import', :success
 
+= render_cell :layout, :admin_users_filter, :query => @query
+
 .page-admin-users
   = paginate @users
 
