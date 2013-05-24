@@ -1,5 +1,9 @@
 .page-sidebar
-  - if @user.is_teacher?
+  - if @user.is_admin?
+    = simple_navbar :admin, :as_list, :with_icon
+  - elsif @user.is_manager?
+    = simple_navbar :manager, :as_list, :with_icon
+  - elsif @user.is_teacher?
     = simple_navbar :teacher, :as_list, :with_icon
-  - if @user.is_student?
+  - elsif @user.is_student?
     = simple_navbar :student, :as_list, :with_icon

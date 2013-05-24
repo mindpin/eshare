@@ -6,6 +6,11 @@ class LayoutCell < Cell::Rails
     render
   end
 
+  def topnav_admin(opts = {})
+    @user = opts[:user]
+    render
+  end
+
   def searchbar(opts = {})
     @user = opts[:user]
     render

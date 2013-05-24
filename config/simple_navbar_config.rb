@@ -1,15 +1,12 @@
 SimpleNavbar::Base.config do
   rule :admin do
-    nav :home, :url => '/admin' do
-      controller :'admin/index'
-    end
-
     nav :users_manage, :url => '/admin/users' do
       controller :'admin/users'
     end
 
-    nav :categories_manage, :url => '/admin/categories' do
-      controller :'admin/categories'
+    nav :courses_manage, :url => '/manage/courses' do
+      controller :'manage/courses'
+      controller :'manage/chapters'
     end
   end
 

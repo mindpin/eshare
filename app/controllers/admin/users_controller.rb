@@ -14,6 +14,10 @@ class Admin::UsersController < ApplicationController
     _update_user(:change_base_info)
   end
 
+  def new
+    @user = User.new
+  end
+
   # ---------------
 
   def change_password

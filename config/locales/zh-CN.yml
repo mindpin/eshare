@@ -4,6 +4,7 @@ zh-CN:
       home: 首页
       users_manage: 用户管理
       categories_manage: 分类管理
+      courses_manage: 课程管理
 
     teacher:
       dashboard: 动态
@@ -41,7 +42,8 @@ zh-CN:
         create: 创建课件
         update: 更新课件
       user:
-        update: 确定
+        create: 创建用户
+        update: 确定更新
       question:
         create: 确定提问
 
@@ -129,8 +131,8 @@ zh-CN:
 
     site:
       title:
-        app: MINDPIN EduShare
-        admin: MINDPIN EduShare | ADMIN
+        app: EduShare
+        admin: EduShare | ADMIN
       home_title:
         app: EduShare
         admin: EduShare Admin
@@ -151,6 +153,7 @@ zh-CN:
   compoents:
     data_table:
       users:
+        id: ID
         role: 角色
         login: 用户名
         name: 姓名

@@ -1,14 +1,20 @@
+- content_for :header do
+  %h1 修改用户信息
+
 .page-admin-user-edit
+  .cpart.base-info
+    %h3 基本信息
+    = simple_form_for @user, :url => "/admin/users/#{@user.id}" do |f|
+      = f.input :login
+      = f.input :name
+      = f.input :email
+      = f.button :submit, :class => 'success'
+      %a.btn.cancel{:href => '/admin/users'}= t('common.form.cancel')
 
-  .title 基本信息
-  = simple_form_for @user, :url => "/admin/users/#{@user.id}" do |f|
-    = f.input :login
-    = f.input :name
-    = f.input :email
-    = f.button :submit
-
-  .title 修改密码
-  = simple_form_for @user, :url => "/admin/users/#{@user.id}/change_password" do |f|
-    = f.input :password
-    = f.input :password_confirmation
-    = f.button :submit, '修改密码'
+  .cpart
+    %h3 修改密码
+    = simple_form_for @user, :url => "/admin/users/#{@user.id}/change_password" do |f|
+      = f.input :password
+      = f.input :password_confirmation
+      = f.button :submit, '修改密码', :class => 'success'
+      %a.btn.cancel{:href => '/admin/users'}= t('common.form.cancel')

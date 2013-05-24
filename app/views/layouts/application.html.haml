@@ -9,10 +9,9 @@
   = render_cell :layout, :searchbar, :user => current_user
   = render_cell :layout, :sidebar, :user => current_user
 
-  .page-layout-application
-    .page-content
-      - header_content = yield :header
-      - if header_content.present?
-        .content-header= header_content
-      = yield
-      .clearfix
+  .page-content
+    - header_content = yield :header
+    - if header_content.present?
+      .content-header= header_content
+    = yield
+    .clearfix

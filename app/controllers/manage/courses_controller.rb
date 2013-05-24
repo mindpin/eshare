@@ -1,5 +1,10 @@
 class Manage::CoursesController < ApplicationController
   before_filter :authenticate_user!
+  layout :get_layout
+  def get_layout
+    return 'admin' if current_user.is_admin?
+    return 'manage'
+  end
   
   def index
     @courses = Course.page(params[:page])
