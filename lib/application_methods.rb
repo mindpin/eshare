@@ -25,7 +25,7 @@ module ApplicationMethods
   #----------------------
 
   def hold_ie678
-    return if params[:controller] == 'file_entities' && params[:action] == 'download'
+    return if /chromeframe/.match(request.user_agent)
     
     if /MSIE 6/.match(request.user_agent) || /MSIE 7/.match(request.user_agent) || /MSIE 8/.match(request.user_agent)
       return render "layouts/status_page/hold_ie678", :layout => false
