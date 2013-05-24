@@ -116,17 +116,17 @@ body {
 body.auth{
   position:static;
   background:url(wallpaper/auth-bg.png);
-  color:white;
-  text-shadow:0 0 3px black;
 
   .page-sign-in{
-    background-color:rgba(black, 0.5);
-    width:600px;
-    height:300px;
+    background-color:rgba(black, 0.6);
+    width:510px;
+    height:280px;
     position:absolute;
     top:50%;left:50%;
-    margin-left:-300px;
-    margin-top:-150px;
+    margin-left:-255px;
+    margin-top:-190px;
+    @include border-radius(3px);
+
     form{
       padding:30px;
       .input.string, .input.password{
@@ -138,6 +138,7 @@ body.auth{
           margin-right:15px;
           height:48px;line-height:48px;
           font-size:16px;
+          display:none;
         }
         input{
           padding:6px 14px;
@@ -148,11 +149,34 @@ body.auth{
           width:300px;
         }
       }
-      .input.boolean{
-        margin-left:80px + 15px;
-      }
       .form-actions{
-        margin-left:80px + 15px;
+        margin-bottom:10px;
+        .btn {
+          width:330px !important;
+          @include border-radius(3px);
+        }
+      }
+      .remember{
+        color:white;
+        text-shadow:0 0 1px black;
+      }
+
+      .logo {
+        width:360px;height:90px;
+        background:url(eshare-logo.png) no-repeat;
+        position:absolute;
+        top:-90px;
+        left:0;
+      }
+
+      .BK-logo {
+        width:120px;
+        height:120px;
+        position:absolute;
+        top:30px;right:-20px;
+        border:solid 5px white;
+        @include border-radius(3px);
+        background:white url(bk-logo-100.png) no-repeat 10px 10px;
       }
     }
   }
@@ -404,6 +428,19 @@ body.account {
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
     &:hover, &:focus, &:active, &.active, &.disabled, &[disabled] {
       background-color:#BF5836;
+      color:#fff;
+    }
+  }
+
+  &.login{
+    @include gradient(#AAD74C, #87B946);
+    background-color: #9ACA4A;
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    color:#fff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    &:hover, &:focus, &:active, &.active, &.disabled, &[disabled] {
+      background-color:#87B946;
       color:#fff;
     }
   }

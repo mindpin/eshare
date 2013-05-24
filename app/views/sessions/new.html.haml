@@ -2,9 +2,17 @@
 
 .page-sign-in
   = simple_form_for resource, :as => resource_name, :url => session_path(resource_name) do |f|
-    = f.input :login, :placeholder => '填写用户名或邮箱'
-    = f.input :password, :required => true
-    - if devise_mapping.rememberable?
-      = f.input :remember_me, :as => :boolean
+    .form-inputs
+      = f.input :login, :placeholder => '用户名/邮箱'
+      = f.input :password, :required => true, :placeholder => '密码'
     .form-actions
-      = f.button :submit, t('common.sign-in'), 'data-disable-with' => t('common.sign-ining')
+      = f.button :submit, t('common.sign-in'), 'data-disable-with' => t('common.sign-ining'), :class => 'large login'
+
+    - if devise_mapping.rememberable?
+      .remember
+        = f.input :remember_me, :as => :boolean
+
+    .logo
+
+    - if true
+      .BK-logo
