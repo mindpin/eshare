@@ -1,0 +1,10 @@
+- content_for :header do
+  %h1
+    %span= @query
+    %span 搜索到
+    %span.c= @search.total
+    %span 个结果
+
+.page-search
+  - @search.results.each do |course|
+    = render_cell :course, :card, :course => course, :user => current_user

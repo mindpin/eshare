@@ -4,8 +4,7 @@
 
 .page-courses-index
   .hot-courses.2week
-    .headline
-      %h2 最近两周的热门课程
+    %h3.cp 最近两周的热门课程
 
     :ruby
       courses = Course.top_interactive_sums_of(Date.today, Date.today - 13).limit(4)
@@ -13,19 +12,19 @@
       - courses.each do |course|
         = render_cell :course, :smallcard, :course => course, :user => current_user
 
-  .all-courses
-    .headline
-      %h2 课程浏览
-    - Course::BASE_TAGS.each do |bt|
-      = render_cell :courses_of_tag, :table, :tag => bt
+  .mainp75
+    .cpart.all-courses
+      %h3 课程浏览
+      - Course::BASE_TAGS.each do |bt|
+        = render_cell :courses_of_tag, :table, :tag => bt
 
-  .chart
-    .headline
-      %h2 个人学习情况统计
-    .cha
-      .desc
-        .d 课程总数
-        .c= Course.count
-      .page-chart.all-course-read-pie{:data => {:url => "/charts/courses/all_courses_read_pie"}}
+  .sidep25
+    .cpart.chart
+      %h3 个人学习情况统计
+      .cha
+        .desc
+          .d 课程总数
+          .c= Course.count
+        .page-chart.all-course-read-pie{:data => {:url => "/charts/courses/all_courses_read_pie"}}
 
   .clearfix

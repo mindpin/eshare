@@ -1,0 +1,16 @@
+.page-chat-bar{:data => {:'user-id' => @user.id, :'user-name' => @user.name}}
+  .contacts
+    - User.limit(20).where('id <> ?', @user.id).each do |user|
+      .user{:data => {:id => user.id, :name => user.name}}
+        .avatar= avatar user, :small
+  .chat-box
+    .headbar
+      .avatar
+      .contact 
+        %span 和
+        %span.name
+        %span 聊天
+    .chatlog
+    .inputer
+      %textarea.ipt
+      %a.btn.success.small.send{:href => 'javascript:;'} 发送

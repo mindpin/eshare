@@ -126,7 +126,7 @@ jQuery ->
     init: ->
       flashvars =
         p : '0' # 不自动播放
-        x : '/' # 必须写成 '/' 才会加载 js 里的配置，为什么不能写成 '' ? 我也不知道为什么
+        x : null # 5月23日之前这里必须写成 '/'，而之后必须写成 '' 或 null，待观察。 
         my_url : encodeURIComponent(window.location.href)
         f : @video_xml_url
         s : '2'

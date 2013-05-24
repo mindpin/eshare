@@ -7,6 +7,6 @@
       = link_to @course.name, @course
     .desc= truncate_u @course.desc, 32
     .study
-      %a.btn.success{:href => "/courses/#{@course.id}"} 
-        %i.icon-play-circle.icon-white
+      %a.btn.learn{:href => "/courses/#{@course.id}"} 
+        %i.icon-chevron-right.icon-white
         %span 开始学习

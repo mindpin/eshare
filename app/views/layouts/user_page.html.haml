@@ -6,10 +6,11 @@
 !!!
 - simple_page_layout title, :html_lang => :zh, :body_class => 'app' do
   = render_cell :layout, :topnav, :user => current_user
+  = render_cell :layout, :searchbar, :user => current_user
   = render_cell :layout, :sidebar, :user => current_user
 
-  .page-content
-    .content-inner.user-page
+  .page-layout-application
+    .page-content
       .mainp66
         = render 'users/head', :user => @user
         = yield
@@ -17,3 +18,4 @@
         = render_cell :follow, :stat, :user => @user
         = render_cell :tags, :learning, :user => @user
         = render_cell :sync, :weibo, :user => @user
+      .clearfix

@@ -12,9 +12,15 @@
     - table.add_column :'practices-count' do |ch|
       = ch.practices.count
     - table.add_column :updated_at
+
     - table.add_column(:ops) do |ch|
-      %a.btn.mini{:href => "/manage/chapters/#{ch.id}/edit"}= t('common.edit')
-      = link_to t('common.delete'), "/manage/chapters/#{ch.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger'
+      %a.btn.mini.inverse{:href => "/manage/chapters/#{ch.id}/edit"}
+        %i.icon-edit.icon-white
+        %span= t('common.edit')
+      = link_to "/manage/chapters/#{ch.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger' do
+        %i.icon-remove-sign.icon-white
+        %span= t('common.delete')
+
     - table.add_column :position do |ch|
       - if ch.next.present?
         = link_to "/manage/chapters/#{ch.id}/move_down", :method => :put, :class => 'btn mini move-down' do

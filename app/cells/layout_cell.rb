@@ -6,6 +6,11 @@ class LayoutCell < Cell::Rails
     render
   end
 
+  def searchbar(opts = {})
+    @user = opts[:user]
+    render
+  end
+
   def sidebar(opts = {})
     @user = opts[:user]
     render
