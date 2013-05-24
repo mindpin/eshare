@@ -4,14 +4,16 @@ describe User do
   describe '用户邮箱校验' do
     before {
       @user1 = User.new :login => 'jerry',
-                       :email => 'aaa',
-                       :password => '1234',
-                       :role => 'admin'
+                        :name =>'zhangsan',
+                        :email => 'aaa',
+                        :password => '1234',
+                        :role => 'admin'
 
       @user2 = User.new :login => 'jerry',
-                       :email => 'a@b.com',
-                       :password => '1234',
-                       :role => 'admin'
+                        :name =>'lisi',
+                        :email => 'a@b.com',
+                        :password => '1234',
+                        :role => 'admin'
 
       @user1.save
       @user2.save
