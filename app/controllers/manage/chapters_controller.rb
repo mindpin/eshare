@@ -3,7 +3,7 @@ class Manage::ChaptersController < ApplicationController
   layout :get_layout
   def get_layout
     return 'admin' if current_user.is_admin?
-    return 'manage'
+    'application'
   end
   
   def show
