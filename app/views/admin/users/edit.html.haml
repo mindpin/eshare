@@ -8,6 +8,16 @@
       = f.input :login
       = f.input :name
       = f.input :email
+      :ruby
+        s = [
+          ['学生 Student', :student], 
+          ['老师 Teacher', :teacher],
+        ]
+
+      .input{:style => 'margin-bottom:20px;'}
+        %label 用户角色
+        = f.select :role, s, :label => '用户角色'
+      
       = f.button :submit, :class => 'success'
       %a.btn.cancel{:href => '/admin/users'}= t('common.form.cancel')
 

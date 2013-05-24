@@ -104,7 +104,9 @@ Eshare::Application.routes.draw do
       end
 
       collection do
+        get :download_import_sample
         get :import
+        post :do_import
       end
     end
 

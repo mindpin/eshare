@@ -3,7 +3,7 @@ class Admin::UsersController < ApplicationController
   layout 'admin'
 
   def index
-    @users = User.page params[:page]
+    @users = User.page(params[:page]).order('id DESC')
   end
 
   def edit
@@ -16,6 +16,20 @@ class Admin::UsersController < ApplicationController
 
   def new
     @user = User.new
+  end
+
+  def create
+    @user = User.new(params[:user])
+    if @user.save
+      return redirect_to :action => :index
+    end
+    render :action => :new
+  end
+
+  def destroy
+    @user = User.find params[:id]
+    @user.destroy
+    redirect_to :action => :index
   end
 
   # ---------------
@@ -41,15 +55,19 @@ class Admin::UsersController < ApplicationController
     redirect_to user_attrs_path(@user)
   end
 
-  def import
+  def download_import_sample
+    send_file User.get_sample_excel_student, :filename => 'user_sample.xlsx'
   end
 
-  # def do_import
-  #   file = params[:excel_file]
-  #   User.import(file, :teacher)
+  def import
 
-  #   render :nothing => true
-  # end
+  end
+
+  def do_import
+    file = params[:excel_file]
+    User.import(file)
+    redirect_to :action => :index
+  end
 
 protected
 

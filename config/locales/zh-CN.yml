@@ -60,6 +60,8 @@ zh-CN:
         password_confirmation: 确认密码
         remember_me: 记住登录状态
         avatar: 用户头像
+        email: EMail
+
       course:
         name: 课程名
         cid: 课程编号
@@ -97,6 +99,16 @@ zh-CN:
           attributes:
             title:
               blank: 必须填写课件标题
+
+        user:
+          attributes:
+            email:
+              blank: 必须填写邮箱
+            password:
+              blank: 必须同时填写密码和确认密码
+              confirmation: 必须同时填写密码和确认密码
+            name:
+              blank: 必须填写姓名
 
 
   views:

@@ -1,12 +1,19 @@
-.page-admin-users-import
-  = form_tag '/admin/students/do_import', :method => :post, :multipart => true do
-    .field
-      %label excel文件
-      = file_field_tag 'excel_file'
-      = submit_tag '导入'
+- content_for :header do
+  %h1 从 Excel 导入用户
 
-  = form_tag '/admin/teachers/do_import', :method => :post, :multipart => true do
-    .field
+.page-manage-courses-import
+  .download
+    .desc 下载示例文件，根据示例文件内容填写用户信息
+    .desc “用户名”，“姓名”，“EMail” 都是必须要填写的；
+    .desc “用户名” 一栏需要填写英文或数字用户名，用于登录系统；
+    .desc 所有用户的初始密码为 1234，可以由管理员或用户本人修改；
+
+    %a.btn.info{:href => '/admin/users/download_import_sample'} 下载示例文件
+
+  = form_tag "/admin/users/do_import", :method => :post, :multipart => true do
+    .desc 上传填写好的 Excel 文件，导入数据
+    .input.file.required
       %label excel文件
       = file_field_tag 'excel_file'
-      = submit_tag '导入'
+    %input.btn.success{:name => 'commit', :type => :submit, :value => '上传文件'}
+    %a.btn.cancel{:href => '/admin/users'}= t('common.form.cancel')

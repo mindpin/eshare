@@ -57,9 +57,7 @@ class Manage::CoursesController < ApplicationController
 
   def do_import
     file = params[:excel_file]
-    # render :text => File.extname(file.original_filename)
     Course.import(file, current_user)
-
     redirect_to :action => :index
   end
 

@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
 
   validates :email, :uniqueness => {:case_sensitive => false}
 
+  validates :name, :presence => true
+
   def self.find_for_database_authentication(conditions)
     login = conditions.delete(:login)
     self.where(:login => login).first || self.where(:email => login).first
@@ -51,11 +53,19 @@ class User < ActiveRecord::Base
                     :updater => lambda {AttrsConfig.get(:teacher)}
 
   # 导入文件
-  simple_excel_import :teacher, :fields => [:login, :name, :email, :password],
+  simple_excel_import :teacher, :fields => [:login, :name, :email],
                                 :default => {:role => :teacher}
 
-  simple_excel_import :student, :fields => [:login, :name, :email, :password],
+  simple_excel_import :student, :fields => [:login, :name, :email],
                                 :default => {:role => :student}
+  def self.import(excel_file)
+    users = self.parse_excel_student excel_file
+    users.each do |u|
+      u.password = '1234'
+      u.password_confirmation = '1234'
+      u.save
+    end
+  end
 
   def follow(model)
     model.follow_by_user self

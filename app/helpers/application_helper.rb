@@ -146,6 +146,20 @@ module ApplicationHelper
     }
   end
 
+  def user_roles_str(user)
+    return '' if user.blank? || user.roles.blank?
+    rrr = {
+      :student => '学生',
+      :teacher => '老师',
+      :admin => '系统管理员',
+      :manager => '教学管理员'
+    }
+
+    user.roles.map {|role|
+      rrr[role]
+    }.join('，')
+  end
+
   module FeedHelper
     def feed_icon(feed)
       capture_haml {
