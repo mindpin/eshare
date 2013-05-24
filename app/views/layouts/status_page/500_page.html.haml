@@ -1,6 +1,20 @@
-.info= message
+- title = t('common.site.title.app')
 
-.exception
-  .message= exception.message
-  - exception.backtrace.each do |m|
-    %div= m
+!!!
+- simple_page_layout title, :html_lang => :zh, :body_class => 'error' do
+  = render_cell :layout, :topnav, :user => current_user
+
+  .page-content
+    .page-error-page
+      .box
+        .code 500
+        .info 系统遇到了一个错误
+        .back
+          %a.btn.login{:href => '/'} 返回首页
+
+      - if !Rails.env.production?
+        .message= message
+        .exception
+          .message= exception.message
+          - exception.backtrace.each do |m|
+            %div= m

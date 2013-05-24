@@ -182,7 +182,7 @@ body.auth{
   }
 }
 
-body.admin, body.app, body.account {
+body.admin, body.app, body.account, body.error {
   .page-navbar{
     .navbar-inner {
       min-height:30px !important;
@@ -260,9 +260,7 @@ body.admin, body.app, body.account {
       }
     }
   }
-}
 
-body.admin, body.app, body.account {
   .page-content {
     $sidebar-width : 100px;
     margin-left:10px + $sidebar-width + 10px; //120
@@ -395,6 +393,10 @@ body.account {
     
     position:relative;
   }
+}
+
+body.error {
+  padding-top:30px;
 }
 
 // ------------------------
@@ -2307,5 +2309,23 @@ form .input.page-form-tag-inputer {
   .cpart.base-info {
     border-bottom:solid 1px #ddd;
     padding-bottom:20px;
+  }
+}
+
+.page-error-page {
+  .box {
+    padding:20px;
+    margin-bottom:20px;
+    border:solid 1px #ddd;
+    background-color:#f7f7f7;
+    .code {
+      font-size:30px;
+      margin-bottom:20px;
+      color:rgba(black, 0.3);
+    }
+    .info {
+      margin-bottom:20px;
+      font-size:16px;
+    }
   }
 }

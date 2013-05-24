@@ -15,11 +15,11 @@ module ApplicationMethods
 
     case code
     when 404
-      render "layouts/status_page/404_page", :status=>404, :layout => false,
-        :locals=>{:exception=>exception,:message=>message}
+      render "layouts/status_page/404_page", :status => 404, :layout => false,
+        :locals=>{:exception => exception, :message => message}
     when 500
-      render "layouts/status_page/500_page", :status=>500, :layout => false,
-        :locals=>{:exception=>exception,:message=>message}
+      render "layouts/status_page/500_page", :status => 500, :layout => false,
+        :locals=>{:exception => exception, :message => message}
     end
   end
   #----------------------
@@ -27,34 +27,21 @@ module ApplicationMethods
   def hold_ie678
     return if params[:controller] == 'file_entities' && params[:action] == 'download'
     
-    if /MSIE 6/.match(request.user_agent)
-      render "layouts/status_page/hold_ie678",:layout=>false
+    if /MSIE 6/.match(request.user_agent) || /MSIE 7/.match(request.user_agent) || /MSIE 8/.match(request.user_agent)
+      return render "layouts/status_page/hold_ie678", :layout => false
     end
-
-    if /MSIE 7/.match(request.user_agent)
-      render "layouts/status_page/hold_ie678",:layout=>false
-    end
-
-    # if /MSIE 8/.match(request.user_agent)
-    #   render "layouts/status_page/hold_ie678",:layout=>false
-    # end
   end
 
   def catch_some_exception
     yield
-  rescue ActionController::RoutingError=>ex
-    render_status_page(404,ex,'正在访问的页面不存在，或者已被删除。')
-  rescue AbstractController::ActionNotFound=>ex
-    render_status_page(404,ex,'正在访问的页面不存在，或者已被删除。')
+  rescue ActionController::RoutingError => ex
+    render_status_page(404, ex, '正在访问的页面不存在，或者已被删除。')
+  rescue AbstractController::ActionNotFound => ex
+    render_status_page(404, ex, '正在访问的页面不存在，或者已被删除。')
   rescue ActiveRecord::RecordNotFound=>ex
-    render_status_page(404,ex,'正在访问的页面不存在，或者已被删除。')
-  #TODO 没有 redis
-  # rescue Redis::CannotConnectError=>ex
-  #   render_status_page(500,ex,'redis 服务出现了错误')
-  # rescue Riddle::ConnectionError=>ex
-  #   render_status_page(500,ex,'sphinx 服务出现了错误')
-  rescue Exception=>ex
-    render_status_page(500,ex,'未知错误')
+    render_status_page(404, ex, '正在访问的页面不存在，或者已被删除。')
+  rescue Exception => ex
+    render_status_page(500, ex, '未知错误')
   end
 
   def fix_ie_accept
