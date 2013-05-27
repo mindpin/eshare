@@ -11,9 +11,13 @@ class QuestionFollow < ActiveRecord::Base
 
   module QuestionMethods
     def self.included(base)
-      base.has_many :follows, :class_name => 'QuestionFollow', :foreign_key => :question_id
-      base.has_many :follow_users, :through => :follows, :source => :user,
-        :order => 'question_follows.id desc'
+      base.has_many :follows, :class_name => 'QuestionFollow', 
+                              :foreign_key => :question_id
+
+      base.has_many :followers, :through => :follows, 
+                                   :source => :user,
+                                   :order => 'question_follows.id DESC'
+
       base.after_create :_follow_by_creator
     end
 

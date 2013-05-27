@@ -40,6 +40,7 @@ zh-CN:
         update: 更新%{model}
       answer:
         create: 发布回答
+        update: 更新回答
       chapter:
         create: 创建章节
         update: 更新章节
@@ -80,6 +81,8 @@ zh-CN:
       course_ware:
         title: 课件标题
         desc: 课件简介
+      answer:
+        content: 回答正文
 
     errors:
       models:

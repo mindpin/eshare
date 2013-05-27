@@ -1,4 +1,5 @@
 class AnswersController < ApplicationController
+  before_filter :authenticate_user!
   before_filter :pre_load
 
   def pre_load
@@ -28,11 +29,21 @@ class AnswersController < ApplicationController
     redirect_to :back
   end
 
+  def vote_cancel
+    @answer.vote_cancel_by! current_user
+    redirect_to :back
+  end
+
   def update
     if @answer.update_attributes(params[:answer])
       return redirect_to "/questions/#{@answer.question_id}"
     end
     render :action => :edit
+  end
+
+  def destroy
+    @answer.destroy
+    redirect_to :back
   end
 
 end

@@ -22,7 +22,8 @@ class AnswerVote < ActiveRecord::Base
   after_save :update_vote_sum
   after_destroy :update_vote_sum
   def update_vote_sum
-    self.answer.refresh_vote_sum!
+    self.answer.refresh_vote_sum! if self.answer.present?
+    return true
   end
 
   # 记录用户活动

@@ -59,16 +59,16 @@ describe Question do
           @answer = FactoryGirl.create(:answer, :question => @question)
         end
 
-        @answered_updated_at = @question.updated_at
+        @answered_actived_at = @question.actived_at
       }
 
       it "问题被任何人回答" do
-        @answered_updated_at.should > @updated_at
+        @answered_actived_at.should > @updated_at
       end
 
       it "修改回答" do
         @answer.update_attributes({:content => 'test'})
-        @question.updated_at.should > @answered_updated_at
+        @question.actived_at.should > @answered_actived_at
       end
 
     end
@@ -284,10 +284,7 @@ describe Answer do
     it "is_anonymous 为 false" do
       Answer.onymous.each { |a| a.is_anonymous.should == false }
     end
-
   end
-
-
 end
 
 describe AnswerVote do
@@ -331,11 +328,33 @@ describe AnswerVote do
     }
   }
 
+  context '答案投票的级联删除' do
+    before {
+      @answer = FactoryGirl.create :answer
+      5.times do
+        vote = FactoryGirl.create :answer_vote, :answer => @answer
+      end
+    }
 
+    it {
+      Answer.count.should == 1
+    }
+
+    it {
+      @answer.answer_votes.count.should == 5
+    }
+
+    it {
+      @answer.destroy
+      Answer.count.should == 0
+    }
+
+    it {
+      @answer.destroy
+      AnswerVote.count.should == 0
+    }
+  end
 end
-
-
-
 
 describe "最佳答案" do
   before {
@@ -385,12 +404,8 @@ describe "最佳答案" do
     it "应该不是原来的值" do
       @question.best_answer.should_not == @origin_best_answer
     end
-    
   end
-
-
 end
-
 
 describe "有最佳答案的问题列表" do
   before {
@@ -429,4 +444,61 @@ describe "有最佳答案的问题列表" do
   it "列表正确" do
     @questions_with_best_answer.should == [@question_3, @question_2, @question_1]
   end
+end
+
+describe '问题的 actived_at 更新' do
+  before {
+    @question = FactoryGirl.create :question
+
+    @updated_at = @question.updated_at
+    @actived_at = @question.actived_at
+  }
+
+  it {
+    @actived_at.should_not be_blank
+  }
+
+  it('创建回答') {
+    Timecop.travel(@actived_at + 1.day) do
+      FactoryGirl.create :answer, :question => @question
+    end
+
+    @question.actived_at.should > @actived_at
+    @question.updated_at.should == @updated_at
+  }
+
+  it('修改问题') {
+    Timecop.travel(@actived_at + 1.day) do
+      @question.update_attributes({
+        :title => 'foobar'  
+      })
+    end
+
+    @question.actived_at.should > @actived_at
+    @question.updated_at.should > @updated_at
+  }
+end
+
+describe 'answer.has_voted_up_by? answer.has_voted_down_by?' do
+  before {
+    @answer = FactoryGirl.create :answer
+    @user = FactoryGirl.create :user
+  }
+
+  it {
+    @answer.has_voted_up_by?(@user).should == false
+    @answer.has_voted_down_by?(@user).should == false
+  }
+
+  it {
+    @answer.vote_up_by! @user
+    @answer.has_voted_up_by?(@user).should == true
+    @answer.has_voted_down_by?(@user).should == false
+  }
+
+  it {
+    @answer.vote_down_by! @user
+    @answer.has_voted_up_by?(@user).should == false
+    @answer.has_voted_down_by?(@user).should == true
+  }
 end

@@ -56,6 +56,11 @@ class Question < ActiveRecord::Base
   record_feed :scene => :questions,
                         :callbacks => [:create, :update]
 
+  before_save :update_actived_at
+  def update_actived_at
+    self.actived_at = Time.now if self.changed? || self.new_record?
+  end
+
   def answered_by?(user)
     return false if user.blank?
     return self.answer_of(user).present?
@@ -90,7 +95,7 @@ class Question < ActiveRecord::Base
       follows_questions = Question.joins(:follows).where(%`
         question_follows.user_id = #{self.id}
           and
-        question_follows.last_view_time < questions.updated_at
+        question_follows.last_view_time < questions.actived_at
       `)
 
       ask_to_questions = Question.joins(%`
@@ -102,7 +107,7 @@ class Question < ActiveRecord::Base
       `)
 
       questions = follows_questions + ask_to_questions
-      questions.sort_by(&:updated_at).reverse
+      questions.sort_by(&:actived_at).reverse
     end
   end
 end
