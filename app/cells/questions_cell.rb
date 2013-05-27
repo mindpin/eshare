@@ -22,6 +22,7 @@ class QuestionsCell < Cell::Rails
     @user = opts[:user]
     @question = opts[:question]
     @course = @question.course
-    render
+    return render if @course
+    return ''
   end
 end
