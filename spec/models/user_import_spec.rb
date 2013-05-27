@@ -18,7 +18,7 @@ describe User do
           file = File.new 'spec/data/user_import_test_files/user.xls'
 
           expect{
-            User.import_excel_teacher file
+            User.import_excel file, :teacher
           }.to change{User.count}.by(3)
 
           @user = User.find_by_email('hi2@gmail.com')
@@ -38,7 +38,7 @@ describe User do
           file = File.new 'spec/data/user_import_test_files/user.xlsx'
 
           expect{
-            User.import_excel_teacher file
+            User.import_excel file, :teacher
           }.to change{User.count}.by(3)
 
           @user = User.find_by_email('hi2@gmail.com')
@@ -55,9 +55,9 @@ describe User do
 
       it "import openoffice format" do
         file = File.new 'spec/data/user_import_test_files/user.sxc'
-       
+        
         expect{
-          User.import_excel_teacher file
+          User.import_excel file, :teacher
         }.to change{User.count}.by(3)
       end
     end
@@ -67,7 +67,7 @@ describe User do
         file = File.new 'spec/data/user_import_test_files/user.xls'
        
         expect{
-          User.import_excel_student file
+          User.import_excel file, :student
         }.to change{User.count}.by(3)
       end
 
@@ -77,7 +77,7 @@ describe User do
         file = File.new 'spec/data/user_import_test_files/user.xlsx'
 
         expect{
-          User.import_excel_student file
+          User.import_excel file, :student
         }.to change{User.count}.by(3)
       end
 
@@ -85,7 +85,7 @@ describe User do
         file = File.new 'spec/data/user_import_test_files/user.sxc'
        
         expect{
-          User.import_excel_student file
+          User.import_excel file, :student
         }.to change{User.count}.by(3)
       end
     end

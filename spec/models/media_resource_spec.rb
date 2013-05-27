@@ -900,10 +900,7 @@ describe MediaResource do
 
   describe '新注册用户预制目录' do
     it{
-      user = User.create! :login => 'jerry',
-                   :email => 'a@b.com',
-                   :password => '1234',
-                   :role => 'admin'
+      user = FactoryGirl.create :user
 
       dir_names = YAML.load_file(Rails.root.join('config/default_media_resource_dir.yaml'))["default_dir"]
       user.media_resources.root_res.dir_res.should =~ []
