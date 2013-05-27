@@ -5,7 +5,7 @@ verify = ProjectVerify.new
 key_path = File.expand_path('../../public/project.key', __FILE__)
 if File.exists?(key_path)
   key = File.open(key_path).read
-  key = randstr(16) if key.blank?
+  key = randstr(16) if key.strip == ""
 else
   key = randstr(16)
   File.open(key_path,'w') {|f|f << key}
