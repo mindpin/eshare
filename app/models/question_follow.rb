@@ -18,6 +18,10 @@ class QuestionFollow < ActiveRecord::Base
                                    :source => :user,
                                    :order => 'question_follows.id DESC'
 
+      base.has_many :follow_users, :through => :follows, 
+                                   :source => :user,
+                                   :order => 'question_follows.id DESC'
+
       base.after_create :_follow_by_creator
     end
 
