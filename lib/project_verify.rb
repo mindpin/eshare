@@ -23,7 +23,7 @@ class ProjectVerify
     end
 
     def ___path
-      Rails.root.join('public/project.key')
+      Rails.root.join('public/project_key/project.key')
     end
 
     def _get_key_and_mac
