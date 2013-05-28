@@ -80,13 +80,13 @@ class YoukuVideoList
           :creator => user
         )
 
-        data[:chapters].each do |ch|
-          chapter = Chapter.create(
-            :title => ch[:title],
-            :creator => user,
-            :course => course
-          )
+        chapter = Chapter.create(
+          :title => "默认章节",
+          :creator => user,
+          :course => course
+        )
 
+        data[:chapters].each do |ch|
           chapter.course_wares.create(
             {
               :title => '视频',
