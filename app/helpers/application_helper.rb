@@ -187,10 +187,29 @@ module ApplicationHelper
               haml_concat user_link(feed.who)
               haml_concat '提了一个问题'
               haml_concat question_link(feed.to)
-            when 'create_answer'
+            when 'update_question'
               haml_concat user_link(feed.who)
-              haml_concat '回答了问题'
-              haml_concat question_link(feed.to.question)
+              haml_concat '修改了问题'
+              haml_concat question_link(feed.to)
+
+            when 'create_answer'
+              if(answer = feed.to).present?
+                if(question = answer.question).present?
+                  haml_concat user_link(feed.who)
+                  haml_concat '回答了问题'
+                  haml_concat question_link(question)
+                end
+              end
+            when 'update_answer'
+              if(answer = feed.to).present?
+                if(question = answer.question).present?
+                  haml_concat user_link(feed.who)
+                  haml_concat '修改了对问题'
+                  haml_concat question_link(question)
+                  haml_concat '的回答'
+                end
+              end
+
             when 'create_answer_vote', 'update_answer_vote'
               if (answer_vote = feed.to).present?
                 if (answer = answer_vote.answer).present?

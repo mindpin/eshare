@@ -1,5 +1,9 @@
+- content_for :header do
+  %h1 修改对问题的回答
+
 = simple_form_for @answer do |f|
   .form-inputs
-    = f.input :content, :as => :text, :input_html => {:rows => 4, :class => 'xxlarge'}
+    = f.input :content, :as => :text, :input_html => {:rows => 5, :class => 'xxlarge'}
   .form-actions
     = f.button :submit, :class => 'success'
+    %a.btn.cancel{:href => "/questions/#{@answer.question.id}"}= t('common.form.cancel')

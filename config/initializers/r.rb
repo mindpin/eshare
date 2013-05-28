@@ -10,6 +10,9 @@ HASH = {
 }
 
 class R
+  INHOUSE = false
+  INTERNET = !INHOUSE
+
   LIBREOFFICE_PATH = HASH[:libreoffice_path]
   CONVERT_BASE_PATH = File.expand_path(HASH[:convert_base_path], Rails.root.join('config'))
 

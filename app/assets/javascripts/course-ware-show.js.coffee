@@ -157,7 +157,6 @@ jQuery ->
     init_marks_inputer: ->
 
 
-
   # 此类用来对各种视频源的播放进度记录做一个统一整合
   class MindpinVideoProgressParser
     constructor: (@player, @updater)->

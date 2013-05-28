@@ -12,7 +12,7 @@
         .back
           %a.btn.login{:href => '/'} 返回首页
 
-      - if !Rails.env.production?
+      - if true #!Rails.env.production?
         .message= message
         .exception
           .message= exception.message

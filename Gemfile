@@ -136,7 +136,7 @@ gem 'mindpin-simple-tags',
 # feed
 gem 'mindpin-feeds',
     :git => 'git://github.com/mindpin/mindpin-feeds',
-    :tag => '0.0.7'
+    :tag => '0.0.8'
 
 # redis-cache
 gem 'simple-redis-cache',

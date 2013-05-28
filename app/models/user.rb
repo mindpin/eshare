@@ -58,11 +58,14 @@ class User < ActiveRecord::Base
 
   simple_excel_import :student, :fields => [:login, :name, :email],
                                 :default => {:role => :student}
-  def self.import(excel_file)
-    users = self.parse_excel_student excel_file
+
+  def self.import_excel(excel_file, role, password = '1234')
+    users = self.parse_excel_student excel_file if role == :student
+    users = self.parse_excel_teacher excel_file if role == :teacher
+
     users.each do |u|
-      u.password = '1234'
-      u.password_confirmation = '1234'
+      u.password = password
+      u.password_confirmation = password
       u.save
     end
   end

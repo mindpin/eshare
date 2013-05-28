@@ -65,7 +65,7 @@ class Admin::UsersController < ApplicationController
 
   def do_import
     file = params[:excel_file]
-    User.import(file)
+    User.import_excel(file, :student, '1234')
     redirect_to :action => :index
   end
 

@@ -1,0 +1,12 @@
+.cpart
+  %h3 相关课程
+  .page-question-linked-course
+    .course
+      .cover= fit_image @course.cover.versions[:normal].url, :width => 120, :height => 90
+      .title= course_link @course
+      .ch-count
+        %i.icon-book
+        %span #{@course.chapters.count} 个章节
+      .usr-count
+        %i.icon-user
+        %span #{@course.course_ware_readings.count} 人学习
