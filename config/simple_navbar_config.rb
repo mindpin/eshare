@@ -25,6 +25,7 @@ SimpleNavbar::Base.config do
 
     nav :user, :url => '/users/me' do
       controller :users
+      controller :friends
     end
 
     # nav :disk, :url => '/disk' do
@@ -64,6 +65,7 @@ SimpleNavbar::Base.config do
 
     nav :user, :url => '/users/me' do
       controller :users
+      controller :friends
     end
 
     # nav :disk, :url => '/disk' do

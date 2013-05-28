@@ -340,6 +340,27 @@ body.admin, body.app, body.account, body.error {
       padding:0 20px 10px;
       input {margin:0;}
     }
+
+    &.grids-style{
+      border:none 0;
+      background:none;
+      padding:0;
+      .mainp66 {
+        padding-right:20px;
+      }
+      .mainp66, .sidep33{
+        .pblock {
+          border:solid 1px #ddd;
+          background-color:white;
+          padding:20px;
+          padding-bottom:0;
+          margin-bottom:20px;
+          &.nopadding{
+            padding:0;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -2193,10 +2214,13 @@ form .input.page-form-tag-inputer {
 }
 
 .page-user-page-friends-stat {
-  border-bottom:solid 1px #ddd;
-  margin-bottom: 20px;
+  // border-bottom:solid 1px #ddd;
+  // margin-bottom: 20px;
+  background-color:#fcfcfc;
   overflow:hidden;
   .fo, .fr{
+    width:50%;
+    @include border-box;
     padding:20px;
     float:left;
     display:block;
@@ -2211,16 +2235,18 @@ form .input.page-form-tag-inputer {
       color:#555;
     }
     &:hover {
+      background-color:white;
       .c, .de{color:#005580 !important;};
     }
   }
-  .fr {
-    border-left:solid 1px #ddd;
+  .fo {
+    border-right:solid 1px #ddd;
   }
 }
 
 .page-friends-followings, .page-friends-followers{
   border:solid 1px #ddd;
+  margin-bottom:20px;
   .stat {
     padding:10px 15px;
     border-bottom:solid 1px #ddd;
