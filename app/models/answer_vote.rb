@@ -17,6 +17,11 @@ class AnswerVote < ActiveRecord::Base
     Kind::VOTE_UP, Kind::VOTE_DOWN, Kind::VOTE_CANCEL
   ]
 
+  validate :not_vote_self_answer
+  def not_vote_self_answer
+    errors.add(:base, '不允许对自己的回答投票') if self.answer.creator == self.user
+  end
+
   scope :by_user, lambda { |user| where(:user_id => user.id) }
 
   after_save :update_vote_sum

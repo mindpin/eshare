@@ -291,35 +291,46 @@ describe AnswerVote do
   context('Validation') {
     before {
       @question     = FactoryGirl.create :question
-      @user         = FactoryGirl.create :user
+      @answer_user         = FactoryGirl.create :user
+      @vote_user         = FactoryGirl.create :user
       @answer       = FactoryGirl.create :answer, :question => @question,
-                                                  :creator => @user
+                                                  :creator => @answer_user
     }
 
     it {
       vote = AnswerVote.new :answer => @answer,
-                            :user => @user
+                            :user => @vote_user
       vote.valid?.should == false
     }
 
     context {
-      before { @vote = @answer.answer_votes.create :user => @user }
+      before { @vote = @answer.answer_votes.create :user => @vote_user }
       it { @vote.valid?.should == false }
       it { AnswerVote.count.should == 0 }
     }
 
     context {
       before {
-        @vote = @answer.answer_votes.create :user => @user
+        @vote = @answer.answer_votes.create :user => @vote_user
         @vote.update_attribute :kind, 'VOTE_CANCEL'
       }
       it { @vote.valid?.should == true }
       it { AnswerVote.count.should == 1 }
     }
 
+    context "不能对自己的回答进行投票" do
+      before {
+        @vote = @answer.answer_votes.create :user => @answer_user
+        @vote.kind = 'VOTE_UP'
+        @vote.save
+      }
+      it { @vote.valid?.should == false }
+      it { AnswerVote.count.should == 0 }
+    end
+
     context {
       before {
-        @vote = @answer.answer_votes.create :user => @user
+        @vote = @answer.answer_votes.create :user => @vote_user
         @vote.update_attributes :kind => 'XXXX'
         # udpate_attribute 方法不会触发校验
       }
@@ -355,6 +366,10 @@ describe AnswerVote do
     }
   end
 end
+
+
+
+
 
 describe "最佳答案" do
   before {
