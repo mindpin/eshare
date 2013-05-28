@@ -93,6 +93,13 @@ class User < ActiveRecord::Base
     model.unfollow_by_user self
   end
 
+  # 记录用户 增加/修改 个人签名档
+  record_feed :scene => :users,
+                        :callbacks => [ :update ],
+                        :before_record_feed => lambda {|user, callback_type|
+                          return user.tagline_changed?
+                        }
+
   include Course::UserMethods
   include Question::UserMethods
   include Answer::UserMethods
