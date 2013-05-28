@@ -194,7 +194,7 @@ body.auth{
 }
 
 body.admin, body.app, body.account, body.error {
-  .page-navbar{
+  .page-top-nav .page-navbar{
     .navbar-inner {
       min-height:30px !important;
     }
@@ -2131,10 +2131,8 @@ form .input.page-form-tag-inputer {
 }
 
 .page-user-page-head {
-  border:solid 1px #ddd;
-  padding:20px;
+  padding-bottom:20px;
   overflow:hidden;
-  margin-bottom:20px;
 
   .avatar {
     float:left;
@@ -2146,6 +2144,51 @@ form .input.page-form-tag-inputer {
       font-size:16px;font-weight:bold;
     }
     .joined{margin-bottom:10px;}
+  }
+}
+
+.page-user-page-navbar {
+  margin-bottom: 20px;
+
+  .navbar-inner {
+    @include border-radius(0);
+    background:#FCFCFC;
+    .nav {
+      padding:0;
+      li a {
+        padding-left:20px;
+        padding-right:20px;
+      }
+      li.active a {
+        background:#f4f4f4;
+        box-shadow:none;
+        padding-left:19px;
+        padding-right:19px;
+        border-left:solid 1px #ddd;
+        border-right:solid 1px #ddd;
+        &:hover {
+          background:#f7f7f7;
+        }
+      }
+      li.active:first-child a{
+        border-left:none 0;
+        padding-left:20px;
+      }
+    }
+  }
+
+  .navbar-inner {
+    padding:0;
+
+    li a {
+      font-weight:bold;
+      font-size:14px;
+      span.count {
+        font-weight:normal;
+        margin-left:5px;
+        color:#666;
+      }
+    }
   }
 }
 

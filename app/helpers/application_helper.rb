@@ -125,6 +125,8 @@ module ApplicationHelper
 
   def follow_button(cur_user, user)
     # %a.page-follow.follow.btn.success{:data => {:id => user.id}}
+    return '' if cur_user == user
+
     if cur_user.has_follow? user
       return capture_haml {
         haml_tag 'a.page-follow.unfollow.btn.small', '取消关注', :data => {:id => user.id}

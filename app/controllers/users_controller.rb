@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   def me
     @user = current_user
-    render :show
+    redirect_to "/users/#{@user.id}"
   end
 
   def show

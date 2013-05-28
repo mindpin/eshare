@@ -84,6 +84,11 @@ class CourseWareReading < ActiveRecord::Base
   module UserMethods
     extend ActiveSupport::Concern
 
+    included do
+      has_many :course_ware_readings
+      has_many :joined_courses, :through => :course_ware_readings, :source => :course, :uniq => true
+    end
+
     module ClassMethods
       # 返回综合学习进度最多的前若干名用户
       def top_study_users(count = 3)
@@ -150,7 +155,7 @@ class CourseWareReading < ActiveRecord::Base
 
     # 正在学习的课程
     def learning_courses
-      Course.joins(:course_ware_readings).where('course_ware_readings.user_id = ?', self.id).group('courses.id')
+      joined_courses
     end
 
     # 正在学习的课程中最常用的tag

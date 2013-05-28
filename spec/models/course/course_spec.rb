@@ -154,7 +154,7 @@ describe Course do
     end
   end
 
-  context '正在学习的课程' do
+  context '正在学习的课程 joined_courses' do
     before {
       @user = FactoryGirl.create :user
       @user1 = FactoryGirl.create :user
@@ -172,7 +172,7 @@ describe Course do
     }
 
     it {
-      Course.recent_read_by(@user).should =~ [
+      @user.joined_courses.should =~ [
         CourseWare.all[0].chapter.course, 
         CourseWare.all[1].chapter.course,
         CourseWare.all[3].chapter.course
@@ -180,7 +180,7 @@ describe Course do
     }
 
     it {
-      Course.recent_read_by(@user1).should =~ [
+      @user1.joined_courses.should =~ [
         CourseWare.all[2].chapter.course, 
         CourseWare.all[4].chapter.course
       ]

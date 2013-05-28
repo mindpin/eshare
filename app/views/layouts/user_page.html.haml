@@ -13,6 +13,7 @@
     .page-content
       .mainp66
         = render 'users/head', :user => @user
+        = render_cell :user, :page_navbar, :user => @user
         = yield
       .sidep33
         = render_cell :follow, :stat, :user => @user
