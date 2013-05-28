@@ -7,6 +7,9 @@ gem 'json', '1.7.7' # JSON解析，RAILS默认引入的
 gem 'rubyzip', '0.9.9', :require => false
 gem 'docsplit', '0.7.2'
 gem 'sunspot_rails', '2.0.0'
+gem 'chinese_pinyin', '0.4.2'
+gem 'rmmseg-cpp-huacnlee', '0.2.9'
+gem 'redis-search', :git => 'git://github.com/huacnlee/redis-search.git'
 
 group :assets do
   gem 'sass-rails', '~> 3.2.3'
@@ -133,7 +136,7 @@ gem 'mindpin-simple-tags',
 # feed
 gem 'mindpin-feeds',
     :git => 'git://github.com/mindpin/mindpin-feeds',
-    :tag => '0.0.8'
+    :tag => '0.0.9'
 
 # redis-cache
 gem 'simple-redis-cache',

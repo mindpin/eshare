@@ -29,7 +29,7 @@ class CourseWare < ActiveRecord::Base
                            :source => :user
 
   has_many :course_ware_marks
-  has_many :questions, :as => :model
+  has_many :questions
 
   scope :by_course, lambda {|course|
     joins(:chapter).where('chapters.course_id = ?', course.id)

@@ -39,7 +39,7 @@ class Course < ActiveRecord::Base
     self.set_tag_list(tags_str, :user => user, :force_public => true)
   end
 
-  attr_accessible :name, :cid, :desc, :syllabus, :cover, :creator
+  attr_accessible :name, :cid, :desc, :syllabus, :cover, :creator, :with_chapter
 
   belongs_to :creator, :class_name => 'User', :foreign_key => :creator_id
   has_many :chapters
@@ -54,7 +54,7 @@ class Course < ActiveRecord::Base
 
   has_many :test_papers
 
-  has_many :questions, :as => :model
+  has_many :questions
 
   validates :creator, :presence => true
 

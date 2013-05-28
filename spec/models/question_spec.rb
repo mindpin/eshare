@@ -108,21 +108,27 @@ describe Question do
     }
 
     it{
-      question = FactoryGirl.create(:question, :model => @course)
+      question = FactoryGirl.create(:question, :course => @course)
       question.reload
       question.course.should == @course
+      question.chapter.should == nil
+      question.course_ware.should == nil
     }
 
     it{
-      question = FactoryGirl.create(:question, :model => @chapter)
+      question = FactoryGirl.create(:question, :chapter => @chapter)
       question.reload
       question.course.should == @course
+      question.chapter.should == @chapter
+      question.course_ware.should == nil
     }
 
     it{
-      question = FactoryGirl.create(:question, :model => @course_ware)
+      question = FactoryGirl.create(:question, :course_ware => @course_ware)
       question.reload
       question.course.should == @course
+      question.chapter.should == @chapter
+      question.course_ware.should == @course_ware
     }
 
     it{
@@ -291,35 +297,67 @@ describe AnswerVote do
   context('Validation') {
     before {
       @question     = FactoryGirl.create :question
-      @user         = FactoryGirl.create :user
+      @answer_user         = FactoryGirl.create :user
+      @vote_user         = FactoryGirl.create :user
       @answer       = FactoryGirl.create :answer, :question => @question,
-                                                  :creator => @user
+                                                  :creator => @answer_user
     }
 
     it {
       vote = AnswerVote.new :answer => @answer,
-                            :user => @user
+                            :user => @vote_user
       vote.valid?.should == false
     }
 
     context {
-      before { @vote = @answer.answer_votes.create :user => @user }
+      before { @vote = @answer.answer_votes.create :user => @vote_user }
       it { @vote.valid?.should == false }
       it { AnswerVote.count.should == 0 }
     }
 
     context {
       before {
-        @vote = @answer.answer_votes.create :user => @user
+        @vote = @answer.answer_votes.create :user => @vote_user
         @vote.update_attribute :kind, 'VOTE_CANCEL'
       }
       it { @vote.valid?.should == true }
       it { AnswerVote.count.should == 1 }
     }
 
+    context "不能对自己的回答进行投票" do
+
+      before {
+        @vote = @answer.answer_votes.create :user => @answer_user
+        @vote.kind = 'VOTE_UP'
+        @vote.save
+      }
+
+      it { @vote.valid?.should == false }
+      it { AnswerVote.count.should == 0 }
+
+      it "vote_up_by! 无记录" do
+        @answer.vote_up_by! @answer_user
+
+        AnswerVote.count.should == 0
+      end
+
+      it "vote_down_by! 无记录" do
+        @answer.vote_down_by! @answer_user
+
+        AnswerVote.count.should == 0
+      end
+
+      it "vote_cancel_by! 无记录" do
+        @answer.vote_cancel_by! @answer_user
+
+        AnswerVote.count.should == 0
+      end
+      
+    end
+
     context {
       before {
-        @vote = @answer.answer_votes.create :user => @user
+        @vote = @answer.answer_votes.create :user => @vote_user
         @vote.update_attributes :kind => 'XXXX'
         # udpate_attribute 方法不会触发校验
       }
@@ -355,6 +393,10 @@ describe AnswerVote do
     }
   end
 end
+
+
+
+
 
 describe "最佳答案" do
   before {
