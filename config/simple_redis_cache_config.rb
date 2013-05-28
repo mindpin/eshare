@@ -89,7 +89,7 @@ SimpleRedisCache.config do
               add_to_cache(feed.id, user)
             end
           when Question
-            if feed.to.model.is_a?(CourseWare) && feed.what == "create_question"
+            if feed.to.course.present? && feed.what == "create_question"
               add_to_cache(feed.id, user)
             end
           when PracticeRecord
@@ -121,8 +121,8 @@ SimpleRedisCache.config do
               add_to_cache(feed.id, course)
             end
           when Question
-            if feed.to.model.is_a?(CourseWare) && feed.what == "create_question"
-              course = feed.to.model.chapter.course
+            if feed.to.course.present? && feed.what == "create_question"
+              course = feed.to.course
               add_to_cache(feed.id, course)
             end
           when PracticeRecord

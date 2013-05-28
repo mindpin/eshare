@@ -54,7 +54,7 @@ class Course < ActiveRecord::Base
 
   has_many :test_papers
 
-  has_many :questions, :as => :model
+  has_many :questions
 
   validates :creator, :presence => true
 

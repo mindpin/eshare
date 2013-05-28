@@ -108,21 +108,27 @@ describe Question do
     }
 
     it{
-      question = FactoryGirl.create(:question, :model => @course)
+      question = FactoryGirl.create(:question, :course => @course)
       question.reload
       question.course.should == @course
+      question.chapter.should == nil
+      question.course_ware.should == nil
     }
 
     it{
-      question = FactoryGirl.create(:question, :model => @chapter)
+      question = FactoryGirl.create(:question, :chapter => @chapter)
       question.reload
       question.course.should == @course
+      question.chapter.should == @chapter
+      question.course_ware.should == nil
     }
 
     it{
-      question = FactoryGirl.create(:question, :model => @course_ware)
+      question = FactoryGirl.create(:question, :course_ware => @course_ware)
       question.reload
       question.course.should == @course
+      question.chapter.should == @chapter
+      question.course_ware.should == @course_ware
     }
 
     it{
