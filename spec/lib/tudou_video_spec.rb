@@ -35,7 +35,7 @@ describe TudouVideoList do
       subject        {importer}
 
       it {expect {importer.import}.to change {Course.count}.by(1)}
-      it {expect {importer.import}.to change {Chapter.count}.by(importer.list.items.count)}
+      it {expect {importer.import}.to change {Chapter.count}.by(1)}
       it {expect {importer.import}.to change {CourseWare.count}.by(importer.list.items.count)}
     end
   end

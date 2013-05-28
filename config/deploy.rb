@@ -16,6 +16,7 @@ set :shared_paths, [
   '.ruby-version', 
   'deploy/sh/property.yaml', 
   'public/YKAuth.txt', 
+  'public/project_key',
   'config/initializers/r.rb']
 
 task :environment do
@@ -38,9 +39,10 @@ task :setup => :environment do
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/deploy/sh"]
   queue! %[touch "#{deploy_to}/shared/deploy/sh/property.yaml"]
 
-  queue! %[mkdir -p "#{deploy_to}/shared/public"]
+  queue! %[mkdir -p "#{deploy_to}/shared/public/project_key"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/public"]
-  queue! %[touch "#{deploy_to}/shared/public/YKAuth.txt"]  
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/public/project_key"]
+  queue! %[touch "#{deploy_to}/shared/public/YKAuth.txt"]
 
   queue! %[touch "#{deploy_to}/shared/.ruby-version"]
 
@@ -50,6 +52,16 @@ task :setup => :environment do
   queue  %[echo "-----> Be sure to edit 'shared/.ruby-version'."]
   queue  %[echo "-----> Be sure to edit 'shared/deploy/sh/property.yaml'."]
   queue  %[echo "-----> Be sure to edit 'shared/public/YKAuth.txt'."]
+end
+
+desc "init_verify_key"
+task :init_verify_key => :environment do
+  deploy do
+    invoke :'git:clone'
+    invoke :'deploy:link_shared_paths'
+    queue! "bundle"
+    queue! "ruby script/init_verify_key.rb"
+  end
 end
 
 desc "Deploys the current version to the server."
