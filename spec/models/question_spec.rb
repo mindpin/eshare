@@ -325,13 +325,34 @@ describe AnswerVote do
     }
 
     context "不能对自己的回答进行投票" do
+
       before {
         @vote = @answer.answer_votes.create :user => @answer_user
         @vote.kind = 'VOTE_UP'
         @vote.save
       }
+
       it { @vote.valid?.should == false }
       it { AnswerVote.count.should == 0 }
+
+      it "vote_up_by! 无记录" do
+        @answer.vote_up_by! @answer_user
+
+        AnswerVote.count.should == 0
+      end
+
+      it "vote_down_by! 无记录" do
+        @answer.vote_down_by! @answer_user
+
+        AnswerVote.count.should == 0
+      end
+
+      it "vote_cancel_by! 无记录" do
+        @answer.vote_cancel_by! @answer_user
+
+        AnswerVote.count.should == 0
+      end
+      
     end
 
     context {
