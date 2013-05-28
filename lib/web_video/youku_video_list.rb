@@ -77,7 +77,8 @@ class YoukuVideoList
           :name => data[:name],
           :desc => data[:desc],
           :cid => randstr,
-          :creator => user
+          :creator => user,
+          :with_chapter => false
         )
 
         chapter = Chapter.create(
