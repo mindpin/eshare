@@ -100,6 +100,16 @@ class User < ActiveRecord::Base
                           return user.tagline_changed?
                         }
 
+  include Redis::Search
+  redis_search_index :title_field => :name,
+                     :prefix_index_enable => true,
+                     :condition_fields => [:is_admin?, :is_teacher?, :is_student?],
+                     :ext_fields => [:normal_avatar_url]
+
+  def normal_avatar_url
+    avatar.versions[:normal].url
+  end
+
   include Course::UserMethods
   include Question::UserMethods
   include Answer::UserMethods

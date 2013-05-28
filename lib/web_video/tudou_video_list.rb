@@ -26,7 +26,7 @@ class TudouVideoList
 
     def course
       @course ||= Course.create(:name    => list.title,
-                                :cid     => list.lid,
+                                :cid     => randstr,
                                 :with_chapter => false,
                                 :creator => User.first)
     end

@@ -12,7 +12,7 @@ begin
     config.redis = redis
     config.complete_max_length = 100
     config.pinyin_match = true
-    # 是否开启中文分词，true为关闭，可节省内存占用
+    # 是否关闭中文分词，true为关闭，可节省内存占用
     config.disable_rmmseg = true
   end
 rescue

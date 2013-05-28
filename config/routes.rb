@@ -80,6 +80,7 @@ Eshare::Application.routes.draw do
   resources :users, :shallow => true do
     collection do
       get :me
+      get :complete_search
     end
 
     member do

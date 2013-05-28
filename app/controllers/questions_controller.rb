@@ -18,7 +18,7 @@ class QuestionsController < ApplicationController
 
     if request.xhr? && params[:course_ware_id]
       @course_ware = CourseWare.find params[:course_ware_id]
-      @question.model = @course_ware
+      @question.course_ware = @course_ware
       return render :text => (render_cell :questions, :list, :questions => [@question], :user => current_user) if @question.save
       return render :text => 'params invalid', :status => 500
     end

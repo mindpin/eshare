@@ -29,9 +29,9 @@ class Answer < ActiveRecord::Base
     self.question.actived_at = Time.now
 
     self.question.without_feed do
-      ActiveRecord::Base.record_timestamps = false
+      Question.record_timestamps = false
       self.question.save
-      ActiveRecord::Base.record_timestamps = true
+      Question.record_timestamps = true
     end
   end
 

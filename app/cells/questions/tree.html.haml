@@ -19,22 +19,24 @@
       answer-#{answer.id}
 
     - add_left(:vote_up) do |answer|
-      - if answer.has_voted_up_by? user
-        = link_to "/answers/#{answer.id}/vote_cancel", :method => :put, :class => 'cancel', :title => '已投赞成票，点击取消' do
-          %i.icon-chevron-up
-      - else
-        = link_to "/answers/#{answer.id}/vote_up", :method => :put, :title => '点击投赞成票' do
-          %i.icon-chevron-up
+      - if answer.creator != user
+        - if answer.has_voted_up_by? user
+          = link_to "/answers/#{answer.id}/vote_cancel", :method => :put, :class => 'cancel', :title => '已投赞成票，点击取消' do
+            %i.icon-chevron-up
+        - else
+          = link_to "/answers/#{answer.id}/vote_up", :method => :put, :title => '点击投赞成票' do
+            %i.icon-chevron-up
 
     - add_left(:vote_sum)
 
     - add_left(:vote_down) do |answer|
-      - if answer.has_voted_down_by? user
-        = link_to "/answers/#{answer.id}/vote_cancel", :method => :put, :class => 'cancel', :title => '已投反对票，点击取消' do
-          %i.icon-chevron-down
-      - else
-        = link_to "/answers/#{answer.id}/vote_down", :method => :put, :title => '点击投反对票' do
-          %i.icon-chevron-down
+      - if answer.creator != user
+        - if answer.has_voted_down_by? user
+          = link_to "/answers/#{answer.id}/vote_cancel", :method => :put, :class => 'cancel', :title => '已投反对票，点击取消' do
+            %i.icon-chevron-down
+        - else
+          = link_to "/answers/#{answer.id}/vote_down", :method => :put, :title => '点击投反对票' do
+            %i.icon-chevron-down
 
     - add(:creator) do |answer|
       .avatar= avatar_link answer.creator, :small

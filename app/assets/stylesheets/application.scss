@@ -2452,7 +2452,7 @@ form .input.page-form-tag-inputer {
       }
     }
 
-    .vote_up a {
+    .vote_up{
       margin-top:2px;
     }
     .vote_up, .vote_down {
@@ -2465,6 +2465,7 @@ form .input.page-form-tag-inputer {
         overflow:hidden;
         font-size:0;
         line-height:50em;
+        margin-bottom:5px;
         @include border-radius(2px);
 
         i {
@@ -2479,11 +2480,13 @@ form .input.page-form-tag-inputer {
       }
     }
     .vote_sum {
-      margin-top:5px;
       margin-bottom:5px;
       font-weight: bold;
       text-align: center;
       color:#555;
+      width:32px;
+      background-color:#fafafa;
+      @include border-radius(2px);
     }
   }
 
