@@ -44,14 +44,11 @@ module Eshare
       'strong', 'span'
     config.action_view.sanitized_allowed_attributes = 'href', 'src'
 
-    config.action_mailer.delivery_method = :smtp
-    config.action_mailer.smtp_settings = {
-      :address              => "",
-      :port                 => 25,
-      :user_name            => '',
-      :password             => '',
-      :authentication       => 'plain',
-      :enable_starttls_auto => true
-    }
+    # FOR INTERNET
+    config.to_prepare do
+      Devise::PasswordsController.layout 'auth'
+    end
+
+    # EMAIL setting in r.rb
   end
 end

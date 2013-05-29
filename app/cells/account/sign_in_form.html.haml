@@ -7,5 +7,6 @@
       = f.button :submit, t('common.sign-in'), 'data-disable-with' => t('common.sign-ining'), :class => 'large sign-in'
     .remember
       = f.input :remember_me, :as => :boolean
-    .recover
-      %a.forget-password{:href => '/account/password/new'} 我忘记密码了
+    - if R::INTERNET
+      .recover
+        %a.forget-password{:href => '/account/password/new'} 我忘记密码了
