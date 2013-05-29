@@ -43,5 +43,15 @@ module Eshare
       'code', 'pre', 'p', 'br', 'img', 'cite', 'blockquote', 'b', 'i', 'em',
       'strong', 'span'
     config.action_view.sanitized_allowed_attributes = 'href', 'src'
+
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      :address              => "",
+      :port                 => 25,
+      :user_name            => '',
+      :password             => '',
+      :authentication       => 'plain',
+      :enable_starttls_auto => true
+    }
   end
 end

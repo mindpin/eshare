@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 Eshare::Application.routes.draw do
+  default_url_options :host => "edushare.mindpin.com"
+
   root :to => 'index#index'
   get '/dashboard' => 'index#dashboard'
   get '/plan' => 'index#plan'

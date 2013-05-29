@@ -1,14 +1,14 @@
 class AccountController < Devise::RegistrationsController
-  layout 'auth', :only => [:new]
-
-  layout :get_edit_method_layout, :only => [:edit]
-  def get_edit_method_layout
-    if current_user.is_admin?
+  layout Proc.new { |controller|
+    case controller.action_name
+    when 'new'
+      return 'auth'
+    when 'edit'
       return 'account'
     else
       return 'account'
     end
-  end
+  }
 
   def new
     super

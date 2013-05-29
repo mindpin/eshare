@@ -1,0 +1,11 @@
+.sign-in-form
+  = simple_form_for User.new, :as => :user, :url => '/account/sign_in' do |f|
+    .form-inputs
+      = f.input :login, :placeholder => '用户名/邮箱', :required => true
+      = f.input :password, :required => true, :placeholder => '密码', :required => true
+    .form-actions
+      = f.button :submit, t('common.sign-in'), 'data-disable-with' => t('common.sign-ining'), :class => 'large sign-in'
+    .remember
+      = f.input :remember_me, :as => :boolean
+    .recover
+      %a.forget-password{:href => '/account/password/new'} 我忘记密码了

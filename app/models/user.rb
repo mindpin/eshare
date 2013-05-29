@@ -5,7 +5,8 @@ class User < ActiveRecord::Base
   # :lockable, :timeoutable and :omniauthable
   # :recoverable
   devise :database_authenticatable, :registerable, 
-         :rememberable, :trackable, :validatable
+         :rememberable, :trackable, :validatable,
+         :recoverable
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :login, :email, :password, :password_confirmation, :remember_me
@@ -45,6 +46,11 @@ class User < ActiveRecord::Base
   validates :role, :presence => true
   roles_field :roles_mask, :roles => [:admin, :manager, :teacher, :student]
 
+  before_validation :set_default_role
+  def set_default_role
+    self.role = :student if self.role.blank?
+  end
+
   # 分别为学生和老师增加动态字段
   include DynamicAttr::Owner
   has_dynamic_attrs :student_attrs,
@@ -72,9 +78,7 @@ class User < ActiveRecord::Base
 
   scope :like_filter, lambda { |query|
     if query.blank?
-      {
-        :conditions => ['TRUE']
-      }
+      { :conditions => ['TRUE'] }
     else
       {
         :conditions => [

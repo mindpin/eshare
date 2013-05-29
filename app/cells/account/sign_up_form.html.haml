@@ -1,0 +1,10 @@
+.sign-up-form
+  = simple_form_for User.new, :as => :user, :url => '/account' do |f|
+    .form-inputs
+      = f.input :email, :placeholder => '邮箱', :required => true
+      = f.input :login, :placeholder => '登录名', :required => true
+      = f.input :name, :placeholder => '姓名', :required => true
+      = f.input :password, :placeholder => '密码', :required => true
+      = f.input :password_confirmation, :placeholder => '确认密码', :required => true
+    .form-actions
+      = f.button :submit, t('common.sign-up'), 'data-disable-with' => t('common.sign-uping'), :class => 'large sign-up'

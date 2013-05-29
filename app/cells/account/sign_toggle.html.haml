@@ -1,0 +1,9 @@
+- if R::INTERNET
+  - if @is_sign_up
+    .toggle
+      %a.sign-in{:href => '/account/sign_in'} 登录
+      %a.active.sign-up{:href => '/account/sign_up'} 注册
+  - else
+    .toggle
+      %a.active.sign-in{:href => '/account/sign_in'} 登录
+      %a.sign-up{:href => '/account/sign_up'} 注册

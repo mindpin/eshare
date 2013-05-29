@@ -1,5 +1,9 @@
 !!!
 - simple_page_layout 'MINDPIN EduShare', :html_lang => :zh, :body_class => 'auth' do
-  = page_wallpaper '/assets/wallpaper/auth-wallpaper.jpg'
+  - if R::INTERNET
+    = page_wallpaper '/assets/wallpaper/auth-wallpaper.jpg'
+  - if R::INHOUSE
+    = page_wallpaper '/assets/wallpaper/auth-wallpaper-inhouse.jpg'
+
   .page-content
     = yield

@@ -5,6 +5,7 @@
       %input{:name => :q, :type => :text}
       %a.btn.info.do-search{:href => 'javascript:;'}
         %i.icon-search.icon-white
-    .usri
-      .name= @user.name
-      .avatar= avatar @user, :small
+    - if @user.present?
+      .usri
+        .name= @user.name
+        .avatar= avatar @user, :small
