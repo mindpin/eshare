@@ -3,8 +3,8 @@ require 'spec_helper'
 describe JavascriptStep do
 
   before {
-    @course_ware_1 = FactoryGirl.create(:course_ware)
-    @course_ware_2 = FactoryGirl.create(:course_ware)
+    @course_ware_1 = FactoryGirl.create(:course_ware, :kind => 'javascript')
+    @course_ware_2 = FactoryGirl.create(:course_ware, :kind => 'javascript')
 
     @step_1_1 = @course_ware_1.javascript_steps.create(:content => "content_1", :rule => "rule_1")
     @step_2_1 = @course_ware_2.javascript_steps.create(:content => "content_2", :rule => "rule_2")
