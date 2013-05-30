@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 Eshare::Application.routes.draw do
+  default_url_options :host => "edushare.mindpin.com" # devise 发邮件需要用到
+  # 参考
+  # https://github.com/plataformatec/devise/wiki/How-To:-Create-custom-layouts
+  # 来设置 devise 的布局
+
   root :to => 'index#index'
   get '/dashboard' => 'index#dashboard'
   get '/plan' => 'index#plan'

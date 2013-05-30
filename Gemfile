@@ -48,7 +48,7 @@ gem 'slim', '1.3.8', :require => false
 gem 'sinatra', '1.3.0', :require => false
 
 # 登录验证
-gem 'devise', '2.2.3'
+gem 'devise', '2.2.4'
 
 # 页面渲染
 gem 'haml', '4.0.0' # HAML模板语言

@@ -43,5 +43,12 @@ module Eshare
       'code', 'pre', 'p', 'br', 'img', 'cite', 'blockquote', 'b', 'i', 'em',
       'strong', 'span'
     config.action_view.sanitized_allowed_attributes = 'href', 'src'
+
+    # FOR INTERNET
+    config.to_prepare do
+      Devise::PasswordsController.layout 'auth'
+    end
+
+    # EMAIL setting in r.rb
   end
 end

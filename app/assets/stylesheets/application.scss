@@ -117,79 +117,211 @@ body.auth{
   position:static;
   background:url(wallpaper/auth-bg.png);
 
-  .page-sign-in{
-    background-color:rgba(black, 0.6);
-    width:510px;
-    height:280px;
-    position:absolute;
-    top:50%;left:50%;
-    margin-left:-255px;
-    margin-top:-190px;
-    @include border-radius(3px);
+  .page-sign{
+    background-color:rgba(white, 0.8);
+    border-left:solid 1px rgba(white, 0.6);
+    box-shadow:0 0 5px rgba(black, 0.5);
+    position:fixed;
+    top:0;right:0;bottom:0;
+
+    $w:320px;
+    width:$w;
+
+    .toggle {
+      background-color:rgba(white, 0.8);
+      height:40px;line-height:40px;
+      border-bottom:solid 1px rgba(black, 0.2);
+      a {
+        display:block;
+        float:left;
+        @include border-box;
+        width:50%;
+        text-align: center;
+        color:#444;
+        text-decoration:none;
+
+        &:first-child{
+          border-right:solid 1px #ddd;;
+        }
+        &.active {
+          background-color:white;
+        }
+      }
+    }
 
     form{
-      padding:30px;
-      .input.string, .input.password{
-        overflow:hidden;
+      padding:20px;
+      .input.string, .input.email, .input.password{
         label{
-          float:left;
-          width:80px;
-          text-align:right;
-          margin-right:15px;
-          height:48px;line-height:48px;
-          font-size:16px;
-          display:none;
+          position:absolute;
+          width:50px;height:50px;
+          @include border-radius(3px 0 0 3px);
+          right:20px;
+          overflow:hidden;
+          line-height:20em;
+          font-size:0;
+
+          
+          &:before {
+            content:"";
+            display:block;
+            width:24px;height:24px;
+            margin-top:13px;margin-left:13px;
+            opacity:0.9;
+            background:url(auth-icons-black.png) no-repeat;
+            opacity:0.38;
+          }
+
+          &[for=user_login]:before, &[for=user_name]:before {
+            background-position: 0 0;
+          }
+          &[for=user_password]:before {
+            background-position: -25px 0;
+          }
+          &[for=user_email]:before {
+            background-position: -50px 0;
+          }
+          &[for=user_password_confirmation] {
+            display:none;
+          }
+          &[for=user_name] {
+            // display:none;
+          }
         }
         input{
-          padding:6px 14px;
+          padding:6px 49px 6px 14px;
           $h : 48px - 6px * 2;
           height:$h;line-height:$h;
-          font-weight:bold;
+          width:$w - 2px - 14px - 49px - 40px;
+
           font-size:16px;
-          width:300px;
+          border:solid 1px rgba(black, 0.4);
+          box-shadow:none;
+        }
+      }
+      .login-as-email {
+        label[for=user_login]:before {
+          background-position: -50px 0 !important;
+        }
+      }
+
+
+      .form-desc {
+        background-color:rgba(white, 0.8);
+        position:relative;
+        padding:20px;
+        margin-bottom:30px;
+
+        &:before {
+          content:"";
+          border:solid 10px transparent;
+          border-top:solid 10px rgba(white, 0.8);
+          position:absolute;
+          bottom:-20px;left:20px;
         }
       }
       .form-actions{
         margin-bottom:10px;
         .btn {
-          width:330px !important;
+          width:$w - 40px !important;
           @include border-radius(3px);
         }
       }
       .remember{
-        color:white;
-        text-shadow:0 0 1px black;
+        margin-top:5px;
+        color:#333;
+        text-shadow:0 0 1px white;
+        float:left;
       }
+      .recover {
+        margin-top:5px;
+        float:right;
+        a {
+          color :#333;
+          text-shadow:0 0 1px white;
+        }
+      }
+    }
+    .sign-res-info {
+      padding:20px;
+      margin:0 20px;
+      background-color:rgba(red, 0.1);
+      position:relative;
+      text-shadow:0 0 2px white;
+
+      &:before {
+        content:"";
+        border:solid 10px transparent;
+        border-bottom:solid 10px rgba(red, 0.1);
+        position:absolute;
+        top:-20px;left:20px;
+      }
+
+      i {
+        margin-right:5px;
+      }
+
+      .info {
+        margin-bottom:4px;
+        color:#aa3333;
+        font-weight:bold;
+        &:last-child {
+          margin-bottom:0;
+        }
+      }
+
+      &.success {
+        background-color:rgba(green, 0.1);
+        &:before {border-bottom:solid 10px rgba(green, 0.1);}
+        .info {
+          color:#339933;
+        }
+      }
+    }
+
+    .ls {
+      position:fixed;
+      top:0;bottom:0;
+      left:0;right:$w;
 
       .logo {
-        width:360px;height:90px;
+        width:500px;height:200px;
         background:url(eshare-logo.png) no-repeat;
         position:absolute;
-        top:-90px;
-        left:0;
+        top:50%;
+        left:50%;
+        margin-top:-200px;
+        margin-left:-250px;
       }
 
-      .version {
-        font-size:20px;
-        font-weight:bold;
+      .logo-inhouse {
+        width:500px;height:200px;
+        background:url(eshare-logo-inhouse.png) no-repeat;
         position:absolute;
-        color:white;
-        text-shadow:0 0 1px black;
-        position:absolute;
-        top:-45px;
-        right:30px;
+        top:50%;
+        left:50%;
+        margin-top:-200px;
+        margin-left:-180px;
       }
 
-      .BK-logo {
+      .logo-3rd {
         width:120px;
         height:120px;
         position:absolute;
-        top:30px;right:-20px;
+        top:50%;
+        left:50%;
+        margin-left:-180px - 120px;
+        margin-top:-200px + 35px;
+
         border:solid 5px white;
         @include border-radius(3px);
         background:white url(bk-logo-100.png) no-repeat 10px 10px;
       }
     }
+  }
+
+  .page-fit-image {
+    pointer-events:none;
   }
 }
 
@@ -470,15 +602,28 @@ body.error {
     }
   }
 
-  &.login{
-    @include gradient(#AAD74C, #87B946);
-    background-color: #9ACA4A;
+  &.sign-in{
+    @include gradient(#94BB2E, #7EAC26);
+    background-color: #94BB2E;
     background-repeat: repeat-x;
-    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    border-color: rgba(0, 0, 0, 0.25) rgba(0, 0, 0, 0.25) rgba(0, 0, 0, 0.25);
     color:#fff;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
     &:hover, &:focus, &:active, &.active, &.disabled, &[disabled] {
-      background-color:#87B946;
+      background-color:#7EAC26;
+      color:#fff;
+    }
+  }
+
+  &.sign-up{
+    @include gradient(#278CDE, #0078D8);
+    background-color: #278CDE;
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.25) rgba(0, 0, 0, 0.25) rgba(0, 0, 0, 0.25);
+    color:#fff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    &:hover, &:focus, &:active, &.active, &.disabled, &[disabled] {
+      background-color:#0078D8;
       color:#fff;
     }
   }

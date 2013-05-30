@@ -1,19 +1,4 @@
-- page_title '登录'
-
-.page-sign-in
-  = simple_form_for resource, :as => resource_name, :url => session_path(resource_name) do |f|
-    .form-inputs
-      = f.input :login, :placeholder => '用户名/邮箱'
-      = f.input :password, :required => true, :placeholder => '密码'
-    .form-actions
-      = f.button :submit, t('common.sign-in'), 'data-disable-with' => t('common.sign-ining'), :class => 'large login'
-
-    - if devise_mapping.rememberable?
-      .remember
-        = f.input :remember_me, :as => :boolean
-
-    .logo
-    .version 体验版
-
-    - if true
-      .BK-logo
+.page-sign
+  = render_cell :account, :sign_toggle
+  = render_cell :account, :sign_in_form
+  = render_cell :account, :sign_logo

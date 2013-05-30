@@ -1,6 +1,10 @@
 require "spec_helper"
 
 describe User do
+  before {
+    R::INHOUSE = true
+    R::INTERNET = false
+  }
 
   describe "import file" do
     it "should raise format error" do

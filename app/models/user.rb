@@ -5,7 +5,8 @@ class User < ActiveRecord::Base
   # :lockable, :timeoutable and :omniauthable
   # :recoverable
   devise :database_authenticatable, :registerable, 
-         :rememberable, :trackable, :validatable
+         :rememberable, :trackable, :validatable,
+         :recoverable
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :login, :email, :password, :password_confirmation, :remember_me
@@ -14,11 +15,21 @@ class User < ActiveRecord::Base
   validates :login, :format => {:with => /\A\w+\z/, :message => '只允许数字、字母和下划线'},
                     :length => {:in => 3..20},
                     :presence => true,
-                    :uniqueness => {:case_sensitive => false}
+                    :uniqueness => {:case_sensitive => false},
+                    :unless => Proc.new { |user|
+                      user.login == user.email
+                    }
 
   validates :email, :uniqueness => {:case_sensitive => false}
 
-  validates :name, :presence => true
+  if R::INHOUSE
+    validates :name, :presence => true
+  end
+
+  if R::INTERNET
+    validates :name, :presence => true,
+                     :uniqueness => {:case_sensitive => false}
+  end
 
   def self.find_for_database_authentication(conditions)
     login = conditions.delete(:login)
@@ -44,6 +55,19 @@ class User < ActiveRecord::Base
   attr_accessible :role
   validates :role, :presence => true
   roles_field :roles_mask, :roles => [:admin, :manager, :teacher, :student]
+
+  before_validation :set_default_role
+  def set_default_role
+    self.role = :student if self.role.blank?
+  end
+
+  before_validation :set_login_for_internet_version
+  def set_login_for_internet_version
+    if R::INTERNET
+      self.login = self.email
+      self.password_confirmation = self.password
+    end
+  end
 
   # 分别为学生和老师增加动态字段
   include DynamicAttr::Owner
@@ -72,9 +96,7 @@ class User < ActiveRecord::Base
 
   scope :like_filter, lambda { |query|
     if query.blank?
-      {
-        :conditions => ['TRUE']
-      }
+      { :conditions => ['TRUE'] }
     else
       {
         :conditions => [
