@@ -5,28 +5,28 @@ describe User do
     before {
       # 邮箱不正确
       @user1 = User.new :login => 'jerry',
-                        :name =>'zhangsan',
+                        :name =>'宋亮',
                         :email => 'aaa',
                         :password => '1234',
                         :role => 'admin'
 
       # 正确
       @user2 = User.new :login => 'jerry',
-                        :name =>'lisi',
+                        :name =>'李飞',
                         :email => 'a@b.com',
                         :password => '1234',
                         :role => 'admin'
 
       # login == email 正确
       @user3 = User.new :login => 'ben7th@126.com',
-                        :name => '宋亮',
+                        :name => '黄锴',
                         :email => 'ben7th@126.com',
                         :password => '1234',
                         :role => 'student'
 
       # login != email 不正确
       @user4 = User.new :login => 'ben7th@gmail.com',
-                        :name => '宋亮',
+                        :name => '吴笛',
                         :email => 'ben7th@126.com',
                         :password => '1234',
                         :role => 'student'
