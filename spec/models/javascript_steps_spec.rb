@@ -28,7 +28,7 @@ describe JavascriptStep do
     end
 
     it "step_1_2 下一个步骤" do
-      @step_1_2.prev.should == nil
+      @step_1_2.next.should == nil
     end
 
   end
