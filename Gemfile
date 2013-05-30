@@ -141,7 +141,7 @@ gem 'mindpin-feeds',
 # redis-cache
 gem 'simple-redis-cache',
     :git => 'git://github.com/mindpin/simple-redis-cache.git',
-    :tag => '0.0.1'
+    :tag => '0.0.2'
 
 gem 'simple_comment',
     :git => 'git://github.com/kaid/simple_comment.git'
