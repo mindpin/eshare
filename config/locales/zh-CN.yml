@@ -112,16 +112,19 @@ zh-CN:
         user:
           attributes:
             email:
-              blank: 必须填写邮箱
+              blank: 邮箱未填写
+              taken: 邮箱已经注册过了
+              invalid: 邮箱格式不正确
             password:
-              blank: 必须同时正确填写密码和确认密码
-              confirmation: 必须同时正确填写密码和确认密码
+              blank: 密码未填写
+              confirmation: 确认密码未填写
               too_short: 密码太短
             name:
-              blank: 必须填写姓名
+              blank: 昵称未填写
+              taken: 昵称已经被使用了
             current_password:
-              blank: 必须填写当前密码
-              invalid: 当前密码填写不正确
+              blank: 当前密码未填写
+              invalid: 当前密码不正确
         question:
           attributes:
             title:
@@ -248,3 +251,10 @@ zh-CN:
         lft: left
         rgt: right
         ops: 操作
+
+  devise:
+    failure:
+      user:
+        unauthenticated: 用户认证失败
+        not_found_in_database: 用户不存在
+        invalid: 用户密码不正确

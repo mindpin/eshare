@@ -1,10 +1,20 @@
 .sign-up-form
-  = simple_form_for User.new, :as => :user, :url => '/account' do |f|
+  = simple_form_for User.new, :as => :user, :url => '/account', :remote => true do |f|
     .form-inputs
       = f.input :email, :placeholder => '邮箱', :required => true
-      = f.input :login, :placeholder => '登录名', :required => true
-      = f.input :name, :placeholder => '姓名', :required => true
+      - if R::INTERNET
+        = f.input :name, :placeholder => '昵称', :required => true
+      - if R::INHOUSE
+        = f.input :name, :placeholder => '姓名', :required => true
+        
       = f.input :password, :placeholder => '密码', :required => true
-      = f.input :password_confirmation, :placeholder => '确认密码', :required => true
     .form-actions
-      = f.button :submit, t('common.sign-up'), 'data-disable-with' => t('common.sign-uping'), :class => 'large sign-up'
+      = f.button :submit, t('common.sign-up'), :class => 'large sign-up'#, 'data-disable-with' => t('common.sign-uping')
+
+.sign-res-info{:style => 'display:none;'}
+  .info{:style => 'display:none;'}
+    %i.icon-info-sign
+    %span 提示信息
+  .info.ok{:style => 'display:none;'}
+    %i.icon-ok
+    %span 注册成功

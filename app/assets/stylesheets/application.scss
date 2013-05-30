@@ -120,7 +120,7 @@ body.auth{
   .page-sign{
     background-color:rgba(white, 0.8);
     border-left:solid 1px rgba(white, 0.6);
-    box-shadow:0 0 10px black;
+    box-shadow:0 0 5px rgba(black, 0.5);
     position:fixed;
     top:0;right:0;bottom:0;
 
@@ -152,13 +152,11 @@ body.auth{
     form{
       padding:20px;
       .input.string, .input.email, .input.password{
-        
         label{
           position:absolute;
           width:50px;height:50px;
           @include border-radius(3px 0 0 3px);
-          background-color:rgba(black, 0.4);
-          left:-51px;
+          right:20px;
           overflow:hidden;
           line-height:20em;
           font-size:0;
@@ -170,40 +168,57 @@ body.auth{
             width:24px;height:24px;
             margin-top:13px;margin-left:13px;
             opacity:0.9;
+            background:url(auth-icons-black.png) no-repeat;
+            opacity:0.38;
           }
 
-          &[for=user_login]:before {
-            background:url(auth-icons.png) no-repeat 0 0;
+          &[for=user_login]:before, &[for=user_name]:before {
+            background-position: 0 0;
           }
           &[for=user_password]:before {
-            background:url(auth-icons.png) no-repeat -25px 0;
+            background-position: -25px 0;
           }
           &[for=user_email]:before {
-            background:url(auth-icons.png) no-repeat -50px 0;
+            background-position: -50px 0;
           }
           &[for=user_password_confirmation] {
             display:none;
           }
           &[for=user_name] {
-            display:none;
+            // display:none;
           }
         }
         input{
-          padding:6px 14px;
+          padding:6px 49px 6px 14px;
           $h : 48px - 6px * 2;
           height:$h;line-height:$h;
-          width:$w - 30px - 40px;
+          width:$w - 2px - 14px - 49px - 40px;
 
           font-size:16px;
           border:solid 1px rgba(black, 0.4);
           box-shadow:none;
         }
       }
+      .login-as-email {
+        label[for=user_login]:before {
+          background-position: -50px 0 !important;
+        }
+      }
+
+
       .form-desc {
-        margin:-20px;
-        margin-bottom:20px;
-        background-color:rgba(white, 1);
+        background-color:rgba(white, 0.8);
+        position:relative;
         padding:20px;
+        margin-bottom:30px;
+
+        &:before {
+          content:"";
+          border:solid 10px transparent;
+          border-top:solid 10px rgba(white, 0.8);
+          position:absolute;
+          bottom:-20px;left:20px;
+        }
       }
       .form-actions{
         margin-bottom:10px;
@@ -222,12 +237,48 @@ body.auth{
         margin-top:5px;
         float:right;
         a {
-          color :#046DC2;
+          color :#333;
           text-shadow:0 0 1px white;
         }
       }
-
     }
+    .sign-res-info {
+      padding:20px;
+      margin:0 20px;
+      background-color:rgba(red, 0.1);
+      position:relative;
+      text-shadow:0 0 2px white;
+
+      &:before {
+        content:"";
+        border:solid 10px transparent;
+        border-bottom:solid 10px rgba(red, 0.1);
+        position:absolute;
+        top:-20px;left:20px;
+      }
+
+      i {
+        margin-right:5px;
+      }
+
+      .info {
+        margin-bottom:4px;
+        color:#aa3333;
+        font-weight:bold;
+        &:last-child {
+          margin-bottom:0;
+        }
+      }
+
+      &.success {
+        background-color:rgba(green, 0.1);
+        &:before {border-bottom:solid 10px rgba(green, 0.1);}
+        .info {
+          color:#339933;
+        }
+      }
+    }
+
     .ls {
       position:fixed;
       top:0;bottom:0;

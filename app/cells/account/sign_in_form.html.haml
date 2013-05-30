@@ -1,12 +1,26 @@
 .sign-in-form
-  = simple_form_for User.new, :as => :user, :url => '/account/sign_in' do |f|
+  = simple_form_for User.new, :as => :user, :url => '/account/sign_in', :remote => true do |f|
     .form-inputs
-      = f.input :login, :placeholder => '用户名/邮箱', :required => true
+      - if R::INHOUSE
+        = f.input :login, :placeholder => '用户名/邮箱', :required => true
+      - if R::INTERNET
+        .login-as-email
+          = f.input :login, :placeholder => '邮箱', :required => true
+
       = f.input :password, :required => true, :placeholder => '密码', :required => true
     .form-actions
-      = f.button :submit, t('common.sign-in'), 'data-disable-with' => t('common.sign-ining'), :class => 'large sign-in'
+      = f.button :submit, t('common.sign-in'), :class => 'large sign-in'#, 'data-disable-with' => t('common.sign-ining')
     .remember
       = f.input :remember_me, :as => :boolean
     - if R::INTERNET
       .recover
-        %a.forget-password{:href => '/account/password/new'} 我忘记密码了
+        %a.forget-password{:href => '/account/password/new'} 忘记密码了？
+    .clearfix
+
+.sign-res-info{:style => 'display:none;'}
+  .info{:style => 'display:none;'}
+    %i.icon-info-sign
+    %span 提示信息
+  .info.ok{:style => 'display:none;'}
+    %i.icon-ok
+    %span 登录成功
