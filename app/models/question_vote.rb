@@ -43,4 +43,45 @@ class QuestionVote < ActiveRecord::Base
       base.has_many :question_votes
     end
   end
+
+  module QuestionMethods
+    def has_voted_by?(user)
+      _get_question_vote_of(user).present?
+    end
+
+    def has_voted_up_by?(user)
+      return false if !has_voted_by?(user)
+      return _get_question_vote_of(user).kind == QuestionVote::Kind::VOTE_UP
+    end
+
+    def has_voted_down_by?(user)
+      return false if !has_voted_by?(user)
+      return _get_question_vote_of(user).kind == QuestionVote::Kind::VOTE_DOWN
+    end
+
+    def _get_question_vote_of(user)
+      self.answer_votes.by_user(user).first
+    end
+
+    def vote_up_by!(user)
+      _prepate_question_vote(user).update_attributes :kind => QuestionVote::Kind::VOTE_UP
+      reload
+    end
+
+    def vote_down_by!(user)
+      _prepate_question_vote(user).update_attributes :kind => QuestionVote::Kind::VOTE_DOWN
+      reload
+    end
+
+    def vote_cancel_by!(user)
+      _prepate_question_vote(user).update_attributes :kind => QuestionVote::Kind::VOTE_CANCEL
+      reload
+    end
+
+    def refresh_vote_sum!
+      self.vote_sum = self.answer_votes.map(&:point).sum
+      self.save
+    end
+  end
+
 end
