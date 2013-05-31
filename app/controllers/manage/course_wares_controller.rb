@@ -71,4 +71,20 @@ class Manage::CourseWaresController < ApplicationController
     return redirect_to "/manage/chapters/#{@chapter.id}"
   end
 
+  def new_javascript_steps
+    render '/javascript_steps/new.html.haml'
+  end
+
+  def create_javascript_steps
+    chapter = Chapter.find(params[:chapter_id])
+    course_ware = chapter.course_wares.build(:title => 'javascript steps', :creator => current_user)
+    course_ware.kind = 'javascript'
+    course_ware.save
+    course_ware.javascript_steps.create(:content => 'js1', :rule => "1")
+    course_ware.javascript_steps.create(:content => 'js2', :rule => "2")
+    course_ware.javascript_steps.create(:content => 'js3', :rule => "3")
+    course_ware.javascript_steps.create(:content => 'js4', :rule => "4")
+    course_ware.javascript_steps.create(:content => 'js5', :rule => "5")
+    redirect_to "/course_wares/#{course_ware.id}/show_javascript_steps"
+  end
 end
