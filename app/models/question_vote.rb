@@ -11,7 +11,7 @@ class QuestionVote < ActiveRecord::Base
   belongs_to :question
 
   validates :user, :question, :kind, :presence => true
-  validates_uniqueness_of :answer_id, :scope => :user_id,
+  validates_uniqueness_of :question_id, :scope => :user_id,
                                       :message => "每个问题只允许投票一次"
   validates_inclusion_of :kind, :in => [
     Kind::VOTE_UP, Kind::VOTE_DOWN, Kind::VOTE_CANCEL
@@ -60,7 +60,7 @@ class QuestionVote < ActiveRecord::Base
     end
 
     def _get_question_vote_of(user)
-      self.answer_votes.by_user(user).first
+      self.question_votes.by_user(user).first
     end
 
     def vote_up_by!(user)
@@ -78,10 +78,18 @@ class QuestionVote < ActiveRecord::Base
       reload
     end
 
+
+
     def refresh_vote_sum!
-      self.vote_sum = self.answer_votes.map(&:point).sum
+      self.vote_sum = self.question_votes.map(&:point).sum
       self.save
     end
+
+    private
+      def _prepate_question_vote(user)
+        self.question_votes.by_user(user).first || self.question_votes.build(:user => user)
+      end
+
   end
 
 end

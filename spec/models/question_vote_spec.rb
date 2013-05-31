@@ -50,7 +50,7 @@ describe QuestionVote do
       it "数量为1" do
         QuestionVote.count.should == 1 
       end
-    }
+    end
 
     describe "不能对自己的创建的问题进行投票(1)" do
 
