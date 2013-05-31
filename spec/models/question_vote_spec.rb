@@ -5,7 +5,12 @@ describe QuestionVote do
     before {
       @question_user         = FactoryGirl.create :user
       @vote_user         = FactoryGirl.create :user
-      @question     = FactoryGirl.create :question, :creator => @question_user
+
+      Timecop.travel(Time.now - 2.day) do
+        @question     = FactoryGirl.create :question, :creator => @question_user
+      end
+
+      @updated_at = @question.updated_at
     }
 
     describe "new 直接创建" do
@@ -24,7 +29,7 @@ describe QuestionVote do
 
     describe "create 直接创建" do
       before { 
-        @vote = @question.question_votes.create :user => @vote_user 
+        @vote = @question.question_votes.create :user => @vote_user
       }
 
       it "无效的投票记录" do
@@ -39,8 +44,8 @@ describe QuestionVote do
 
     describe "create 先创建, 再 update kind 字段" do
       before {
-        @vote = @question.question_votes.create :user => @vote_user
-        @vote.update_attribute :kind, 'VOTE_CANCEL'
+        @vote = @question.question_votes.create :user => @vote_user, :kind => 'VOTE_UP'
+        @question.reload
       }
 
       it "有效的投票记录" do
@@ -50,6 +55,31 @@ describe QuestionVote do
       it "数量为1" do
         QuestionVote.count.should == 1 
       end
+
+      it "vote_sum in question 记录为 1" do
+        @question.vote_sum.should == 1
+      end
+
+      it "问题投票, updated_at 不更新" do
+        @question.updated_at.to_i.should == @updated_at.to_i
+      end
+
+      describe "更新 kind 状态" do
+        before {
+          @vote.update_attribute :kind, 'VOTE_DOWN'
+        }
+
+        it "有效的投票记录" do
+          @vote.valid?.should == true 
+        end
+
+        it "数量为1" do
+          QuestionVote.count.should == 1 
+        end
+
+      end
+
+
     end
 
     describe "不能对自己的创建的问题进行投票(1)" do
