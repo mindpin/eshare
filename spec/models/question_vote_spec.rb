@@ -13,6 +13,20 @@ describe QuestionVote do
       @updated_at = @question.updated_at
     }
 
+
+    it "还没投票" do
+      @question.has_voted_by?(@vote_user).should == false
+    end
+
+    it "vote up 为 false" do
+      @question.has_voted_up_by?(@vote_user).should == false
+    end
+
+    it "vote down 为 false" do
+      @question.has_voted_down_by?(@vote_user).should == false
+    end
+
+
     describe "new 直接创建" do
       before { 
         @vote = QuestionVote.new :question => @question, :user => @vote_user
@@ -32,6 +46,18 @@ describe QuestionVote do
         @vote = @question.question_votes.create :user => @vote_user
       }
 
+      it "还没投票" do
+        @question.has_voted_by?(@vote_user).should == false
+      end
+
+      it "vote up 为 false" do
+        @question.has_voted_up_by?(@vote_user).should == false
+      end
+
+      it "vote down 为 false" do
+        @question.has_voted_down_by?(@vote_user).should == false
+      end
+
       it "无效的投票记录" do
         @vote.valid?.should == false 
       end
@@ -46,6 +72,18 @@ describe QuestionVote do
       before {
         @vote = @question.question_votes.create :user => @vote_user, :kind => 'VOTE_UP'
         @question.reload
+      }
+
+      it {
+        @question.has_voted_by?(@vote_user).should == true
+      }
+
+      it {
+        @question.has_voted_up_by?(@vote_user).should == true
+      }
+
+      it {
+        @question.has_voted_down_by?(@vote_user).should == false
       }
 
       it "有效的投票记录" do
@@ -91,6 +129,18 @@ describe QuestionVote do
         }
 
         it {
+          @question.has_voted_by?(@vote_user).should == true
+        }
+
+        it {
+          @question.has_voted_up_by?(@vote_user).should == true
+        }
+
+        it {
+          @question.has_voted_down_by?(@vote_user).should == false
+        }
+
+        it {
           QuestionVote.count.should == 1
         }
 
@@ -106,6 +156,18 @@ describe QuestionVote do
         }
 
         it {
+          @question.has_voted_by?(@vote_user).should == true
+        }
+
+        it {
+          @question.has_voted_up_by?(@vote_user).should == false
+        }
+
+        it {
+          @question.has_voted_down_by?(@vote_user).should == true
+        }
+
+        it {
           QuestionVote.count.should == 1
         }
 
@@ -118,6 +180,18 @@ describe QuestionVote do
       describe "vote_cancel_by!" do
         before {
           @question.vote_cancel_by! @vote_user
+        }
+
+        it {
+          @question.has_voted_by?(@vote_user).should == true
+        }
+
+        it {
+          @question.has_voted_up_by?(@vote_user).should == false
+        }
+
+        it {
+          @question.has_voted_down_by?(@vote_user).should == false
         }
 
         it {
