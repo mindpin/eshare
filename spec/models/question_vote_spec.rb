@@ -82,6 +82,59 @@ describe QuestionVote do
 
     end
 
+
+
+    describe "检测 vote 相关方法" do
+      describe "vote_up_by!" do
+        before {
+          @question.vote_up_by! @vote_user
+        }
+
+        it {
+          QuestionVote.count.should == 1
+        }
+
+        it {
+          @question.vote_sum.should == 1
+        }
+      end
+
+
+      describe "vote_down_by!" do
+        before {
+          @question.vote_down_by! @vote_user
+        }
+
+        it {
+          QuestionVote.count.should == 1
+        }
+
+        it {
+          @question.vote_sum.should == -1
+        }
+      end
+
+
+      describe "vote_cancel_by!" do
+        before {
+          @question.vote_cancel_by! @vote_user
+        }
+
+        it {
+          QuestionVote.count.should == 1
+        }
+
+        it {
+          @question.vote_sum.should == 0
+        }
+      end
+
+
+    end
+
+
+
+
     describe "不能对自己的创建的问题进行投票(1)" do
 
       before {
