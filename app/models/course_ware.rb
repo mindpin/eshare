@@ -32,6 +32,7 @@ class CourseWare < ActiveRecord::Base
   has_many :questions
 
   has_many :javascript_steps
+  has_many :css_steps
 
   scope :by_course, lambda {|course|
     joins(:chapter).where('chapters.course_id = ?', course.id)
