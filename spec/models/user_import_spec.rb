@@ -6,6 +6,11 @@ describe User do
     R::INTERNET = false
   }
 
+  after {
+    R::INHOUSE = false
+    R::INTERNET = true
+  }
+
   describe "import file" do
     it "should raise format error" do
       file = File.new 'spec/data/user_import_test_files/incorrect_excel.aaa'
