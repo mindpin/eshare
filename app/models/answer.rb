@@ -69,8 +69,10 @@ class Answer < ActiveRecord::Base
   end
 
   def refresh_vote_sum!
+    Answer.record_timestamps = false
     self.vote_sum = self.answer_votes.map(&:point).sum
     self.save
+    Answer.record_timestamps = true
   end
 
   private
