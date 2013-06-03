@@ -106,14 +106,14 @@ $ ->
       "/course_wares/#{cw_id}/javascript_steps/first.json"
 
     # 初始化页面jsconsole
-    @init_jsconsole: ->
-      @jsprompt  = new JSPrompt(jQuery('.page-show-javascript-steps .jsprompt'))
-      @jsconsole = new JSConsole(jQuery('.page-show-javascript-steps .jsconsole'))
+    @init_jsconsole: (jsprompt, jsconsole)->
+      @jsprompt  = jsprompt
+      @jsconsole = jsconsole
       @jsprompt.link(@jsconsole)
+      this
 
     # 开始javascript steps流程
     @start: ->
-      @init_jsconsole()
       jQuery.ajax
         url: @first_step_url()
         method: 'GET'
@@ -147,4 +147,11 @@ $ ->
       "/javascript_steps/#{@id}/next.json"
 
 
-  JSStep.start()
+  $jsprompt  = jQuery('.page-show-javascript-steps .jsprompt')
+  $jsconsole = jQuery('.page-show-javascript-steps .jsconsole')
+
+  if $jsprompt.length > 0 && $jsconsole.length > 0
+    jsprompt  = new JSPrompt($jsprompt)
+    jsconsole = new JSConsole($jsconsole)
+
+    JSStep.init_jsconsole(jsprompt, jsconsole).start()
