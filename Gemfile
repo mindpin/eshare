@@ -120,13 +120,9 @@ gem 'file-part-upload',
 ## excel导入和示例生成
 gem 'simple-excel-import',
     :git => 'git://github.com/mindpin/simple-excel-import.git',
-    :tag => '0.0.2.5'
+    :tag => '0.0.2.6'
     # :path => '/web/songliang/simple-excel-import'
 # gem 'axlsx', '1.3.5' # 上面的gem依赖它
-
-## office文档转换
-gem 'odocuconv',
-    :git => 'git://github.com/kaid/odocuconv.git'
 
 ## tag
 gem 'mindpin-simple-tags',
