@@ -94,6 +94,7 @@ end
 desc "restart server"
 task :restart => :environment do
   queue %[
+    source /etc/profile
     cd #{deploy_to}/#{current_path}
     ./deploy/sh/redis_server.sh restart
     ./deploy/sh/sidekiq.sh restart
