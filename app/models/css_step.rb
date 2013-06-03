@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-class CsstStep < ActiveRecord::Base
+class CssStep < ActiveRecord::Base
   attr_accessible :course_ware, :content, :rule
 
   belongs_to :course_ware
