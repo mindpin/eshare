@@ -299,8 +299,13 @@ describe AnswerVote do
       @question     = FactoryGirl.create :question
       @answer_user         = FactoryGirl.create :user
       @vote_user         = FactoryGirl.create :user
-      @answer       = FactoryGirl.create :answer, :question => @question,
+
+      Timecop.travel(Time.now - 2.day) do
+        @answer       = FactoryGirl.create :answer, :question => @question,
                                                   :creator => @answer_user
+      end
+
+      @answer_updated_at = @answer.updated_at
     }
 
     it {
@@ -310,7 +315,10 @@ describe AnswerVote do
     }
 
     context {
-      before { @vote = @answer.answer_votes.create :user => @vote_user }
+      before { 
+        @vote = @answer.answer_votes.create :user => @vote_user
+      }
+
       it { @vote.valid?.should == false }
       it { AnswerVote.count.should == 0 }
     }
@@ -318,10 +326,16 @@ describe AnswerVote do
     context {
       before {
         @vote = @answer.answer_votes.create :user => @vote_user
-        @vote.update_attribute :kind, 'VOTE_CANCEL'
+        @vote.update_attribute :kind, 'VOTE_DOWN'
+
+        @answer.reload
       }
       it { @vote.valid?.should == true }
       it { AnswerVote.count.should == 1 }
+
+      it "答案投票, updated_at 不更新" do
+        @answer.updated_at.to_i.should == @answer_updated_at.to_i
+      end
     }
 
     context "不能对自己的回答进行投票" do

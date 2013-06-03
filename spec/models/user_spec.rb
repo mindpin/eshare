@@ -1,6 +1,16 @@
 require "spec_helper"
 
 describe User do
+  before {
+    R::INHOUSE = true
+    R::INTERNET = false
+  }
+
+  after {
+    R::INHOUSE = false
+    R::INTERNET = true
+  }
+
   describe '用户邮箱校验' do
     before {
       # 邮箱不正确
