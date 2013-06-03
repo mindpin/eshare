@@ -255,6 +255,6 @@ zh-CN:
   devise:
     failure:
       user:
-        unauthenticated: 用户认证失败
+        unauthenticated: 用户验证失败
         not_found_in_database: 用户不存在
         invalid: 用户密码不正确

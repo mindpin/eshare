@@ -46,7 +46,13 @@ module Eshare
 
     # FOR INTERNET
     config.to_prepare do
-      Devise::PasswordsController.layout 'auth'
+      Devise::PasswordsController.layout Proc.new { |controller|
+        if controller.request.headers['X-PJAX']
+          return false
+        end
+
+        return 'auth'
+      }
     end
 
     # EMAIL setting in r.rb

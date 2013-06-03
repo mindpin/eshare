@@ -30,7 +30,7 @@ class FileEntity < ActiveRecord::Base
       'swf'
     ],
     :ppt => [
-      'ppt'
+      'ppt', 'pptx'
     ],
     :pdf => [
       'pdf'
