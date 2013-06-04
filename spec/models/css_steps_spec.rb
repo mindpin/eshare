@@ -1,16 +1,16 @@
 require 'spec_helper'
 
-describe JavascriptStep do
+describe CssStep do
 
   before {
-    @course_ware_1 = FactoryGirl.create(:course_ware, :kind => 'javascript')
-    @course_ware_2 = FactoryGirl.create(:course_ware, :kind => 'javascript')
+    @course_ware_1 = FactoryGirl.create(:course_ware, :kind => 'css')
+    @course_ware_2 = FactoryGirl.create(:course_ware, :kind => 'css')
 
-    @step_1_1 = @course_ware_1.javascript_steps.create(:content => "content_1", :rule => "rule_1")
-    @step_2_1 = @course_ware_2.javascript_steps.create(:content => "content_2", :rule => "rule_2")
-    @step_1_2 = @course_ware_1.javascript_steps.create(:content => "content_3", :rule => "rule_3")
-    @step_2_2 = @course_ware_2.javascript_steps.create(:content => "content_4", :rule => "rule_4")
-    @step_2_3 = @course_ware_2.javascript_steps.create(:content => "content_5", :rule => "rule_5")
+    @step_1_1 = @course_ware_1.css_steps.create(:content => "content_1", :rule => "rule_1")
+    @step_2_1 = @course_ware_2.css_steps.create(:content => "content_2", :rule => "rule_2")
+    @step_1_2 = @course_ware_1.css_steps.create(:content => "content_3", :rule => "rule_3")
+    @step_2_2 = @course_ware_2.css_steps.create(:content => "content_4", :rule => "rule_4")
+    @step_2_3 = @course_ware_2.css_steps.create(:content => "content_5", :rule => "rule_5")
   }
 
   describe "课件 1" do
@@ -79,12 +79,10 @@ describe JavascriptStep do
     }
 
     it{
-      @course_ware_2.javascript_steps.create(:content => "content_6", :rule => "rule_6")
+      @course_ware_2.css_steps.create(:content => "content_6", :rule => "rule_6")
       @course_ware_2.reload
       @course_ware_2.total_count.should == 4
     }
   end
-
-  
 
 end
