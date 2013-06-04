@@ -34,4 +34,12 @@ class CoursesController < ApplicationController
   def users_rank
     @rank = @course.users_rank
   end
+
+  # 学生选课 INHOUSE
+  def student_select
+    current_user.select_course @course
+    render :json => {
+      :status => 'request'
+    }
+  end
 end

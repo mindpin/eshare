@@ -192,6 +192,13 @@ Eshare::Application.routes.draw do
           end
         end
       end
+
+      resources :applies, :shallow => true do
+        member do
+          put :accept
+          put :reject
+        end
+      end
     end
 
     namespace :aj do
@@ -204,6 +211,7 @@ Eshare::Application.routes.draw do
   resources :courses, :shallow => true do
     member do
       post :checkin
+      post :student_select
       get :users_rank
     end
 

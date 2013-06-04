@@ -1,0 +1,19 @@
+- content_for :header do
+  .page-manage-courses-breadcrumb
+    %ul.page-breadcrumb
+      %li
+        %a{:href => '/manage/courses'} 课程管理
+        %span.divider /
+      %li.active 选课管理：#{@course.name}
+
+.page-course-applies
+  = page_data_table(:'course-applies', @applies, :striped, :bordered) do |table|
+    - table.add_column(:user) do |apply|
+      = user_link apply.user
+    - table.add_column(:status) do |apply|
+      = course_apply_status apply
+    - table.add_column(:ops) do |apply|
+      = link_to "/manage/applies/#{apply.id}/accept", :class => 'btn mini success', :method => :put do
+        %span 通过
+      = link_to "/manage/applies/#{apply.id}/reject", :class => 'btn mini danger', :method => :put do
+        %span 拒绝

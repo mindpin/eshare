@@ -10,7 +10,7 @@ HASH = {
 }
 
 class R
-  INHOUSE = false
+  INHOUSE = true
   INTERNET = !INHOUSE
 
   LIBREOFFICE_PATH = HASH[:libreoffice_path]
