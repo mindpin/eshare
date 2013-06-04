@@ -211,6 +211,7 @@ zh-CN:
         ops: 操作
         chapters-count: 章节数
         creator: 创建者
+        select_apply: 选课人数
 
       chapters:
         title: 标题
@@ -229,6 +230,11 @@ zh-CN:
         ops: 操作
         position: 排序位置
         convert_status: 转码状态
+
+      course-applies:
+        user: 选课人
+        status: 选课状态
+        ops: 操作
 
       questions:
         title: 标题
@@ -255,6 +261,6 @@ zh-CN:
   devise:
     failure:
       user:
-        unauthenticated: 用户认证失败
+        unauthenticated: 用户验证失败
         not_found_in_database: 用户不存在
         invalid: 用户密码不正确

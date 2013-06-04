@@ -32,4 +32,16 @@ class CourseCell < Cell::Rails
     @courses = @user.advise_courses
     render
   end
+
+  def checkin(opts = {})
+    @course = opts[:course]
+    @user = opts[:user]
+    render
+  end
+
+  def student_select(opts = {})
+    @course = opts[:course]
+    @user = opts[:user]
+    render
+  end
 end

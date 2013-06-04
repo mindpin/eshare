@@ -1,3 +1,6 @@
+- content_for :javascript do
+  = javascript_include_tag '/pjax/jquery.pjax'
+
 !!!
 - simple_page_layout 'MINDPIN EduShare', :html_lang => :zh, :body_class => 'auth' do
   - if R::INTERNET

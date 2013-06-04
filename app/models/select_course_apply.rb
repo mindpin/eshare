@@ -22,29 +22,44 @@ class SelectCourseApply < ActiveRecord::Base
       base.has_many :apply_users, :through => :select_course_applies, :source => :user
     end
 
-    # 8 查询一个课程的所有”没有处理“的选课请求(status == REQUEST)
+    # 判断一个用户是否“选了”某门课（status == REQUEST 的情况）
+    def is_request_selected_by?(user)
+      sca = user.select_course_applies.by_course(self).first
+      return sca.present? && sca.status == STATUS_REQUEST
+    end
+
+    # 判断一个用户是否"选中"某门课（status == ACCEPT 的情况）
+    def is_accept_selected_by?(user)
+      sca = user.select_course_applies.by_course(self).first
+      return sca.present? && sca.status == STATUS_ACCEPT
+    end
+
+    # 判断一个用户的选某门课的请求是否被拒绝（status == REJECT 的情况）
+    def is_reject_selected_by?(user)
+      sca = user.select_course_applies.by_course(self).first
+      return sca.present? && sca.status == STATUS_REJECT
+    end
+
+    # ----------------
+
+    # 查询一个课程的所有“没有被处理”的选课请求(status == REQUEST)
     def request_select_course_applies
       self.select_course_applies.by_status(STATUS_REQUEST)
     end
 
-    # 6 查询课程被哪些用户“选中”（status == ACCEPT 的情况）
-    def selected_users
-      _apply_users_by_status(STATUS_ACCEPT)
-    end
-
-    # 5 查询课程被哪些用户“选了”（status == REQUEST 的情况）
-    def apply_select_users
+    # 查询课程被哪些用户“选了”（status == REQUEST 的情况）
+    def request_selected_users
       _apply_users_by_status(STATUS_REQUEST)
     end
 
-    # 4 判断一个用户是否"选中"某门课（status == ACCEPT 的情况）
-    def is_selected?(user)
-      user.selected_courses.include?(self)
+    # 查询课程被哪些用户“选中”（status == ACCEPT 的情况）
+    def accept_selected_users
+      _apply_users_by_status(STATUS_ACCEPT)
     end
 
-    #3 判断一个用户是否“选了”某门课（status == REQUEST 的情况）
-    def is_apply_select?(user)
-      user.apply_select_courses.include?(self)
+    # 查询哪些用户的选课请求已被拒绝（status == REJECT 的情况）
+    def reject_selected_users
+      _apply_users_by_status(STATUS_REJECT)
     end
 
     private
@@ -59,27 +74,33 @@ class SelectCourseApply < ActiveRecord::Base
       base.has_many :apply_courses, :through => :select_course_applies, :source => :course
     end
 
-    # 7 用户发起一个选课请求
+    # 用户发起一个选课请求
     def select_course(course)
-      return if course.is_apply_select?(self) || course.is_selected?(self)
-      if self.apply_courses.include?(course)
-        self.select_course_applies.by_course(course).first.update_attributes :status => STATUS_REQUEST
-      else
-        self.select_course_applies.create(:course => course, :status => STATUS_REQUEST)
-      end
+      _prepare_course_apply_for(course).update_attributes :status => STATUS_REQUEST
     end
 
-    # 2 查询用户“选中”的课程列表（status == ACCEPT 的情况）
-    def selected_courses
-      _apply_courses_by_status(STATUS_ACCEPT)
-    end
-
-    # 1 查询用户"选了"的课程列表（status == REQUEST 的情况）
-    def apply_select_courses
+    # 查询用户"选了"的课程列表（status == REQUEST 的情况）
+    def request_selected_courses
       _apply_courses_by_status(STATUS_REQUEST)
     end
 
+    # 查询用户“选中”的课程列表（status == ACCEPT 的情况）
+    def accept_selected_courses
+      _apply_courses_by_status(STATUS_ACCEPT)
+    end
+
+    # 查询拒绝了该用户的课程列表（status == REJECT 的情况）
+    def reject_selected_courses
+      _apply_courses_by_status(STATUS_REJECT)
+    end
+
+
     private
+      def _prepare_course_apply_for(course)
+        self.select_course_applies.by_course(course).first || 
+        self.select_course_applies.build(:course => course)
+      end
+
       def _apply_courses_by_status(status)
         self.apply_courses.where(
           'select_course_applies.status = ?', status

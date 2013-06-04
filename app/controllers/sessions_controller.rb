@@ -1,5 +1,14 @@
 class SessionsController < Devise::SessionsController
-  layout 'auth', :only => [:new]
+  layout Proc.new { |controller|
+    if controller.request.headers['X-PJAX']
+      return false
+    end
+
+    case controller.action_name
+    when 'new'
+      return 'auth'
+    end
+  }
 
   def new
     super

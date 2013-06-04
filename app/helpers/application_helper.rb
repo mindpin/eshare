@@ -162,6 +162,21 @@ module ApplicationHelper
     }.join('，')
   end
 
+  def course_apply_status(apply)
+    klass = apply.status.downcase
+    string = {
+      SelectCourseApply::STATUS_REQUEST => '申请',
+      SelectCourseApply::STATUS_ACCEPT => '批准',
+      SelectCourseApply::STATUS_REJECT => '拒绝'
+    }[apply.status]
+
+    capture_haml {
+      haml_tag 'span', :class => klass do
+        haml_tag 'span', "#{string} #{apply.status}"
+      end
+    }
+  end
+
   module FeedHelper
     def feed_icon(feed)
       capture_haml {

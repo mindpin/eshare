@@ -1,20 +1,18 @@
-# jQuery('.page-sign .toggle a').click ->
-#   $a = jQuery(this)
-#   console.log $a
-
-#   if $a.hasClass('sign-in')
-#     $a.addClass('active')
-#     jQuery('.page-sign .toggle a.sign-up').removeClass('active')
-#     jQuery('.page-sign .sign-up-form').fadeOut 100, ->
-#       jQuery('.page-sign .sign-in-form').fadeIn 100
-
-#   if $a.hasClass('sign-up')
-#     $a.addClass('active')
-#     jQuery('.page-sign .toggle a.sign-in').removeClass('active')
-#     jQuery('.page-sign .sign-in-form').fadeOut 100, ->
-#       jQuery('.page-sign .sign-up-form').fadeIn 100
-
 # 登录表单
+jQuery ->
+  jQuery(document).on 'click', '.page-sign .toggle a.active', (evt)=>
+    jQuery.pjax.click evt, '.page-content'
+
+  jQuery(document).on 'click', '.page-sign .recover a', (evt)=>
+    jQuery.pjax.click evt, '.page-content'
+
+  jQuery(document)
+    # .on 'pjax:start', ->
+    #   jQuery('.page-sign form').fadeOut(200)
+
+    .on 'pjax:success', ->
+      jQuery('.page-sign form').hide().fadeIn(500)
+
 jQuery ->
   class AuthInfo
     constructor: ()->
@@ -41,22 +39,21 @@ jQuery ->
 
       return @
 
-
-  jQuery('.page-sign .sign-in-form').on 'ajax:error', (evt, xhr)->
+  jQuery(document).on 'ajax:error', '.page-sign .sign-in-form', (evt, xhr)->
     info = xhr.responseText
     new AuthInfo().clear().add(info).show()
 
-  jQuery('.page-sign .sign-in-form').on 'ajax:success', (evt, xhr)->
+  jQuery(document).on 'ajax:success', '.page-sign .sign-in-form', (evt, xhr)->
     new AuthInfo().success()
     window.location.href = '/'
 
-  jQuery('.page-sign .sign-up-form').on 'ajax:error', (evt, xhr)->
+  jQuery(document).on 'ajax:error', '.page-sign .sign-up-form', (evt, xhr)->
     infos = jQuery.parseJSON(xhr.responseText)
     ai = new AuthInfo().clear()
     jQuery.each infos, (index, info)->
       ai.add(info)
     ai.show()
 
-  jQuery('.page-sign .sign-up-form').on 'ajax:success', (evt, xhr)->
+  jQuery(document).on 'ajax:success', '.page-sign .sign-up-form', (evt, xhr)->
     new AuthInfo().success()
     window.location.href = '/'

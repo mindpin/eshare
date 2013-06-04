@@ -1,0 +1,22 @@
+- signed_today = @course.signed_today?(@user)
+.user-course-checkin{:class => signed_today ? 'signed' : ''}
+  .rank
+    .desc 课程排名
+    .r= @course.rank
+  .checkin-info
+    %i.checkin
+    .desc 已签到
+    .streak 
+      %span 连续签到
+      %span.count= @course.current_streak_for(@user)
+      %span 天
+  .checkin-order
+    .desc 签到成功！
+    .ord
+      %span 你今天在本课程第
+      %span.order= @course.today_sign_order_of(@user)
+      %soan 个签到
+
+  %a.checkin{:href => 'javascript:;', :data => {:id => @course.id}}
+    %i.checkin
+    %span 课程签到
