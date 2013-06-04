@@ -21,6 +21,15 @@ class CourseCell < Cell::Rails
     render
   end
 
+  def minicard(opts = {})
+    @course = opts[:course]
+    @user = opts[:user]
+
+    @percent = @course.read_percent(@user)
+
+    render
+  end
+
   def recent_learning(opts = {})
     @user = opts[:user]
     @courses = @user.learning_courses.limit(5)
