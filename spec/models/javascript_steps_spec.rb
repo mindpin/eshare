@@ -61,6 +61,30 @@ describe JavascriptStep do
 
   end
 
+  describe 'course_ware.total_count' do
+    it{
+      @course_ware_1.reload
+      @course_ware_1.total_count.should == 2
+    }
+
+    it{
+      @course_ware_2.reload
+      @course_ware_2.total_count.should == 3
+    }
+
+    it{
+      @step_2_3.destroy
+      @course_ware_2.reload
+      @course_ware_2.total_count.should == 2
+    }
+
+    it{
+      @course_ware_2.javascript_steps.create(:content => "content_6", :rule => "rule_6")
+      @course_ware_2.reload
+      @course_ware_2.total_count.should == 4
+    }
+  end
+
   
 
 end
