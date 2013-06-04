@@ -6,7 +6,7 @@
     - Tag.popular_tags(:count => 30).each do |tag|
       :ruby
         name = tag.name
-        count = tag.taggings.count
+        count = tag.taggings.where('user_id IS NULL').count
       %a.tag{:href => "/tags/courses/#{tag.name}", :style => 'display:none;', :data => {:weight => count}}
         .name= name
         .count (#{count})

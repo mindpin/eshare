@@ -16,7 +16,19 @@
     .cpart.all-courses
       %h3 课程浏览
       - Course::BASE_TAGS.each do |bt|
-        = render_cell :courses_of_tag, :table, :tag => bt
+        :ruby
+          tagname = bt
+          courses = Course.by_tag(tagname).limit(21)
+
+        - if courses.present?
+          .tag-courses
+            .tagname
+              %i.icon-tag
+              %a{:href => "/tags/courses/#{tagname}"}= tagname
+
+            .courses
+              - courses.each do |course|
+                = render_cell :course, :minicard, :course => course, :user => current_user
 
   .sidep25
     .cpart.chart

@@ -969,7 +969,7 @@ img.page-avatar {
       }
     }
 
-    &.small {
+    &.small, &.mini{
       // border-color:transparent;
       // box-shadow:none;
       width:24%;
@@ -1002,6 +1002,15 @@ img.page-avatar {
         a {display:block;}
       }
     }
+
+    &.mini {
+      width:19%;
+      margin-left:1.25%;
+      .title {
+        margin-bottom:0;
+        font-size:14px;
+      }
+    }
   }
 }
 
@@ -1020,14 +1029,19 @@ img.page-avatar {
     .tag-courses{
       margin-bottom:20px;
       .tagname {
-        color:#005580;
-        font-size:15px;
+        color:#815828;
         margin-bottom:5px;
+        // padding:5px;
+        // background-color:#FEEFC5;
+
+        i {opacity:0.6;}
       }
       .courses {
-        border-top:solid 5px #005580;
+        border-top:solid 1px #eee;
         width:100%;
         margin-bottom:10px;
+        overflow:hidden;
+        padding-top:20px;
 
         td {
           width:33.3333333%;
@@ -2764,5 +2778,11 @@ form .input.page-form-tag-inputer {
       margin-bottom:5px;
       i {opacity:0.5;}
     }
+  }
+}
+
+.page-user-courses {
+  .courses {
+    overflow:hidden;
   }
 }
