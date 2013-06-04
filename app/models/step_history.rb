@@ -1,0 +1,58 @@
+class StepHistory < ActiveRecord::Base
+  attr_accessible :user, :course_ware, :step, :input, :is_passed
+
+  belongs_to :user
+  belongs_to :course_ware
+  belongs_to :step, :polymorphic => true
+
+  validates :user, :course_ware, :step, :input, :presence => true
+  scope :by_user, lambda{|user| {:conditions => ['step_histories.user_id = ?', user.id] } }
+  scope :passed,  :conditions => ['step_histories.is_passed IS TRUE']
+  scope :unpassed, :conditions => ['step_histories.is_passed IS NOT TRUE']
+
+  before_validation :set_course_ware
+  def set_course_ware
+    if self.step.present? && self.course_ware.blank?
+      self.course_ware = self.step.course_ware
+    end
+  end
+
+  after_create :refresh_course_ware_reading
+  def refresh_course_ware_reading
+    count = self.course_ware.passed_step_count_of(self.user)
+    self.course_ware.update_read_count_by(self.user, count)
+  end
+
+  module StepMethods
+    def self.included(base)
+      base.has_many :step_histories, :as => :step
+      base.has_many :passed_users, :through => :step_histories, :source => :user,
+        :conditions => 'step_histories.is_passed IS TRUE', :uniq => true
+      base.has_many :tried_users, :through => :step_histories, :source => :user,
+        :uniq => true
+    end
+
+    def is_passed_by?(user)
+      self.step_histories.by_user(user).passed.present?
+    end
+
+    def unpassed_users
+      tried_users - passed_users
+    end
+
+  end
+
+  module CourseWareMethods
+    def self.included(base)
+      base.has_many :step_histories
+    end
+
+    def passed_step_count_of(user)
+      self.step_histories.by_user(user).passed.map{|history|history.step}.uniq.count
+    end
+
+    def is_passed_by?(user)
+      passed_step_count_of(user) == self.total_count
+    end
+  end
+end
