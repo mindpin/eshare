@@ -18,7 +18,7 @@
       - Course::BASE_TAGS.each do |bt|
         :ruby
           tagname = bt
-          courses = Course.by_tag(tagname).limit(5)
+          courses = Course.by_tag(tagname).limit(10)
 
         - if courses.present?
           .tag-courses

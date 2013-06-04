@@ -1010,6 +1010,10 @@ img.page-avatar {
         margin-bottom:0;
         font-size:14px;
       }
+
+      &:nth-child(5n + 1) {
+        margin-left:0;
+      }
     }
   }
 }
