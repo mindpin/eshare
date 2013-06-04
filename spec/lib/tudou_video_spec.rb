@@ -37,6 +37,10 @@ describe TudouVideoList do
       it {expect {importer.import}.to change {Course.count}.by(1)}
       it {expect {importer.import}.to change {Chapter.count}.by(1)}
       it {expect {importer.import}.to change {CourseWare.count}.by(importer.list.items.count)}
+      it 'sets cover for course' do
+        importer.import
+        Course.first.cover.file.should_not be nil
+      end
     end
   end
 

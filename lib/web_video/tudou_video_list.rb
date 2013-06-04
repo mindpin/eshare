@@ -18,15 +18,7 @@ class TudouVideoList
         ware.save
       end
 
-      open course.course_wares.first.cover_url do |req|
-        file = Tempfile.new(['course_cover', '.png'])
-        file.binmode
-        file.write req.read
-        course.cover = file
-        course.save
-        file.close
-        file.unlink
-      end
+      course.set_video_course_cover
     end
 
     def chapter
