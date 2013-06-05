@@ -269,7 +269,7 @@ body.auth{
     .sign-res-info {
       padding:20px;
       margin:0 20px;
-      background-color:rgba(#ffdddd, 0.5);
+      background-color:rgba(#ffdddd, 0.8);
       position:relative;
       text-shadow:0 0 2px white;
       @include border-radius(2px);
@@ -277,7 +277,7 @@ body.auth{
       &:before {
         content:"";
         border:solid 10px transparent;
-        border-bottom:solid 10px rgba(#ffdddd, 0.5);
+        border-bottom:solid 10px rgba(#ffdddd, 0.8);
         position:absolute;
         top:-20px;left:20px;
       }
@@ -297,10 +297,10 @@ body.auth{
       }
 
       &.success {
-        background-color:rgba(#ddffdd, 0.5);
-        &:before {border-bottom:solid 10px rgba(#ddffdd, 0.5);}
+        background-color:rgba(#ddffdd, 0.8);
+        &:before {border-bottom:solid 10px rgba(#ddffdd, 0.8);}
         .info {
-          color:#339933;
+          color:darken(#339933, 10%);
         }
       }
     }
@@ -1009,6 +1009,10 @@ img.page-avatar {
       .title {
         margin-bottom:0;
         font-size:14px;
+      }
+
+      &:nth-child(5n + 1) {
+        margin-left:0;
       }
     }
   }
