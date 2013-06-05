@@ -101,7 +101,8 @@ gem 'simple-page-layout',
 
 ## 在页面上显示图片的一些辅助方法
 gem 'simple-images',
-    :git => 'git://github.com/mindpin/simple-images'
+    # :git => 'git://github.com/mindpin/simple-images'
+    :path => '/web/songliang/simple-images'
 
 gem 'simple-page-compoents',
     :git => 'git://github.com/mindpin/simple-page-compoents',
