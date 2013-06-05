@@ -70,9 +70,27 @@ class Omniauth < ActiveRecord::Base
       _get_omniauth(provider).destroy
     end
 
+    def send_weibo(text)
+      client = _get_weibo_oauth2_client(PROVIDER_WEIBO)
+      client.statuses.update(text)
+    end
+
     private
       def _get_omniauth(provider)
         self.omniauths.by_provider(provider).first
+      end
+
+      def _get_weibo_oauth2_client(provider)
+        omniauth = _get_omniauth(provider)
+        return if omniauth.blank?
+
+        client = WeiboOAuth2::Client.new
+
+        client.get_token_from_hash(
+          :access_token => omniauth.token,
+          :expires_at => omniauth.expires_at
+        )
+        client
       end
 
   end
