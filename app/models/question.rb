@@ -97,4 +97,12 @@ class Question < ActiveRecord::Base
       questions.sort_by(&:actived_at).reverse
     end
   end
+
+  searchable do
+    text :title, :content
+
+    text :answers_content do
+      answers.pluck("answers.content")
+    end
+  end
 end

@@ -38,6 +38,9 @@ zh-CN:
       course:
         create: 创建%{model}
         update: 更新%{model}
+      question:
+        create: 确定提问
+        update: 更新问题
       answer:
         create: 发布回答
         update: 更新回答
@@ -50,8 +53,6 @@ zh-CN:
       user:
         create: 创建用户
         update: 确定更新
-      question:
-        create: 确定提问
 
   activerecord:
     models:
@@ -81,6 +82,9 @@ zh-CN:
       course_ware:
         title: 课件标题
         desc: 课件简介
+      question:
+        title: 问题
+        content: 具体描述
       answer:
         content: 回答正文
 
@@ -181,7 +185,7 @@ zh-CN:
       course-ware-no-desc: 当前小节还没有简介
 
     question:
-      you-can-answer-only-once: 一个问题你只能回答一次，不过你可以修改 %{your-answer}
+      you-can-answer-only-once: 你已经回答过这个问题了。对于一个问题你只能回答一次，不过你可以编辑修改 %{your-answer}
       your-answer: 你自己的回答
 
 

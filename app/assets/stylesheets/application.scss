@@ -503,6 +503,9 @@ body.admin, body.app, body.account, body.error {
       border:none 0;
       background:none;
       padding:0;
+      min-width:860px + 42px;
+      max-width:1160px + 42px;
+
       .mainp66 {
         padding-right:20px;
       }
@@ -515,6 +518,9 @@ body.admin, body.app, body.account, body.error {
           margin-bottom:20px;
           &.nopadding{
             padding:0;
+          }
+          &.info {
+            background-color:#FCFCFC;
           }
         }
       }
@@ -612,7 +618,9 @@ body.error {
     }
   }
   &.unfollow {
-    background-color:#e6e6e6;
+    @include gradient(#eee, #eee);
+    background-color:#eee;
+    border-color:#ddd;
   }
 
   &.learn {
@@ -2620,53 +2628,71 @@ form .input.page-form-tag-inputer {
   $left:50px;
 
   .question {
-    padding-left:$left;
-    position:relative;
-    padding-bottom:60px;
-    margin-bottom:15px;
+    .con {
+      padding-left:$left;
+      position:relative;
+      padding-bottom:60px;
+      margin-bottom:20px;
 
-    .icon {
-      position:absolute;
-      top:0;left:0;
-      width:32px;height:32px;
-      background:url("feed_icons/feed_icons.png") no-repeat 0 -33px;
-      opacity:0.8;
+      .icon {
+        position:absolute;
+        top:0;left:0;
+        width:32px;height:32px;
+        background:url("feed_icons/feed_icons.png") no-repeat 0 -33px;
+        opacity:0.8;
+      }
+
+      .title, .content {
+        font-size:14px;
+        margin-bottom:10px;
+      }
+      .title {
+        font-weight:bold;
+      }
+
+      .creator {
+        position:absolute;
+        right:0px;
+        bottom:0px;
+        .avatar {
+          float:right;
+        }
+        .name, .time {
+          margin-right:40px;
+          font-size:12px;
+          line-height:16px;
+          text-align:right;
+        }
+
+        .time {
+          font-size:12px;
+          color:#999;
+        }
+      }
+
+      .ops {
+        margin-top:20px;
+      }
     }
 
-    .title, .content {
-      font-size:14px;
-      margin-bottom:10px;
-    }
+    .btb {
+      background-color:#FCFCFC;
+      border-top:solid 1px #ddd;
+      margin:0 -20px;
+      padding:15px 20px;
+      overflow:hidden;
 
-    .creator {
-      position:absolute;
-      right:0px;
-      bottom:0px;
-      .avatar {
+      .fo {
         float:right;
+        a.btn {width:60px;}
       }
-      .name, .time {
-        margin-right:40px;
-        font-size:12px;
-        line-height:16px;
-        text-align:right;
-      }
-
-      .time {
-        font-size:12px;
-        color:#999;
-      }
-    }
-
-    .fo {
-      position:absolute;
-      bottom:0;
-      left:$left;
     }
   }
 
   .answers {
-    margin-bottom:20px;
+    margin:-20px;
+    margin-bottom:0px;
+
     .tile-body {
       margin-left:$left;
     }
@@ -2674,7 +2700,13 @@ form .input.page-form-tag-inputer {
     .answer {
       border-top:solid 1px #ddd;
       position:relative;
-      padding-bottom:40px;
+      padding:20px;
+      padding-bottom:40px + 20px;
+      margin-top:0;
+
+      &:first-child {
+        border-top:none 0;
+      }
 
       .content {
         font-size:14px;
@@ -2683,8 +2715,8 @@ form .input.page-form-tag-inputer {
 
       .creator {
         position:absolute;
-        right:0px;
-        bottom:0px;
+        right:20px;
+        bottom:20px;
         margin-bottom:0;
         .avatar {
           float:right;
@@ -2699,6 +2731,10 @@ form .input.page-form-tag-inputer {
           font-size:12px;
           color:#999;
         }
+      }
+
+      .ops {
+        margin-top:20px;
       }
     }
 
@@ -2735,23 +2771,25 @@ form .input.page-form-tag-inputer {
       text-align: center;
       color:#555;
       width:32px;
+      height:32px;line-height:32px;
       background-color:#fafafa;
       @include border-radius(2px);
     }
   }
 
   .my-answer {
-    margin-bottom:30px;
+    margin:0 -20px;
     .you-can-answer-only-once {
       padding:20px;
-      border:solid 1px #ddd;
-      background-color:#f7f7f7;
+      border-top:solid 1px #ddd;
+      background-color:#FFFFDA;
     }
 
     .new_answer {
       border-top:solid 1px #ddd;
-      padding-top:20px;
+      padding:20px 20px 40px;
       padding-left:$left;
+      background-color:#FCFCFC;
       label {display:none;}
     }
   }
@@ -2760,7 +2798,7 @@ form .input.page-form-tag-inputer {
 .page-question-info {
   margin-bottom:20px;
   .st {
-    color:#999;
+    color:#666;
   }
 }
 
@@ -2788,5 +2826,11 @@ form .input.page-form-tag-inputer {
 .page-user-courses {
   .courses {
     overflow:hidden;
+  }
+}
+
+.page-search {
+  .questions .ops {
+    display:none;
   }
 }
