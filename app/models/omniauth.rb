@@ -79,6 +79,19 @@ class Omniauth < ActiveRecord::Base
       client.statuses.update(text)
     end
 
+    def get_weibo_comments(url_long, page)
+      client = _get_weibo_oauth2_client(PROVIDER_WEIBO)
+      short_url = client.short_url.shorten(url_long).urls.first.url_short
+      comments = client.short_url.comment_comments(short_url, opt={:count => 50, :page => page})
+
+      weibo_comments = []
+      comments['share_comments'].each do |comment|
+        weibo_comments << WeiboComment.new(comment)
+      end
+
+      weibo_comments
+    end
+
     def get_weibo_messages
       client = WeiboOAuth2::Client.new
       client.get_token_from_hash({:access_token => _get_omniauth(PROVIDER_WEIBO).token, 
@@ -100,7 +113,6 @@ class Omniauth < ActiveRecord::Base
       
       Fenci._combine_statuses(records)
     end
-
 
     private
       def _get_omniauth(provider)
