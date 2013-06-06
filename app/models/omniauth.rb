@@ -105,20 +105,16 @@ class Omniauth < ActiveRecord::Base
       messages
     end
 
-    def get_weibo_words_rate
+    def sort_weibo_words
       messages = get_weibo_messages
       
-      h = Fenci.new(messages).combine
-
-      rate = h.sort_by {|k, v| v}.reverse
-      ActiveSupport::OrderedHash[rate]
+      Fenci.new(messages).sort_words
     end
 
     def get_weibo_hot_words(count = 4)
-      hot_words = []
-      words = get_weibo_words_rate
-      words.keys[0..count].each { |key| hot_words << { key => words[key] } }
-      hot_words
+      messages = get_weibo_messages
+
+      Fenci.new(messages).get_hot_words(count)
     end
 
     private

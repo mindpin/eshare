@@ -8,7 +8,7 @@ class Fenci
     @statuses = statuses
   end
 
-  def combine
+  def combine_into_words
     words = Hash.new(0)
 
     @statuses.each do |status|
@@ -29,6 +29,21 @@ class Fenci
     end
 
     words
+  end
+
+
+  def sort_words
+    words = combine_into_words
+    words = words.sort_by {|k, v| v}.reverse
+    ActiveSupport::OrderedHash[words]
+  end
+
+
+  def get_hot_words(count)
+    hot_words = []
+    words = sort_words
+    words.keys[0..count].each { |key| hot_words << { key => words[key] } }
+    hot_words
   end
 
 
