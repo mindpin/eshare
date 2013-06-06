@@ -93,12 +93,10 @@ class Omniauth < ActiveRecord::Base
     end
 
     def get_weibo_messages
-      client = WeiboOAuth2::Client.new
-      client.get_token_from_hash({:access_token => _get_omniauth(PROVIDER_WEIBO).token, 
-                                  :expires_at => _get_omniauth(PROVIDER_WEIBO).expires_at})
+      client = _get_weibo_oauth2_client(PROVIDER_WEIBO)
       statuses = client.statuses
 
-      weibo_list = statuses.public_timeline(:count => 3)
+      weibo_list = statuses.user_timeline(:count => 200)
 
       messages = []
       weibo_list['statuses'].each do |row|
@@ -109,9 +107,12 @@ class Omniauth < ActiveRecord::Base
     end
 
     def get_weibo_words_rate
-      records = get_weibo_messages
+      messages = get_weibo_messages
       
-      Fenci._combine_statuses(records)
+      h = Fenci._combine_statuses(messages)
+
+      rate = h.sort_by {|k, v| v}.reverse
+      ActiveSupport::OrderedHash[rate]
     end
 
     private
