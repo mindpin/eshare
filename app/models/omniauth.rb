@@ -3,7 +3,7 @@ class Omniauth < ActiveRecord::Base
   PROVIDER_GITHUB = 'github'
 
   PROVIDERS = [PROVIDER_WEIBO, PROVIDER_GITHUB]
-  attr_accessible :provider, :token, :expires_at, :expires, :info_json
+  attr_accessible :provider, :token, :expires_at, :expires, :info_json, :uid
   
   belongs_to :user
   validates :user, :provider, :token, :presence => true
@@ -23,6 +23,7 @@ class Omniauth < ActiveRecord::Base
       token = auth_hash['credentials']['token']
       expires = auth_hash['credentials']['expires']
       expires_at = auth_hash['credentials']['expires_at']
+      uid = auth_hash['uid']
       info = auth_hash['info']
 
       omniauth = _get_omniauth(provider)
@@ -31,6 +32,7 @@ class Omniauth < ActiveRecord::Base
         self.omniauths.create(
           :provider   => provider, 
           :token      => token,
+          :uid        => uid,
           :expires    => expires, 
           :expires_at => expires_at,
           :info_json  => info.to_json
@@ -38,6 +40,7 @@ class Omniauth < ActiveRecord::Base
       else
         omniauth.update_attributes(
           :token      => token, 
+          :uid        => uid,
           :expires    => expires, 
           :expires_at => expires_at,
           :info_json  => info.to_json
