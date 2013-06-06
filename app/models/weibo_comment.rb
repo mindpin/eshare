@@ -1,5 +1,5 @@
 class WeiboComment
-  COUNT = 2
+  COUNT = 50
 
   attr_reader :omniauth_user, :created_at, :id, :text
 
