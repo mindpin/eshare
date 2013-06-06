@@ -61,12 +61,12 @@ class QuestionsController < ApplicationController
 
   def follow
     current_user.follow(@question)
-    redirect_to :back
+    render :text => 'ok'
   end
 
   def unfollow
     current_user.unfollow(@question)
-    redirect_to :back
+    render :text => 'ok'
   end
 
 end

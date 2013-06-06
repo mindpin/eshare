@@ -124,17 +124,31 @@ module ApplicationHelper
   end
 
   def follow_button(cur_user, user)
-    # %a.page-follow.follow.btn.success{:data => {:id => user.id}}
+    # %a.page-follow.unfollow.btn.small{:data => {:id => user.id}}
     return '' if cur_user == user
 
     if cur_user.has_follow? user
       return capture_haml {
-        haml_tag 'a.page-follow.unfollow.btn.small', '取消关注', :data => {:id => user.id}
+        haml_tag 'a.page-follow.unfollow.btn.small', '取消关注', :data => {:id => user.id}, :href => 'javascript:;'
       }
     end
 
     capture_haml {
-      haml_tag 'a.page-follow.follow.btn.small', '关注', :data => {:id => user.id}
+      haml_tag 'a.page-follow.follow.btn.small', '关注', :data => {:id => user.id}, :href => 'javascript:;'
+    }
+  end
+
+  def question_follow_button(cur_user, question)
+    # %a.page-question-follow.unfollow.btn.small{:data => {:id => question.id}}
+
+    if question.followed_by? cur_user
+      return capture_haml {
+        haml_tag 'a.page-question-follow.unfollow.btn', '取消关注', :data => {:id => question.id}, :href => 'javascript:;'
+      }
+    end
+
+    capture_haml {
+      haml_tag 'a.page-question-follow.follow.btn', '关注', :data => {:id => question.id}, :href => 'javascript:;'
     }
   end
 

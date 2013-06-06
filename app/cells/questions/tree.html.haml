@@ -23,10 +23,7 @@
 
       .btb
         .fo
-          - if @question.followed_by?(@user)
-            = link_to "取消关注", "/questions/#{@question.id}/unfollow", :method => :post, :class => 'unfollow btn'
-          - else
-            = link_to "关注", "/questions/#{@question.id}/follow", :method => :post, :class => 'follow btn'
+          = question_follow_button @user, @question
 
   .pblock
     - user = @user
