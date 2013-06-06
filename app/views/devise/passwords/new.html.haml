@@ -1,0 +1,20 @@
+.page-sign
+  .toggle
+    %a.active.back{:href => '/account/sign_in'}
+      %i.icon-circle-arrow-left.icon-white
+      %span 返回
+
+  = simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f|
+    .form-desc
+      填写你注册时使用的邮箱，我们会发送密码重置邮件到此邮箱中，通过邮件中包含的链接，你可以重置密码。
+
+    = #f.error_notification
+
+    .form-inputs
+      = f.input :email, :placeholder => '注册邮箱', :required => true, :autofocus => true
+
+    .form-actions
+      = f.button :submit, "发送邮件", :class => 'large sign-up'
+
+
+  = render_cell :account, :sign_logo

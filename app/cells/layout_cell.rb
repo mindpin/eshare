@@ -6,6 +6,11 @@ class LayoutCell < Cell::Rails
     render
   end
 
+  def topnav_admin(opts = {})
+    @user = opts[:user]
+    render
+  end
+
   def searchbar(opts = {})
     @user = opts[:user]
     render
@@ -13,6 +18,21 @@ class LayoutCell < Cell::Rails
 
   def sidebar(opts = {})
     @user = opts[:user]
+    render
+  end
+
+  def account_sidebar(opts = {})
+    @user = opts[:user]
+    render
+  end
+
+  def admin_users_filter(opts = {})
+    @query = opts[:query]
+    render
+  end
+
+  def manage_courses_filter(opts = {})
+    @query = opts[:query]
     render
   end
 end

@@ -1,0 +1,13 @@
+- if R::INTERNET
+  - if @is_sign_up
+    .toggle
+      .title 账号注册
+      %a.active.sign-in{:href => '/account/sign_in'}
+        %span 登录
+        %i.icon-circle-arrow-right.icon-white
+  - else
+    .toggle
+      .title 用户登录
+      %a.active.sign-up{:href => '/account/sign_up'}
+        %span 注册
+        %i.icon-circle-arrow-right.icon-white

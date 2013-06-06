@@ -33,5 +33,6 @@ before_fork do |server, worker|
 end
 
 after_fork do |server, worker|
+  Redis::Search.config.redis.redis.client.reconnect
   ActiveRecord::Base.establish_connection
 end

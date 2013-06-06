@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'open-uri'
 
 class TudouVideoList
@@ -10,21 +11,25 @@ class TudouVideoList
 
     def import
       list.items.each do |item|
-        chapter = course.chapters.create(:title   => item.title,
-                                         :desc    => item.desc,
-                                         :creator => course.creator)
-
         ware = chapter.course_wares.new(:title   => item.title,
                                         :creator => chapter.creator,
                                         :url     => item.url)
         ware.kind = 'tudou'
         ware.save
       end
+
+      course.set_video_course_cover
+    end
+
+    def chapter
+      @chapter ||= course.chapters.create(:title   => "默认章节",
+                                          :creator => course.creator)
     end
 
     def course
       @course ||= Course.create(:name    => list.title,
-                                :cid     => list.lid,
+                                :cid     => randstr,
+                                :with_chapter => false,
                                 :creator => User.first)
     end
   end

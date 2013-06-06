@@ -1,0 +1,7 @@
+.course.page-course.card.mini
+  .cover
+    = link_to @course do
+      = fit_image @course.cover.versions[:normal].url, :height => 100
+  .data
+    .title
+      = link_to @course.name, @course

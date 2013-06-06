@@ -1,0 +1,18 @@
+.page-sign
+  = simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f|
+    = #f.error_notification
+
+    .form-desc
+      你正在进行重置密码操作，请输入新的密码。
+
+    = f.input :reset_password_token, :as => :hidden
+    = f.full_error :reset_password_token
+
+    .form-inputs
+      = f.input :password, :autofocus => true, :placeholder => '密码', :required => true
+      = f.input :password_confirmation, :placeholder => '确认密码', :required => true
+
+    .form-actions
+      = f.button :submit, "重置密码", :class => 'large sign-up'
+
+  = render_cell :account, :sign_logo

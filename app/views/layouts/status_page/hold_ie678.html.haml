@@ -1,1 +1,28 @@
-不支持 IE6 IE7 IE8 的访问，请换用其他浏览器
+.page-no-support-browser
+  .why
+    %h2 为什么会显示这个页面？
+    %p EduShare 使用了 HTML5 技术来支持图表显示和文件断点续传等功能
+    %p IE9 以下的浏览器不能很好地支持这些功能。
+    %img{:src=>'assets/HTML5_logo_128.png'}
+
+  %hr
+  .how
+    %h2 我该怎么办？
+
+  .m1
+    %p
+      %b 方法一：
+      %span 在 IE浏览器上安装插件（如果你使用的是IE9以下的IE浏览器）
+    %p
+      %b 下载浏览器插件：
+      %span= link_to '本地下载', '/static_files/downloads/google_chromeframe_standalone_enterprise.msi'
+      %span= link_to '远程下载', 'http://www.google.com/chromeframe?hl=zh-CN'
+
+    %br
+    %p
+      %b 方法二： 
+      %span 使用 Firefox(火狐) / Google Chrome 浏览器来访问 EduShare
+    %p
+      %b 下载 Google Chrome：
+      %span= link_to '本地下载', '/static_files/downloads/chrome_standalone_setup.exe'
+      %span= link_to '远程下载', 'http://www.google.cn/intl/zh-CN/chrome/browser/?installdataindex=chinabookmarkcontrol&brand=CHUN'

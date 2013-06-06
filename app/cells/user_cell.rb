@@ -1,7 +1,7 @@
 class UserCell < Cell::Rails
   helper :application
 
-  def stat(opts = {})
+  def page_navbar(opts = {})
     @user = opts[:user]
     render
   end

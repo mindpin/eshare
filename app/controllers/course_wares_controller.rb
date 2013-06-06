@@ -7,7 +7,7 @@ class CourseWaresController < ApplicationController
     
     @chapter = @course_ware.chapter
     @course = @chapter.course
-    @questions = @chapter.questions.page(params[:page]).per(10)
+    @questions = @course_ware.questions.page(params[:page]).per(10)
   end
 
   def update_read_count

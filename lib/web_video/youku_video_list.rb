@@ -77,16 +77,17 @@ class YoukuVideoList
           :name => data[:name],
           :desc => data[:desc],
           :cid => randstr,
-          :creator => user
+          :creator => user,
+          :with_chapter => false
+        )
+
+        chapter = Chapter.create(
+          :title => "默认章节",
+          :creator => user,
+          :course => course
         )
 
         data[:chapters].each do |ch|
-          chapter = Chapter.create(
-            :title => ch[:title],
-            :creator => user,
-            :course => course
-          )
-
           chapter.course_wares.create(
             {
               :title => '视频',
@@ -97,6 +98,8 @@ class YoukuVideoList
             }, { :as => :import }
           )
         end
+
+        course.set_video_course_cover
         course
       end
     end

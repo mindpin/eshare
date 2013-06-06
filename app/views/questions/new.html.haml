@@ -1,6 +1,10 @@
+- content_for :header do
+  %h1 发起提问
+
 = simple_form_for @question do |f|
-  = f.input :title
-  = f.input :content, as: :text
-  = f.association :chapter
-  = f.association :ask_to
-  = f.submit
+  = f.input :title, :as => :text, :input_html => {:rows => 3, :class => :xxlarge}, :label => '问题'
+  = f.input :content, :as => :text, :input_html => {:rows => 5, :class => :xxlarge}, :label => '问题描述'
+  / = f.association :chapter
+  / = f.association :ask_to
+  = f.button :submit, :class => 'success'
+  %a.btn.cancel{:href => "/questions"}= t('common.form.cancel')

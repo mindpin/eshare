@@ -1,6 +1,11 @@
 class Manage::CourseWaresController < ApplicationController
   before_filter :authenticate_user!
-
+  layout :get_layout
+  def get_layout
+    return 'admin' if current_user.is_admin?
+    'application'
+  end
+  
   def index
     @chapter = Chapter.find(params[:chapter_id])
   end

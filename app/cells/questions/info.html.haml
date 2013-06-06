@@ -1,0 +1,15 @@
+.cpart
+  %h3 统计信息
+  .page-question-info{:data => {:id => @question.id}}
+    .st.actived
+      %span 最近活动：
+      %span= timeago @question.actived_at
+    .st.created
+      %span 创建时间：
+      %span= timeago @question.created_at
+    .st.answers-count 
+      %span 回答次数：
+      %span= @question.answers.count
+    .st.followers-count
+      %span 关注人数：
+      %span= @question.followers.count

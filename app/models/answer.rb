@@ -6,7 +6,7 @@ class Answer < ActiveRecord::Base
 
   belongs_to :creator, :class_name => 'User', :foreign_key => :creator_id
   belongs_to :question
-  has_many :answer_votes
+  has_many :answer_votes, :dependent => :delete_all
 
   validates :creator, :question, :content, :presence => true
   validates_uniqueness_of :question_id, :scope => :creator_id,
@@ -21,21 +21,36 @@ class Answer < ActiveRecord::Base
 
   # 记录用户活动
   record_feed :scene => :questions,
-                        :callbacks => [ :create ]
+                        :callbacks => [ :create, :update]
 
 
-  after_save :update_question_updated_at
-
-  def update_question_updated_at 
-    self.question.updated_at = Time.now
+  after_save :update_question_actived_at
+  def update_question_actived_at 
+    self.question.actived_at = Time.now
 
     self.question.without_feed do
+      Question.record_timestamps = false
       self.question.save
+      Question.record_timestamps = true
     end
   end
 
   def has_voted_by?(user)
-    self.answer_votes.by_user(user).present?
+    _get_answer_vote_of(user).present?
+  end
+
+  def has_voted_up_by?(user)
+    return false if !has_voted_by?(user)
+    return _get_answer_vote_of(user).kind == AnswerVote::Kind::VOTE_UP
+  end
+
+  def has_voted_down_by?(user)
+    return false if !has_voted_by?(user)
+    return _get_answer_vote_of(user).kind == AnswerVote::Kind::VOTE_DOWN
+  end
+
+  def _get_answer_vote_of(user)
+    self.answer_votes.by_user(user).first
   end
 
   def vote_up_by!(user)
@@ -54,8 +69,10 @@ class Answer < ActiveRecord::Base
   end
 
   def refresh_vote_sum!
+    Answer.record_timestamps = false
     self.vote_sum = self.answer_votes.map(&:point).sum
     self.save
+    Answer.record_timestamps = true
   end
 
   private

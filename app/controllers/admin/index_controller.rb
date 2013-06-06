@@ -9,5 +9,6 @@ class Admin::IndexController < ApplicationController
   end
 
   def index
+    redirect_to "/admin/users"
   end
 end

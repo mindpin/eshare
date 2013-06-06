@@ -7,6 +7,9 @@ gem 'json', '1.7.7' # JSON解析，RAILS默认引入的
 gem 'rubyzip', '0.9.9', :require => false
 gem 'docsplit', '0.7.2'
 gem 'sunspot_rails', '2.0.0'
+gem 'chinese_pinyin', '0.4.2'
+gem 'rmmseg-cpp-huacnlee', '0.2.9'
+gem 'redis-search', :git => 'git://github.com/huacnlee/redis-search.git'
 
 group :assets do
   gem 'sass-rails', '~> 3.2.3'
@@ -45,7 +48,7 @@ gem 'slim', '1.3.8', :require => false
 gem 'sinatra', '1.3.0', :require => false
 
 # 登录验证
-gem 'devise', '2.2.3'
+gem 'devise', '2.2.4'
 
 # 页面渲染
 gem 'haml', '4.0.0' # HAML模板语言
@@ -78,6 +81,7 @@ gem "cancan", "~> 1.6.10"
 gem "omniauth-github", "~> 1.1.0"
 gem 'omniauth-weibo-oauth2'
 gem "weibo_2", "~> 0.1.1"
+gem 'rmmseg-cpp'
 
 # 自己写的 gem，都不指定版本号，如果有重大修改，通过GIT TAG解决
 
@@ -117,13 +121,9 @@ gem 'file-part-upload',
 ## excel导入和示例生成
 gem 'simple-excel-import',
     :git => 'git://github.com/mindpin/simple-excel-import.git',
-    :tag => '0.0.2.5'
+    :tag => '0.0.2.6'
     # :path => '/web/songliang/simple-excel-import'
 # gem 'axlsx', '1.3.5' # 上面的gem依赖它
-
-## office文档转换
-gem 'odocuconv',
-    :git => 'git://github.com/kaid/odocuconv.git'
 
 ## tag
 gem 'mindpin-simple-tags',
@@ -133,12 +133,12 @@ gem 'mindpin-simple-tags',
 # feed
 gem 'mindpin-feeds',
     :git => 'git://github.com/mindpin/mindpin-feeds',
-    :tag => '0.0.7'
+    :tag => '0.1.0'
 
 # redis-cache
 gem 'simple-redis-cache',
     :git => 'git://github.com/mindpin/simple-redis-cache.git',
-    :tag => '0.0.1'
+    :tag => '0.0.2'
 
 gem 'simple_comment',
     :git => 'git://github.com/kaid/simple_comment.git'

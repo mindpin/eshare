@@ -1,21 +1,14 @@
 - title = t('common.site.title.admin')
-- home_title = t('common.site.home_title.admin')
 
 !!!
 - simple_page_layout title, :html_lang => :zh, :body_class => 'admin' do
-  .page-sidebar
-    = simple_navbar :admin, :as_list, :with_icon
+  = render_cell :layout, :topnav_admin, :user => current_user
+  = render_cell :layout, :sidebar, :user => current_user
 
-  = page_navbar(:fixed_top, :color_inverse) do |navbar|
-    - navbar.add_item('首页', '/admin')
-    - navbar.add_item('设置密码', '/admin/setting/password')
-    - navbar.add_item('退出登录', '/account/sign_out')
-    - navbar.prepend link_to(home_title, '/admin', :class => :brand)
-
-  .page-search-bar
-  .page-content-header
-    = yield :header
-
-  .page-content
-    .content-inner
+  .page-layout-application.admin
+    .page-content
+      - header_content = yield :header
+      - if header_content.present?
+        .content-header= header_content
       = yield
+      .clearfix

@@ -1,8 +1,8 @@
+- content_for :header do
+  %h1 修改密码
+
 = simple_form_for resource, :as => resource_name, :url => registration_path(resource_name) do |f|
   = f.input :current_password
   = f.input :password
   = f.input :password_confirmation
-  = f.submit '修改密码', 'data-disable-with' => '正在保存'
-
-.avatar
-  = link_to '修改头像', '/account/avatar'
+  = f.button :submit, '修改密码', 'data-disable-with' => '正在保存', :class => 'success'
