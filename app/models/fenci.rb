@@ -1,4 +1,4 @@
-module Fengci
+module Fenci
   STOP_WORDS = begin
     file = File.new File.expand_path(Rails.root.to_s + '/lib/stopwords.txt')
     file.read.split("\r\n") - ['']

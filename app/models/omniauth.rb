@@ -1,5 +1,5 @@
 class Omniauth < ActiveRecord::Base
-  include Fengci
+  include Fenci
 
   PROVIDER_WEIBO = 'weibo'
   PROVIDER_GITHUB = 'github'
@@ -98,7 +98,7 @@ class Omniauth < ActiveRecord::Base
     def get_weibo_words_rate
       records = get_weibo_messages
       
-      Fengci._combine_statuses(records)
+      Fenci._combine_statuses(records)
     end
 
 
