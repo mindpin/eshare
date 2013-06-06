@@ -30,6 +30,7 @@ zh-CN:
     account:
       password: 修改密码
       avatar: 修改头像
+      sync: 社交网站同步
     admin_account:
       password: 修改密码
 
@@ -239,6 +240,9 @@ zh-CN:
         user: 选课人
         status: 选课状态
         ops: 操作
+
+        course: 课程
+        updated_at: 更新时间
 
       questions:
         title: 标题

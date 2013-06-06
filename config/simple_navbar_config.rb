@@ -91,6 +91,12 @@ SimpleNavbar::Base.config do
     nav :avatar, :url => '/account/avatar' do
       controller :account, :only => :avatar
     end
+
+    if R::INTERNET
+      nav :sync, :url => '/account/sync' do
+        controller :account, :only => :sync
+      end
+    end
   end
 
   rule :admin_account do

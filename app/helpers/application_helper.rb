@@ -185,8 +185,8 @@ module ApplicationHelper
     }[apply.status]
 
     capture_haml {
-      haml_tag 'span', :class => klass do
-        haml_tag 'span', "#{string} #{apply.status}"
+      haml_tag 'span', :class => "page-apply-status #{klass}" do
+        haml_tag 'span', "#{string}"
       end
     }
   end

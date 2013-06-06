@@ -64,7 +64,7 @@ class User < ActiveRecord::Base
   before_validation :set_login_for_internet_version
   def set_login_for_internet_version
     if R::INTERNET
-      self.login = self.email
+      self.login = self.email if self.login.blank?
       self.password_confirmation = self.password
     end
   end

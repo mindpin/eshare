@@ -92,6 +92,7 @@ Eshare::Application.routes.draw do
       get :courses
       get :questions
       get :answers
+      get :course_applies
     end
   end
 end
