@@ -1,4 +1,5 @@
 class Omniauth < ActiveRecord::Base
+
   PROVIDER_WEIBO = 'weibo'
   PROVIDER_GITHUB = 'github'
 
@@ -13,6 +14,8 @@ class Omniauth < ActiveRecord::Base
 
   scope :by_provider, lambda {|provider| {:conditions => ['omniauths.provider = ?', provider]} }
 
+
+  
   module UserMethods
     def self.included(base)
       base.has_many :omniauths
@@ -73,9 +76,66 @@ class Omniauth < ActiveRecord::Base
       _get_omniauth(provider).destroy
     end
 
+    def send_weibo(text)
+      client = _get_weibo_oauth2_client(PROVIDER_WEIBO)
+      client.statuses.update(text)
+    end
+
+    def get_weibo_comments(url_long, page)
+      client = _get_weibo_oauth2_client(PROVIDER_WEIBO)
+      short_url = client.short_url.shorten(url_long).urls.first.url_short
+      comments = client.short_url.comment_comments(short_url, opt={:count => 50, :page => page})
+
+      weibo_comments = []
+      comments['share_comments'].each do |comment|
+        weibo_comments << WeiboComment.new(comment)
+      end
+
+      weibo_comments
+    end
+
+    def get_weibo_messages
+      client = _get_weibo_oauth2_client(PROVIDER_WEIBO)
+      statuses = client.statuses
+
+      weibo_list = statuses.user_timeline(:count => 200)
+
+      messages = []
+      weibo_list['statuses'].each do |row|
+        messages << row['text']
+      end
+
+      messages
+    end
+
+    def sort_weibo_words
+      messages = get_weibo_messages
+      
+      Fenci.new(messages).sort_words
+    end
+
+    def get_weibo_hot_words(count = 5)
+      messages = get_weibo_messages
+
+      Fenci.new(messages).get_hot_words(count)
+    end
+
     private
       def _get_omniauth(provider)
         self.omniauths.by_provider(provider).first
+      end
+
+      def _get_weibo_oauth2_client(provider)
+        omniauth = _get_omniauth(provider)
+        return if omniauth.blank?
+
+        client = WeiboOAuth2::Client.new
+
+        client.get_token_from_hash(
+          :access_token => omniauth.token,
+          :expires_at => omniauth.expires_at
+        )
+        client
       end
 
   end
