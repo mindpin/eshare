@@ -114,6 +114,13 @@ class Omniauth < ActiveRecord::Base
       ActiveSupport::OrderedHash[rate]
     end
 
+    def get_weibo_hot_words(count = 5)
+      hot_words = []
+      words = get_weibo_words_rate
+      words.keys[0..count].each { |key| hot_words << { key => words[key] } }
+      hot_words
+    end
+
     private
       def _get_omniauth(provider)
         self.omniauths.by_provider(provider).first
