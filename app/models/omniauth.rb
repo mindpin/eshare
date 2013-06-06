@@ -1,5 +1,4 @@
 class Omniauth < ActiveRecord::Base
-  include Fenci
 
   PROVIDER_WEIBO = 'weibo'
   PROVIDER_GITHUB = 'github'
@@ -109,7 +108,7 @@ class Omniauth < ActiveRecord::Base
     def get_weibo_words_rate
       messages = get_weibo_messages
       
-      h = Fenci._combine_statuses(messages)
+      h = Fenci.new(messages).combine
 
       rate = h.sort_by {|k, v| v}.reverse
       ActiveSupport::OrderedHash[rate]
