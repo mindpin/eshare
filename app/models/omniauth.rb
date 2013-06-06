@@ -111,7 +111,7 @@ class Omniauth < ActiveRecord::Base
       Fenci.new(messages).sort_words
     end
 
-    def get_weibo_hot_words(count = 4)
+    def get_weibo_hot_words(count = 5)
       messages = get_weibo_messages
 
       Fenci.new(messages).get_hot_words(count)
