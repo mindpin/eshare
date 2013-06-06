@@ -7,5 +7,5 @@
   .sidep33
     .pblock.info
       = render_cell :questions, :info, :question => @question
-    .pblock
-      = render_cell :questions, :linked_course, :user => @current_user, :question => @question
+    
+    = render_cell :questions, :linked_course, :user => @current_user, :question => @question

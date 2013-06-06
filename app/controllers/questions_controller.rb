@@ -31,7 +31,7 @@ class QuestionsController < ApplicationController
       return render :text => 'params invalid', :status => 500
     end
     
-    return redirect_to :action => :index if @question.save
+    return redirect_to @question if @question.save
     render :action => :new
   end
 
@@ -40,9 +40,12 @@ class QuestionsController < ApplicationController
     return render :text => 'access denied.', :status => 403 if @question.blank?
 
     if request.xhr?
-      return render :text => 'delete ok.'if @question.destroy
+      return render :text => 'delete ok' if @question.destroy
       return render :text => 'delete error', :status => 500
     end
+
+    return redirect_to :action => :index if @question.destroy
+    return redirect_to :action => :index
   end
 
   def show
