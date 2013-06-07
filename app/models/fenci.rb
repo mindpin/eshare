@@ -42,8 +42,7 @@ class Fenci
   def get_hot_words(count = 5)
     hot_words = []
     words = sort_words
-    words.keys[0..count-1].each { |key| hot_words << { key => words[key] } }
-    hot_words
+    words.keys[0..count-1]
   end
 
 
