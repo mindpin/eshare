@@ -3,54 +3,46 @@ require "spec_helper"
 
 describe WeiboFriends do
   describe WeiboFriends::Finder do
-    let(:finder) {WeiboFriends::Finder.new FactoryGirl.create(:user), 1}
+    let(:user)   {FactoryGirl.create(:user)}
+    let(:finder) {WeiboFriends::Finder.new(user, :page_size => 1)}
     let(:uid1)   {Omniauth.all[3].uid}
-    let(:uid2)   {Omniauth.all[7].uid}
+    let(:uid2)   {Omniauth.all[4].uid}
+    let(:user1)  {finder.find_registered_friend(uid1)}
+    let(:user2)  {finder.find_registered_friend(uid2)}
+
     before(:each) do
       8.times {FactoryGirl.create :omniauth}
 
       WeiboFriends::Finder.send :define_method, :request do
         response = Hashie::Mash.new(:total_number => 10)
-        response.users = (
-          [Hashie::Mash.new(:id => Omniauth.all[3].uid), Hashie::Mash.new(:id => Omniauth.all[7].uid)] +
-          1.upto(8).map {|i| Hashie::Mash.new(:id => "notregistered#{i}")}
+        response.ids = (
+          [Omniauth.all[3].uid, Omniauth.all[4].uid] +
+          1.upto(8).map {|i| "notregistered#{i}"}
         )[cursor..-1]
         response
       end
     end
 
-    describe "#next" do
-      it "returns first page" do
-        finder.next.should eq [finder.find_registered_friend(uid1)]
+    describe "#fetch" do
+      it "fetches first page" do
+        finder.fetch.should =~ [user1]
       end
 
-      it "returns second page" do
-        finder.next
-        finder.next.should eq [finder.find_registered_friend(uid2)]
+      it "fetches second page" do
+        finder.fetch
+        finder.fetch.should =~ [user1, user2]
       end
 
-      it "returns next page util last page" do
-        finder.next
-        finder.next
-        finder.next.should eq [finder.find_registered_friend(uid2)]
+      it "fetches next page util reaching the end" do
+        2.times {finder.fetch}
+        finder.fetch.should =~ [user1, user2]
+      end
+
+      it "fetches with a middle way cursor" do
+        finder = WeiboFriends::Finder.new user, :page_size => 1, :cursor => 1
+        finder.fetch.should =~ [user2]
       end
     end
 
-    describe "#prev" do
-      it "returns nothing" do
-        finder.prev.should be nil
-      end
-
-      it "returns first page" do
-        2.times {finder.next}
-        finder.prev.should eq [finder.find_registered_friend(uid1)]
-      end
-
-      it "returns previous page util first page" do
-        2.times {finder.next}
-        2.times {finder.prev}
-        finder.prev.should eq [finder.find_registered_friend(uid1)]
-      end
-    end
   end
 end

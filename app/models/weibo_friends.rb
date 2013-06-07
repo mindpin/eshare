@@ -12,13 +12,11 @@ module WeiboFriends
   class Finder
     attr_reader :user, :list, :page_size, :cursor, :page, :cursor, :total, :max_pages
 
-    def initialize(user, page_size = 16)
+    def initialize(user, options = {})
       @user = user
-      @cursor = 0
+      @cursor = options[:cursor] || 0
+      @page_size = options[:page_size] || 16
       @list = []
-      @page_size = page_size
-      @max_pages = 0
-      @page = 1
     end
 
     def weibo_omniauth
@@ -30,40 +28,22 @@ module WeiboFriends
     end
 
     def request
-      client.friendships.friends(:uid => weibo_omniauth.uid, :cursor => cursor)
+      client.friendships.friends_ids(:uid => weibo_omniauth.uid, :cursor => cursor)
     end
 
     def fetch
       if !total || cursor < total
         response = request
         @total = response.total_number
-        list[max_pages] = [] if !list[max_pages]
-        response.users.each_with_index do |friend, index|
-          user = find_registered_friend(friend.id)
-          list[max_pages] << user if user
+        response.ids.each_with_index do |uid, index|
+          user = find_registered_friend(uid)
+          list << user if user
           @cursor += 1
-          return @max_pages += 1 if list[max_pages].size == page_size
+          return list if list.size == page_size
         end
-        list.reject!(&:blank?)
         fetch
       end
-    end
-
-    def goto(page)
-      list[page - 1]
-    end
-
-    def prev
-      @page -= 1 if page >= 2
-      goto(page)
-    end
-
-    def next
-      if fetch
-        return list[max_pages - 1]
-      end
-      @page += 1 if page < max_pages
-      goto(page)
+      list
     end
 
     def find_registered_friend(uid)
