@@ -4,7 +4,7 @@ require "spec_helper"
 describe WeiboFriends do
   describe WeiboFriends::Finder do
     let(:user)   {FactoryGirl.create(:user)}
-    let(:finder) {WeiboFriends::Finder.new(user, :page_size => 1)}
+    let(:finder) {user.find_weibo_friends_from_edushare(:page_size => 1)}
     let(:uid1)   {Omniauth.all[3].uid}
     let(:uid2)   {Omniauth.all[4].uid}
     let(:user1)  {finder.find_registered_friend(uid1)}
@@ -39,7 +39,7 @@ describe WeiboFriends do
       end
 
       it "fetches with a middle way cursor" do
-        finder = WeiboFriends::Finder.new user, :page_size => 1, :cursor => 1
+        finder = user.find_weibo_friends_from_edushare(:page_size => 1, :cursor => 1)
         finder.fetch.should =~ [user2]
       end
     end

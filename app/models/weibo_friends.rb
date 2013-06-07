@@ -4,8 +4,8 @@ module WeiboFriends
   end
 
   module InstanceMethods
-    def find_weibo_friends_from_edushare
-      @find_weibo_friends_from_edushare ||= Finder.new(self)
+    def find_weibo_friends_from_edushare(options={})
+      @find_weibo_friends_from_edushare ||= Finder.new(self, options)
     end
   end
 
@@ -31,8 +31,12 @@ module WeiboFriends
       client.friendships.friends_ids(:uid => weibo_omniauth.uid, :cursor => cursor)
     end
 
+    def has_further_result?
+      !total || cursor < total
+    end
+
     def fetch
-      if !total || cursor < total
+      if has_further_result?
         response = request
         @total = response.total_number
         response.ids.each_with_index do |uid, index|
