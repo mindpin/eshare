@@ -29,7 +29,7 @@ class Omniauth < ActiveRecord::Base
       uid = auth_hash['uid']
       info = auth_hash['info']
 
-      omniauth = _get_omniauth(provider)
+      omniauth = get_omniauth(provider)
 
       if omniauth.blank?
         self.omniauths.create(
@@ -54,7 +54,7 @@ class Omniauth < ActiveRecord::Base
     Omniauth::PROVIDERS.each do |provider|
 
       define_method "get_#{provider}_bind_info" do
-        JSON::parse _get_omniauth(provider).info_json
+        JSON::parse get_omniauth(provider).info_json
       end
 
       define_method "is_binded_#{provider}?" do
@@ -64,7 +64,7 @@ class Omniauth < ActiveRecord::Base
       define_method "binded_#{provider}_is_expired?" do
         return true if omniauths.by_provider(provider).blank?
 
-        omniauth = _get_omniauth(provider)
+        omniauth = get_omniauth(provider)
         return false if !omniauth.expires
 
         omniauth.expires_at.to_i <= Time.now.to_i
@@ -73,16 +73,16 @@ class Omniauth < ActiveRecord::Base
     end
 
     def unbind_omniauth(provider)
-      _get_omniauth(provider).destroy
+      get_omniauth(provider).destroy
     end
 
     def send_weibo(text)
-      client = _get_weibo_oauth2_client(PROVIDER_WEIBO)
+      client = get_weibo_oauth2_client(PROVIDER_WEIBO)
       client.statuses.update(text)
     end
 
     def get_weibo_comments(url_long, page)
-      client = _get_weibo_oauth2_client(PROVIDER_WEIBO)
+      client = get_weibo_oauth2_client(PROVIDER_WEIBO)
       short_url = client.short_url.shorten(url_long).urls.first.url_short
       comments = client.short_url.comment_comments(short_url, opt={:count => 50, :page => page})
 
@@ -95,7 +95,7 @@ class Omniauth < ActiveRecord::Base
     end
 
     def get_weibo_messages
-      client = _get_weibo_oauth2_client(PROVIDER_WEIBO)
+      client = get_weibo_oauth2_client(PROVIDER_WEIBO)
       statuses = client.statuses
 
       weibo_list = statuses.user_timeline(:count => 200)
@@ -120,23 +120,22 @@ class Omniauth < ActiveRecord::Base
       Fenci.new(messages).get_hot_words(count)
     end
 
-    private
-      def _get_omniauth(provider)
-        self.omniauths.by_provider(provider).first
-      end
+    def get_omniauth(provider)
+      self.omniauths.by_provider(provider).first
+    end
 
-      def _get_weibo_oauth2_client(provider)
-        omniauth = _get_omniauth(provider)
-        return if omniauth.blank?
+    def get_weibo_oauth2_client(provider)
+      omniauth = get_omniauth(provider)
+      return if omniauth.blank?
 
-        client = WeiboOAuth2::Client.new
+      client = WeiboOAuth2::Client.new
 
-        client.get_token_from_hash(
-          :access_token => omniauth.token,
-          :expires_at => omniauth.expires_at
-        )
-        client
-      end
+      client.get_token_from_hash(
+        :access_token => omniauth.token,
+        :expires_at => omniauth.expires_at
+      )
+      client
+    end
 
   end
 end

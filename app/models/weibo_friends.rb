@@ -3,9 +3,9 @@ module WeiboFriends
     base.send :include, InstanceMethods
   end
 
-  class InstanceMethods
-    def weibo_friends
-      @weibo_friends_finder = Finder.new(self)
+  module InstanceMethods
+    def find_weibo_friends_from_edushare
+      @find_weibo_friends_from_edushare ||= Finder.new(self)
     end
   end
 
@@ -22,16 +22,11 @@ module WeiboFriends
     end
 
     def weibo_omniauth
-      user.send :_get_omniauth, 'weibo'
+      @weibo_omniauth ||= user.get_omniauth(Omniauth::PROVIDER_WEIBO)
     end
     
     def client
-      @client ||= WeiboOAuth2::Client.new
-      @client.get_token_from_hash(
-        :access_token => weibo_omniauth.token,
-        :expires_at   => weibo_omniauth.expires_at
-      ) if !@client.authorized?
-      @client
+      user.get_weibo_oauth2_client(Omniauth::PROVIDER_WEIBO)
     end
 
     def request
