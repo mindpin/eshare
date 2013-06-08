@@ -1,8 +1,16 @@
 - content_for :header do
-  %h1 修改密码
+  %h1 基础信息设置
 
-= simple_form_for resource, :as => resource_name, :url => registration_path(resource_name) do |f|
-  = f.input :current_password
-  = f.input :password
-  = f.input :password_confirmation
-  = f.button :submit, '修改密码', 'data-disable-with' => '正在保存', :class => 'success'
+.page-account-edit
+  - if R::INTERNET && !current_user.is_admin?
+    .base-form
+      = simple_form_for resource, :as => resource_name, :url => registration_path(resource_name) do |f|
+        = f.input :name, :label => '用户昵称'
+        = f.button :submit, '确定', 'data-disable-with' => '正在保存', :class => 'success'
+
+  .password-form
+    = simple_form_for resource, :as => resource_name, :url => registration_path(resource_name, :by => :pwd) do |f|
+      = f.input :current_password
+      = f.input :password
+      = f.input :password_confirmation
+      = f.button :submit, '修改密码', 'data-disable-with' => '正在保存', :class => 'success'

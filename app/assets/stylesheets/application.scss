@@ -1134,6 +1134,24 @@ img.page-avatar {
   }
 }
 
+.page-account-userpage {
+  .curr-desc {
+    border-top:solid 1px #ddd;
+    margin:20px 0 10px;;
+    padding-top:20px;
+  }
+
+  .userpage-head {
+    width:500px;
+    height:150px;
+    margin-bottom:20px;
+  }
+
+  .hint {
+    margin-left:20px;
+  }
+}
+
 .page-course-show {
   margin:-20px -20px 20px;
   min-height:300px;
@@ -2418,19 +2436,56 @@ form .input.page-form-tag-inputer {
 }
 
 .page-user-page-head {
-  padding-bottom:20px;
+  margin:-20px -20px 0;
+  padding:20px;
   overflow:hidden;
+  position:relative;
+  height:184px;
 
-  .avatar {
-    float:left;
+  .headbg {
+    position:absolute;
+    top:0;left:0;right:0;
+    height:180px;
+    overflow:hidden;
   }
-  .ct {
-    margin-left:200px;
-    h2.name {
-      margin:0;margin-bottom:10px;
-      font-size:16px;font-weight:bold;
+
+  .headdata {
+    position:absolute;
+    .avatar {
+      float:left;
+      z-index:2;
+      img{@include border-radius(0);}
+      background-color:#fff;
+      padding:2px;
+      // border:solid 1px #eee;
+      box-shadow:0 0px 3px rgba(black, 0.4);
+      position:relative;
+      a.edit {
+        position:absolute;
+        height:30px;line-height:30px;
+        color:white;
+        text-align:center;
+        left:0;right:0;bottom:0;
+        background-color:rgba(black, 0.8);
+        display:none;
+      }
+
+      &:hover {
+        a.edit {
+          display:block;
+        }
+      }
     }
-    .joined{margin-bottom:10px;}
+    .ct {
+      margin-left:210px;
+      h2.name {
+        margin:0;margin-bottom:10px;
+        font-size:16px;font-weight:bold;
+        color:white;
+        text-shadow:0 0 1px black;
+      }
+      .joined{margin-bottom:10px;color:#eee;}
+    }
   }
 }
 
@@ -2681,6 +2736,15 @@ form .input.page-form-tag-inputer {
       .ops {
         margin-top:20px;
       }
+
+      .edit-form {
+        form {
+          margin:-20px -20px 0 -70px;
+          padding:20px 20px 30px 70px;
+          background-color:#fcfcfc;
+          border-bottom:solid 1px #ddd;
+        }
+      }
     }
 
     .btb {
@@ -2743,6 +2807,15 @@ form .input.page-form-tag-inputer {
 
       .ops {
         margin-top:20px;
+      }
+
+      .edit-form {
+        form {
+          margin:-20px -20px 0 -70px;
+          padding:20px 20px 30px 70px;
+          background-color:#fcfcfc;
+          border-bottom:solid 1px #ddd;
+        }
       }
     }
 
@@ -2870,5 +2943,72 @@ form .input.page-form-tag-inputer {
 .page-user-course-applies {
   .course-applies{
     margin-bottom:20px;
+  }
+}
+
+.page-account-sync{
+  margin:-20px;
+  .site {
+    border-bottom:solid 1px #ddd;
+    padding:20px;
+    height:25px;line-height:25px;
+    position:relative;
+
+    .icon {
+      float:left;
+      width:25px;height:25px;
+      margin-right:20px;
+    }
+    &.weibo {
+      .icon {
+        background:url(sync/syncicon24.png) no-repeat 0px 0px;
+      }
+    }
+    &.github {
+      .icon {
+        background:url(sync/syncicon24.png) no-repeat -300px 0px;
+      }
+    }
+
+    .name {
+      float:left;
+    }
+    .user, .expired{
+      float:left;
+      color:#999;
+    }
+    a.btn {
+      position:absolute;
+      left:300px;
+    }
+  }
+}
+
+.page-sync-sites {
+  @extend .page-account-sync;
+  margin-bottom:0;
+
+  .site {
+    // height:25px + 5px + 20px;
+
+    &:last-child {
+      border-bottom:none 0;
+    }
+
+    .url {
+      padding-top:5px;
+      line-height:20px;
+      clear:both;
+    }
+  }
+}
+
+.page-account-edit {
+  .base-form {
+    margin:-20px -20px 0;
+    border-bottom:solid 1px #ddd;
+    margin-bottom:20px;
+    padding:20px;
+    background-color:#fcfcfc;
   }
 }

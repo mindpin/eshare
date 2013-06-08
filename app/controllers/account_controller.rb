@@ -48,6 +48,26 @@ class AccountController < Devise::RegistrationsController
     super
   end
 
+  def update
+    self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
+    prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
+
+    re = params[:by] == 'pwd' ? resource.update_with_password(resource_params) : resource.update_attributes(resource_params)
+
+    if re
+      if is_navigational_format?
+        flash_key = update_needs_confirmation?(resource, prev_unconfirmed_email) ?
+          :update_needs_confirmation : :updated
+        set_flash_message :notice, flash_key
+      end
+      sign_in resource_name, resource, :bypass => true
+      respond_with resource, :location => after_update_path_for(resource)
+    else
+      clean_up_passwords resource
+      respond_with resource
+    end
+  end
+
   def avatar
   end
 
@@ -56,6 +76,16 @@ class AccountController < Devise::RegistrationsController
     user.avatar = params[:user][:avatar]
     user.save
     redirect_to :action => :avatar
+  end
+
+  def userpage
+  end
+
+  def userpage_update
+    user = User.find(current_user.id)
+    user.userpage_head = params[:user][:userpage_head]
+    user.save
+    redirect_to :action => :userpage
   end
 
   protected

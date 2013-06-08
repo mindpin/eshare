@@ -84,7 +84,7 @@ SimpleNavbar::Base.config do
   # ------------------------
 
   rule :account do
-    nav :password, :url => '/account/edit' do
+    nav :edit, :url => '/account/edit' do
       controller :account, :only => :edit
     end
     
@@ -92,9 +92,13 @@ SimpleNavbar::Base.config do
       controller :account, :only => :avatar
     end
 
+    nav :userpage, :url => '/account/userpage' do
+      controller :account, :only => :userpage
+    end
+
     if R::INTERNET
       nav :sync, :url => '/account/sync' do
-        controller :account, :only => :sync
+        controller :oauth, :only => :sync
       end
     end
   end

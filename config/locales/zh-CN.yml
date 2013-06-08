@@ -28,11 +28,12 @@ zh-CN:
       learning_plan: 计划
 
     account:
-      password: 修改密码
-      avatar: 修改头像
+      edit: 基础信息设置
+      avatar: 头像设置
+      userpage: 个人页设置
       sync: 社交网站同步
     admin_account:
-      password: 修改密码
+      password: 修改管理员密码
 
   helpers:
     submit:
@@ -70,6 +71,7 @@ zh-CN:
         remember_me: 记住登录状态
         avatar: 用户头像
         email: EMail
+        userpage_head: 个人页版头图片
 
       course:
         name: 课程名

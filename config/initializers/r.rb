@@ -5,12 +5,12 @@ HASH = {
   :weibo_key => 4271779692,
   :weibo_secret => '96371b3a41daaca4cec23e3e8d31018e',
 
-  :github_key => 'c759c6d54e5a91ea0510',
-  :github_secret => '90fb53f99cdd15e73c820a5365678dbda8e706c4'
+  :github_key => 'c067288843b244eefb89',
+  :github_secret => '0897746b031770bfff033044a1e86cd634b20f3b'
 }
 
 class R
-  INHOUSE = true
+  INHOUSE = false
   INTERNET = !INHOUSE
 
   LIBREOFFICE_PATH = HASH[:libreoffice_path]

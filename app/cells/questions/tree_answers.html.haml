@@ -1,0 +1,51 @@
+- user = @user
+= page_tile(:answers, @answers) do
+  - set_id do |answer|
+    answer-#{answer.id}
+
+  - add_left(:vote_up) do |answer|
+    - if answer.creator != user
+      - if answer.has_voted_up_by? user
+        = link_to "/answers/#{answer.id}/vote_cancel", :method => :put, :class => 'cancel', :title => '已投赞成票，点击取消' do
+          %i.icon-chevron-up
+      - else
+        = link_to "/answers/#{answer.id}/vote_up", :method => :put, :title => '点击投赞成票' do
+          %i.icon-chevron-up
+
+  - add_left(:vote_sum)
+
+  - add_left(:vote_down) do |answer|
+    - if answer.creator != user
+      - if answer.has_voted_down_by? user
+        = link_to "/answers/#{answer.id}/vote_cancel", :method => :put, :class => 'cancel', :title => '已投反对票，点击取消' do
+          %i.icon-chevron-down
+      - else
+        = link_to "/answers/#{answer.id}/vote_down", :method => :put, :title => '点击投反对票' do
+          %i.icon-chevron-down
+
+  - add(:creator) do |answer|
+    .avatar= avatar_link answer.creator, :small
+    .name= user_link answer.creator
+    .time= answer.updated_at
+
+  - context do |answer|
+    - add(:content) do
+      = simple_format answer.content
+
+    - if answer.creator == user
+      - add(:ops) do
+        %a.btn.success.mini.edit{:href => "javascript:;"}
+          %i.icon-edit.icon-white
+          %span= t('common.edit')
+        = link_to "/answers/#{answer.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn danger mini delete' do
+          %i.icon-minus.icon-white
+          %span= t('common.delete')
+
+      - add(:'edit-form') do
+        = preserve do
+          = simple_form_for answer, :remote => true, :html => {:style => 'display:none'} do |f|
+            .form-inputs
+              = f.input :content, :as => :text, :input_html => {:rows => 5, :class => 'xxlarge'}
+            .form-actions
+              = f.button :submit, :class => 'success'
+              %a.btn.cancel{:href => 'javascript:;'}= t('common.form.cancel')

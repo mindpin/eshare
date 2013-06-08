@@ -13,6 +13,18 @@ class QuestionsCell < Cell::Rails
     render
   end
 
+  def tree_question(opts = {})
+    @user = opts[:user]
+    @question = opts[:question]
+    render
+  end
+
+  def tree_answers(opts = {})
+    @user = opts[:user]
+    @answers = opts[:answers]
+    render
+  end
+
   def info(opts = {})
     @question = opts[:question]
     render

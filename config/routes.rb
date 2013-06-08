@@ -16,7 +16,6 @@ Eshare::Application.routes.draw do
 
   # /auth/weibo/callback
   get '/auth/:provider/callback' => 'oauth#callback'
-  get '/account/sync' => 'oauth#sync'
   post '/auth/:provider/unbind' => 'oauth#unbind'
 
   # devise
@@ -29,6 +28,9 @@ Eshare::Application.routes.draw do
   devise_scope :user do
     get 'account/avatar' => 'account#avatar'
     put 'account/avatar' => 'account#avatar_update'
+    get 'account/userpage' => 'account#userpage'
+    put 'account/userpage' => 'account#userpage_update'
+    get '/account/sync'  => 'oauth#sync'
   end
 
   resources :announcements

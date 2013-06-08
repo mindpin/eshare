@@ -191,6 +191,15 @@ module ApplicationHelper
     }
   end
 
+  def user_page_head_bg(user)
+    # url = '/assets/user_page/default.png'
+    # fit_image url, :height => 180
+
+    capture_haml {
+      haml_tag 'img', :src => user.userpage_head.versions[:default].url, :width => '100%'
+    }
+  end
+
   module FeedHelper
     def feed_icon(feed)
       capture_haml {

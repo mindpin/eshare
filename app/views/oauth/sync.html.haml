@@ -1,20 +1,30 @@
-.page-account-sync
-  %label 新浪微博
-  - if !current_user.is_binded_weibo?
-    = link_to '绑定', '/auth/weibo'
-  - else
-    - if current_user.binded_weibo_is_expired?
-      .expired (认证过期)
-      = link_to '绑定', '/auth/weibo'
-    - else
-      = link_to '解除绑定', '/auth/weibo/unbind', :method => :post
+- content_for :header do
+  %h1 同步到社交网站
 
-  %label Github
-  - if !current_user.is_binded_github?
-    = link_to '绑定', '/auth/github'
-  - else
-    - if current_user.binded_github_is_expired?
-      .expired (认证过期)
-      = link_to '绑定', '/auth/github'
+.page-account-sync
+  .site.weibo
+    .icon
+    .name 新浪微博
+    - if !current_user.is_binded_weibo?
+      %a.btn.follow.small{:href => '/auth/weibo'} 绑定
     - else
-      = link_to '解除绑定', '/auth/github/unbind', :method => :post
+      - if current_user.binded_weibo_is_expired?
+        .expired （认证过期）
+        %a.btn.follow.small{:href => '/auth/weibo'} 绑定
+      - else
+        - info = current_user.get_weibo_bind_info
+        - name = info['name']
+        .user （#{name}）
+        %a.btn.unfollow.small{:href => '/auth/weibo/unbind', :data => {:method => :post}} 取消绑定
+
+  .site.github
+    .icon
+    .name GitHub
+    - if !current_user.is_binded_github?
+      %a.btn.follow.small{:href => '/auth/github'} 绑定
+    - else
+      - if current_user.binded_github_is_expired?
+        .expired （认证过期）
+        %a.btn.follow.small{:href => '/auth/github'} 绑定
+      - else
+        %a.btn.unfollow.small{:href => '/auth/github/unbind', :data => {:method => :post}} 取消绑定

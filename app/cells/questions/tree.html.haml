@@ -1,73 +1,9 @@
 .page-question-tree
   .pblock
-    .question
-      .con
-        .icon
-        .title= @question.title
-        - if @question.content.present?
-          .content= simple_format @question.content
-
-        - if @question.creator == @user
-          .ops
-            %a.btn.success.mini{:href => "/questions/#{@question.id}/edit"}
-              %i.icon-edit.icon-white
-              %span= t('common.edit')
-            = link_to "/questions/#{@question.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn danger mini' do
-              %i.icon-minus.icon-white
-              %span= t('common.delete')
-
-        .creator
-          .avatar= avatar_link @question.creator, :small
-          .name= user_link @question.creator
-          .time= @question.updated_at
-
-      .btb
-        .fo
-          = question_follow_button @user, @question
+    = render_cell :questions, :tree_question, :user => @user, :question => @question
 
   .pblock
-    - user = @user
-    = page_tile(:answers, @question.answers) do
-      - set_id do |answer|
-        answer-#{answer.id}
-
-      - add_left(:vote_up) do |answer|
-        - if answer.creator != user
-          - if answer.has_voted_up_by? user
-            = link_to "/answers/#{answer.id}/vote_cancel", :method => :put, :class => 'cancel', :title => '已投赞成票，点击取消' do
-              %i.icon-chevron-up
-          - else
-            = link_to "/answers/#{answer.id}/vote_up", :method => :put, :title => '点击投赞成票' do
-              %i.icon-chevron-up
-
-      - add_left(:vote_sum)
-
-      - add_left(:vote_down) do |answer|
-        - if answer.creator != user
-          - if answer.has_voted_down_by? user
-            = link_to "/answers/#{answer.id}/vote_cancel", :method => :put, :class => 'cancel', :title => '已投反对票，点击取消' do
-              %i.icon-chevron-down
-          - else
-            = link_to "/answers/#{answer.id}/vote_down", :method => :put, :title => '点击投反对票' do
-              %i.icon-chevron-down
-
-      - add(:creator) do |answer|
-        .avatar= avatar_link answer.creator, :small
-        .name= user_link answer.creator
-        .time= answer.updated_at
-
-      - context do |answer|
-        - add(:content) do
-          = simple_format answer.content
-
-        - if answer.creator == user
-          - add(:ops) do
-            %a.btn.success.mini{:href => "/answers/#{answer.id}/edit"}
-              %i.icon-edit.icon-white
-              %span= t('common.edit')
-            = link_to "/answers/#{answer.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn danger mini' do
-              %i.icon-minus.icon-white
-              %span= t('common.delete')
+    = render_cell :questions, :tree_answers, :user => @user, :answers => @question.answers
 
     .my-answer
       - if @question.answered_by? @user

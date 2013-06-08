@@ -1,6 +1,8 @@
 class OauthController < ApplicationController
   before_filter :authenticate_user!
 
+  layout 'account'
+
   def sync
   end
 

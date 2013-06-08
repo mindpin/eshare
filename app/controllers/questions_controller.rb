@@ -56,6 +56,16 @@ class QuestionsController < ApplicationController
   end
 
   def update
+    if request.xhr?
+      if @question.update_attributes(params[:question])
+        return render :json => {
+          :status => 'ok', 
+          :html => render_cell(:questions, :tree_question, :user => current_user, :question => @question)
+        }
+      end
+      return render :text => 'question update error', :status => 500
+    end
+
     if @question.update_attributes(params[:question])
       return redirect_to :action => :index
     end

@@ -51,6 +51,9 @@ class User < ActiveRecord::Base
   mount_uploader :avatar, AvatarUploader
   attr_accessible :name, :avatar
 
+  mount_uploader :userpage_head, UserPageHeadUploader
+  attr_accessible :userpage_head
+
   # 声明角色
   attr_accessible :role
   validates :role, :presence => true
