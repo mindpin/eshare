@@ -125,6 +125,8 @@ module ApplicationHelper
 
   def follow_button(cur_user, user)
     # %a.page-follow.follow.btn.success{:data => {:id => user.id}}
+    return '' if cur_user == user
+
     if cur_user.has_follow? user
       return capture_haml {
         haml_tag 'a.page-follow.unfollow.btn.small', '取消关注', :data => {:id => user.id}
@@ -142,6 +144,35 @@ module ApplicationHelper
       haml_tag 'a.page-tag.tag', :href => "/tags/#{sub_path}/#{tag.name}", :data => {:name => tag.name} do
         haml_tag 'i.icon-tag'
         haml_tag 'span', tag.name
+      end
+    }
+  end
+
+  def user_roles_str(user)
+    return '' if user.blank? || user.roles.blank?
+    rrr = {
+      :student => '学生',
+      :teacher => '老师',
+      :admin => '系统管理员',
+      :manager => '教学管理员'
+    }
+
+    user.roles.map {|role|
+      rrr[role]
+    }.join('，')
+  end
+
+  def course_apply_status(apply)
+    klass = apply.status.downcase
+    string = {
+      SelectCourseApply::STATUS_REQUEST => '申请',
+      SelectCourseApply::STATUS_ACCEPT => '批准',
+      SelectCourseApply::STATUS_REJECT => '拒绝'
+    }[apply.status]
+
+    capture_haml {
+      haml_tag 'span', :class => klass do
+        haml_tag 'span', "#{string} #{apply.status}"
       end
     }
   end
@@ -173,10 +204,29 @@ module ApplicationHelper
               haml_concat user_link(feed.who)
               haml_concat '提了一个问题'
               haml_concat question_link(feed.to)
-            when 'create_answer'
+            when 'update_question'
               haml_concat user_link(feed.who)
-              haml_concat '回答了问题'
-              haml_concat question_link(feed.to.question)
+              haml_concat '修改了问题'
+              haml_concat question_link(feed.to)
+
+            when 'create_answer'
+              if(answer = feed.to).present?
+                if(question = answer.question).present?
+                  haml_concat user_link(feed.who)
+                  haml_concat '回答了问题'
+                  haml_concat question_link(question)
+                end
+              end
+            when 'update_answer'
+              if(answer = feed.to).present?
+                if(question = answer.question).present?
+                  haml_concat user_link(feed.who)
+                  haml_concat '修改了对问题'
+                  haml_concat question_link(question)
+                  haml_concat '的回答'
+                end
+              end
+
             when 'create_answer_vote', 'update_answer_vote'
               if (answer_vote = feed.to).present?
                 if (answer = answer_vote.answer).present?

@@ -1,15 +1,12 @@
 SimpleNavbar::Base.config do
   rule :admin do
-    nav :home, :url => '/admin' do
-      controller :'admin/index'
-    end
-
     nav :users_manage, :url => '/admin/users' do
       controller :'admin/users'
     end
 
-    nav :categories_manage, :url => '/admin/categories' do
-      controller :'admin/categories'
+    nav :courses_manage, :url => '/manage/courses' do
+      controller :'manage/courses'
+      controller :'manage/chapters'
     end
   end
 
@@ -28,11 +25,12 @@ SimpleNavbar::Base.config do
 
     nav :user, :url => '/users/me' do
       controller :users
+      controller :friends
     end
 
-    nav :disk, :url => '/disk' do
-      controller :disk
-    end
+    # nav :disk, :url => '/disk' do
+    #   controller :disk
+    # end
 
     nav :tags, :url => '/tags' do
       controller :tags
@@ -67,11 +65,12 @@ SimpleNavbar::Base.config do
 
     nav :user, :url => '/users/me' do
       controller :users
+      controller :friends
     end
 
-    nav :disk, :url => '/disk' do
-      controller :disk
-    end
+    # nav :disk, :url => '/disk' do
+    #   controller :disk
+    # end
 
     nav :tags, :url => '/tags' do
       controller :tags
@@ -79,6 +78,24 @@ SimpleNavbar::Base.config do
 
     nav :questions, :url => '/questions' do
       controller :questions
+    end
+  end
+
+  # ------------------------
+
+  rule :account do
+    nav :password, :url => '/account/edit' do
+      controller :account, :only => :edit
+    end
+    
+    nav :avatar, :url => '/account/avatar' do
+      controller :account, :only => :avatar
+    end
+  end
+
+  rule :admin_account do
+    nav :password, :url => '/account/edit' do
+      controller :account, :only => :edit
     end
   end
 

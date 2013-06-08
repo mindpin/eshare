@@ -1,5 +1,13 @@
 class QuestionsController < ApplicationController
   before_filter :pre_load
+  layout Proc.new { |controller|
+    case controller.action_name
+    when 'show'
+      return 'question_page'
+    else
+      return 'application'
+    end
+  }
 
   def pre_load
     @question = Question.find(params[:id]) if params[:id]
@@ -16,16 +24,14 @@ class QuestionsController < ApplicationController
   def create
     @question = current_user.questions.build(params[:question])
 
-    if request.xhr? && params[:chapter_id]
-      @chapter = Chapter.find params[:chapter_id]
-      @question.model = @chapter
-      return render(:partial => 'course_wares/questions', :locals => {:questions => [@question]} ) if @question.save
+    if request.xhr? && params[:course_ware_id]
+      @course_ware = CourseWare.find params[:course_ware_id]
+      @question.course_ware = @course_ware
+      return render :text => (render_cell :questions, :list, :questions => [@question], :user => current_user) if @question.save
       return render :text => 'params invalid', :status => 500
     end
-
-    if @question.save
-      return redirect_to :action => :index
-    end
+    
+    return redirect_to :action => :index if @question.save
     render :action => :new
   end
 
@@ -40,8 +46,6 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @answer = Answer.new
-
     @question.visit_by!(current_user)
   end
 

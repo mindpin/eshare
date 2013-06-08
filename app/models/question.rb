@@ -2,14 +2,23 @@ class Question < ActiveRecord::Base
   include CourseInteractive::QuestionMethods
   include QuestionFeedTimelime::QuestionMethods
   include QuestionFollow::QuestionMethods
+  include QuestionVote::QuestionMethods
   
-  attr_accessible :title, :content, :ask_to_user_id, :creator, :model, :best_answer
+  attr_accessible :title, :content, :ask_to_user_id, :creator, :best_answer,
+                  :course, :chapter, :course_ware
 
   belongs_to :creator, :class_name => 'User', :foreign_key => :creator_id
   belongs_to :ask_to, :class_name => 'User', :foreign_key => :ask_to_user_id
+  
+  belongs_to :course
+  belongs_to :chapter
+  belongs_to :course_ware
+
   belongs_to :best_answer, :class_name => 'Answer', :foreign_key => :best_answer_id
-  belongs_to :model, :polymorphic => true
   has_many :answers
+  has_many :question_votes, :dependent => :delete_all
+
+  default_scope order('vote_sum desc')
 
   validates :creator, :title, :presence => true
 
@@ -27,20 +36,7 @@ class Question < ActiveRecord::Base
   scope :has_best_answer, :conditions => ['best_answer_id > 0']
   scope :today, :conditions => ['DATE(created_at) = ?',Time.now.to_date]
   scope :by_course, lambda {|course|
-
-    chapter_ids = course.chapter_ids.to_a
-    course_wares_ids = course.course_ware_ids.to_a
-     
-    wheres = ["(model_type = 'Course' and model_id = #{course.id})"]
-    if !chapter_ids.blank?
-      wheres << "(model_type = 'Chapter' and model_id in (#{chapter_ids*","}))"
-    end
-     
-    if !course_wares_ids.blank?
-      wheres << "(model_type = 'CourseWare' and model_id in (#{course_wares_ids*","}))"
-    end
-     
-    {:conditions => wheres*" or "}
+    {:conditions => ['questions.course_id = ?', course.id]}
   }
   
   scope :on_date, lambda { |date|
@@ -56,6 +52,21 @@ class Question < ActiveRecord::Base
   record_feed :scene => :questions,
                         :callbacks => [:create, :update]
 
+  before_save :update_actived_at
+  def update_actived_at
+    self.actived_at = Time.now if self.changed? || self.new_record?
+  end
+
+  before_save :update_course_related_attrs
+  def update_course_related_attrs
+    if self.course_ware.present?
+      self.chapter = self.course_ware.chapter
+      self.course = self.chapter.course
+    elsif self.chapter.present?
+      self.course = self.chapter.course
+    end
+  end
+
   def answered_by?(user)
     return false if user.blank?
     return self.answer_of(user).present?
@@ -64,21 +75,6 @@ class Question < ActiveRecord::Base
   def answer_of(user)
     return nil if user.blank?
     return self.answers.by_user(user).first
-  end
-
-  def course
-    case self.model
-    when Chapter
-      self.model.course
-    when Course
-      self.model
-    when CourseWare
-      self.model.chapter.course
-    else
-      nil
-    end
-  rescue
-    nil
   end
 
   module UserMethods
@@ -90,7 +86,7 @@ class Question < ActiveRecord::Base
       follows_questions = Question.joins(:follows).where(%`
         question_follows.user_id = #{self.id}
           and
-        question_follows.last_view_time < questions.updated_at
+        question_follows.last_view_time < questions.actived_at
       `)
 
       ask_to_questions = Question.joins(%`
@@ -102,7 +98,15 @@ class Question < ActiveRecord::Base
       `)
 
       questions = follows_questions + ask_to_questions
-      questions.sort_by(&:updated_at).reverse
+      questions.sort_by(&:actived_at).reverse
+    end
+  end
+
+  searchable do
+    text :title, :content
+
+    text :answers_content do
+      answers.pluck("answers.content")
     end
   end
 end

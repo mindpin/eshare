@@ -16,6 +16,8 @@ set :shared_paths, [
   '.ruby-version', 
   'deploy/sh/property.yaml', 
   'public/YKAuth.txt', 
+  'public/project_key',
+  'config/oauth_key.yaml',
   'config/initializers/r.rb']
 
 task :environment do
@@ -28,6 +30,7 @@ task :setup => :environment do
   queue! %[mkdir -p "#{deploy_to}/shared/config/initializers"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/config"]
   queue! %[touch "#{deploy_to}/shared/config/database.yml"]
+  queue! %[touch "#{deploy_to}/shared/config/oauth_key.yaml"]
   queue! %[touch "#{deploy_to}/shared/config/initializers/r.rb"]
 
   queue! %[mkdir -p "#{deploy_to}/shared/db"]
@@ -38,18 +41,30 @@ task :setup => :environment do
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/deploy/sh"]
   queue! %[touch "#{deploy_to}/shared/deploy/sh/property.yaml"]
 
-  queue! %[mkdir -p "#{deploy_to}/shared/public"]
+  queue! %[mkdir -p "#{deploy_to}/shared/public/project_key"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/public"]
-  queue! %[touch "#{deploy_to}/shared/public/YKAuth.txt"]  
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/public/project_key"]
+  queue! %[touch "#{deploy_to}/shared/public/YKAuth.txt"]
 
   queue! %[touch "#{deploy_to}/shared/.ruby-version"]
 
   queue  %[echo "-----> Be sure to edit 'shared/config/database.yml'."]
+  queue  %[echo "-----> Be sure to edit 'shared/config/oauth_key.yaml'."]
   queue  %[echo "-----> Be sure to edit 'shared/db/schema.rb'."]
   queue  %[echo "-----> Be sure to edit 'shared/config/initializers/r.rb'."]
   queue  %[echo "-----> Be sure to edit 'shared/.ruby-version'."]
   queue  %[echo "-----> Be sure to edit 'shared/deploy/sh/property.yaml'."]
   queue  %[echo "-----> Be sure to edit 'shared/public/YKAuth.txt'."]
+end
+
+desc "init_verify_key"
+task :init_verify_key => :environment do
+  deploy do
+    invoke :'git:clone'
+    invoke :'deploy:link_shared_paths'
+    queue! "bundle"
+    queue! "ruby script/init_verify_key.rb"
+  end
 end
 
 desc "Deploys the current version to the server."
@@ -82,6 +97,7 @@ end
 desc "restart server"
 task :restart => :environment do
   queue %[
+    source /etc/profile
     cd #{deploy_to}/#{current_path}
     ./deploy/sh/redis_server.sh restart
     ./deploy/sh/sidekiq.sh restart

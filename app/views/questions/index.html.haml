@@ -1,48 +1,13 @@
-.page-questions-index
+- content_for :header do
   %h1= t('page.questions.index')
+  .btn-group
+    %a.btn.success{:href => '/questions/new'}
+      %i.icon-plus.icon-white
+      %span 发起提问
 
-  = page_button_group :questions do |g|
-    - g.add '发起提问', '/questions/new'
-
-  = paginate @feeds
-
-  = page_tile(:'questions-feeds', @feeds) do
-    - add_left(:avatar) do |feed|
-      - if feed.to
-        = avatar feed.to.creator
-    - add(:desc) do |feed|
-      = feed_desc feed
-    - add(:time, :quiet) do |feed|
-      = feed.created_at
-
-    - context do |feed|
-
-      - if feed.what == 'create_question'
-        - question = feed.to
-        - if question.present?
-          - add(:title) do
-            %a{:href => "/questions/#{question.id}"}= question.title
-          - add(:content) do
-            = question.content
-          - add_foot(:answers) do
-            %a{:href => "/questions/#{question.id}"} #{question.answers.count} 个回答
-
-      - if feed.what == 'create_answer'
-        - answer = feed.to
-        - question = answer.question
-        - add(:title) do
-          %a{:href => "/questions/#{question.id}"}= question.title
-        - add(:'answer-content') do
-          = answer.content
-
-      - if ['update_answervote', 'create_answervote'].include? feed.what
-        - vote = feed.to
-        - answer = vote.answer
-        - question = answer.question
-        - add(:title) do
-          %a{:href => "/questions/#{question.id}"}= question.title
-        - add(:'answer-creator', :bold) do
-          %span>= user_link answer.creator
-          %span> ：
-        - add(:'answer-content') do
-          = answer.content
+.page-questions-index
+  .mainp66
+    .cpart
+      %h3 最新动态
+      = paginate @feeds
+      = render_cell :timeline, :render_feeds, :user => current_user, :feeds => @feeds

@@ -73,18 +73,10 @@ module CourseFeedTimelime
             feeds.to_type = 'Question'
               and
             feeds.to_id = questions.id
-            INNER JOIN course_wares
-              ON
-            questions.model_type = 'CourseWare'
-              and
-            questions.model_id = course_wares.id
-            INNER JOIN chapters
-              ON
-            chapters.id = course_wares.chapter_id
           WHERE
             feeds.what = 'create_question'
           and
-            chapters.course_id = #{self.id}
+            questions.course_id = #{self.id}
           and
             feeds.scene = 'questions'
 

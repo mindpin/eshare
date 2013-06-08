@@ -1,5 +1,7 @@
-.page-files-index{:data => {:path => @current_dir_path}}
+- content_for :header do
   %h1 我的文件夹
+
+.page-files-index{:data => {:path => @current_dir_path}}
   = render_cell :file_breadcrumb, :display
 
   .operatebar.btn-group

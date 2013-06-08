@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'spec_helper'
 
 
@@ -21,5 +22,15 @@ describe YoukuVideoList do
 
   it "解析结果" do
     p @v.parse
+  end
+
+  describe YoukuVideoList::CourseMethods do
+    let(:user) {FactoryGirl.create :user}
+    subject {Course.import_youku_video_list('http://www.youku.com/show_page/id_z7a3c4ddaaed011e1b52a.html', user)}
+
+    it "创建了一个默认课程" do
+      expect {subject}.to change {Chapter.count}.by(1)
+      Course.first.cover.file.should_not be nil
+    end
   end
 end

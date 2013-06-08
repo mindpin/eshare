@@ -1,0 +1,6 @@
+.page-user-page-navbar
+  = page_navbar do |navbar|
+    - navbar.add_item("<span>主页</span>".html_safe, "/users/#{@user.id}")
+    - navbar.add_item("<span>学习的课程</span><span class='count'>#{@user.joined_courses.count}</span>".html_safe, "/users/#{@user.id}/courses")
+    - navbar.add_item("<span>提问</span><span class='count'>#{@user.questions.count}</span>".html_safe, "/users/#{@user.id}/questions")
+    - navbar.add_item("<span>回答</span><span class='count'>#{@user.answers.count}</span>".html_safe, "/users/#{@user.id}/answers")

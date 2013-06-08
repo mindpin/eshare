@@ -59,16 +59,16 @@ describe Question do
           @answer = FactoryGirl.create(:answer, :question => @question)
         end
 
-        @answered_updated_at = @question.updated_at
+        @answered_actived_at = @question.actived_at
       }
 
       it "问题被任何人回答" do
-        @answered_updated_at.should > @updated_at
+        @answered_actived_at.should > @updated_at
       end
 
       it "修改回答" do
         @answer.update_attributes({:content => 'test'})
-        @question.updated_at.should > @answered_updated_at
+        @question.actived_at.should > @answered_actived_at
       end
 
     end
@@ -108,21 +108,27 @@ describe Question do
     }
 
     it{
-      question = FactoryGirl.create(:question, :model => @course)
+      question = FactoryGirl.create(:question, :course => @course)
       question.reload
       question.course.should == @course
+      question.chapter.should == nil
+      question.course_ware.should == nil
     }
 
     it{
-      question = FactoryGirl.create(:question, :model => @chapter)
+      question = FactoryGirl.create(:question, :chapter => @chapter)
       question.reload
       question.course.should == @course
+      question.chapter.should == @chapter
+      question.course_ware.should == nil
     }
 
     it{
-      question = FactoryGirl.create(:question, :model => @course_ware)
+      question = FactoryGirl.create(:question, :course_ware => @course_ware)
       question.reload
       question.course.should == @course
+      question.chapter.should == @chapter
+      question.course_ware.should == @course_ware
     }
 
     it{
@@ -284,45 +290,88 @@ describe Answer do
     it "is_anonymous 为 false" do
       Answer.onymous.each { |a| a.is_anonymous.should == false }
     end
-
   end
-
-
 end
 
 describe AnswerVote do
   context('Validation') {
     before {
       @question     = FactoryGirl.create :question
-      @user         = FactoryGirl.create :user
-      @answer       = FactoryGirl.create :answer, :question => @question,
-                                                  :creator => @user
+      @answer_user         = FactoryGirl.create :user
+      @vote_user         = FactoryGirl.create :user
+
+      Timecop.travel(Time.now - 2.day) do
+        @answer       = FactoryGirl.create :answer, :question => @question,
+                                                  :creator => @answer_user
+      end
+
+      @answer_updated_at = @answer.updated_at
     }
 
     it {
       vote = AnswerVote.new :answer => @answer,
-                            :user => @user
+                            :user => @vote_user
       vote.valid?.should == false
     }
 
     context {
-      before { @vote = @answer.answer_votes.create :user => @user }
+      before { 
+        @vote = @answer.answer_votes.create :user => @vote_user
+      }
+
       it { @vote.valid?.should == false }
       it { AnswerVote.count.should == 0 }
     }
 
     context {
       before {
-        @vote = @answer.answer_votes.create :user => @user
-        @vote.update_attribute :kind, 'VOTE_CANCEL'
+        @vote = @answer.answer_votes.create :user => @vote_user
+        @vote.update_attribute :kind, 'VOTE_DOWN'
+
+        @answer.reload
       }
       it { @vote.valid?.should == true }
       it { AnswerVote.count.should == 1 }
+
+      it "答案投票, updated_at 不更新" do
+        @answer.updated_at.to_i.should == @answer_updated_at.to_i
+      end
     }
+
+    context "不能对自己的回答进行投票" do
+
+      before {
+        @vote = @answer.answer_votes.create :user => @answer_user
+        @vote.kind = 'VOTE_UP'
+        @vote.save
+      }
+
+      it { @vote.valid?.should == false }
+      it { AnswerVote.count.should == 0 }
+
+      it "vote_up_by! 无记录" do
+        @answer.vote_up_by! @answer_user
+
+        AnswerVote.count.should == 0
+      end
+
+      it "vote_down_by! 无记录" do
+        @answer.vote_down_by! @answer_user
+
+        AnswerVote.count.should == 0
+      end
+
+      it "vote_cancel_by! 无记录" do
+        @answer.vote_cancel_by! @answer_user
+
+        AnswerVote.count.should == 0
+      end
+      
+    end
 
     context {
       before {
-        @vote = @answer.answer_votes.create :user => @user
+        @vote = @answer.answer_votes.create :user => @vote_user
         @vote.update_attributes :kind => 'XXXX'
         # udpate_attribute 方法不会触发校验
       }
@@ -331,8 +380,34 @@ describe AnswerVote do
     }
   }
 
+  context '答案投票的级联删除' do
+    before {
+      @answer = FactoryGirl.create :answer
+      5.times do
+        vote = FactoryGirl.create :answer_vote, :answer => @answer
+      end
+    }
 
+    it {
+      Answer.count.should == 1
+    }
+
+    it {
+      @answer.answer_votes.count.should == 5
+    }
+
+    it {
+      @answer.destroy
+      Answer.count.should == 0
+    }
+
+    it {
+      @answer.destroy
+      AnswerVote.count.should == 0
+    }
+  end
 end
+
 
 
 
@@ -385,12 +460,8 @@ describe "最佳答案" do
     it "应该不是原来的值" do
       @question.best_answer.should_not == @origin_best_answer
     end
-    
   end
-
-
 end
-
 
 describe "有最佳答案的问题列表" do
   before {
@@ -429,4 +500,61 @@ describe "有最佳答案的问题列表" do
   it "列表正确" do
     @questions_with_best_answer.should == [@question_3, @question_2, @question_1]
   end
+end
+
+describe '问题的 actived_at 更新' do
+  before {
+    @question = FactoryGirl.create :question
+
+    @updated_at = @question.updated_at
+    @actived_at = @question.actived_at
+  }
+
+  it {
+    @actived_at.should_not be_blank
+  }
+
+  it('创建回答') {
+    Timecop.travel(@actived_at + 1.day) do
+      FactoryGirl.create :answer, :question => @question
+    end
+
+    @question.actived_at.should > @actived_at
+    @question.updated_at.should == @updated_at
+  }
+
+  it('修改问题') {
+    Timecop.travel(@actived_at + 1.day) do
+      @question.update_attributes({
+        :title => 'foobar'  
+      })
+    end
+
+    @question.actived_at.should > @actived_at
+    @question.updated_at.should > @updated_at
+  }
+end
+
+describe 'answer.has_voted_up_by? answer.has_voted_down_by?' do
+  before {
+    @answer = FactoryGirl.create :answer
+    @user = FactoryGirl.create :user
+  }
+
+  it {
+    @answer.has_voted_up_by?(@user).should == false
+    @answer.has_voted_down_by?(@user).should == false
+  }
+
+  it {
+    @answer.vote_up_by! @user
+    @answer.has_voted_up_by?(@user).should == true
+    @answer.has_voted_down_by?(@user).should == false
+  }
+
+  it {
+    @answer.vote_down_by! @user
+    @answer.has_voted_up_by?(@user).should == false
+    @answer.has_voted_down_by?(@user).should == true
+  }
 end

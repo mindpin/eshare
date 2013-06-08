@@ -32,7 +32,6 @@ jQuery ->
         if evt.keyCode == 13
           @send_mark()
 
-
       @$send.on 'click', @send_mark
 
 
@@ -156,7 +155,6 @@ jQuery ->
         return -1
 
     init_marks_inputer: ->
-
 
 
   # 此类用来对各种视频源的播放进度记录做一个统一整合

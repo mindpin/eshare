@@ -20,7 +20,7 @@
       .questions
         .bar 线上问答
         .form
-          = simple_form_for Question.new, :url => [@chapter, :questions] do |f|
+          = simple_form_for Question.new, :url => [@course_ware, :questions] do |f|
             .question-desc{:style => 'display:none;'}
               .p 请准确详尽的描述问题，方便他人理解你的疑问。
               .p 提问之前可以先查找有没有类似的问题已经被解答过，尽量避免提出重复的问题。
@@ -30,7 +30,9 @@
               %a.btn.submit.success{:href => 'javascript:;'}= t('helpers.submit.question.create')
               %a.btn.cancel{:href => "javascript:;"}= t('common.form.cancel')
 
-        = render 'course_wares/questions', :questions => @questions
+        = render_cell :questions, :list, :questions => @questions, :user => current_user
+        - if @questions.length > 1
+          = paginate @questions
 
       .side-info
         .chart

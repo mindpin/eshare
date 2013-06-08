@@ -1,10 +1,4 @@
-- page_title '登录'
-
-.page-sign-in
-  = simple_form_for resource, :as => resource_name, :url => session_path(resource_name) do |f|
-    = f.input :login, :placeholder => '填写用户名或邮箱'
-    = f.input :password, :required => true
-    - if devise_mapping.rememberable?
-      = f.input :remember_me, :as => :boolean
-    .form-actions
-      = f.button :submit, t('common.sign-in'), 'data-disable-with' => t('common.sign-ining')
+.page-sign
+  = render_cell :account, :sign_toggle
+  = render_cell :account, :sign_in_form
+  = render_cell :account, :sign_logo

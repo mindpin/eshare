@@ -6,17 +6,27 @@
     - g.add '导入优酷播放列表', '/manage/courses/import_youku_list', :success
     - g.add '导入土豆豆单', '/manage/courses/import_tudou_list', :success
 
+= render_cell :layout, :manage_courses_filter, :query => @query
+
 .page-admin-courses
   = paginate @courses
   = page_data_table(:courses, @courses, :striped, :bordered) do |table|
+    - table.add_column(:id) do |course|
+      = "##{course.id}"
     - table.add_column(:name) do |course|
       = link_to course.name, "/manage/courses/#{course.id}"
     - table.add_column(:cid)
-    - table.add_column(:desc) do |course|
-      = truncate_u course.desc, 20
+    - table.add_column(:creator) do |course|
+      = user_link course.creator
+    / - table.add_column(:desc) do |course|
+    /   = truncate_u course.desc, 20
     - table.add_column(:'chapters-count') do |course|
       = course.chapters.count
       
+    - if R::INHOUSE
+      - table.add_column(:select_apply) do |course|
+        %span #{course.apply_users.count} 人
+
     - table.add_column(:ops) do |course|
 
       %a.btn.mini.inverse{:href => "/manage/courses/#{course.id}/edit"}
@@ -26,3 +36,8 @@
       = link_to "/manage/courses/#{course.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger' do
         %i.icon-remove-sign.icon-white
         %span= t('common.delete')
+
+      - if R::INHOUSE
+        %a.btn.mini{:href => "/manage/courses/#{course.id}/applies"}
+          %i.icon-list-alt
+          %span 选课管理

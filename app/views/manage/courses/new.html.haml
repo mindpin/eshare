@@ -1,4 +1,4 @@
-.page-content-header
+- content_for :header do
   = render_cell :manage_courses_breadcrumb, :form, :model => @course
 
 = simple_form_for @course, :url => '/manage/courses' do |f|

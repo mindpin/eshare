@@ -9,34 +9,9 @@
       %h3 课程列表
 
       - if @courses.present?
-        .courses
-          = page_tile :tag_courses, @courses do
-            - add_left :cover do |course|
-              = link_to course do
-                = fit_image course.cover.versions[:normal].url, :width => 150, :height => 150
-
-            - add :title do |course|
-              = link_to course.name, course
-
-            - add :desc do |course|
-              = truncate_u course.desc, 64
-
-            - add :count do |course|
-              %span.course-wares-count
-                %i.icon-leaf
-                %span #{course.chapters.count} 个章节
-              %span.course-practices-count
-                %i.icon-tasks
-                %span #{course.questions.count} 个问答
-              - if user_signed_in?
-                - percent = course.read_percent(current_user)
-                %span.percent 已学习 #{percent}
-
-            - add :study do |course|
-              - if user_signed_in?
-                = link_to '＞ 开始学习', course
-
-        = paginate @courses
+        - @courses.each do |course|
+          = render_cell :course, :card, :course => course, :user => current_user
+          
       - else
         %h2 该标签下暂时没有内容
 

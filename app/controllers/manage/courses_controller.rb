@@ -1,8 +1,19 @@
 class Manage::CoursesController < ApplicationController
   before_filter :authenticate_user!
+  layout :get_layout
+  def get_layout
+    return 'admin' if current_user.is_admin?
+    'application'
+  end
   
   def index
-    @courses = Course.page(params[:page])
+    if (query = @query = params[:q]).blank?
+      @courses = Course.page(params[:page])
+    else
+      @courses = @search = Course.search {
+        fulltext query
+      }.results
+    end
   end
 
   def new
@@ -52,9 +63,7 @@ class Manage::CoursesController < ApplicationController
 
   def do_import
     file = params[:excel_file]
-    # render :text => File.extname(file.original_filename)
     Course.import(file, current_user)
-
     redirect_to :action => :index
   end
 

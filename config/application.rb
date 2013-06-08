@@ -43,5 +43,18 @@ module Eshare
       'code', 'pre', 'p', 'br', 'img', 'cite', 'blockquote', 'b', 'i', 'em',
       'strong', 'span'
     config.action_view.sanitized_allowed_attributes = 'href', 'src'
+
+    # FOR INTERNET
+    config.to_prepare do
+      Devise::PasswordsController.layout Proc.new { |controller|
+        if controller.request.headers['X-PJAX']
+          return false
+        end
+
+        return 'auth'
+      }
+    end
+
+    # EMAIL setting in r.rb
   end
 end

@@ -1,0 +1,6 @@
+.page-user-page-questions
+  .cpart
+    %h3 我提出的问题
+    - questions = current_user.questions.page params[:page]
+    = render_cell :questions, :list, :questions => questions, :user => current_user
+    = paginate questions

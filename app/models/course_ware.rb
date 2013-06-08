@@ -7,6 +7,7 @@ class CourseWare < ActiveRecord::Base
   include CourseReadPercent::CourseWareMethods
   include CourseWareKindMethods
   include CourseWareReadingDelta::CourseWareMethods
+  include StepHistory::CourseWareMethods
 
   attr_accessible :title, :desc, :url, :creator, :total_count
   attr_accessible :title, :desc, :file_entity_id, :kind, :url, :as => :upload
@@ -29,7 +30,10 @@ class CourseWare < ActiveRecord::Base
                            :source => :user
 
   has_many :course_ware_marks
-  has_many :questions, :as => :model
+  has_many :questions
+
+  has_many :javascript_steps
+  has_many :css_steps
 
   scope :by_course, lambda {|course|
     joins(:chapter).where('chapters.course_id = ?', course.id)

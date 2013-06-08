@@ -4,6 +4,7 @@ zh-CN:
       home: 首页
       users_manage: 用户管理
       categories_manage: 分类管理
+      courses_manage: 课程管理
 
     teacher:
       dashboard: 动态
@@ -16,7 +17,6 @@ zh-CN:
       courses_manage: 课程管理
       courses_manage_aj: 课管理β
 
-
     student:
       dashboard: 动态
       courses: 课程
@@ -27,13 +27,23 @@ zh-CN:
 
       learning_plan: 计划
 
+    account:
+      password: 修改密码
+      avatar: 修改头像
+    admin_account:
+      password: 修改密码
+
   helpers:
     submit:
       course:
         create: 创建%{model}
         update: 更新%{model}
+      question:
+        create: 确定提问
+        update: 更新问题
       answer:
         create: 发布回答
+        update: 更新回答
       chapter:
         create: 创建章节
         update: 更新章节
@@ -41,9 +51,8 @@ zh-CN:
         create: 创建课件
         update: 更新课件
       user:
-        update: 确定
-      question:
-        create: 确定提问
+        create: 创建用户
+        update: 确定更新
 
   activerecord:
     models:
@@ -54,10 +63,13 @@ zh-CN:
       user:
         login: 用户名
         name: 姓名
+        current_password: 当前密码
         password: 密码
         password_confirmation: 确认密码
         remember_me: 记住登录状态
         avatar: 用户头像
+        email: EMail
+
       course:
         name: 课程名
         cid: 课程编号
@@ -70,6 +82,11 @@ zh-CN:
       course_ware:
         title: 课件标题
         desc: 课件简介
+      question:
+        title: 问题
+        content: 具体描述
+      answer:
+        content: 回答正文
 
     errors:
       models:
@@ -96,6 +113,27 @@ zh-CN:
             title:
               blank: 必须填写课件标题
 
+        user:
+          attributes:
+            email:
+              blank: 邮箱未填写
+              taken: 邮箱已经注册过了
+              invalid: 邮箱格式不正确
+            password:
+              blank: 密码未填写
+              confirmation: 确认密码未填写
+              too_short: 密码太短
+            name:
+              blank: 昵称未填写
+              taken: 昵称已经被使用了
+            current_password:
+              blank: 当前密码未填写
+              invalid: 当前密码不正确
+        question:
+          attributes:
+            title:
+              blank: 必须填写问题
+
 
   views:
     pagination:
@@ -112,8 +150,11 @@ zh-CN:
       index: 问答首页
 
   common:
-    sign-in: 登录
+    sign-in: 登　录
     sign-ining: 正在登录
+
+    sign-up: 注　册
+    sign-uping: 正在注册
 
     edit: 编辑
     delete: 删除
@@ -129,8 +170,8 @@ zh-CN:
 
     site:
       title:
-        app: MINDPIN EduShare
-        admin: MINDPIN EduShare | ADMIN
+        app: EduShare
+        admin: EduShare | ADMIN
       home_title:
         app: EduShare
         admin: EduShare Admin
@@ -144,13 +185,14 @@ zh-CN:
       course-ware-no-desc: 当前小节还没有简介
 
     question:
-      you-can-answer-only-once: 一个问题你只能回答一次，不过你可以修改 %{your-answer}
+      you-can-answer-only-once: 你已经回答过这个问题了。对于一个问题你只能回答一次，不过你可以编辑修改 %{your-answer}
       your-answer: 你自己的回答
 
 
   compoents:
     data_table:
       users:
+        id: ID
         role: 角色
         login: 用户名
         name: 姓名
@@ -165,13 +207,15 @@ zh-CN:
         ops: 操作
 
       courses:
-        role: 角色
+        id: ID
         name: 课程名称
         cid: 课程编号
         desc: 简介
         syllabus: 教学大钢
         ops: 操作
         chapters-count: 章节数
+        creator: 创建者
+        select_apply: 选课人数
 
       chapters:
         title: 标题
@@ -190,6 +234,11 @@ zh-CN:
         ops: 操作
         position: 排序位置
         convert_status: 转码状态
+
+      course-applies:
+        user: 选课人
+        status: 选课状态
+        ops: 操作
 
       questions:
         title: 标题
@@ -212,3 +261,10 @@ zh-CN:
         lft: left
         rgt: right
         ops: 操作
+
+  devise:
+    failure:
+      user:
+        unauthenticated: 用户验证失败
+        not_found_in_database: 用户不存在
+        invalid: 用户密码不正确

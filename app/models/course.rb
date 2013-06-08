@@ -39,7 +39,7 @@ class Course < ActiveRecord::Base
     self.set_tag_list(tags_str, :user => user, :force_public => true)
   end
 
-  attr_accessible :name, :cid, :desc, :syllabus, :cover, :creator
+  attr_accessible :name, :cid, :desc, :syllabus, :cover, :creator, :with_chapter
 
   belongs_to :creator, :class_name => 'User', :foreign_key => :creator_id
   has_many :chapters
@@ -54,7 +54,7 @@ class Course < ActiveRecord::Base
 
   has_many :test_papers
 
-  has_many :questions, :as => :model
+  has_many :questions
 
   validates :creator, :presence => true
 
@@ -63,14 +63,6 @@ class Course < ActiveRecord::Base
 
   default_scope order('courses.id desc')
   max_paginates_per 50
-
-  # 最近被指定用户学习过的课程
-  scope :recent_read_by, lambda { |user|
-    joins(:course_ware_readings)
-      .where('course_ware_readings.user_id = ?', user.id)
-      .group(:id)
-      .order('course_ware_readings.updated_at DESC')
-  }
 
   # carrierwave
   mount_uploader :cover, CourseCoverUploader
@@ -125,6 +117,30 @@ class Course < ActiveRecord::Base
     end
 
     return '无'
+  end
+
+  # 给视频类课程根据其中的视频设置封面
+  def set_video_course_cover
+    return if course_wares.blank?
+    cw = course_wares.first
+    if cw.is_tudou? || cw.is_youku?
+      url = cw.cover_url
+      return if url.blank?
+      require 'open-uri'
+
+      tmpfile = Tempfile.new('foo')
+      path = "#{tmpfile.path}.png"
+
+      open(path, 'wb') do |file|
+        file << open(url).read
+      end
+
+      file = File.new path
+
+      p file.size
+      self.cover = file
+      self.save
+    end
   end
 
   module UserMethods

@@ -36,7 +36,7 @@ describe CourseFeedTimelime do
         @course_ware_2.set_read_by!(@user_1)
         @course_ware_reading_21 = @course_ware_2.course_ware_readings.by_user(@user_1).first
         # 提问问题
-        @question_1 = FactoryGirl.create(:question, :model => @course_ware_1, :creator => @user_1)
+        @question_1 = FactoryGirl.create(:question, :course_ware => @course_ware_1, :creator => @user_1)
         # 做练习
         @practice_1.submit_by_user(@user_1)
         @practice_record_11 = @practice_1.records.where(:user_id => @user_1).first
@@ -73,7 +73,7 @@ describe CourseFeedTimelime do
           @course_ware_reading_41 = @course_ware_4.course_ware_readings.by_user(@user_1).first
         
           # 提问问题
-          @question_2 = FactoryGirl.create(:question, :model => @course_ware_3, :creator => @user_1)
+          @question_2 = FactoryGirl.create(:question, :course_ware => @course_ware_3, :creator => @user_1)
         
           # 做练习
           @practice_3.submit_by_user(@user_1)
@@ -91,7 +91,7 @@ describe CourseFeedTimelime do
           @course_ware_reading_22 = @course_ware_2.course_ware_readings.by_user(@user_2).first
         
           # 提问问题
-          @question_3 = FactoryGirl.create(:question, :model => @course_ware_1, :creator => @user_2)
+          @question_3 = FactoryGirl.create(:question, :course_ware => @course_ware_1, :creator => @user_2)
         
           # 做练习
           @practice_1.submit_by_user(@user_2)
@@ -109,7 +109,7 @@ describe CourseFeedTimelime do
           @course_ware_reading_42 = @course_ware_4.course_ware_readings.by_user(@user_2).first
         
           # 提问问题
-          @question_4 = FactoryGirl.create(:question, :model => @course_ware_3, :creator => @user_2)
+          @question_4 = FactoryGirl.create(:question, :course_ware => @course_ware_3, :creator => @user_2)
         
           # 做练习
           @practice_3.submit_by_user(@user_2)
@@ -198,7 +198,7 @@ describe CourseFeedTimelime do
       @course_ware_2.set_read_by!(@user_1)
       @course_ware_reading_21 = @course_ware_2.course_ware_readings.by_user(@user_1).first
       # 提问问题
-      @question_1 = FactoryGirl.create(:question, :model => @course_ware_1, :creator => @user_1)
+      @question_1 = FactoryGirl.create(:question, :course_ware => @course_ware_1, :creator => @user_1)
       # 做练习
       @practice_1.submit_by_user(@user_1)
       @practice_record_11 = @practice_1.records.where(:user_id => @user_1).first
@@ -226,7 +226,7 @@ describe CourseFeedTimelime do
       @course_ware_reading_41 = @course_ware_4.course_ware_readings.by_user(@user_1).first
     
       # 提问问题
-      @question_2 = FactoryGirl.create(:question, :model => @course_ware_3, :creator => @user_1)
+      @question_2 = FactoryGirl.create(:question, :course_ware => @course_ware_3, :creator => @user_1)
     
       # 做练习
       @practice_3.submit_by_user(@user_1)
@@ -244,7 +244,7 @@ describe CourseFeedTimelime do
       @course_ware_reading_22 = @course_ware_2.course_ware_readings.by_user(@user_2).first
     
       # 提问问题
-      @question_3 = FactoryGirl.create(:question, :model => @course_ware_1, :creator => @user_2)
+      @question_3 = FactoryGirl.create(:question, :course_ware => @course_ware_1, :creator => @user_2)
     
       # 做练习
       @practice_1.submit_by_user(@user_2)
@@ -262,7 +262,7 @@ describe CourseFeedTimelime do
       @course_ware_reading_42 = @course_ware_4.course_ware_readings.by_user(@user_2).first
     
       # 提问问题
-      @question_4 = FactoryGirl.create(:question, :model => @course_ware_3, :creator => @user_2)
+      @question_4 = FactoryGirl.create(:question, :course_ware => @course_ware_3, :creator => @user_2)
     
       # 做练习
       @practice_3.submit_by_user(@user_2)
