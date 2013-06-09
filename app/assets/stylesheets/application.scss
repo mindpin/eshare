@@ -344,6 +344,28 @@ body.auth{
         background:white url(bk-logo-100.png) no-repeat 10px 10px;
       }
     }
+
+    .oauth-sign {
+      position:absolute;
+      bottom:40px;
+      left:20px;
+      a.btn {
+        position:relative;
+        width:240px;
+        @include border-radius(3px);
+        i {
+          position:absolute;
+          width:24px;height:24px;
+          left:14px;
+          top:9px;
+          background:url(/assets/sync/sign_icon_weibo_24.png) no-repeat;
+        }
+
+        &.weibo {
+
+        }
+      }
+    }
   }
 
   .page-fit-image {
@@ -658,6 +680,19 @@ body.error {
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
     &:hover, &:focus, &:active, &.active, &.disabled, &[disabled] {
       background-color:#0078D8;
+      color:#fff;
+    }
+  }
+
+  &.oauthsign.weibo {
+    @include gradient(#E86649, #E3543A);
+    background-color:#E55C41;
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.3) rgba(0, 0, 0, 0.3) rgba(0, 0, 0, 0.3);
+    color:#fff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    &:hover, &:focus, &:active, &.active, &.disabled, &[disabled] {
+      background-color:#E3543A;
       color:#fff;
     }
   }

@@ -112,6 +112,24 @@ class User < ActiveRecord::Base
     end
   }
 
+  def self.create_oauth_sign_user(oauth_hash)
+    return nil if R::INHOUSE
+
+    name = "user#{randstr}"
+    login = "#{name}@example.com"
+    user = User.new ({
+      :login => login,
+      :email => login,
+      :name => name, 
+      :role => :student,
+      :password => '1234',
+      :password_confirmation => '1234'
+    })
+    user.save(:validate => false)
+    user.create_or_update_omniauth(oauth_hash)
+    user
+  end
+
   def follow(model)
     model.follow_by_user self
   end
