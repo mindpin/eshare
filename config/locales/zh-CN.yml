@@ -125,7 +125,7 @@ zh-CN:
               invalid: 邮箱格式不正确
             password:
               blank: 密码未填写
-              confirmation: 确认密码未填写
+              confirmation: 两次密码输入不同
               too_short: 密码太短
             name:
               blank: 昵称未填写

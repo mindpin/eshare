@@ -2,13 +2,16 @@ require "spec_helper"
 
 describe User do
   before {
+    @current_inhouse = R::INHOUSE
+    @current_internet = R::INTERNET
+
     R::INHOUSE = true
     R::INTERNET = false
   }
 
   after {
-    R::INHOUSE = false
-    R::INTERNET = true
+    R::INHOUSE = @current_inhouse
+    R::INTERNET = @current_internet
   }
 
   describe "import file" do

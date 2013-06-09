@@ -2268,8 +2268,6 @@ form .input.page-form-tag-inputer {
 }
 
 .page-cell-no-follow {
-  border-top:solid 1px #ddd;
-
   .in-house.no-users {
     border:solid 1px #ddd;
     padding:20px;
@@ -2280,26 +2278,30 @@ form .input.page-form-tag-inputer {
 
   .desc {
     text-align:center;
-    margin-top:20px;
-    margin-bottom:20px;
+    margin:-20px;
+    margin-bottom:0;
+    padding:20px;
     font-size:15px;
     color:#666;
+    background-color:#FFFFDA;
   }
   .users {
     overflow:hidden;
-    margin-bottom:20px;
+    margin:0 -20px;
 
     .user {
       @include border-box;
       float:left;
       border:solid 1px #ddd;
+      border-bottom:none 0;
       border-right:none 0;
+
       width:25%;
       padding:15px;
-      
-      &:last-child {
-        border-right:solid 1px #ddd;
-      }
+
+      &:first-child {
+        border-left:none 0;
+      } 
 
       .avatar {
         float:left;
@@ -2324,9 +2326,10 @@ form .input.page-form-tag-inputer {
 
       .ffollow {
         border-top:solid 1px #ddd;
-        padding-top:15px;
+        background-color:#f7f7f7;
+        padding:15px;
         overflow:hidden;
-        margin-top:15px;
+        margin:15px -15px -15px;
         a.btn {
           float:right;width:50px;
         }
@@ -2338,15 +2341,15 @@ form .input.page-form-tag-inputer {
 .cpart {
   &.recent-learning-courses, &.advise-courses {
     .no-course {
-      background-color:#f7f7f7;
-      border:solid 1px #ddd;
-      padding:15px;
-      margin-bottom: 20px;
+      background-color:#FFFFDA;
+      border-top:solid 1px #ddd;
+      padding:20px;
+      margin:0 -20px -20px;
     }
 
     .courses {
-      margin-bottom:20px;
-      border:solid 1px #ddd;
+      margin:0 -20px -20px;
+      border-top:solid 1px #ddd;
       .course {
         display:block;
         border-bottom:solid 1px #ddd;
@@ -2489,13 +2492,14 @@ form .input.page-form-tag-inputer {
       color:white;
       text-align:center;
       right:5px;bottom:5px;width:110px;
-      background-color:rgba(black, 0.8);
+      background-color:rgba(black, 0.618);
       display:none;
     }
 
     &:hover {
       a.edit {
         display:block;
+        padding:0 10px;
       }
     }
   }
@@ -2517,7 +2521,7 @@ form .input.page-form-tag-inputer {
         color:white;
         text-align:center;
         left:0;right:0;bottom:0;
-        background-color:rgba(black, 0.8);
+        background-color:rgba(black, 0.618);
         display:none;
       }
 
@@ -2528,12 +2532,15 @@ form .input.page-form-tag-inputer {
       }
     }
     .ct {
-      margin-left:210px;
+      margin-left:205px;
+      text-shadow:0 0 2px black;
+      // background-color:rgba(black, 0.4);
+      // padding:20px;
+
       h2.name {
         margin:0;margin-bottom:10px;
         font-size:16px;font-weight:bold;
         color:white;
-        text-shadow:0 0 1px black;
       }
       .joined{margin-bottom:10px;color:#eee;font-size:12px;}
       .tagline{color:white;}
@@ -3000,6 +3007,18 @@ form .input.page-form-tag-inputer {
 
 .page-account-sync{
   margin:-20px;
+  .error-info {
+    padding:20px;
+    background-color:#FFFFDA;
+    border-bottom:solid 1px #ddd;
+  }
+
+  .you-must-complete-your-info {
+    padding:20px;
+    background-color:#FFFFDA;
+    border-bottom:solid 1px #ddd;
+  }
+
   .site {
     border-bottom:solid 1px #ddd;
     padding:20px;
@@ -3052,6 +3071,13 @@ form .input.page-form-tag-inputer {
       line-height:20px;
       clear:both;
     }
+  }
+
+  .setting {
+    background-color:#FFFFDA;
+    padding:10px 20px;
+    font-size:13px;
+    line-height:20px;
   }
 }
 

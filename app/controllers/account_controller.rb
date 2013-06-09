@@ -68,6 +68,17 @@ class AccountController < Devise::RegistrationsController
     end
   end
 
+  # def complete
+  #   # 补全第三方账号直接登录的用户信息
+  #   self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
+  #   prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
+
+  #   if resource.update_with_password(resource_params)
+      
+  #   end
+
+  # end
+
   def avatar
   end
 

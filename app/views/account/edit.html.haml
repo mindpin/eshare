@@ -2,16 +2,33 @@
   %h1 基础信息设置
 
 .page-account-edit
-  - if R::INTERNET && !current_user.is_admin?
-    .base-form
-      = simple_form_for resource, :as => resource_name, :url => registration_path(resource_name) do |f|
-        = f.input :name, :label => '用户昵称'
-        = f.input :tagline, :as => :text, :input_html => {:rows => 3, :class => 'xxlarge'}
+  - if current_user.is_oauth_sign_temp_user?
+    .complete-form
+      .desc
+        %p 你目前正在使用第三方网站账号直接登录本网站。
+        %p 建议将你的邮箱，本网站密码等账号信息补充完善，以便能够完整使用本网站提供的全部功能。
+        %p 目前你在本网站的用户昵称是登录时自动生成的随机昵称，你在这里可以将它改为你希望的昵称。
+
+      = simple_form_for resource, :as => resource_name, :url => registration_path(resource_name, :by => :pwd) do |f|
+        = f.input :login, :as => :hidden, :input_html => {:value => ''}
+        = f.input :email, :required => true, :input_html => {:value => ''}
+        = f.input :name, :label => '用户昵称', :input_html => {:value => ''}
+        = f.input :current_password, :as => :hidden, :input_html => {:value => '1234'}
+        = f.input :password, :required => true
+        = f.input :password_confirmation, :required => true
         = f.button :submit, '确定', 'data-disable-with' => '正在保存', :class => 'success'
 
-  .password-form
-    = simple_form_for resource, :as => resource_name, :url => registration_path(resource_name, :by => :pwd) do |f|
-      = f.input :current_password
-      = f.input :password
-      = f.input :password_confirmation
-      = f.button :submit, '修改密码', 'data-disable-with' => '正在保存', :class => 'success'
+  - else
+    - if R::INTERNET && !current_user.is_admin?
+      .base-form
+        = simple_form_for resource, :as => resource_name, :url => registration_path(resource_name) do |f|
+          = f.input :name, :label => '用户昵称'
+          = f.input :tagline, :as => :text, :input_html => {:rows => 3, :class => 'xxlarge'}
+          = f.button :submit, '确定', 'data-disable-with' => '正在保存', :class => 'success'
+
+    .password-form
+      = simple_form_for resource, :as => resource_name, :url => registration_path(resource_name, :by => :pwd) do |f|
+        = f.input :current_password
+        = f.input :password
+        = f.input :password_confirmation
+        = f.button :submit, '修改密码', 'data-disable-with' => '正在保存', :class => 'success'

@@ -70,7 +70,9 @@ class User < ActiveRecord::Base
   def set_login_for_internet_version
     if R::INTERNET
       self.login = self.email if self.login.blank?
-      self.password_confirmation = self.password
+      if self.id.blank?
+        self.password_confirmation = self.password
+      end
     end
   end
 
@@ -112,9 +114,18 @@ class User < ActiveRecord::Base
     end
   }
 
-  def self.create_oauth_sign_user(oauth_hash)
+  def self.create_of_find_oauth_sign_user(oauth_hash)
     return nil if R::INHOUSE
 
+    # 先尝试找
+    omniauth = Omniauth.find_by_uid(oauth_hash['uid'])
+    if omniauth.present?
+      user = omniauth.user
+      user.create_or_update_omniauth(oauth_hash)
+      return user
+    end
+
+    # 找不到就创建
     name = "user#{randstr}"
     login = "#{name}@example.com"
     user = User.new ({
@@ -122,12 +133,18 @@ class User < ActiveRecord::Base
       :email => login,
       :name => name, 
       :role => :student,
-      :password => '1234',
-      :password_confirmation => '1234'
+      :password => '1234'
     })
-    user.save(:validate => false)
+    user.save
     user.create_or_update_omniauth(oauth_hash)
     user
+  end
+
+  # 判断是否还没有补充邮箱，密码等信息的只能用oauth登录的临时用户
+  def is_oauth_sign_temp_user?
+    return false if R::INHOUSE
+
+    return self.email.include? '@example.com'    
   end
 
   def follow(model)
