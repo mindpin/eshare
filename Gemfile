@@ -123,9 +123,9 @@ gem 'file-part-upload',
 ## excel导入和示例生成
 gem 'simple-excel-import',
     :git => 'git://github.com/mindpin/simple-excel-import.git',
-    :tag => '0.0.2.6'
+    :tag => '0.0.2.7'
     # :path => '/web/songliang/simple-excel-import'
-# gem 'axlsx', '1.3.5' # 上面的gem依赖它
+    # gem 'axlsx', '1.3.5' # 上面的gem依赖它
 
 ## tag
 gem 'mindpin-simple-tags',
