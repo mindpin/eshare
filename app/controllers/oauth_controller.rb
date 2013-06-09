@@ -12,10 +12,11 @@ class OauthController < ApplicationController
       current_user.create_or_update_omniauth(oauth_hash)
       redirect_to '/account/sync'
     else
-      user = User.create_oauth_sign_user(oauth_hash)
-      sign_in(:user, user)
+      render :json => oauth_hash
+      # user = User.create_oauth_sign_user(oauth_hash)
+      # sign_in(:user, user)
 
-      redirect_to '/'
+      # redirect_to '/'
     end
   end
 

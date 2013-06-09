@@ -2,6 +2,7 @@ class Question < ActiveRecord::Base
   include CourseInteractive::QuestionMethods
   include QuestionFeedTimelime::QuestionMethods
   include QuestionFollow::QuestionMethods
+  include QuestionVote::QuestionMethods
   
   attr_accessible :title, :content, :ask_to_user_id, :creator, :best_answer,
                   :course, :chapter, :course_ware
@@ -15,6 +16,9 @@ class Question < ActiveRecord::Base
 
   belongs_to :best_answer, :class_name => 'Answer', :foreign_key => :best_answer_id
   has_many :answers
+  has_many :question_votes, :dependent => :delete_all
+
+  default_scope order('vote_sum desc')
 
   validates :creator, :title, :presence => true
 

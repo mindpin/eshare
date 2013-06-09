@@ -1,13 +1,13 @@
 HASH = {
   :libreoffice_path  => '/opt/libreoffice3.6',
-  :convert_base_path => '../public',
-
-  :weibo_key => 4271779692,
-  :weibo_secret => '96371b3a41daaca4cec23e3e8d31018e',
-
-  :github_key => 'c067288843b244eefb89',
-  :github_secret => '0897746b031770bfff033044a1e86cd634b20f3b'
+  :convert_base_path => '../public'
 }
+
+oauth_key_path = Rails.root.join('config/oauth_key.yaml')
+if File.exists?(oauth_key_path)
+  oauth_key_hash = YAML.load_file(oauth_key_path).symbolize_keys
+  HASH.merge!(oauth_key_hash)
+end
 
 class R
   INHOUSE = false

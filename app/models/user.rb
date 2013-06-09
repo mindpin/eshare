@@ -181,4 +181,5 @@ class User < ActiveRecord::Base
   include Omniauth::UserMethods
   include Team::UserMethods
   include TeamMembership::UserMethods
+  include WeiboFriends
 end

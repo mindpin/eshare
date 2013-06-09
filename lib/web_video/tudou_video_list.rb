@@ -17,6 +17,8 @@ class TudouVideoList
         ware.kind = 'tudou'
         ware.save
       end
+
+      course.set_video_course_cover
     end
 
     def chapter
