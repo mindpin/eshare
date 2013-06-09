@@ -6,6 +6,7 @@
     .base-form
       = simple_form_for resource, :as => resource_name, :url => registration_path(resource_name) do |f|
         = f.input :name, :label => '用户昵称'
+        = f.input :tagline, :as => :text, :input_html => {:rows => 3, :class => 'xxlarge'}
         = f.button :submit, '确定', 'data-disable-with' => '正在保存', :class => 'success'
 
   .password-form

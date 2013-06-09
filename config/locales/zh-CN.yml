@@ -72,6 +72,7 @@ zh-CN:
         avatar: 用户头像
         email: EMail
         userpage_head: 个人页版头图片
+        tagline: 个人签名档
 
       course:
         name: 课程名

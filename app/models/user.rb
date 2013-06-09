@@ -39,6 +39,8 @@ class User < ActiveRecord::Base
   # ------------ 以上是用户登录相关代码，不要改动
   # ------------ 任何代码请在下方添加
 
+  validates :tagline, :length => {:in => 0..150}
+
   # 修改基本信息
   attr_accessible :login, :name, :email, :as => :change_base_info
   # 修改密码
@@ -49,7 +51,7 @@ class User < ActiveRecord::Base
 
   # carrierwave
   mount_uploader :avatar, AvatarUploader
-  attr_accessible :name, :avatar
+  attr_accessible :name, :tagline, :avatar
 
   mount_uploader :userpage_head, UserPageHeadUploader
   attr_accessible :userpage_head

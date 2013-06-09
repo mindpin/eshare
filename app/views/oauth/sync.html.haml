@@ -27,4 +27,7 @@
         .expired （认证过期）
         %a.btn.follow.small{:href => '/auth/github'} 绑定
       - else
+        - info = current_user.get_github_bind_info
+        - name = info['name']
+        .user （#{name}）
         %a.btn.unfollow.small{:href => '/auth/github/unbind', :data => {:method => :post}} 取消绑定
