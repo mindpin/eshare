@@ -14,7 +14,7 @@
           - if @course_ware.convert_success?
             = render_cell :course_ware_widget, :pages, :course_ware => @course_ware, :user => current_user
           - else
-            PPT/PDF文件格式转换没有成功，或正在进行转换
+            .is-converting PPT/PDF文件格式转换没有成功，或正在进行转换
 
     .infos
       .questions

@@ -1658,6 +1658,13 @@ img.page-avatar {
           }
         }
 
+        .is-converting {
+          background-color:#FFFFDA;
+          border-bottom:solid 1px #ddd;
+          margin:-20px -20px 20px;
+          padding:20px;
+        }
+
         .stat {
           @include floatfix;
           .read {

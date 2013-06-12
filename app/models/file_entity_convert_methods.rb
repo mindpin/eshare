@@ -129,13 +129,11 @@ module FileEntityConvertMethods
     File.basename(saved_file_name, ".#{extname}")
   end
 
-  def get_output_images(size)
-    match_path = File.join(convert_output_dir, size, "*.png")
-    Dir[match_path].map{|path| OutputImage.new(path, File.join(output_base_url, size))}.sort_by(&:id)
-  end
-
-  def output_images
-    get_output_images('origin')
+  def output_images(version = 'normal')
+    match_path = File.join(convert_output_dir, version, "*.png")
+    Dir[match_path].map { |path| 
+      OutputImage.new(path, File.join(output_base_url, version))
+    }.sort_by(&:id)
   end
 
   class OutputImage
