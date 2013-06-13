@@ -62,6 +62,21 @@ class SelectCourseApply < ActiveRecord::Base
       _apply_users_by_status(STATUS_REJECT)
     end
 
+    # 是否有选课人数上限限制
+    def have_apply_request_max?
+      self.max_apply_request != -1
+    end
+    # 查询是否已经到达选课人数上限
+    def apply_request_is_max?
+      return false if !self.have_apply_request_max?
+      (self.request_selected_users.size + self.accept_selected_users.size)  >= self.max_apply_request
+    end
+    # 查询现在还有多少选课名额
+    def remaining_apply_request_count
+      return -1 if !self.have_apply_request_max?
+      self.max_apply_request - (self.request_selected_users.size + self.accept_selected_users.size)
+    end
+
     private
       def _apply_users_by_status(status)
         self.apply_users.where('select_course_applies.status = ?', status)
@@ -76,6 +91,7 @@ class SelectCourseApply < ActiveRecord::Base
 
     # 用户发起一个选课请求
     def select_course(course)
+      return false if course.apply_request_is_max?
       _prepare_course_apply_for(course).update_attributes :status => STATUS_REQUEST
     end
 

@@ -39,7 +39,7 @@ class Course < ActiveRecord::Base
     self.set_tag_list(tags_str, :user => user, :force_public => true)
   end
 
-  attr_accessible :name, :cid, :desc, :syllabus, :cover, :creator, :with_chapter
+  attr_accessible :name, :cid, :desc, :syllabus, :cover, :creator, :with_chapter, :max_apply_request
 
   belongs_to :creator, :class_name => 'User', :foreign_key => :creator_id
   has_many :chapters
@@ -60,6 +60,12 @@ class Course < ActiveRecord::Base
 
   validates :cid, :uniqueness => {:case_sensitive => false},
                   :presence => true
+
+  # 给 course  增加回调
+  before_validation :set_default_max_apply_request
+  def set_default_max_apply_request
+      self.max_apply_request = -1 if max_apply_request.blank?
+  end
 
   default_scope order('courses.id desc')
   max_paginates_per 50
