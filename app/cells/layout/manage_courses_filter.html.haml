@@ -1,3 +1,6 @@
+-# 通过 "/manage/courses?q=#{q}" 搜索
+-# 具体逻辑定义在 search.js.coffee
+
 .page-filter.manage-courses
   %input{:name => :q, :type => :text, :placeholder => '查找课程', :value => @query}
   %a.btn.info.do-search{:href => 'javascript:;'}

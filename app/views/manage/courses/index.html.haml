@@ -1,10 +1,18 @@
 - content_for :header do
   = render_cell :manage_courses_breadcrumb, :display
-  = page_button_group :courses do |g|
-    - g.add '创建课程', '/manage/courses/new', :success
-    - g.add '导入Excel', '/manage/courses/import', :success
-    - g.add '导入优酷播放列表', '/manage/courses/import_youku_list', :success
-    - g.add '导入土豆豆单', '/manage/courses/import_tudou_list', :success
+  .btn-group
+    %a.btn.success{:href => '/manage/courses/new'}
+      %i.icon-plus.icon-white
+      %span 创建课程
+    %a.btn.success{:href => '/manage/courses/import'}
+      %i.icon-upload.icon-white
+      %span 导入Excel
+    %a.btn.success{:href => '/manage/courses/import_youku_list'}
+      %i.icon-upload.icon-white
+      %span 导入优酷列表
+    %a.btn.success{:href => '/manage/courses/import_tudou_list'}
+      %i.icon-upload.icon-white
+      %span 导入土豆豆单
 
 = render_cell :layout, :manage_courses_filter, :query => @query
 
@@ -25,9 +33,17 @@
       
     - if R::INHOUSE
       - table.add_column(:select_apply) do |course|
-        %span #{course.apply_users.count} 人
+        - max = course.max_apply_request
+        %span #{course.apply_users.count}
+        %span /
+        %span #{max}
 
     - table.add_column(:ops) do |course|
+
+      - if R::INHOUSE
+        %a.btn.mini{:href => "/manage/courses/#{course.id}/applies"}
+          %i.icon-list-alt
+          %span 选课管理
 
       %a.btn.mini.inverse{:href => "/manage/courses/#{course.id}/edit"}
         %i.icon-edit.icon-white
@@ -36,8 +52,3 @@
       = link_to "/manage/courses/#{course.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger' do
         %i.icon-remove-sign.icon-white
         %span= t('common.delete')
-
-      - if R::INHOUSE
-        %a.btn.mini{:href => "/manage/courses/#{course.id}/applies"}
-          %i.icon-list-alt
-          %span 选课管理
