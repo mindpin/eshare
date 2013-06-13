@@ -39,7 +39,8 @@ class Course < ActiveRecord::Base
     self.set_tag_list(tags_str, :user => user, :force_public => true)
   end
 
-  attr_accessible :name, :cid, :desc, :syllabus, :cover, :creator, :with_chapter, :max_apply_request
+  attr_accessible :name, :cid, :desc, :syllabus, :cover, :creator, :with_chapter, 
+                  :apply_request_limit, :enable_apply_request_limit
 
   belongs_to :creator, :class_name => 'User', :foreign_key => :creator_id
   has_many :chapters
@@ -61,10 +62,28 @@ class Course < ActiveRecord::Base
   validates :cid, :uniqueness => {:case_sensitive => false},
                   :presence => true
 
-  # 给 course  增加回调
-  before_validation :set_default_max_apply_request
-  def set_default_max_apply_request
-      self.max_apply_request = -1 if max_apply_request.blank?
+  # 设置 apply_request_limit 默认值
+  before_validation :set_default_apply_request_limit
+  def set_default_apply_request_limit
+    # 设置不限制人数时
+    if !@enable_apply_request_limit
+      self.apply_request_limit = -1
+      return true
+    end
+
+    # 未设置限制人数，或者限制人数被设置为 0 时
+    if self.apply_request_limit.blank? || self.apply_request_limit == 0
+      self.apply_request_limit = -1
+      return true
+    end
+  end
+
+  def enable_apply_request_limit=(value)
+    @enable_apply_request_limit = value
+  end
+
+  def enable_apply_request_limit
+    have_apply_request_limit?
   end
 
   default_scope order('courses.id desc')

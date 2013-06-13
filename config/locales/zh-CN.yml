@@ -80,6 +80,9 @@ zh-CN:
         desc: 课程简介
         syllabus: 课程大纲
         cover: 课程封面
+        enable_apply_request_limit: 限制选课人数
+        apply_request_limit: 最大选课人数
+
       chapter:
         title: 章节标题
         desc: 章节简介

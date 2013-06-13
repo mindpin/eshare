@@ -67,6 +67,10 @@ body {
     }
   }
 
+  .pagination:last-child {
+    margin-bottom:0;
+  }
+
   .mainp75 {
     width:75%;float:left;
     min-height:400px;
@@ -508,7 +512,7 @@ body.admin, body.app, body.account, body.error {
         }
       }
 
-      .btn-group {
+      .btn-group, .btns{
         float:right;
         margin:14px 0 0 0;
       }
@@ -531,20 +535,27 @@ body.admin, body.app, body.account, body.error {
       .mainp66 {
         padding-right:20px;
       }
-      .mainp66, .sidep33{
-        .pblock {
-          border:solid 1px #ddd;
-          background-color:white;
-          padding:20px;
-          padding-bottom:0;
-          margin-bottom:20px;
-          &.nopadding{
-            padding:0;
-          }
-          &.info {
-            background-color:#FCFCFC;
-          }
+
+      .pblock {
+        border:solid 1px #ddd;
+        background-color:white;
+        padding:20px;
+        padding-bottom:0;
+        margin-bottom:20px;
+        &.nopadding{
+          padding:0;
         }
+        &.info {
+          background-color:#FCFCFC;
+        }
+      }
+
+      .content-header {
+        border:solid 1px #ddd;
+        background-color:white;
+        padding:0 20px;
+        margin:0;
+        margin-bottom:20px;
       }
     }
   }
@@ -1302,6 +1313,24 @@ img.page-avatar {
         }
       }
 
+      .limit {
+        float:left;
+        margin-left:10px;
+        background-color:white;
+        border:solid 1px #ddd;
+        height:46px;
+        padding:0 20px;
+        .desc {line-height:23px;}
+        .n{font-size:16px;font-weight:bold;text-align:center;}
+      }
+
+      .full {
+        height:46px;line-height:46px;
+        border:solid 1px #ddd;
+        padding:0 20px;
+        background-color:#FFFFDA;
+      }
+
       .info {
         border:1px solid rgba(0, 0, 0, 0.2);
         width:150px;
@@ -1327,14 +1356,17 @@ img.page-avatar {
       }
 
       &.request {
+        .full, .limit{display:none;}
         .doselect{display:none;}
         .info.request{display:block;}
       }
       &.accept {
+        .full, .limit{display:none;}
         .doselect{display:none;}
         .info.accept{display:block;}
       }
       &.reject {
+        .full, .limit{display:none;}
         .doselect{display:none;}
         .info.reject{display:block;}
       }
@@ -1871,6 +1903,55 @@ img.page-avatar {
   .item {
     border-left:none;
     border-right:solid 1px #ddd;
+  }
+}
+
+.page-layout-course-manage {
+  .pblock.filter {
+    margin-top:-21px;
+    .page-filter {
+      margin-bottom:0;
+      border-bottom:0 none;
+    }
+  }
+  .pblock.table {
+    padding:0 !important;
+    border:0 none !important;
+  }
+  .pblock.form {
+    padding-bottom:20px !important;
+
+    .download {
+      margin:-20px -20px 20px;
+      padding:20px;
+      background-color:#FFFFDA;
+    }
+  }
+
+  .page-course-form {
+    .form-inputs.apply_request_limit {
+      height:30px;
+      margin-bottom:20px;
+
+      .input.boolean{
+        float:left;
+        width:120px;
+        label {height:30px;line-height:30px;margin:0;}
+        input[type=checkbox] {
+          margin-top:8px;
+        }
+      }
+
+      .input.integer{
+        float:left;
+        margin-right:10px;
+      }
+
+      label.ren {
+        height:30px;line-height:30px;margin:0;
+        float:left;
+      }
+    }
   }
 }
 
@@ -3097,3 +3178,4 @@ form .input.page-form-tag-inputer {
     background-color:#fcfcfc;
   }
 }
+

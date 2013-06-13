@@ -1,0 +1,26 @@
+- title = t('common.site.title.app')
+
+- content_for :javascript do
+  = javascript_include_tag '/highcharts/js/highcharts'
+
+- if current_user.is_admin?
+  - klass = 'course-manage admin'
+- else
+  - klass = 'course-manage app'
+
+!!!
+- simple_page_layout title, :html_lang => :zh, :body_class => klass do
+  - if current_user.is_admin?
+    = render_cell :layout, :topnav_admin, :user => current_user
+  - else
+    = render_cell :layout, :topnav, :user => current_user
+    = render_cell :layout, :searchbar, :user => current_user
+
+  = render_cell :layout, :sidebar, :user => current_user
+
+  .page-layout-course-manage
+    .page-content.grids-style
+      - header_content = yield :header
+      - if header_content.present?
+        .content-header= header_content
+      = yield

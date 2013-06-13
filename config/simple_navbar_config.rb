@@ -7,6 +7,7 @@ SimpleNavbar::Base.config do
     nav :courses_manage, :url => '/manage/courses' do
       controller :'manage/courses'
       controller :'manage/chapters'
+      controller :'manage/applies'
     end
   end
 
@@ -43,6 +44,7 @@ SimpleNavbar::Base.config do
     nav :courses_manage, :url => '/manage/courses' do
       controller :'manage/courses'
       controller :'manage/chapters'
+      controller :'manage/applies'
     end
   end
 

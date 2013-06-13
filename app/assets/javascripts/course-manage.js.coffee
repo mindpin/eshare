@@ -1,3 +1,4 @@
+# aj方式，暂时用不上
 jQuery ->
   class CourseManager
     constructor: (@$elm)->
@@ -24,3 +25,28 @@ jQuery ->
 
   jQuery('.page-course-manage-aj').each ->
     new CourseManager jQuery(this)
+
+
+jQuery ->
+  class CourseForm
+    constructor: (@$form)->
+      @setup()
+
+    setup: ->
+      that = @
+      jQuery(@$form).on 'click', '#course_enable_apply_request_limit', ->
+        $checkbox = jQuery(this)
+        if $checkbox.is(':checked')
+          that.show_limit()
+        else
+          that.hide_limit()
+
+    show_limit: ->
+      @$form.find('.limit-inputer').fadeIn(200).find('input').val('')
+
+    hide_limit: ->
+      @$form.find('.limit-inputer').fadeOut(200).find('input').val('')
+
+
+  jQuery('.page-course-form form').each ->
+    new CourseForm jQuery(this)

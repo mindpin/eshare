@@ -1,0 +1,9 @@
+.page-manage-courses-breadcrumb
+  %ul.page-breadcrumb
+    %li
+      %a{:href => '/manage/courses'} 课程管理
+      %span.divider /
+    %li
+      %a{:href => "/manage/courses/#{@course.id}"}= @course.name
+      %span.divider /
+    %li.active 选课管理

@@ -5,7 +5,7 @@ describe SelectCourseApply do
   let(:user1){FactoryGirl.create(:user)}
   let(:user2){FactoryGirl.create(:user)}
   let(:user3){FactoryGirl.create(:user)}
-  let(:course){FactoryGirl.create :course, :max_apply_request => 4}
+  let(:course){FactoryGirl.create :course, :apply_request_limit => 4}
   let(:course1){FactoryGirl.create(:course)}
 
 
@@ -97,18 +97,18 @@ describe SelectCourseApply do
     }
   end
 
-  describe '#apply_request_is_max?  查询是否已经到达选课人数上限' do
+  describe '#apply_request_is_full?  查询是否已经到达选课人数上限' do
     it {
       user1.select_course(course)
       user.select_course(course)
-      course.apply_request_is_max?.should  == false
+      course.apply_request_is_full?.should  == false
     }
     it {
       user1.select_course(course1)
       user2.select_course(course1)
       user3.select_course(course1)
       user.select_course(course1)
-      course1.apply_request_is_max?.should  == false
+      course1.apply_request_is_full?.should  == false
     }
     it {
       user1.select_course(course)
@@ -116,7 +116,7 @@ describe SelectCourseApply do
       user3.select_course(course)
       user.select_course(course)
       user.select_course_applies.by_course(course).first.update_attributes :status => 'ACCEPT'
-      course.apply_request_is_max?.should  == true
+      course.apply_request_is_full?.should  == true
     }
   end
 

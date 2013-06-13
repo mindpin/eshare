@@ -2,8 +2,7 @@ class Manage::ChaptersController < ApplicationController
   before_filter :authenticate_user!
   layout :get_layout
   def get_layout
-    return 'admin' if current_user.is_admin?
-    'application'
+    return 'course_manage'
   end
   
   def show
