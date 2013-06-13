@@ -33,10 +33,6 @@ Eshare::Application.routes.draw do
 
   resources :announcements
 
-  resources :surveys, :shallow => true do
-    resources :survey_items
-    resources :survey_results
-  end
 end
 
 # 搜索

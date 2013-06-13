@@ -137,7 +137,6 @@ class User < ActiveRecord::Base
   include Answer::UserMethods
   include AnswerVote::UserMethods
   include Announcement::UserMethods
-  include Survey::UserMethods
   include Follow::UserMethods
   include QuestionFollow::UserMethods
   include Practice::UserMethods
