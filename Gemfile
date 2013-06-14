@@ -151,4 +151,4 @@ gem 'mina',
 
 gem 'simple-survey',
     :git => 'git://github.com/mindpin/simple-survey.git',
-    :tag => '0.0.4'
+    :tag => '0.0.7'

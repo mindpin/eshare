@@ -5,6 +5,7 @@ zh-CN:
       users_manage: 用户管理
       categories_manage: 分类管理
       courses_manage: 课程管理
+      surveys_manage: 调查管理
 
     teacher:
       dashboard: 动态
@@ -26,6 +27,7 @@ zh-CN:
       questions: 问答
 
       learning_plan: 计划
+      surveys: 调查
 
     account:
       edit: 基础信息设置
@@ -95,6 +97,9 @@ zh-CN:
       answer:
         content: 回答正文
 
+      survey:
+        title: 调查表标题
+
     errors:
       models:
         course:
@@ -140,6 +145,15 @@ zh-CN:
           attributes:
             title:
               blank: 必须填写问题
+        survey:
+          attributes:
+            title:
+              blank: 必须填写调查表标题
+
+        simple_survey/survey_result:
+          attributes:
+            survey_id:
+              taken: 不能重复填写一个调查表
 
 
   views:
@@ -270,6 +284,17 @@ zh-CN:
         parent: 父节点
         lft: left
         rgt: right
+        ops: 操作
+
+      surveys:
+        id: ID
+        title: 调查表标题
+        ops: 操作
+        count: 已填写份数
+
+      survey_results:
+        user: 被调查人
+        time: 调查时间
         ops: 操作
 
   devise:

@@ -37,3 +37,4 @@ public/install_*
 public/project_key/project.key
 script/data/video_courses.yaml
 config/oauth_key.yaml
+config/survey_templates/*

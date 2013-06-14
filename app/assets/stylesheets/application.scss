@@ -1906,7 +1906,7 @@ img.page-avatar {
   }
 }
 
-.page-layout-course-manage {
+.page-layout-manage {
   .pblock.filter {
     margin-top:-21px;
     .page-filter {
@@ -1915,10 +1915,12 @@ img.page-avatar {
     }
   }
   .pblock.table {
+    margin-top:-21px;
     padding:0 !important;
     border:0 none !important;
   }
   .pblock.form {
+    margin-top:-21px;
     padding-bottom:20px !important;
 
     .download {
@@ -2009,81 +2011,6 @@ img.page-avatar {
       padding:0 3px;
       position:relative;top:1px;
       @include border-radius(2px);
-    }
-  }
-}
-
-.page-course-manage-aj {
-  .chapters{
-    position:fixed;
-    top:40px;
-    bottom:0;
-    background-color:#f7f7f7;
-    width:239px;border-right:solid 1px #ddd;
-    // overflow-y: scroll;
-    box-shadow:2px 0 3px rgba(black, 0.1);
-
-    .head {
-      padding:10px;
-      border-bottom:solid 1px #ddd;
-    }
-
-    a.chapter {
-      display:block;
-      border-bottom:solid 1px #ddd;
-      padding:10px;
-      text-decoration:none;
-      background-color:white;
-      &:hover {
-        background-color:#F7F7F7;
-      }
-      &.current {
-        background-color:#0088CC;
-        color:white;
-      }
-    }
-  }
-
-  #pjax-container {
-    position:fixed;
-    left:240px;top:40px;bottom:0;right:0;
-    background-color:white;
-    padding:20px;
-
-    .header {
-      margin:-20px -20px 20px;
-      .page-manage-courses-breadcrumb ul{
-        border-bottom:solid 1px #eee;
-        @include border-radius(0);
-        padding:10px 15px;
-        font-size:16px;
-      }
-    }
-
-    .chapter {
-      position:absolute;
-      top:42px;height:300px;
-      left:0;right:0;
-      border-bottom:solid 1px #eee;
-
-      .desc {
-        position:absolute;
-        top:0;left:0;bottom:0;width:480px;
-        border-right:solid 1px #eee;
-        .inner {
-          padding:20px;
-        }
-      }
-
-      .course-wares {
-        position:absolute;
-        top:0;left:481px;bottom:0;right:0;
-        overflow-y:auto;
-
-        .course_ware {
-          padding-left:20px;
-        }
-      }
     }
   }
 }
@@ -3179,3 +3106,119 @@ form .input.page-form-tag-inputer {
   }
 }
 
+.page-surveys-index {
+  .surveys-list {
+    margin: -20px;
+    margin-top: -21px;
+    .survey {
+
+      .tile-body {
+        position:relative;
+        width:600px;
+        margin-left:80px;
+      }
+
+      padding-left:20px;
+      .title {
+        font-size:16px !important;
+        font-weight:normal !important;
+      }
+      .status {
+        margin-top:10px;
+        span {
+          display:block;
+          @include border-radius(2px);
+          color:white;
+          background-color:#BE3730;
+          padding:0 8px;
+          &.completed {
+            background-color:#4473CA;
+          }
+        }
+      }
+
+      .ops {
+        position:absolute;
+        top:5px;right:0;
+      }
+    }
+  }
+}
+
+.page-survey-show {
+  .template {
+    border-bottom:solid 1px #ddd;
+    background-color:#FFFFDA;
+    margin:-20px -20px 20px;
+    padding:10px 20px;
+    font-size:12px;
+    color:#666;
+  }
+}
+
+.page-survey-form {
+  .errors {
+    margin:-20px -20px 20px;
+    background-color:rgba(red, 0.1);
+    border-bottom:solid 1px #ddd;
+    color:darken(red, 20%);
+    padding:10px 20px;
+    .error {
+    }
+  }
+
+  .survey-items {
+    .survey-item {
+      border-bottom:solid 1px #ddd;
+      padding-bottom:20px;
+      margin-bottom:20px;
+
+      .kind {
+        float:left;
+        color:white;
+        background-color:#3E78FD;
+        @include border-radius(2px);
+        padding:0 8px;
+      }
+
+      .content {
+        margin-left:60px;
+      }
+      .inputer {
+        margin-left:60px;
+        .option {
+          margin-bottom:2px;
+          position:relative;
+          &.selected {
+            font-weight:bold;
+            i{position:absolute;left:-20px;top:2px;}
+          }
+        }
+
+        .answer {
+          margin-top:14px;
+          color:green;
+        }
+      }
+    }
+  }
+}
+
+.page-manage-survey-show {
+  .result-user{
+    margin:-20px -20px 20px;
+    padding:20px;
+    border-bottom:solid 1px #ddd;
+    background-color:#FFFFDA;
+    .desc {
+      margin-bottom:10px;
+    }
+  }
+  .form-actions {
+    display:none;
+  }
+
+  .survey-item .answer {
+    display:none;
+  }
+}

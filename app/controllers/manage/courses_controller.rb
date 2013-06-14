@@ -2,7 +2,7 @@ class Manage::CoursesController < ApplicationController
   before_filter :authenticate_user!
   layout :get_layout
   def get_layout
-    return 'course_manage'
+    return 'manage'
   end
   
   def index

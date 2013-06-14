@@ -1,0 +1,14 @@
+- content_for :header do
+  %h1 调查结果
+
+.page-manage-survey-show
+  .result-user
+    .desc
+      %span 被调查人
+      %span= user_link @survey_result.user
+    .back
+      %a.btn.mini{:href => "/manage/surveys/#{@survey_result.survey.id}"}
+        %i.icon-chevron-left
+        %span 返回汇总表
+
+  = render_cell :survey, :result, :survey => Survey.find(@survey_result.survey.id), :user => @survey_result.user

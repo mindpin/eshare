@@ -2,7 +2,7 @@
   = render_cell :manage_courses_breadcrumb, :form, :model => @course_ware
 
 .page-course-ware-form
-  .pblock
+  .pblock.form
     = simple_form_for @course_ware, :url => "/manage/chapters/#{@chapter.id}/course_wares" do |f|
       .form-inputs
         = f.input :title, :input_html => {:class => 'xxlarge'}

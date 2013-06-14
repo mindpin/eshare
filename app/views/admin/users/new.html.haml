@@ -1,24 +1,25 @@
 - content_for :header do
   %h1 新增用户
 
-= simple_form_for @user, :url => '/admin/users' do |f|
-  .form-inputs
-    = f.input :login
-    = f.input :name
-    = f.input :email
-    = f.input :password
-    = f.input :password_confirmation
+.pblock.form
+  = simple_form_for @user, :url => '/admin/users' do |f|
+    .form-inputs
+      = f.input :login
+      = f.input :name
+      = f.input :email
+      = f.input :password
+      = f.input :password_confirmation
 
-    :ruby
-      s = [
-        ['学生 Student', :student], 
-        ['老师 Teacher', :teacher],
-      ]
+      :ruby
+        s = [
+          ['学生 Student', :student], 
+          ['老师 Teacher', :teacher],
+        ]
 
-    .input{:style => 'margin-bottom:20px;'}
-      %label 用户角色
-      = f.select :role, s, :label => '用户角色'
+      .input{:style => 'margin-bottom:20px;'}
+        %label 用户角色
+        = f.select :role, s, :label => '用户角色'
 
-  .form-actions
-    = f.button :submit, :class => 'success'
-    %a.btn.cancel{:href => '/admin/users'}= t('common.form.cancel')
+    .form-actions
+      = f.button :submit, :class => 'success'
+      %a.btn.cancel{:href => '/admin/users'}= t('common.form.cancel')

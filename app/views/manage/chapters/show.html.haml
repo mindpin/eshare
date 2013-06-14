@@ -22,10 +22,14 @@
       - table.add_column :convert_status do |cw|
         - if cw.convert_status.present?
           %span.status{:class => cw.convert_status}= cw.convert_status
-          = link_to "重转码", "/manage/course_wares/#{cw.id}/do_convert", :method => :put, :class => 'btn mini convert'
+          %a.btn.mini.convert{:href => "/manage/course_wares/#{cw.id}/do_convert", :data => {:method => :put}}
+            %i.icon-repeat
+            %span 重转码
 
         - elsif cw.file_entity && cw.file_entity.can_be_converted?
-          = link_to "开始转码", "/manage/course_wares/#{cw.id}/do_convert", :method => :put, :class => 'btn mini convert'
+          %a.btn.mini.convert{:href => "/manage/course_wares/#{cw.id}/do_convert", :data => {:method => :put}}
+            %i.icon-repeat
+            %span 开始转码
 
       - table.add_column :ops do |cw|
 

@@ -1,9 +1,0 @@
-.header
-  = render_cell :manage_courses_breadcrumb, :form, :model => @chapter
-
-= simple_form_for @chapter, :url => "/manage/aj/courses/#{@course.id}/chapters" do |f|
-  .form-inputs
-    = f.input :title
-    = f.input :desc, :input_html => {:rows => 6}
-  .form-actions
-    = f.button :submit, :class => 'success'

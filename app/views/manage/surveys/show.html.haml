@@ -1,0 +1,15 @@
+- content_for :header do
+  %h1 调查结果汇总：#{@survey.title}
+
+.pblock.table
+  = page_data_table(:survey_results, @survey.survey_results, :striped, :bordered) do |table|
+    - table.add_column(:user) do |sr|
+      = link_to sr.user.name, "/manage/survey_results/#{sr.id}"
+    - table.add_column(:time) do |sr|
+      = sr.updated_at
+    - table.add_column(:ops) do |sr|
+      %a.btn.mini{:href => "/manage/survey_results/#{sr.id}"}
+        %i.icon-list
+        %span 查看详情
+
+      
