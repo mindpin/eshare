@@ -99,6 +99,18 @@ describe SelectCourseApply do
 
   describe '#apply_request_is_full?  查询是否已经到达选课人数上限' do
     it {
+      course.have_apply_request_limit?.should == true
+    }
+
+    it {
+      course.remaining_apply_request_count.should == 4
+    }
+
+    it {
+      course.apply_request_limit.should == 4
+    }
+
+    it {
       user1.select_course(course)
       user.select_course(course)
       course.apply_request_is_full?.should  == false

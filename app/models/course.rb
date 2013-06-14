@@ -65,6 +65,8 @@ class Course < ActiveRecord::Base
   # 设置 apply_request_limit 默认值
   before_validation :set_default_apply_request_limit
   def set_default_apply_request_limit
+    return true if self.have_apply_request_limit?
+
     # 设置不限制人数时
     if !@enable_apply_request_limit
       self.apply_request_limit = -1
