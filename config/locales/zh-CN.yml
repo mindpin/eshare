@@ -57,6 +57,8 @@ zh-CN:
       user:
         create: 创建用户
         update: 确定更新
+      survey:
+        create: 创建调查表
 
   activerecord:
     models:

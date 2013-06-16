@@ -2,7 +2,9 @@
   %h1 调查结果汇总：#{@survey.title}
 
 .pblock.table
-  = page_data_table(:survey_results, @survey.survey_results, :striped, :bordered) do |table|
+  - survey_results = @survey.survey_results.page(params[:page])
+
+  = page_data_table(:survey_results, survey_results, :striped, :bordered) do |table|
     - table.add_column(:user) do |sr|
       = link_to sr.user.name, "/manage/survey_results/#{sr.id}"
     - table.add_column(:time) do |sr|
@@ -12,4 +14,36 @@
         %i.icon-list
         %span 查看详情
 
-      
+= paginate survey_results
+
+
+- arr = %w(A B C D E F G H I J K L M N O P Q R S T U V W X Y Z)
+.pblock
+  .page-survey-item-stats
+    - results_count = @survey.survey_results.count
+
+    - item_number = 0
+    - @survey.survey_template.survey_template_items.each do |item|
+      - item_number = item_number + 1
+
+      .item-stat
+        .content= item.content
+        .options
+          - case item.kind
+          - when SimpleSurvey::SurveyTemplateItem::Kind::SINGLE_CHOICE
+            - counts = @survey.get_single_choice_item_option_count(item_number)
+            - idx = 0
+            - item.options.each do |opt|
+              - val = arr[idx]
+              - count = counts[idx]
+              - percent = results_count > 0 ? "#{(count * 100.0 / results_count).round(2)}%" : "--"
+              .option{:data => {:o => val, :c => count, :p => percent}}
+                .text #{val}, #{opt}
+                .count= count
+                .percent= percent
+                / .progress
+                /   .page-progress.success.striped
+                /     .bar{:style => "width:#{percent};"}
+
+              - idx = idx + 1
+        .page-chart.survey-single-choice-stat

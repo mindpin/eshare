@@ -3222,3 +3222,72 @@ form .input.page-form-tag-inputer {
     display:none;
   }
 }
+
+.page-survey-item-stats {
+  margin:-20px;
+  margin-bottom:0;
+  .item-stat {
+    overflow:hidden;
+    border-bottom:solid 1px #ddd;
+    &:last-child{
+      border-bottom:none 0;
+    }
+
+    .content {
+      border-bottom:solid 1px #ddd;
+      background-color:#FFFFDA;
+      padding:10px 20px;
+      font-weight:bold;
+    }
+
+    .options {
+      float:left;
+      width:70%;
+      // border-right:solid 1px #ddd;
+      .option {
+        overflow: hidden;
+        
+        border-bottom:solid 1px #ddd;
+        &:last-child{
+          border-bottom:none;
+        }
+
+        .text {
+          padding:10px 20px;
+          width:60%;
+          border-right:solid 1px #ddd;
+          @include border-box;
+          float:left;
+        }
+
+        .count, .percent {
+          float:left;
+          width:20%;
+          @include border-box;
+          padding:10px 20px;
+          border-right:solid 1px #ddd;
+          text-align:right;
+        }
+
+        // .progress {
+        //   float:left;
+        //   width:20%;
+        //   @include border-box;
+        //   padding:10px 10px;
+        //   .page-progress {
+        //     margin-bottom:0;
+        //     height:19px;
+        //   }
+        // }
+      }
+    }
+
+    .page-chart.survey-single-choice-stat {
+      float:left;
+      width:30%;
+      border:0 none;
+      margin-bottom:0;
+      height:150px;
+    }
+  }
+}

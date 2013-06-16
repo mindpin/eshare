@@ -205,3 +205,49 @@ jQuery('.page-chart.all-courses-punch-card').each ->
       url: $chart.data('url')
       success: (res)->
         $chart.html res
+
+jQuery ->
+  jQuery('.page-chart.survey-single-choice-stat').each ->
+    $chart = jQuery(this)
+    data = []
+    $chart.parent().find('.options .option').each ->
+      $option = jQuery(this)
+      data.push {
+        name: $option.data('o'), 
+        y: $option.data('c')
+      }
+
+    option =
+      chart:
+        plotBackgroundColor: null
+        plotBorderWidth: null
+        plotShadow: false
+        backgroundColor: null
+
+      title:
+        text: null
+
+      plotOptions: 
+        pie: 
+          allowPointSelect: false
+          # cursor: 'pointer'
+
+      series: [
+        {
+          type: 'pie'
+          name: '课件数'
+          animation: false
+          # innerSize: '20%'
+          dataLabels:
+            formatter: ->
+              if @y > 0 then @y else null
+            color: 'white'
+            distance: -25
+            style:
+              fontSize: '12px'
+              fontWeight: 'bold'
+          data: data
+        }
+      ]
+    console.log $chart, $chart.highcharts
+    $chart.highcharts option
