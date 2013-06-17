@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class NoteUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
   include ImageUploaderMethods
@@ -9,14 +11,14 @@ class NoteUploader < CarrierWave::Uploader::Base
   def default_url
     # For Rails 3.1+ asset pipeline compatibility:
     # asset_path("fallback/" + [version_name, "default.png"].compact.join('_'))
-    "/assets/default_notes/#{version_name}.png"
+    "/assets/default_avatars/#{version_name}.png"
   end
 
   # 图片裁剪
   version :large do
     process :resize_to_fill => [180, 180]
   end
-
+  # 图片裁剪
   version :normal do
     process :resize_to_fill => [300, 300]
   end

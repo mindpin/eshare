@@ -42,6 +42,25 @@ describe Note do
     }
   end
 
+  describe "image" do
+    before{
+      @image = File.new(Rails.root.join("spec/data/file_entity.jpg"))
+      user.notes.create(:content => 'content1', :is_private => true,:course_ware => course_ware)
+    }
+    
+    it{
+      user.notes.first.image.identifier.should == nil
+    }
+
+    it{
+      @note = user.notes.first
+      @note.image = @image
+      @note.save!
+      puts @note.image.identifier
+      @note.image.identifier.should_not == nil
+    }
+  end
+
   it{
     user.notes.create(:content => 'content1',:is_private => true,:course_ware => course_ware)
     user.notes.create(:content => 'context1',:is_private => false,:chapter => chapter)
