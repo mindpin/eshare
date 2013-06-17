@@ -70,8 +70,10 @@ SimpleNavbar::Base.config do
       controller :index, :only => :dashboard
     end
 
-    nav :learning_plan, :url => '/plan' do
-      controller :index, :only => :plan
+    if R::INHOUSE
+      nav :learning_plan, :url => '/plan' do
+        controller :index, :only => :plan
+      end
     end
 
     nav :user, :url => '/users/me' do

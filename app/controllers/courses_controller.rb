@@ -11,7 +11,6 @@ class CoursesController < ApplicationController
   end
 
   def show
-    @chapters = @course.chapters.page(params[:page])
   end
 
   def manage

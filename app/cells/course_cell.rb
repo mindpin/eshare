@@ -53,4 +53,26 @@ class CourseCell < Cell::Rails
     @user = opts[:user]
     render
   end
+
+  def sidebar(opts = {})
+    @course = opts[:course]
+    @user = opts[:user]
+    render
+  end
+
+  def header(opts = {})
+    @course = opts[:course]
+    render
+  end
+
+  def show_chapters(opts = {})
+    @course = opts[:course]
+    @user = opts[:user]
+    render
+  end
+
+  def learning_users(opts = {})
+    @course = opts[:course]
+    render
+  end  
 end

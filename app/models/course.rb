@@ -48,6 +48,12 @@ class Course < ActiveRecord::Base
   has_many :course_wares, :through => :chapters
   has_many :course_ware_readings, :through => :course_wares
 
+  has_many :directly_course_ware_readings, :class_name => 'CourseWareReading', 
+                                           :foreign_key => :course_id
+  has_many :learning_users, :through => :directly_course_ware_readings,
+                            :source => :user,
+                            :uniq => true
+
   has_many :test_questions
   has_one  :test_option
   
@@ -114,15 +120,15 @@ class Course < ActiveRecord::Base
     sql = %~
       SELECT * FROM
       (
-        SELECT sum(course_ware_readings.read_percent) AS SUM, course_ware_readings.user_id AS USER_ID, courses.id
-        FROM course_ware_readings
-        JOIN course_wares ON course_wares.id = course_ware_readings.course_ware_id
-        JOIN chapters ON chapters.id = course_wares.chapter_id
-        JOIN courses ON courses.id = chapters.course_id
-        WHERE courses.id = #{self.id}
-        GROUP BY course_ware_readings.user_id
+        SELECT 
+          sum(CW.read_percent) AS S1, 
+          CW.user_id AS USER_ID
+
+        FROM course_ware_readings AS CW
+        WHERE CW.course_id = #{self.id}
+        GROUP BY CW.user_id
       ) AS Q
-      ORDER BY SUM DESC
+      ORDER BY S1 DESC
     ~
 
     result = Course.find_by_sql sql
@@ -132,7 +138,7 @@ class Course < ActiveRecord::Base
       index = index + 1
       {
         :user => User.find_by_id(r['USER_ID']),
-        :sum => r['SUM'],
+        :sum => r['S1'],
         :index => index
       }
     end

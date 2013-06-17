@@ -1,0 +1,6 @@
+.header
+  .cover= fit_image(@course.cover.versions[:normal].url, :width => 214, :height => 120)
+  .data
+    %h1= @course.name
+    .desc= @course.desc || t('common.course.course-no-desc')
+    = render_cell :tags, :public, :model => @course
