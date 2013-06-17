@@ -10,6 +10,7 @@ set :branch, 'master'
 set :user, 'root'
 
 set :shared_paths, [
+  'config/survey_templates',
   'config/database.yml',
   'db/schema.rb',
   'log', 
@@ -32,6 +33,8 @@ task :setup => :environment do
   queue! %[touch "#{deploy_to}/shared/config/database.yml"]
   queue! %[touch "#{deploy_to}/shared/config/oauth_key.yaml"]
   queue! %[touch "#{deploy_to}/shared/config/initializers/r.rb"]
+
+  queue! %[mkdir -p "#{deploy_to}/shared/config/survey_templates"]
 
   queue! %[mkdir -p "#{deploy_to}/shared/db"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/db"]
