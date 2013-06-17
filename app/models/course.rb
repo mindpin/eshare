@@ -12,6 +12,7 @@ class Course < ActiveRecord::Base
   include TudouVideoList::CourseMethods
   include CourseFav::CourseMethods
   include SelectCourseApply::CourseMethods
+  include Note::CourseMethods
 
   simple_taggable
   BASE_TAGS = %w(

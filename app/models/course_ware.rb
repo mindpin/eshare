@@ -8,6 +8,7 @@ class CourseWare < ActiveRecord::Base
   include CourseWareKindMethods
   include CourseWareReadingDelta::CourseWareMethods
   include StepHistory::CourseWareMethods
+  include Note::CourseWareMethods
 
   attr_accessible :title, :desc, :url, :creator, :total_count
   attr_accessible :title, :desc, :file_entity_id, :kind, :url, :as => :upload

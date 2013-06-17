@@ -158,4 +158,5 @@ class User < ActiveRecord::Base
   include Team::UserMethods
   include TeamMembership::UserMethods
   include WeiboFriends
+  include Note::UserMethods
 end
