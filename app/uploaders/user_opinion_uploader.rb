@@ -12,12 +12,4 @@ class UserOpnionUploader < CarrierWave::Uploader::Base
     "/assets/default_user_opinions/#{version_name}.png"
   end
 
-  # 图片裁剪
-  version :normal do
-    process :resize_to_fill => [300, 300]
-  end
-
-  version :small do
-    process :resize_to_fill => [100, 100]
-  end
 end
