@@ -1,0 +1,13 @@
+- content_for :header do
+  %h1 个人页设置
+  .page-desc 设置个人的样式等信息
+
+.page-account-userpage
+  .desc 上传一张版头图片，最合适的建议尺寸是 1000 x 300 像素
+  .curr-desc 目前的版头图片
+  .userpage-head
+    %img{:src => current_user.userpage_head.versions[:small].url}
+
+  = simple_form_for current_user, :url => '/account/userpage' do |f|
+    = f.input :userpage_head, :required => true, :hint => '选择一张图片并上传'
+    = f.button :submit, :class => 'success', :disable_with => '正在提交'

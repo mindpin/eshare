@@ -1,8 +1,32 @@
-.page-survey-index
-  .page-action
-    = link_to '新建调查问卷', '/surveys/new'
-  .page-list
-    - current_user.surveys.each do |survey|
-      .item
-        = link_to survey.title, "/surveys/#{survey.id}"
-        = link_to 'delete', "/surveys/#{survey.id}", :method => :delete, :confirm => "确定删除么"
+- content_for :header do
+  %h1 公共调查
+
+.page-surveys-index
+  - c_user = current_user
+
+  = page_tile :'surveys-list', @surveys do
+    - add :title do |su|
+      = link_to truncate_u(su.title, 140), su
+    - add_foot :updated_at do |su|
+      发布于 #{su.updated_at}
+    - add_left :status do |su|
+      - if su.has_completed_by?(current_user)
+        %span.completed 已填写
+      - else
+        %span 未填写
+
+    - context do |su|
+      - if su.has_completed_by?(c_user)
+        - add :ops do
+          %a.btn{:href => "/surveys/#{su.id}"}
+            %i.icon-list
+            %span 查看结果
+          %a.btn{:href => "/surveys/#{su.id}?refill=true", :data => {:confirm => '确定要重新填写吗？之前的填写结果将会被清除'}}
+            %i.icon-pencil
+            %span 重新填写
+
+      - else
+        - add :ops do
+          %a.btn.success{:href => "/surveys/#{su.id}"}
+            %i.icon-pencil.icon-white
+            %span 填写调查

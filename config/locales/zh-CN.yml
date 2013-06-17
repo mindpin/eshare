@@ -5,6 +5,7 @@ zh-CN:
       users_manage: 用户管理
       categories_manage: 分类管理
       courses_manage: 课程管理
+      surveys_manage: 调查管理
 
     teacher:
       dashboard: 动态
@@ -26,12 +27,15 @@ zh-CN:
       questions: 问答
 
       learning_plan: 计划
+      surveys: 调查
 
     account:
-      password: 修改密码
-      avatar: 修改头像
+      edit: 基础信息设置
+      avatar: 头像设置
+      userpage: 个人页设置
+      sync: 社交网站同步
     admin_account:
-      password: 修改密码
+      password: 修改管理员密码
 
   helpers:
     submit:
@@ -53,6 +57,8 @@ zh-CN:
       user:
         create: 创建用户
         update: 确定更新
+      survey:
+        create: 创建调查表
 
   activerecord:
     models:
@@ -69,6 +75,8 @@ zh-CN:
         remember_me: 记住登录状态
         avatar: 用户头像
         email: EMail
+        userpage_head: 个人页版头图片
+        tagline: 个人签名档
 
       course:
         name: 课程名
@@ -76,6 +84,9 @@ zh-CN:
         desc: 课程简介
         syllabus: 课程大纲
         cover: 课程封面
+        enable_apply_request_limit: 限制选课人数
+        apply_request_limit: 最大选课人数
+
       chapter:
         title: 章节标题
         desc: 章节简介
@@ -87,6 +98,9 @@ zh-CN:
         content: 具体描述
       answer:
         content: 回答正文
+
+      survey:
+        title: 调查表标题
 
     errors:
       models:
@@ -121,7 +135,7 @@ zh-CN:
               invalid: 邮箱格式不正确
             password:
               blank: 密码未填写
-              confirmation: 确认密码未填写
+              confirmation: 两次密码输入不同
               too_short: 密码太短
             name:
               blank: 昵称未填写
@@ -133,6 +147,15 @@ zh-CN:
           attributes:
             title:
               blank: 必须填写问题
+        survey:
+          attributes:
+            title:
+              blank: 必须填写调查表标题
+
+        simple_survey/survey_result:
+          attributes:
+            survey_id:
+              taken: 不能重复填写一个调查表
 
 
   views:
@@ -240,6 +263,9 @@ zh-CN:
         status: 选课状态
         ops: 操作
 
+        course: 课程
+        updated_at: 更新时间
+
       questions:
         title: 标题
         content: 内容
@@ -260,6 +286,17 @@ zh-CN:
         parent: 父节点
         lft: left
         rgt: right
+        ops: 操作
+
+      surveys:
+        id: ID
+        title: 调查表标题
+        ops: 操作
+        count: 已填写份数
+
+      survey_results:
+        user: 被调查人
+        time: 调查时间
         ops: 操作
 
   devise:

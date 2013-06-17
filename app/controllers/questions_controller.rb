@@ -31,7 +31,7 @@ class QuestionsController < ApplicationController
       return render :text => 'params invalid', :status => 500
     end
     
-    return redirect_to :action => :index if @question.save
+    return redirect_to @question if @question.save
     render :action => :new
   end
 
@@ -40,9 +40,12 @@ class QuestionsController < ApplicationController
     return render :text => 'access denied.', :status => 403 if @question.blank?
 
     if request.xhr?
-      return render :text => 'delete ok.'if @question.destroy
+      return render :text => 'delete ok' if @question.destroy
       return render :text => 'delete error', :status => 500
     end
+
+    return redirect_to :action => :index if @question.destroy
+    return redirect_to :action => :index
   end
 
   def show
@@ -53,6 +56,16 @@ class QuestionsController < ApplicationController
   end
 
   def update
+    if request.xhr?
+      if @question.update_attributes(params[:question])
+        return render :json => {
+          :status => 'ok', 
+          :html => render_cell(:questions, :tree_question, :user => current_user, :question => @question)
+        }
+      end
+      return render :text => 'question update error', :status => 500
+    end
+
     if @question.update_attributes(params[:question])
       return redirect_to :action => :index
     end
@@ -61,12 +74,12 @@ class QuestionsController < ApplicationController
 
   def follow
     current_user.follow(@question)
-    redirect_to :back
+    render :text => 'ok'
   end
 
   def unfollow
     current_user.unfollow(@question)
-    redirect_to :back
+    render :text => 'ok'
   end
 
 end

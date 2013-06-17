@@ -14,12 +14,15 @@
       .mainp66
         .pblock
           = render 'users/head', :user => @user
-          = render_cell :user, :page_navbar, :user => @user
+          = render_cell :user, :page_navbar, :user => @user, :cur_user => current_user
           = yield
       .sidep33
         .pblock.nopadding
           = render_cell :follow, :stat, :user => @user
         .pblock
           = render_cell :tags, :learning, :user => @user
-          = render_cell :sync, :weibo, :user => @user
+        - if R::INTERNET
+          .pblock
+            = render_cell :sync, :weibo, :user => @user
+
       .clearfix

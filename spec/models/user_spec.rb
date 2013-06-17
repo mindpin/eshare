@@ -2,13 +2,16 @@ require "spec_helper"
 
 describe User do
   before {
+    @current_inhouse = R::INHOUSE
+    @current_internet = R::INTERNET
+
     R::INHOUSE = true
     R::INTERNET = false
   }
 
   after {
-    R::INHOUSE = false
-    R::INTERNET = true
+    R::INHOUSE = @current_inhouse
+    R::INTERNET = @current_internet
   }
 
   describe '用户邮箱校验' do
@@ -94,6 +97,45 @@ describe User do
       @user4.valid?
       @user4.errors.count.should == 1
       @user4.errors.first[0].should == :login
+    }
+  end
+end
+
+describe 'internet user' do
+  before {
+    @current_inhouse = R::INHOUSE
+    @current_internet = R::INTERNET
+
+    R::INHOUSE = false
+    R::INTERNET = true
+  }
+
+  after {
+    R::INHOUSE = @current_inhouse
+    R::INTERNET = @current_internet
+  }
+
+  describe '用户校验' do
+    before {
+      # 创建用户时，只需要填 password
+      # password_confirmation 会自动被设置为一样
+      @user1 = User.new :email => 'ben7th@sina.com',
+                        :name =>'宋亮',
+                        :password => '12345'
+
+      @user2 = FactoryGirl.create :user
+      @user2.password = '55577777'
+    }
+
+    it {
+      @user1.valid?
+      @user1.password_confirmation.should == '12345'
+      @user1.login.should == 'ben7th@sina.com'
+    }
+
+    it {
+      @user2.valid?
+      @user2.password_confirmation.should_not == '55577777'
     }
   end
 end

@@ -81,6 +81,7 @@ gem "cancan", "~> 1.6.10"
 gem "omniauth-github", "~> 1.1.0"
 gem 'omniauth-weibo-oauth2'
 gem "weibo_2", "~> 0.1.1"
+gem 'rmmseg-cpp'
 
 # 自己写的 gem，都不指定版本号，如果有重大修改，通过GIT TAG解决
 
@@ -102,7 +103,7 @@ gem 'simple-page-layout',
 ## 在页面上显示图片的一些辅助方法
 gem 'simple-images',
     :git => 'git://github.com/mindpin/simple-images',
-    :tag => '0.0.2'
+    :tag => '0.0.3'
     # :path => '/web/songliang/simple-images'
 
 gem 'simple-page-compoents',
@@ -122,13 +123,9 @@ gem 'file-part-upload',
 ## excel导入和示例生成
 gem 'simple-excel-import',
     :git => 'git://github.com/mindpin/simple-excel-import.git',
-    :tag => '0.0.2.5'
+    :tag => '0.0.2.7'
     # :path => '/web/songliang/simple-excel-import'
-# gem 'axlsx', '1.3.5' # 上面的gem依赖它
-
-## office文档转换
-gem 'odocuconv',
-    :git => 'git://github.com/kaid/odocuconv.git'
+    # gem 'axlsx', '1.3.5' # 上面的gem依赖它
 
 ## tag
 gem 'mindpin-simple-tags',
@@ -138,12 +135,12 @@ gem 'mindpin-simple-tags',
 # feed
 gem 'mindpin-feeds',
     :git => 'git://github.com/mindpin/mindpin-feeds',
-    :tag => '0.0.9'
+    :tag => '0.1.0'
 
 # redis-cache
 gem 'simple-redis-cache',
     :git => 'git://github.com/mindpin/simple-redis-cache.git',
-    :tag => '0.0.1'
+    :tag => '0.0.2'
 
 gem 'simple_comment',
     :git => 'git://github.com/kaid/simple_comment.git'
@@ -151,3 +148,7 @@ gem 'simple_comment',
 gem 'mina',
     :git => 'git://github.com/fushang318/mina.git',
     :tag => 'v0.2.0fix'
+
+gem 'simple-survey',
+    :git => 'git://github.com/mindpin/simple-survey.git',
+    :tag => '0.0.7'

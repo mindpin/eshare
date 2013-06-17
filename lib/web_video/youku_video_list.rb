@@ -98,6 +98,8 @@ class YoukuVideoList
             }, { :as => :import }
           )
         end
+
+        course.set_video_course_cover
         course
       end
     end

@@ -124,17 +124,31 @@ module ApplicationHelper
   end
 
   def follow_button(cur_user, user)
-    # %a.page-follow.follow.btn.success{:data => {:id => user.id}}
+    # %a.page-follow.unfollow.btn.small{:data => {:id => user.id}}
     return '' if cur_user == user
 
     if cur_user.has_follow? user
       return capture_haml {
-        haml_tag 'a.page-follow.unfollow.btn.small', '取消关注', :data => {:id => user.id}
+        haml_tag 'a.page-follow.unfollow.btn.small', '取消关注', :data => {:id => user.id}, :href => 'javascript:;'
       }
     end
 
     capture_haml {
-      haml_tag 'a.page-follow.follow.btn.small', '关注', :data => {:id => user.id}
+      haml_tag 'a.page-follow.follow.btn.small', '关注', :data => {:id => user.id}, :href => 'javascript:;'
+    }
+  end
+
+  def question_follow_button(cur_user, question)
+    # %a.page-question-follow.unfollow.btn.small{:data => {:id => question.id}}
+
+    if question.followed_by? cur_user
+      return capture_haml {
+        haml_tag 'a.page-question-follow.unfollow.btn', '取消关注', :data => {:id => question.id}, :href => 'javascript:;'
+      }
+    end
+
+    capture_haml {
+      haml_tag 'a.page-question-follow.follow.btn', '关注', :data => {:id => question.id}, :href => 'javascript:;'
     }
   end
 
@@ -171,9 +185,18 @@ module ApplicationHelper
     }[apply.status]
 
     capture_haml {
-      haml_tag 'span', :class => klass do
-        haml_tag 'span', "#{string} #{apply.status}"
+      haml_tag 'span', :class => "page-apply-status #{klass}" do
+        haml_tag 'span', "#{string}"
       end
+    }
+  end
+
+  def user_page_head_bg(user)
+    # url = '/assets/user_page/default.png'
+    # fit_image url, :height => 180
+
+    capture_haml {
+      haml_tag 'img', :src => user.userpage_head.versions[:default].url, :width => '100%'
     }
   end
 

@@ -1,23 +1,33 @@
-.page-content-header
+- content_for :header do
   = render_cell :manage_courses_breadcrumb, :form, :model => @course
 
-= simple_form_for @course, :url => "/manage/courses/#{@course.id}" do |f|
-  .form-inputs
-    = f.input :name, :input_html => {:class => :xxlarge}
-    = f.input :cid, :input_html => {:class => :xxlarge}
-    = f.input :desc, :as => :text, :input_html => {:rows => 6, :class => :xxlarge}
-    = f.input :cover, :as => :file
+.page-course-form
+  .pblock.form
+    = simple_form_for @course, :url => "/manage/courses/#{@course.id}" do |f|
+      .form-inputs
+        = f.input :name, :input_html => {:class => :xxlarge}
+        = f.input :cid, :input_html => {:class => :xxlarge}
+        = f.input :desc, :as => :text, :input_html => {:rows => 6, :class => :xxlarge}
+        = f.input :cover, :as => :file
 
-    .input.page-form-tag-inputer
-      - tags_str = @course.public_tags.map{|x| x.name}.join(', ')
-      %label 分类标签
-      %textarea.xxlarge{:name => :course_tags, :rows => 2, :data => {:value => tags_str}}= tags_str
+      .input.page-form-tag-inputer
+        - tags_str = @course.public_tags.map{|x| x.name}.join(', ')
+        %label 分类标签
+        %textarea.xxlarge{:name => :course_tags, :rows => 2, :data => {:value => tags_str}}= tags_str
 
-      .tags-advice
-        .desc 常用的标签
-        - Course::BASE_TAGS.each do |tagname|
-          %a.tag{:href => 'javascript:;', :data => {:name => tagname}}= tagname
+        .tags-advice
+          .desc 常用的标签
+          - Course::BASE_TAGS.each do |tagname|
+            %a.tag{:href => 'javascript:;', :data => {:name => tagname}}= tagname
 
-  .form-actions
-    = f.button :submit, :class => 'success'
-    %a.btn.cancel{:href => '/manage/courses'}= t('common.form.cancel')
+      - if R::INHOUSE
+        .form-inputs.apply_request_limit
+          - enable = @course.enable_apply_request_limit
+          = f.input :enable_apply_request_limit, :as => :boolean, :input_html => {:autocomplete => :off}
+          .limit-inputer{:style => enable ? '' : 'display:none;'}
+            = f.input :apply_request_limit, :input_html => {:class => :mini, :autocomplete => :off}, :label => false
+            %label.ren 人
+
+      .form-actions
+        = f.button :submit, :class => 'success'
+        %a.btn.cancel{:href => "/manage/courses"}= t('common.form.cancel')

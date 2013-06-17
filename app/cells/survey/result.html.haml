@@ -1,0 +1,47 @@
+- arr = %w(A B C D E F G H I J K L M N O P Q R S T U V W X Y Z)
+
+.page-survey-form
+  - template = @survey.survey_template
+  - if template.present?
+    .survey-items
+      - item_number = 0
+      - template.survey_template_items.each do |item|
+        - item_number = item_number + 1
+        - result_item = @survey_result.survey_result_items.where(:item_number => item_number).first
+
+        - case item.kind
+        - when SimpleSurvey::SurveyTemplateItem::Kind::SINGLE_CHOICE
+          .survey-item
+            .kind.single-choice 单选
+            .content= simple_format item.content
+            .inputer
+              .options
+                - answer = result_item.answer
+                - idx = 0
+                - item.options.each do |opt|
+                  - val = arr[idx]
+                  - if val == answer
+                    .option.selected
+                      %i.icon-ok
+                      #{val}, #{opt}
+                  - else
+                    .option
+                      #{val}, #{opt}
+
+                  - idx = idx + 1
+              .answer
+                %span 我选了: #{answer}
+
+
+        - when SimpleSurvey::SurveyTemplateItem::Kind::MULTIPLE_CHOICE
+          %span.multiple-choice 多选
+        - when SimpleSurvey::SurveyTemplateItem::Kind::FILL 
+          %span.fill 填空
+        - when SimpleSurvey::SurveyTemplateItem::Kind::TEXT
+          %span.text 问答
+
+    .form-actions
+      %a.btn{:href => "/surveys/#{@survey.id}?refill=true", :data => {:confirm => '确定要重新填写吗？之前的填写结果将会被清除'}}
+        %i.icon-pencil
+        %span 重新填写
+      %a.btn.cancel{:href => "/surveys"} 返回

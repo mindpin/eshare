@@ -1,6 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_filter :authenticate_user!
-  layout 'admin'
+  layout 'manage'
 
   def index
     @users = User.page(params[:page]).order('id DESC').like_filter(@query = params[:q])

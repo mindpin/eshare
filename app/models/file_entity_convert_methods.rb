@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 module FileEntityConvertMethods
   class ConvertStatus
     READY      = 'READY'
@@ -128,9 +129,11 @@ module FileEntityConvertMethods
     File.basename(saved_file_name, ".#{extname}")
   end
 
-  def output_images
-    match_path = File.join(convert_output_dir,"*.png")
-    Dir[match_path].map{|path| OutputImage.new(path, output_base_url)}.sort_by(&:id)
+  def output_images(version = 'normal')
+    match_path = File.join(convert_output_dir, version, "*.png")
+    Dir[match_path].map { |path| 
+      OutputImage.new(path, File.join(output_base_url, version))
+    }.sort_by(&:id)
   end
 
   class OutputImage

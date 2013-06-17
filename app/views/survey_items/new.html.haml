@@ -1,5 +1,0 @@
-= simple_form_for @survey_item, :url => "/surveys/#{@survey.id}/survey_items" do |f|
-  = f.input :kind, :collection => SurveyItem::KINDS
-  = f.input :content,  :placeholder => '如果是填空题，用*表示要填的空'
-  = f.input :choice_options, :as => :text, :placeholder => '如果不是选择题留空,选项之间换行分割'
-  = f.button :submit

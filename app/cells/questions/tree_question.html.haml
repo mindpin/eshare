@@ -1,0 +1,34 @@
+.question{:data => {:id => @question.id}}
+  .con
+    .tile-field.icon
+    .tile-field.title= @question.title
+    - if @question.content.present?
+      .tile-field.content= simple_format @question.content
+
+    - if @question.creator == @user
+      .tile-field.ops
+        %a.btn.success.mini.edit{:href => "javascript:;"}
+          %i.icon-edit.icon-white
+          %span= t('common.edit')
+        = link_to "/questions/#{@question.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn danger mini delete' do
+          %i.icon-minus.icon-white
+          %span= t('common.delete')
+
+      .tile-field.edit-form
+        = preserve do
+          = simple_form_for @question, :remote => true, :html => {:style => 'display:none'} do |f|
+            .form-inputs
+              = f.input :title
+              = f.input :content, :as => :text, :input_html => {:rows => 5, :class => 'xxlarge'}
+            .form-actions
+              = f.button :submit, :class => 'success'
+              %a.btn.cancel{:href => 'javascript:;'}= t('common.form.cancel')
+
+    .tile-field.creator
+      .avatar= avatar_link @question.creator, :small
+      .name= user_link @question.creator
+      .time= @question.updated_at
+
+  .btb
+    .fo
+      = question_follow_button @user, @question

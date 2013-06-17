@@ -1,5 +1,21 @@
 .page-user-page-head
-  .avatar= avatar user, :large
-  .ct
-    %h2.name= user.name
-    .joined.quiet #{user.created_at} 加入
+  .headbg
+    .bg= user_page_head_bg user
+    - if user == current_user
+      %a.edit{:href => '/account/userpage'}
+        %i.icon-edit.icon-white
+        %span 修改版头图片
+
+  .headdata
+    .avatar
+      .ava= avatar user, :large
+      - if user == current_user
+        %a.edit{:href => '/account/avatar'} 
+          %i.icon-edit.icon-white
+          %span 修改我的头像
+
+    .ct
+      %h2.name= user.name
+      .joined.quiet #{user.created_at} 加入
+      .tagline= simple_format user.tagline
+    .clearfix

@@ -2,7 +2,7 @@
   .inner
     %a.homepage{:href => '/'} 首页
     .sf
-      %input{:name => :q, :type => :text}
+      %input{:name => :q, :type => :text, :placeholder => '搜索课程和其他内容…'}
       %a.btn.info.do-search{:href => 'javascript:;'}
         %i.icon-search.icon-white
     - if @user.present?

@@ -60,6 +60,85 @@ jQuery ->
           $q.slideUp ->
             $q.remove()
 
-
-
   new QuestionWidget jQuery('.page-course-ware-show .questions')
+
+jQuery ->
+  class AnswerEditor
+    constructor: (@$answer) ->
+      @$edit_btn = @$answer.find('.ops a.btn.edit')
+      @$form = @$answer.find('.edit-form form')
+      @$edit_cancel_btn = @$form.find('a.btn.cancel')
+
+      @id = @$answer.attr('id').split('-')[1]
+
+      @setup()
+
+    setup: ->
+      @$edit_btn.on 'click', =>
+        @show()
+
+      @$edit_cancel_btn.on 'click', =>
+        @hide()
+
+      @$form.on 'ajax:success', (xhr, data)=>
+        $html = jQuery(data.html)
+        $new_answer = $html.find('.answer')
+        @$answer.after($new_answer)
+        @$answer.remove()
+        new AnswerEditor($new_answer)
+
+    show: ->
+      @$answer.find('.tile-field:not(.edit-form, .creator)').slideUp(250)
+      @$form.slideDown(250)
+
+    hide: ->
+      @$answer.find('.tile-field').slideDown(250)
+      @$form.slideUp(250)
+        
+
+  jQuery('.page-question-tree .answers > .answer').each ->
+    $answer = jQuery(this)
+    if $answer.find('.ops').length > 0
+      new AnswerEditor($answer)
+
+
+jQuery ->
+  class QuestionEditor
+    constructor: (@$question) ->
+      @$edit_btn = @$question.find('.ops a.btn.edit')
+      @$form = @$question.find('.edit-form form')
+      @$edit_cancel_btn = @$form.find('a.btn.cancel')
+
+      @id = @$question.data('id')
+
+      @setup()
+
+    setup: ->
+      console.log @$edit_btn
+
+      @$edit_btn.on 'click', =>
+        @show()
+
+      @$edit_cancel_btn.on 'click', =>
+        @hide()
+
+      @$form.on 'ajax:success', (xhr, data)=>
+        $html = jQuery(data.html)
+        $new_question = $html
+        @$question.after($new_question)
+        @$question.remove()
+        new QuestionEditor($new_question)
+
+    show: ->
+      @$question.find('.tile-field:not(.edit-form, .creator)').slideUp(250)
+      @$form.slideDown(250)
+
+    hide: ->
+      @$question.find('.tile-field').slideDown(250)
+      @$form.slideUp(250)
+        
+
+  jQuery('.page-question-tree .question[data-id]').each ->
+    $question = jQuery(this)
+    if $question.find('.ops').length > 0
+      new QuestionEditor($question)

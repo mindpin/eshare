@@ -4,3 +4,7 @@
     - navbar.add_item("<span>学习的课程</span><span class='count'>#{@user.joined_courses.count}</span>".html_safe, "/users/#{@user.id}/courses")
     - navbar.add_item("<span>提问</span><span class='count'>#{@user.questions.count}</span>".html_safe, "/users/#{@user.id}/questions")
     - navbar.add_item("<span>回答</span><span class='count'>#{@user.answers.count}</span>".html_safe, "/users/#{@user.id}/answers")
+
+    - if R::INHOUSE
+      - if @user.is_student? && @user == @cur_user
+        - navbar.add_item("<span>选课记录</span><span class='count'>#{@user.select_course_applies.count}</span>".html_safe, "/users/#{@user.id}/course_applies")

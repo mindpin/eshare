@@ -7,13 +7,14 @@
       %li.active 导入土豆播放列表
 
 .page-manage-courses-import-video-list
-  = form_tag "/manage/courses/import_tudou_list_2", :method => :post, :multipart => true do
-    .desc 填入你希望导入的土豆豆单网址，点击下一步
-    .example 例如：http://www.tudou.com/plcover/M9ovmjs6fkw/
+  .pblock.form
+    = form_tag "/manage/courses/import_tudou_list_2", :method => :post, :multipart => true do
+      .desc 填入你希望导入的土豆豆单网址，点击下一步
+      .example 例如：http://www.tudou.com/plcover/M9ovmjs6fkw/
 
-    .input.string.required
-      %label 土豆豆单网址
-      = text_field_tag :url, '', :placeholder => 'http://', :class => 'string url optional xxlarge'
+      .input.string.required
+        %label 土豆豆单网址
+        = text_field_tag :url, '', :placeholder => 'http://', :class => 'string url optional xxlarge'
 
-    %input.btn.success{:name => 'commit', :type => :submit, :value => '下一步'}
-    %a.btn.cancel{:href => '/manage/courses'}= t('common.form.cancel')
+      %input.btn.success{:name => 'commit', :type => :submit, :value => '下一步'}
+      %a.btn.cancel{:href => '/manage/courses'}= t('common.form.cancel')

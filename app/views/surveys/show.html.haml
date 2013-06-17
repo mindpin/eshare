@@ -1,19 +1,18 @@
-.page-survey-show
-  .title=@survey.title
-  .content=@survey.content
-  .items
-    .action
-      = link_to '增加问题',"/surveys/#{@survey.id}/survey_items/new"
-      - if !@survey.is_answered?(current_user)
-        = link_to '回答问题', "/surveys/#{@survey.id}/survey_results/new"
+- content_for :header do
+  %h1 填写调查表：#{@survey.title}
 
-  - @survey.survey_items.each do |item|
-    .item
-      .title=item.content+"[#{item.kind}]"
-      - if item.is_choice?
-        - item.choice_options.each do |option|  
-          = option
-      - elsif item.is_fill?
-        - item.content_by_replace("____")
-      - else
-        - item.content
+- template = @survey.survey_template
+
+- if template.present?
+  .page-survey-show
+    .template
+      %span 调查表模板：
+      %span= template.name
+
+    - if !@survey.has_completed_by?(current_user) || params[:refill]
+      = render_cell :survey, :form, :survey => @survey, :survey_result => @survey_result, :user => current_user
+    - else
+      = render_cell :survey, :result, :survey => @survey, :user => current_user
+
+- else
+  .error 调查表模板错误

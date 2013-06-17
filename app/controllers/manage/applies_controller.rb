@@ -1,4 +1,10 @@
 class Manage::AppliesController < ApplicationController
+  before_filter :authenticate_user!
+  layout :get_layout
+  def get_layout
+    return 'manage'
+  end
+  
   def index
     @course = Course.find(params[:course_id])
     @applies = @course.select_course_applies

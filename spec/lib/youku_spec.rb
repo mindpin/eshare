@@ -30,6 +30,7 @@ describe YoukuVideoList do
 
     it "创建了一个默认课程" do
       expect {subject}.to change {Chapter.count}.by(1)
+      Course.first.cover.file.should_not be nil
     end
   end
 end

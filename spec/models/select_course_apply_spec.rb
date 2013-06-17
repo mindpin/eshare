@@ -3,7 +3,9 @@ require "spec_helper"
 describe SelectCourseApply do
   let(:user){FactoryGirl.create(:user)}
   let(:user1){FactoryGirl.create(:user)}
-  let(:course){FactoryGirl.create(:course)}
+  let(:user2){FactoryGirl.create(:user)}
+  let(:user3){FactoryGirl.create(:user)}
+  let(:course){FactoryGirl.create :course, :apply_request_limit => 4}
   let(:course1){FactoryGirl.create(:course)}
 
 
@@ -95,6 +97,65 @@ describe SelectCourseApply do
     }
   end
 
+  describe '#apply_request_is_full?  查询是否已经到达选课人数上限' do
+    it {
+      course.have_apply_request_limit?.should == true
+    }
+
+    it {
+      course.remaining_apply_request_count.should == 4
+    }
+
+    it {
+      course.apply_request_limit.should == 4
+    }
+
+    it {
+      user1.select_course(course)
+      user.select_course(course)
+      course.apply_request_is_full?.should  == false
+    }
+    it {
+      user1.select_course(course1)
+      user2.select_course(course1)
+      user3.select_course(course1)
+      user.select_course(course1)
+      course1.apply_request_is_full?.should  == false
+    }
+    it {
+      user1.select_course(course)
+      user2.select_course(course)
+      user3.select_course(course)
+      user.select_course(course)
+      user.select_course_applies.by_course(course).first.update_attributes :status => 'ACCEPT'
+      course.apply_request_is_full?.should  == true
+    }
+  end
+
+  describe '#remaining_apply_request_count  查询现在还有多少选课名额' do
+    it {
+      user1.select_course(course)
+      user.select_course(course)
+      course.remaining_apply_request_count.should  == 2
+    }
+    it {
+      user1.select_course(course1)
+      user.select_course(course1)
+      course1.remaining_apply_request_count.should  == -1
+    }
+
+    it {
+      user1.select_course(course)
+      user2.select_course(course)
+      user3.select_course(course)
+      user.select_course(course)
+      user.select_course_applies.by_course(course).first.update_attributes :status => 'ACCEPT'
+      course.remaining_apply_request_count.should  == 0
+    }
+  end
+
+
+
   describe '#select_course(course) 7 用户发起一个选课请求' do
     it { 
       expect {
@@ -122,6 +183,17 @@ describe SelectCourseApply do
         user.request_selected_courses.all.count
       }.by(1)
     }
+
+    context '#到达选课人数上限' do
+      before do
+        user.select_course(course)
+        user1.select_course(course)
+        user2.select_course(course)
+        user3.select_course(course)
+        @user4 = FactoryGirl.create(:user)
+      end
+      it { @user4.select_course(course).should  == false }
+    end
   end
 
 
