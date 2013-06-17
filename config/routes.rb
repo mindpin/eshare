@@ -16,7 +16,6 @@ Eshare::Application.routes.draw do
 
   # /auth/weibo/callback
   get '/auth/:provider/callback' => 'oauth#callback'
-  get '/account/sync' => 'oauth#sync'
   post '/auth/:provider/unbind' => 'oauth#unbind'
 
   # devise
@@ -29,6 +28,9 @@ Eshare::Application.routes.draw do
   devise_scope :user do
     get 'account/avatar' => 'account#avatar'
     put 'account/avatar' => 'account#avatar_update'
+    get 'account/userpage' => 'account#userpage'
+    put 'account/userpage' => 'account#userpage_update'
+    get '/account/sync'  => 'oauth#sync'
   end
 
   resources :announcements
@@ -88,6 +90,7 @@ Eshare::Application.routes.draw do
       get :courses
       get :questions
       get :answers
+      get :course_applies
     end
   end
 end
@@ -197,6 +200,10 @@ Eshare::Application.routes.draw do
       end
     end
 
+    resources :surveys, :shallow => true do
+      resources :survey_results, :shallow => true
+    end
+
     namespace :aj do
       resources :courses, :shallow => true do
         resources :chapters, :shallow => true
@@ -245,6 +252,15 @@ Eshare::Application.routes.draw do
           end
         end
       end
+    end
+  end
+end
+
+# 调查
+Eshare::Application.routes.draw do
+  resources :surveys, :shallow => true do
+    member do
+      post :submit
     end
   end
 end

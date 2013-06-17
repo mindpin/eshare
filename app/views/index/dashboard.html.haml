@@ -1,23 +1,29 @@
-- content_for :header do
-  %h1 首页
-  .page-desc 汇总了你需要关注的各种信息
-
 .page-dashboard
   .mainp66
-    .cpart.timeline
-      %h3 最新动态
-      - if current_user.followings.count == 0
+    - if current_user.followings.count == 0
+      .pblock
         = render_cell :follow, :recommend, :user => current_user
-        = render_cell :timeline, :public
-      - elsif current_user.followings.count < 10
+      .pblock
+        .cpart.timeline
+          %h3 公共动态
+          = render_cell :timeline, :public
+    - elsif current_user.followings.count < 10
+      .pblock
         = render_cell :follow, :recommend, :user => current_user
-        = render_cell :timeline, :home_timeline, :user => current_user
-      - else
-        = render_cell :timeline, :home_timeline, :user => current_user
+      .pblock
+        .cpart.timeline
+          %h3 最新动态
+          = render_cell :timeline, :home_timeline, :user => current_user
+    - else
+      .pblock
+        .cpart.timeline
+          %h3 最新动态
+          = render_cell :timeline, :home_timeline, :user => current_user
 
   .sidep33
-    = render_cell :course, :recent_learning, :user => current_user
-    = render_cell :tags, :learning, :user => current_user
-    = render_cell :course, :advise, :user => current_user
-
-  .clearfix
+    .pblock
+      = render_cell :course, :recent_learning, :user => current_user
+    .pblock
+      = render_cell :tags, :learning, :user => current_user
+    .pblock
+      = render_cell :course, :advise, :user => current_user

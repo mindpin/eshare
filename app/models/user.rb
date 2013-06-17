@@ -39,6 +39,8 @@ class User < ActiveRecord::Base
   # ------------ 以上是用户登录相关代码，不要改动
   # ------------ 任何代码请在下方添加
 
+  validates :tagline, :length => {:in => 0..150}
+
   # 修改基本信息
   attr_accessible :login, :name, :email, :as => :change_base_info
   # 修改密码
@@ -49,7 +51,10 @@ class User < ActiveRecord::Base
 
   # carrierwave
   mount_uploader :avatar, AvatarUploader
-  attr_accessible :name, :avatar
+  attr_accessible :name, :tagline, :avatar
+
+  mount_uploader :userpage_head, UserPageHeadUploader
+  attr_accessible :userpage_head
 
   # 声明角色
   attr_accessible :role
@@ -64,8 +69,10 @@ class User < ActiveRecord::Base
   before_validation :set_login_for_internet_version
   def set_login_for_internet_version
     if R::INTERNET
-      self.login = self.email
-      self.password_confirmation = self.password
+      self.login = self.email if self.login.blank?
+      if self.id.blank?
+        self.password_confirmation = self.password
+      end
     end
   end
 
@@ -106,6 +113,39 @@ class User < ActiveRecord::Base
       }
     end
   }
+
+  def self.create_of_find_oauth_sign_user(oauth_hash)
+    return nil if R::INHOUSE
+
+    # 先尝试找
+    omniauth = Omniauth.find_by_uid(oauth_hash['uid'])
+    if omniauth.present?
+      user = omniauth.user
+      user.create_or_update_omniauth(oauth_hash)
+      return user
+    end
+
+    # 找不到就创建
+    name = "user#{randstr}"
+    login = "#{name}@example.com"
+    user = User.new ({
+      :login => login,
+      :email => login,
+      :name => name, 
+      :role => :student,
+      :password => '1234'
+    })
+    user.save
+    user.create_or_update_omniauth(oauth_hash)
+    user
+  end
+
+  # 判断是否还没有补充邮箱，密码等信息的只能用oauth登录的临时用户
+  def is_oauth_sign_temp_user?
+    return false if R::INHOUSE
+
+    return self.email.include? '@example.com'    
+  end
 
   def follow(model)
     model.follow_by_user self
@@ -159,4 +199,5 @@ class User < ActiveRecord::Base
   include TeamMembership::UserMethods
   include WeiboFriends
   include Note::UserMethods
+  include CourseAttitude::UserMethods
 end

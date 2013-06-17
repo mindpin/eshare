@@ -1,14 +1,17 @@
-.pages
+.pages{:data => {:scroller => true}}
   .images
-    :ruby
-      images = @course_ware.output_images
-      width = images.first.width
-      height = images.first.height
-      w = 658
-      h = w * height / width
+    - images = @course_ware.output_images
 
-    - images.each do |img|
-      .image= fit_image img.url, :width => w, :height => h
+    - if images.present?
+      :ruby
+        width = images.first.width
+        height = images.first.height
+        w = 658
+        h = w * height / width
+
+      - images.each do |img|
+        .image= fit_image img.url, :width => w, :height => h
+
 .stat.stat-pages{:data => {:id => @course_ware.id}}
   .page
     %span.desc 当前页

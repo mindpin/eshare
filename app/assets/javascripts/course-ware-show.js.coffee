@@ -209,7 +209,7 @@ jQuery ->
         @readed_pages.push i
         i++
 
-      console.log @readed_pages
+      # console.log @readed_pages
 
     init: ->
       # 每一张图片大小都一样

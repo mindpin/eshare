@@ -1,37 +1,48 @@
 - content_for :header do
   = render_cell :manage_courses_breadcrumb, :display, :model => @course
-  = page_button_group :chapters do |g|
-    - g.add '增加章节', "/manage/courses/#{@course.id}/chapters/new", :success
+
+  .btns
+    - if R::INHOUSE
+      %a.btn{:href => "/manage/courses/#{@course.id}/applies"}
+        %i.icon-list-alt
+        %span 选课管理
+    %a.btn{:href => "/manage/courses/#{@course.id}/edit"}
+      %i.icon-edit
+      %span= t('common.edit')
+    %a.btn.success{:href => "/manage/courses/#{@course.id}/chapters/new"}
+      %i.icon-plus.icon-white
+      %span 增加章节
 
 .page-manage-course-show
-  = page_data_table :chapters, @chapters, :striped, :bordered do |table|
-    - table.add_column :title do |ch|
-      %a{:href => "/manage/chapters/#{ch.id}"}= ch.title
-    - table.add_column :'course-wares-count' do |ch|
-      = ch.course_wares.count
-    - table.add_column :'practices-count' do |ch|
-      = ch.practices.count
-    - table.add_column :updated_at
+  .pblock.table
+    = page_data_table :chapters, @chapters, :striped, :bordered do |table|
+      - table.add_column :title do |ch|
+        %a{:href => "/manage/chapters/#{ch.id}"}= ch.title
+      - table.add_column :'course-wares-count' do |ch|
+        = ch.course_wares.count
+      - table.add_column :'practices-count' do |ch|
+        = ch.practices.count
+      - table.add_column :updated_at
 
-    - table.add_column(:ops) do |ch|
-      %a.btn.mini.inverse{:href => "/manage/chapters/#{ch.id}/edit"}
-        %i.icon-edit.icon-white
-        %span= t('common.edit')
-      = link_to "/manage/chapters/#{ch.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger' do
-        %i.icon-remove-sign.icon-white
-        %span= t('common.delete')
+      - table.add_column(:ops) do |ch|
+        %a.btn.mini{:href => "/manage/chapters/#{ch.id}/edit"}
+          %i.icon-edit
+          %span= t('common.edit')
+        = link_to "/manage/chapters/#{ch.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger' do
+          %i.icon-remove.icon-white
+          %span= t('common.delete')
 
-    - table.add_column :position do |ch|
-      - if ch.next.present?
-        = link_to "/manage/chapters/#{ch.id}/move_down", :method => :put, :class => 'btn mini move-down' do
-          %i.icon-arrow-down
-      - else
-        %a.btn.disabled.mini{:href=>'javascript:;'}
-          %i.icon-arrow-down
+      - table.add_column :position do |ch|
+        - if ch.next.present?
+          = link_to "/manage/chapters/#{ch.id}/move_down", :method => :put, :class => 'btn mini move-down' do
+            %i.icon-arrow-down
+        - else
+          %a.btn.disabled.mini{:href=>'javascript:;'}
+            %i.icon-arrow-down
 
-      - if ch.prev.present?
-        = link_to "/manage/chapters/#{ch.id}/move_up", :method => :put, :class => 'btn mini move-up' do
-          %i.icon-arrow-up
-      - else
-        %a.btn.disabled.mini{:href=>'javascript:;'}
-          %i.icon-arrow-up
+        - if ch.prev.present?
+          = link_to "/manage/chapters/#{ch.id}/move_up", :method => :put, :class => 'btn mini move-up' do
+            %i.icon-arrow-up
+        - else
+          %a.btn.disabled.mini{:href=>'javascript:;'}
+            %i.icon-arrow-up

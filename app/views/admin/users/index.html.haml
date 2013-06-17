@@ -1,28 +1,35 @@
 - content_for :header do
   %h1 用户管理
-  = page_button_group :users do |g|
-    - g.add '新增用户', '/admin/users/new', :success
-    - g.add '导入Excel', '/admin/users/import', :success
-
-= render_cell :layout, :admin_users_filter, :query => @query
+  .btns
+    %a.btn.success{:href => '/admin/users/new'}
+      %i.icon-plus.icon-white
+      %span 新增用户
+    %a.btn.success{:href => '/admin/users/import'}
+      %i.icon-upload.icon-white
+      %span 导入Excel
 
 .page-admin-users
-  = paginate @users
+  .pblock.filter
+    = render_cell :layout, :admin_users_filter, :query => @query
 
-  = page_data_table(:users, @users, :striped, :bordered) do |table|
-    - table.add_line_data(:role)
-    - table.add_column(:id) do |user|
-      = "##{user.id}"
-    - table.add_column(:role) do |user|
-      = user_roles_str user
-    - table.add_column(:login)
-    - table.add_column(:name)
-    - table.add_column(:email)
-    - table.add_column(:ops) do |user|
-      - if !user.is_admin?
-        = link_to [:edit, :admin, user], :class => 'edit btn mini inverse' do
-          %i.icon-edit.icon-white
-          %span= t('common.user.edit')
-        = link_to [:admin, user], :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger' do
-          %i.icon-remove-sign.icon-white
-          %span= t('common.delete')
+  .pblock.table
+    = page_data_table(:users, @users, :striped, :bordered) do |table|
+      - table.add_line_data(:role)
+      - table.add_column(:id) do |user|
+        = "##{user.id}"
+      - table.add_column(:role) do |user|
+        = user_roles_str user
+      - table.add_column(:login)
+      - table.add_column(:name) do |user|
+        = user_link user
+      - table.add_column(:email)
+      - table.add_column(:ops) do |user|
+        - if !user.is_admin?
+          = link_to [:edit, :admin, user], :class => 'edit btn mini' do
+            %i.icon-edit
+            %span= t('common.user.edit')
+          = link_to [:admin, user], :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger' do
+            %i.icon-remove.icon-white
+            %span= t('common.delete')
+
+  = paginate @users

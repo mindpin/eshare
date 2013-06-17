@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 class IndexController < ApplicationController
+  layout 'dashboard', :only => [:dashboard]
+
   def index
     if !user_signed_in?
       return redirect_to '/account/sign_in'
@@ -9,7 +11,11 @@ class IndexController < ApplicationController
       return redirect_to "/admin"
     end
     
-    redirect_to '/courses'
+    if R::INHOUSE
+      redirect_to '/courses'
+    else
+      redirect_to '/users/me'
+    end
   end
 
   def dashboard

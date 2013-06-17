@@ -24,3 +24,9 @@
   .info.ok{:style => 'display:none;'}
     %i.icon-ok
     %span 登录成功
+
+- if R::INTERNET
+  .oauth-sign
+    %a.btn.large.oauthsign.weibo{:href => '/auth/weibo'}
+      %i
+      %span 使用新浪微博登录

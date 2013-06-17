@@ -14,7 +14,8 @@ class Omniauth < ActiveRecord::Base
 
   scope :by_provider, lambda {|provider| {:conditions => ['omniauths.provider = ?', provider]} }
 
-
+  # oauth
+  validates :uid, :uniqueness => {:scope => :provider} # 两个不同用户不能绑定一个账号
   
   module UserMethods
     def self.included(base)
