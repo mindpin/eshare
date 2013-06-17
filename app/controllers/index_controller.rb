@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 class IndexController < ApplicationController
+  before_filter :authenticate_user!, :except => [:index]
   layout 'dashboard', :only => [:dashboard]
 
   def index

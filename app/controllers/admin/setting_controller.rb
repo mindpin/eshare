@@ -1,4 +1,5 @@
 class Admin::SettingController < Devise::RegistrationsController
+  before_filter :authenticate_user!
   layout 'admin'
 
   def password
