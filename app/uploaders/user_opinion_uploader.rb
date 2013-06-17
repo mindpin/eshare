@@ -1,4 +1,4 @@
-class UserOpnionUploader < CarrierWave::Uploader::Base
+class UserOpinionUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
   include ImageUploaderMethods
 
