@@ -71,19 +71,20 @@ describe Note do
     it{
       user.notes.create(:content => 'content1',:is_private => true,:course_ware => course_ware)
       user.notes.create(:content => 'context1',:is_private => false,:chapter => chapter)
-      Note.by_course(chapter.course).first.course.should == chapter.course
+      user.notes.create(:content => 'context1',:is_private => false,:chapter => chapter1)
+      Note.by_course(chapter.course).size.should == 1
+    }
+
+    it{
+      user.notes.create(:content => 'context1',:is_private => false,:chapter => chapter)
+      user1.notes.create(:content => 'context1',:is_private => false,:chapter => chapter)
+      Note.by_chapter(chapter).size.should == 2
     }
 
     it{
       user.notes.create(:content => 'content1',:is_private => true,:course_ware => course_ware)
-      user.notes.create(:content => 'context1',:is_private => false,:chapter => chapter)
-      Note.by_chapter(course_ware.chapter).first.chapter.should == course_ware.chapter
-    }
-
-    it{
-      user.notes.create(:content => 'content1',:is_private => true,:course_ware => course_ware)
-      user.notes.create(:content => 'context1',:is_private => false,:chapter => chapter)
-      Note.by_course_ware(course_ware).first.course_ware.should== course_ware
+      user1.notes.create(:content => 'content1',:is_private => true,:course_ware => course_ware)
+      Note.by_course_ware(course_ware).size.should== 2
     }
 
     it{
