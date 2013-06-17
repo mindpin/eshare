@@ -1,4 +1,5 @@
 class AnnouncementsController < ApplicationController
+  before_filter :authenticate_user!
   before_filter :pre_load
 
   def pre_load

@@ -17,7 +17,7 @@ describe TagsController do
       }
 
       it {
-        response.code.should == '401'
+        response.code.should == '302'
       }
 
       it {

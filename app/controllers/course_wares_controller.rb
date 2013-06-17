@@ -1,4 +1,5 @@
 class CourseWaresController < ApplicationController
+  before_filter :authenticate_user!
   layout 'course_ware_show', :only => [:show]
 
   def show

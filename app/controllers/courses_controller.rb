@@ -1,4 +1,5 @@
 class CoursesController < ApplicationController
+  before_filter :authenticate_user!
   before_filter :pre_load
   layout 'course_show', :only => [:show, :users_rank]
 
