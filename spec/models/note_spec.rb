@@ -64,38 +64,38 @@ describe Note do
   it{
     user.notes.create(:content => 'content1',:is_private => true,:course_ware => course_ware)
     user.notes.create(:content => 'context1',:is_private => false,:chapter => chapter)
-    user.notes.size == 2
+    user.notes.size.should == 2
   }
 
   describe "Note.by_course by_chapter by_course_ware privacy publicity" do
     it{
       user.notes.create(:content => 'content1',:is_private => true,:course_ware => course_ware)
       user.notes.create(:content => 'context1',:is_private => false,:chapter => chapter)
-      Note.by_course(chapter.course).first == chapter.course
+      Note.by_course(chapter.course).first.course.should == chapter.course
     }
 
     it{
       user.notes.create(:content => 'content1',:is_private => true,:course_ware => course_ware)
       user.notes.create(:content => 'context1',:is_private => false,:chapter => chapter)
-      Note.by_chapter(course_ware.chapter).first == course_ware.chapter
+      Note.by_chapter(course_ware.chapter).first.chapter.should == course_ware.chapter
     }
 
     it{
       user.notes.create(:content => 'content1',:is_private => true,:course_ware => course_ware)
       user.notes.create(:content => 'context1',:is_private => false,:chapter => chapter)
-      Note.by_course_ware(course_ware).first == course_ware
+      Note.by_course_ware(course_ware).first.course_ware.should== course_ware
     }
 
     it{
       user.notes.create(:content => 'content1',:is_private => true,:course_ware => course_ware)
       user.notes.create(:content => 'context1',:is_private => false,:chapter => chapter)
-      Note.by_privacy.size == 1
+      Note.by_privacy.size.should == 1
     }
 
     it{
       user.notes.create(:content => 'content1',:is_private => true,:course_ware => course_ware)
       user.notes.create(:content => 'context1',:is_private => true,:chapter => chapter)
-      Note.by_privacy.size == 2
+      Note.by_privacy.size.should == 2
     }
   end
 
