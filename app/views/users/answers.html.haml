@@ -1,7 +1,6 @@
 .page-user-page-answers
   .cpart
-    %h3 我回答的问题
-    - answers = current_user.answers.page params[:page]
-    - questions = answers.map(&:question)
-    = render_cell :questions, :list, :questions => questions, :user => current_user
-    = paginate answers
+    %h3 #{@user.name}回答的问题
+    - questions = @answers.map(&:question)
+    = render_cell :questions, :list, :questions => questions, :user => @user
+    = paginate @answers

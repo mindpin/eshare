@@ -6,7 +6,10 @@ zh-CN:
       categories_manage: 分类管理
       courses_manage: 课程管理
       surveys_manage: 调查管理
-      user_opinions_view: 反馈意见
+
+      #INTERNET
+      user_opinions_view: 反馈意见 
+      site_changes: 更新记录
 
     teacher:
       dashboard: 动态
@@ -40,6 +43,7 @@ zh-CN:
 
     help:
       user_opinion: 意见反馈
+      site_changes: 网站功能改进记录
 
   helpers:
     submit:

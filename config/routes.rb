@@ -129,6 +129,7 @@ Eshare::Application.routes.draw do
     end
 
     resources :user_opinions
+    resources :site_changes
   end
 end
 
@@ -218,6 +219,7 @@ Eshare::Application.routes.draw do
       post :checkin
       post :student_select
       get :users_rank
+      get :questions
     end
 
     resources :chapters, :shallow => true do
@@ -241,6 +243,10 @@ Eshare::Application.routes.draw do
       collection do
         get :all_courses_read_pie
         get :all_courses_punch_card
+      end
+
+      member do
+        get :read_pie
       end
 
       resources :chapters, :shallow => true do
@@ -271,5 +277,6 @@ end
 Eshare::Application.routes.draw do
   namespace :help do
     resources :user_opinions, :shallow => true
+    resources :site_changes, :shallow => true
   end
 end

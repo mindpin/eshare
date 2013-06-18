@@ -64,6 +64,8 @@ class Course < ActiveRecord::Base
   has_many :test_papers
 
   has_many :questions
+  has_many :question_answers, :through => :questions,
+                              :source => :answers
 
   validates :creator, :presence => true
 
@@ -176,6 +178,58 @@ class Course < ActiveRecord::Base
       self.cover = file
       self.save
     end
+  end
+
+  # 获取指定用户在课程下的课件学习情况
+  def course_wares_read_stat_of(user)
+    scope = self.directly_course_ware_readings.where(:user_id => user.id)
+
+    reading = scope.where('course_ware_readings.read_percent <> ?', '100%').count
+    read    = scope.where('course_ware_readings.read_percent = ?', '100%').count
+    none    = self.course_wares.count - reading - read
+
+    return {
+      :none => none,
+      :read => read,
+      :reading => reading
+    }
+  end
+
+  # 课程下还没有人回答的问题
+  #TODO ISSUE 103 之后重构
+  def questions_without_answers
+    sql = %~
+      SELECT * FROM
+      (
+        SELECT questions.*, count(answers.id) AS CA from questions
+        LEFT JOIN answers 
+        ON answers.question_id = questions.id 
+        WHERE questions.course_id = #{self.id}
+        GROUP BY questions.id
+      ) AS Q
+
+      WHERE CA = 0
+    ~
+
+    Question.find_by_sql sql
+  end
+
+  # 课程下还没有人回答的问题数目
+  def questions_without_answers_count
+    sql = %~
+      SELECT count(*) AS CC FROM
+      (
+        SELECT questions.*, count(answers.id) AS CA from questions
+        LEFT JOIN answers 
+        ON answers.question_id = questions.id 
+        WHERE questions.course_id = #{self.id}
+        GROUP BY questions.id
+      ) AS Q
+
+      WHERE CA = 0
+    ~
+
+    Question.find_by_sql(sql)[0]['CC']
   end
 
   module UserMethods

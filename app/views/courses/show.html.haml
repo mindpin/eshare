@@ -1,11 +1,16 @@
 .page-course-show
   = render_cell :course, :header, :course => @course
-  
-  .checkins
-    = render_cell :course, :checkin, :user => current_user, :course => @course
-    = render_cell :course, :student_select, :user => current_user, :course => @course
+
+  - if R::INHOUSE
+    .checkins
+      = render_cell :course, :checkin, :user => current_user, :course => @course
+      = render_cell :course, :student_select, :user => current_user, :course => @course
+      
+  = render_cell :course, :navbar, :course => @course
 
   .mainp66
     = render_cell :course, :show_chapters, :user => current_user, :course => @course
   .sidep33
     = render_cell :course, :learning_users, :course => @course
+    - if user_signed_in?
+      = render_cell :course, :learning_chart, :course => @course, :user => current_user

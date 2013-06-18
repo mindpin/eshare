@@ -21,8 +21,8 @@
           = render_cell :follow, :stat, :user => @user
         .pblock
           = render_cell :tags, :learning, :user => @user
+
         - if R::INTERNET
-          .pblock
-            = render_cell :sync, :weibo, :user => @user
+          = render_cell :sync, :weibo, :user => @user, :cur_user => current_user
 
       .clearfix

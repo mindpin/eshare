@@ -1,0 +1,4 @@
+.page-course-page-navbar
+  = page_navbar do |navbar|
+    - navbar.add_item("<span>主页</span>".html_safe, "/courses/#{@course.id}")
+    - navbar.add_item("<span>课程问答</span><span class='newf'>new</span>".html_safe, "/courses/#{@course.id}/questions")

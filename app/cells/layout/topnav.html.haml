@@ -5,7 +5,7 @@
       - navbar.add_item("<i class='icon-user icon-white'></i>#{@user.name}".html_safe, "/users/#{@user.id}")
       - navbar.add_item("<i class='icon-cog icon-white'></i>账号设置".html_safe, '/account/edit')
       - if R::INTERNET
-        - navbar.add_item("<i class='icon-comment icon-white'></i>意见反馈".html_safe, '/help/user_opinions/new')
+        - navbar.add_item("<i class='icon-comment icon-white'></i>意见反馈<span class='newf'>new</span>".html_safe, '/help/user_opinions/new')
       - navbar.add_item("<i class='icon-off icon-white'></i>退出登录".html_safe, '/account/sign_out')
   - else
     = page_navbar(:fixed_top, :color_inverse) do |navbar|

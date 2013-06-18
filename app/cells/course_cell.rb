@@ -74,5 +74,16 @@ class CourseCell < Cell::Rails
   def learning_users(opts = {})
     @course = opts[:course]
     render
-  end  
+  end
+
+  def learning_chart(opts = {})
+    @course = opts[:course]
+    @user = opts[:user]
+    render
+  end
+
+  def navbar(opts = {})
+    @course = opts[:course]
+    render
+  end
 end

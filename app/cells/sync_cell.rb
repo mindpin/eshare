@@ -3,6 +3,7 @@ class SyncCell < Cell::Rails
 
   def weibo(opts = {})
     @user = opts[:user]
+    @cur_user = opts[:cur_user]
     render
   end
 end

@@ -1,0 +1,10 @@
+.page-site-changes
+  - @site_changes.each do |sc|
+    .pblock
+      .site-change
+        .time
+          %i.icon-leaf
+          %span= sc.created_at
+        .content= simple_format sc.content
+
+  = paginate @site_changes

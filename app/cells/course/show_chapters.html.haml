@@ -31,3 +31,7 @@
                 .snapshots
                   - cw.output_images(:small)[0..3].compact.each do |img|
                     .snapshot.docpage= fit_image img.url, :width => 80, :height => 45
+    - else
+      .blank 
+        %i.icon-info-sign
+        %span 课程下还没有任何内容

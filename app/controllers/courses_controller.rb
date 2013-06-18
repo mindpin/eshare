@@ -1,7 +1,7 @@
 class CoursesController < ApplicationController
   before_filter :authenticate_user!
   before_filter :pre_load
-  layout 'course_show', :only => [:show, :users_rank]
+  layout 'course_show', :only => [:show, :users_rank, :questions]
 
   def pre_load
     @course = Course.find(params[:id]) if params[:id]
@@ -41,5 +41,9 @@ class CoursesController < ApplicationController
     render :json => {
       :status => 'request'
     }
+  end
+
+  def questions
+    @questions = @course.questions.page params[:page]
   end
 end

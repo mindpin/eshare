@@ -9,4 +9,9 @@ class Charts::CoursesController < ApplicationController
     @stat = current_user.course_weekdays_stat
     render :layout => false
   end
+
+  def read_pie
+    @course = Course.find params[:id]
+    render :json => @course.course_wares_read_stat_of(current_user)
+  end
 end
