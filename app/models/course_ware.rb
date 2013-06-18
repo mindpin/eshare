@@ -11,7 +11,7 @@ class CourseWare < ActiveRecord::Base
   include Note::CourseWareMethods
 
   attr_accessible :title, :desc, :url, :creator, :total_count
-  attr_accessible :title, :desc, :file_entity_id, :kind, :url, :as => :upload
+  attr_accessible :title, :desc, :file_entity_id, :kind, :url, :chapter_id, :as => :upload
   attr_accessible :title, :desc, :creator, :kind, :chapter, :url, :as => :import
 
   attr_accessible :cover_url_cache, :as => :update_cover

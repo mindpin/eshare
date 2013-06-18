@@ -28,7 +28,12 @@ class CourseWareConverter
       pair.map do |item|
         File.join(entity.convert_output_dir, item)
       end
-    end.each {|args| FileUtils.mv *args}
+    end.each do |source_path, dest_path|
+      if File.exists?(dest_path)
+        FileUtils.rm_r dest_path, :force => true 
+      end
+      FileUtils.mv source_path, dest_path
+    end
 
     entity.convert_success!
   rescue Exception => ex
