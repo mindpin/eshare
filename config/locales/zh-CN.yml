@@ -6,6 +6,7 @@ zh-CN:
       categories_manage: 分类管理
       courses_manage: 课程管理
       surveys_manage: 调查管理
+      user_opinions_view: 反馈意见
 
     teacher:
       dashboard: 动态
@@ -37,6 +38,9 @@ zh-CN:
     admin_account:
       password: 修改管理员密码
 
+    help:
+      user_opinion: 意见反馈
+
   helpers:
     submit:
       course:
@@ -59,6 +63,8 @@ zh-CN:
         update: 确定更新
       survey:
         create: 创建调查表
+      user_opinion:
+        create: 提交
 
   activerecord:
     models:
@@ -101,6 +107,12 @@ zh-CN:
 
       survey:
         title: 调查表标题
+
+      user_opinion:
+        title: 标题
+        content: 内容
+        image: 上传截图说明
+        contact: 联系方式（邮件或其他）
 
     errors:
       models:
@@ -156,6 +168,15 @@ zh-CN:
           attributes:
             survey_id:
               taken: 不能重复填写一个调查表
+
+        user_opinion:
+          attributes:
+            title:
+              blank: 请填写标题
+            content:
+              blank: 请填写反馈内容
+            contact:
+              blank: 请填写联系方式
 
 
   views:

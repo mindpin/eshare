@@ -4,40 +4,12 @@
   = javascript_include_tag '/highcharts/js/highcharts'
 
 !!!
-- simple_page_layout title, :html_lang => :zh, :body_class => 'app' do
+- simple_page_layout title, :html_lang => :zh, :body_class => 'course' do
   = render_cell :layout, :topnav, :user => current_user
   = render_cell :layout, :searchbar, :user => current_user
 
   .page-layout-course-show
-    .sidebar
-      %a.back{:href => '/courses'}
-        %i.icon-chevron-left
-        %span 课程浏览
-      %a.course-link{:href => "/courses/#{@course.id}"}
-        %i.icon-book.icon-white
-        %span.name= @course.name
-
-      - if user_signed_in?
-        .user-card
-          .avatar= avatar current_user
-          .info
-            .name= current_user.name
-            .desc 正在进行学习
-
-          .clearfix
-          .percent
-            .d 学习进度：
-            - percent = @course.read_percent(current_user)
-            .page-progress.success.striped
-              .bar{:style => "width:#{percent};"}
-              .p= percent
-          .rank
-            .d 
-              %span 个人排名：
-              %span.r #{@course.user_rank_of(current_user)}
-              %span= link_to '查看详细', "/courses/#{@course.id}/users_rank"
-
-      .items
+    = render_cell :course, :sidebar, :course => @course, :user => current_user
 
     .content
       = yield

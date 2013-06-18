@@ -10,7 +10,7 @@ if File.exists?(oauth_key_path)
 end
 
 class R
-  INHOUSE = true
+  INHOUSE = false
   INTERNET = !INHOUSE
 
   LIBREOFFICE_PATH = HASH[:libreoffice_path]

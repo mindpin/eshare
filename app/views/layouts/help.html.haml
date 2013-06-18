@@ -1,0 +1,13 @@
+- title = t('common.site.title.app')
+
+- content_for :javascript do
+  = javascript_include_tag '/highcharts/js/highcharts'
+
+!!!
+- simple_page_layout title, :html_lang => :zh, :body_class => 'help' do
+  = render_cell :layout, :topnav, :user => current_user
+  = render_cell :layout, :help_sidebar, :user => current_user
+
+  .page-layout-application
+    .page-content.grids-style
+      = yield

@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+  before_filter :authenticate_user!
   before_filter :pre_load
   layout Proc.new { |controller|
     case controller.action_name

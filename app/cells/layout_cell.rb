@@ -26,6 +26,11 @@ class LayoutCell < Cell::Rails
     render
   end
 
+  def help_sidebar(opts = {})
+    @user = opts[:user]
+    render
+  end
+
   def admin_users_filter(opts = {})
     @query = opts[:query]
     render

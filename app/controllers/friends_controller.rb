@@ -1,4 +1,5 @@
 class FriendsController < ApplicationController
+  before_filter :authenticate_user!
   layout 'user_page', :only => [:followings, :followers]
 
   def followings

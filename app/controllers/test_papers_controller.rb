@@ -1,4 +1,6 @@
 class TestPapersController < ApplicationController
+  before_filter :authenticate_user!
+
   def index
     @test_papers = TestPaper.all
   end

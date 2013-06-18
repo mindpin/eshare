@@ -1,4 +1,6 @@
 class TestQuestionsController < ApplicationController
+  before_filter :authenticate_user!
+
   def index
     @test_questions = Course.find(params[:course_id]).test_questions
   end

@@ -20,6 +20,7 @@ describe FilesController do
 
     context '参数不正确，异常情况' do
       before {
+        sign_in(FactoryGirl.create(:user))
         post :upload, :aaa => 'bbb',
                       :blob => 'foobar'
 
@@ -40,6 +41,7 @@ describe FilesController do
 
     context '上传一个新文件' do
       before do
+        sign_in(FactoryGirl.create(:user))
         post :upload, :file_name  => 'test.zip',
                       :file_size  => 62614734,
                       :start_byte => 0,
@@ -172,6 +174,7 @@ describe FilesController do
 
   describe 'POST #upload 不允许上传空文件' do
     before {
+      sign_in(FactoryGirl.create(:user))
       blob = ActionDispatch::Http::UploadedFile.new({
         :filename => 'blob',
         :type => 'text/html',
