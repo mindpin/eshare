@@ -16,7 +16,7 @@
               ['土豆视频 TUDOU', 'tudou']
             ]
 
-          = f.select :kind, s, :label => '网络视频来源'
+          = f.input :kind, :collection => s, :label => '网络视频来源', :prompt => nil
           = f.input :url, :label => '视频网址 URL', :input_html => {:class => 'xxlarge', :placeholder => 'http://'}
 
         - else
