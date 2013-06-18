@@ -7,6 +7,7 @@
       .form-inputs
         = f.input :title, :input_html => {:class => 'xxlarge'}
         = f.input :desc, :input_html => {:rows => 6, :class => 'xxlarge'}
+        = f.select :chapter_id, @select_chapters.map{|chapter| [chapter.title, chapter.id]}
         = f.input :file_entity_id, :as => :hidden
 
         - if @course_ware.kind == 'youku' # 网络视频
