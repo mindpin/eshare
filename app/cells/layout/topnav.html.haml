@@ -1,10 +1,12 @@
 .page-top-nav
   - if @user.present?
     = page_navbar(:fixed_top, :color_inverse) do |navbar|
-      - navbar.add_item('<i class="icon-home icon-white"></i>首页'.html_safe, '/')
-      - navbar.add_item(@user.name, "/users/#{@user.id}")
-      - navbar.add_item('账号设置', '/account/edit')
-      - navbar.add_item('退出登录', '/account/sign_out')
+      - navbar.add_item("<i class='icon-home icon-white'></i>首页".html_safe, '/')
+      - navbar.add_item("<i class='icon-user icon-white'></i>#{@user.name}".html_safe, "/users/#{@user.id}")
+      - navbar.add_item("<i class='icon-cog icon-white'></i>账号设置".html_safe, '/account/edit')
+      - if R::INTERNET
+        - navbar.add_item("<i class='icon-comment icon-white'></i>意见反馈".html_safe, '/help/user_opinions/new')
+      - navbar.add_item("<i class='icon-off icon-white'></i>退出登录".html_safe, '/account/sign_out')
   - else
     = page_navbar(:fixed_top, :color_inverse) do |navbar|
       - navbar.add_item('<i class="icon-home icon-white"></i>首页'.html_safe, '/')

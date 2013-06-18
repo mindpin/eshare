@@ -45,7 +45,11 @@ jQuery ->
 
   jQuery(document).on 'ajax:success', '.page-sign .sign-in-form', (evt, xhr)->
     new AuthInfo().success()
-    window.location.href = '/'
+    url = xhr.location
+    if url != null || url != '' || url != '/'
+      window.location.href = url
+    else
+      window.location.href = '/'
 
   jQuery(document).on 'ajax:error', '.page-sign .sign-up-form', (evt, xhr)->
     infos = jQuery.parseJSON(xhr.responseText)
@@ -56,4 +60,8 @@ jQuery ->
 
   jQuery(document).on 'ajax:success', '.page-sign .sign-up-form', (evt, xhr)->
     new AuthInfo().success()
-    window.location.href = '/'
+    url = xhr.location
+    if url != null || url != '' || url != '/'
+      window.location.href = url
+    else
+      window.location.href = '/'

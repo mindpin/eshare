@@ -1,48 +1,54 @@
+.course-header
+  %h1= @course_ware.title
+  .desc= @course_ware.desc || t('common.course.course-ware-no-desc')
+
 .page-course-ware-show
-  .header
-    %h1= @course_ware.title
-    .desc= @course_ware.desc || t('common.course.course-ware-no-desc')
-
   .cbody
-    .widget
-      - # 视频
-      - if @course_ware.is_video?
-        = render_cell :course_ware_widget, :video, :course_ware => @course_ware, :user => current_user
+    .pblock
+      .widget
+        - # 视频
+        - if @course_ware.is_video?
+          = render_cell :course_ware_widget, :video, :course_ware => @course_ware, :user => current_user
 
-      - elsif @course_ware.file_entity.present?
-        - if @course_ware.is_pdf? || @course_ware.is_ppt?
-          - if @course_ware.convert_success?
-            = render_cell :course_ware_widget, :pages, :course_ware => @course_ware, :user => current_user
-          - else
-            .is-converting PPT/PDF文件格式转换没有成功，或正在进行转换
+        - elsif @course_ware.file_entity.present?
+          - if @course_ware.is_pdf? || @course_ware.is_ppt?
+            - if @course_ware.convert_success?
+              = render_cell :course_ware_widget, :pages, :course_ware => @course_ware, :user => current_user
+            - else
+              .is-converting PPT/PDF文件格式转换没有成功，或正在进行转换
 
     .infos
-      .questions
-        .bar 线上问答
-        .form
-          = simple_form_for Question.new, :url => [@course_ware, :questions] do |f|
-            .question-desc{:style => 'display:none;'}
-              .p 请准确详尽的描述问题，方便他人理解你的疑问。
-              .p 提问之前可以先查找有没有类似的问题已经被解答过，尽量避免提出重复的问题。
-            .form-inputs
-              = f.input :title, :as => :text, :input_html => {:placeholder => '你可以在这里提问'}
-            .form-actions{:style => 'display:none;'}
-              %a.btn.submit.success{:href => 'javascript:;'}= t('helpers.submit.question.create')
-              %a.btn.cancel{:href => "javascript:;"}= t('common.form.cancel')
+      .mainp66
+        .pblock
+          .cpart.questions
+            %h3 线上问答
+            .form
+              = simple_form_for Question.new, :url => [@course_ware, :questions] do |f|
+                .question-desc{:style => 'display:none;'}
+                  .p 请准确详尽的描述问题，方便他人理解你的疑问。
+                  .p 提问之前可以先查找有没有类似的问题已经被解答过，尽量避免提出重复的问题。
+                .form-inputs
+                  = f.input :title, :as => :text, :input_html => {:placeholder => '你可以在这里提问'}
+                .form-actions{:style => 'display:none;'}
+                  %a.btn.submit.success{:href => 'javascript:;'}= t('helpers.submit.question.create')
+                  %a.btn.cancel{:href => "javascript:;"}= t('common.form.cancel')
 
-        = render_cell :questions, :list, :questions => @questions, :user => current_user
-        - if @questions.length > 1
-          = paginate @questions
+            = render_cell :questions, :list, :questions => @questions, :user => current_user
+            - if @questions.length > 1
+              = paginate @questions
 
-      .side-info
-        .chart
-          .bar 一周学习进度变化
-          .page-chart.course-ware.read-count-last-week{:data => {:url => "/charts/course_wares/#{@course_ware.id}/read_count_last_week"}}
+      .sidep33
+        .side-info
+          .pblock
+            .chart
+              .bar 一周学习进度变化
+              .page-chart.course-ware.read-count-last-week{:data => {:url => "/charts/course_wares/#{@course_ware.id}/read_count_last_week"}}
 
-        .learners
-          .bar 这些人最近学习过这个小节
-          .users
-            - @course_ware.recent_reading_users(10).each do |user|
-              .user
-                .avatar= avatar user
-                .name= user.name
+          .pblock
+            .learners
+              .bar 这些人最近学习过这个小节
+              .users
+                - @course_ware.recent_reading_users(10).each do |user|
+                  .user
+                    .avatar= avatar user
+                    .name= user.name

@@ -1,0 +1,22 @@
+.content-header
+  %h1 意见反馈
+
+.pblock.minus-top
+  .page-user-opinion-new
+    - if params[:success] == 'true'
+      .commit-success
+        %i.icon-ok
+        %span.desc 意见反馈提交成功，我们的改进离不开您的支持！
+      %a.new{:href => '/help/user_opinions/new'} 继续反馈意见
+
+
+    - else
+      - contact = user_signed_in? ? current_user.email : ''
+      = simple_form_for @user_opinion, :url => '/help/user_opinions' do |f|
+        .form-inputs
+          = f.input :title, :input_html => {:class => :xxlarge}, :placeholder => '简单描述您的意见，20字以内'
+          = f.input :content, :as => :text, :input_html => {:rows => 6, :class => :xxlarge}, :placeholder => '请填写具体信息帮助我们尽快了解您的想法并及时改进'
+          = f.input :image, :as => :file
+          = f.input :contact, :input_html => {:value => contact}
+        .form-actions
+          = f.button :submit, :class => 'success'

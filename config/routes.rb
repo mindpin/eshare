@@ -127,6 +127,8 @@ Eshare::Application.routes.draw do
         post :do_import
       end
     end
+
+    resources :user_opinions
   end
 end
 
@@ -262,5 +264,12 @@ Eshare::Application.routes.draw do
     member do
       post :submit
     end
+  end
+end
+
+# 用户反馈 INTERNET
+Eshare::Application.routes.draw do
+  namespace :help do
+    resources :user_opinions, :shallow => true
   end
 end

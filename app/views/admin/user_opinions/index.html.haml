@@ -1,0 +1,18 @@
+- content_for :header do
+  %h1 查看用户提交的反馈意见
+
+.page-admin-user-opinions
+  = page_tile :user_opinions, @user_opinions do
+    - add_left :user do |uo|
+      .avatar= avatar_link uo.user
+      .name= user_link uo.user
+    - add :title
+    - add :content do |uo|
+      = simple_format uo.content
+    - context do |uo|
+      - if uo.image.present?
+        - add :image do |uo|
+          %a{:href => uo.image.url, :target => '_blank'}
+            = fit_image uo.image.url, :width => 60, :height => 45
+
+  = paginate @user_opinions

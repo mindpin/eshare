@@ -17,6 +17,12 @@ SimpleNavbar::Base.config do
         controller :'manage/survey_results'
       end
     end
+
+    if R::INTERNET
+      nav :user_opinions_view, :url => '/admin/user_opinions' do
+        controller :'admin/user_opinions'
+      end
+    end
   end
 
   # -------------------------
@@ -125,6 +131,14 @@ SimpleNavbar::Base.config do
   rule :admin_account do
     nav :password, :url => '/account/edit' do
       controller :account, :only => :edit
+    end
+  end
+
+  if R::INTERNET
+    rule :help do
+      nav :user_opinion, :url => '/help/user_opinions/new' do
+        controller :'help/user_opinions'
+      end
     end
   end
 

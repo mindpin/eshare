@@ -128,6 +128,9 @@ body {
     &.info {
       background-color:#FCFCFC;
     }
+    &.minus-top {
+      margin-top:-21px;
+    }
   }
 }
 
@@ -391,7 +394,7 @@ body.auth{
   }
 }
 
-body.admin, body.app, body.account, body.error, body.course{
+body.admin, body.app, body.account, body.help, body.error, body.course{
   .page-top-nav .page-navbar{
     .navbar-inner {
       min-height:30px !important;
@@ -580,7 +583,7 @@ body.admin {
   }
 }
 
-body.account {
+body.account, body.help {
   padding-top:30px;
 
   .sidebar {
@@ -1641,6 +1644,121 @@ img.page-avatar {
     margin-bottom:30px;
     
     position:relative;
+  }
+}
+
+.page-layout-course-ware-show .sidebar .items, 
+.page-course-show .chapters .chapter .items {
+  .item {
+    display:block;
+    padding:10px 15px;
+    padding-left:24px + 20px + 15px;
+    border-bottom:solid 1px #ddd;
+    border-left:solid 1px #ddd;
+    
+    text-decoration:none;
+    position:relative;
+    background-color:#FAFAFA;
+    color:#555;
+
+    .line {
+      width:4px;
+      position:absolute;
+      top:-1px;bottom:-1px;
+      left:15px + 24px/2 - 4px/2;
+      background-color:#CDCDCD;
+    }
+    &:first-child .line { top:50%; }
+    &:last-child .line { bottom:50%; }
+
+    &:hover {
+      background-color:#fff;
+      text-decoration:none;
+      color:#005580;
+    }
+
+    &.current {
+      background-color:#fff;
+      color:#005580;
+    }
+
+    i {
+      height:24px;width:24px;
+      background:url(course_icons/wares.png) 0px 0px no-repeat;
+      // z-index:1;
+      position:absolute;
+      left:15px;
+      top:50%;
+      margin-top:-12px;
+      &.youku, &.sina, &.tudou, &.flv {
+        background-position: 0px -24px;
+      }
+    }
+
+    &.read {
+      i {
+        background-position:-48px 0;
+        &.youku, &.sina, &.tudou, &.flv { background-position:-48px -24px; }
+      }
+      .line {
+        background-color:#63B4E3;
+      }
+    }
+
+    &.reading {
+      i {
+        background-position:-24px 0;
+        &.youku, &.sina, &.tudou, &.flv { background-position:-24px -24px; }
+      }
+      .line {
+        background-color:#63B4E3;
+      }
+    }
+  }
+}
+.page-course-show .chapters .chapter .items {
+  .item {
+    // border-top:solid 1px transparent;
+  }
+}
+.page-layout-course-ware-show .sidebar .items {
+  border-top:solid 1px #ddd;
+  .item {
+    border-left:none;
+    border-right:solid 1px #ddd;
+  }
+}
+
+.page-layout-course-show {
+  .course-header {
+    border:solid 1px #ddd;
+    padding:20px;
+    background-color:white;
+    margin:-20px -20px 20px;
+    h1 {
+      font-size: 21px;
+      font-weight: normal;
+      margin: 0 0 10px;
+
+    }
+  }
+}
+
+.page-layout-course-ware-show {
+  .course-header {
+    border:solid 1px #ddd;
+    padding:20px;
+    background-color:white;
+    margin:-20px -20px 20px;
+    h1 {
+      font-size: 21px;
+      font-weight: normal;
+      margin: 0 0 10px;
+    }
+  }
+
+  .page-course-ware-show {
+    margin:-21px -20px 20px;
 
     .cbody{
       .widget {
@@ -1766,24 +1884,18 @@ img.page-avatar {
       .infos {
         @include floatfix;
         .questions {
-          float:left;
-          width:60%;
-          
-          .bar {
-            font-size:16px;
-            border-bottom:solid 1px #ccc;
-            margin-bottom:10px;
-            padding-bottom:5px;
-          }
           .form {
-            margin-bottom: 20px;
+            border-top:solid 1px #ddd;
+            margin:0 -20px 0;
+            padding:20px;
+
             label {display:none;}
 
             .form-inputs {
               padding-right:14px;
             }
 
-            #question_title {
+            textarea#question_title {
               width:100%;
               height:20px;
               resize:none;
@@ -1821,9 +1933,8 @@ img.page-avatar {
             }
           }
         }
+
         .side-info {
-          margin-left:60%;
-          padding-left:20px;
           .bar {
             font-size:16px;
             border-bottom:solid 1px #ccc;
@@ -1856,103 +1967,6 @@ img.page-avatar {
           }
         }
       }
-    }
-  }
-}
-
-.page-layout-course-ware-show .sidebar .items, 
-.page-course-show .chapters .chapter .items {
-  .item {
-    display:block;
-    padding:10px 15px;
-    padding-left:24px + 20px + 15px;
-    border-bottom:solid 1px #ddd;
-    border-left:solid 1px #ddd;
-    
-    text-decoration:none;
-    position:relative;
-    background-color:#FAFAFA;
-    color:#555;
-
-    .line {
-      width:4px;
-      position:absolute;
-      top:-1px;bottom:-1px;
-      left:15px + 24px/2 - 4px/2;
-      background-color:#CDCDCD;
-    }
-    &:first-child .line { top:50%; }
-    &:last-child .line { bottom:50%; }
-
-    &:hover {
-      background-color:#fff;
-      text-decoration:none;
-      color:#005580;
-    }
-
-    &.current {
-      background-color:#fff;
-      color:#005580;
-    }
-
-    i {
-      height:24px;width:24px;
-      background:url(course_icons/wares.png) 0px 0px no-repeat;
-      // z-index:1;
-      position:absolute;
-      left:15px;
-      top:50%;
-      margin-top:-12px;
-      &.youku, &.sina, &.tudou, &.flv {
-        background-position: 0px -24px;
-      }
-    }
-
-    &.read {
-      i {
-        background-position:-48px 0;
-        &.youku, &.sina, &.tudou, &.flv { background-position:-48px -24px; }
-      }
-      .line {
-        background-color:#63B4E3;
-      }
-    }
-
-    &.reading {
-      i {
-        background-position:-24px 0;
-        &.youku, &.sina, &.tudou, &.flv { background-position:-24px -24px; }
-      }
-      .line {
-        background-color:#63B4E3;
-      }
-    }
-  }
-}
-.page-course-show .chapters .chapter .items {
-  .item {
-    // border-top:solid 1px transparent;
-  }
-}
-.page-layout-course-ware-show .sidebar .items {
-  border-top:solid 1px #ddd;
-  .item {
-    border-left:none;
-    border-right:solid 1px #ddd;
-  }
-}
-
-.page-layout-course-show {
-  .course-header {
-    border:solid 1px #ddd;
-    padding:20px;
-    background-color:white;
-    margin:-20px -20px 20px;
-    h1 {
-      font-size: 21px;
-      font-weight: normal;
-      margin: 0 0 10px;
-
     }
   }
 }
@@ -3372,5 +3386,20 @@ form .input.page-form-tag-inputer {
         color:#555;
       }
     }
+  }
+}
+
+.page-user-opinion-new {
+  margin-bottom:20px;
+  .form-inputs {
+    margin-bottom:20px;
+  }
+
+  .commit-success {
+    padding:20px;
+    background-color:#E3FFDA;
+    border:solid 1px rgba(black, 0.1);
+    margin-bottom:20px;
+    color:green;
   }
 }
