@@ -12,11 +12,11 @@ describe User do
 
   describe '私有 tag, 自动变为公有 tag' do
     before {
-      # @user.set_tag_list('java ruby python')
+      @user.set_tag_list('java ruby python')
     }
 
     it "自动变为公有 tag" do
-      # @user.public_tags.map(&:name).should == ['java', 'ruby', 'python']
+      @user.public_tags.map(&:name).should == ['java', 'ruby', 'python']
     end
   end
 
