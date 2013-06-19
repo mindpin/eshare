@@ -35,6 +35,18 @@ class Answer < ActiveRecord::Base
     end
   end
 
+  after_create :update_question_answers_count
+  after_destroy :update_question_answers_count
+  def update_question_answers_count
+    self.question.without_feed do
+      qu = self.question
+      qu.record_timestamps = false
+      qu.answers_count = qu.answers.count
+      qu.save
+      qu.record_timestamps = true
+    end
+  end
+
   def has_voted_by?(user)
     _get_answer_vote_of(user).present?
   end

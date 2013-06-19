@@ -137,6 +137,30 @@ describe Question do
       question.course.should == nil
     }
   end
+
+  describe 'question.answers.count 和 question.answers_count 同步' do
+    before {
+      @user = FactoryGirl.create(:user)
+      Timecop.travel(Time.now - 2.day) do
+        @updated_at = Time.now
+        @question     = FactoryGirl.create(:question)
+      end
+      
+    }
+
+    it{
+      @question.answers.count.should == @question.answers_count
+    }
+
+    it{
+      @question.answers.create!(:creator => @user, :content => "1")
+      @question.reload
+      @question.answers.count.should == 1
+      @question.answers_count.should == 1
+      @question.updated_at.to_i.should == @updated_at.to_i
+    }
+
+  end
 end
 
 describe Answer do
