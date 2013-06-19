@@ -130,7 +130,7 @@ gem 'simple-excel-import',
 ## tag
 gem 'mindpin-simple-tags',
     :git => 'git://github.com/mindpin/mindpin-simple-tags.git',
-    :tag => '0.0.3'
+    :tag => '0.0.4'
 
 # feed
 gem 'mindpin-feeds',
