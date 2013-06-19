@@ -1,7 +1,15 @@
 class CoursesController < ApplicationController
   before_filter :authenticate_user!
   before_filter :pre_load
-  layout 'course_show', :only => [:show, :users_rank, :questions]
+  
+  layout Proc.new { |controller|
+    case controller.action_name
+    when 'show', 'users_rank', 'questions', 'notes'
+      return 'course_show'
+    else
+      return 'application'
+    end
+  }
 
   def pre_load
     @course = Course.find(params[:id]) if params[:id]
@@ -45,5 +53,9 @@ class CoursesController < ApplicationController
 
   def questions
     @questions = @course.questions.page params[:page]
+  end
+
+  def notes
+    @notes = @course.notes.page params[:page]
   end
 end

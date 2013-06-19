@@ -16,7 +16,7 @@ html{
 
 body {
   font-size:14px;
-  background-color:#f1f1f1;
+  background-color:#f0f0f0;
   // background-color:#e5e5e5;
   padding-top:80px;
   position:relative;
@@ -71,6 +71,15 @@ body {
     margin-bottom:0;
   }
 
+  .page-progress {
+    box-shadow:0 1px 1px rgba(0, 0, 0, 0.1) inset
+  }
+
+  .mainp100 {
+    width:100%;float:left;
+    min-height:400px;
+    @include border-box;
+  }
   .mainp75 {
     width:75%;float:left;
     min-height:400px;
@@ -95,7 +104,7 @@ body {
     @include border-box;
   }
 
-  .mainp75, .mainp66, .sidep25, .sidep33 {
+  .mainp75, .mainp66, .sidep25, .sidep33, .mainp100 {
     .cpart {
       border-bottom:solid 1px #ddd;
       margin-bottom:20px;
@@ -117,8 +126,12 @@ body {
   }
 
   .pblock {
-    border:solid 1px #ddd;
+    border:solid 1px #e7e7e7;
+    border-bottom:solid 1px #d6d6d6;
     background-color:white;
+    @include border-radius(3px);
+    box-shadow:0 1px 0 #E7E7E7;
+    
     padding:20px;
     padding-bottom:0;
     margin-bottom:20px;
@@ -1215,7 +1228,8 @@ img.page-avatar {
 
   .header {
     background-color:white;
-    border:solid 1px #ddd;
+    border:solid 1px #e7e7e7;
+    @include border-radius(3px 3px 0 0);
     margin-bottom:20px;
     padding:20px 20px 20px;
     position:relative;
@@ -1247,7 +1261,7 @@ img.page-avatar {
 
   .checkins {
     background-color:#f7f7f7;
-    border:solid 1px #ddd;
+    border:solid 1px #e7e7e7;
     margin-top:-21px;
     margin-bottom:20px;
     padding:15px 20px;
@@ -1426,24 +1440,38 @@ img.page-avatar {
       height:40px;
       @include border-radius(0);
       background:#FCFCFC;
+      border:solid 1px #e7e7e7;
+      border-bottom:solid 1px #D6D6D6;
+      box-shadow:0 1px 0 #e7e7e7;
+
       .nav {
         padding:0;
         li a {
           padding-left:20px;
           padding-right:20px;
+          position:relative;
 
           span.newf {
             background-color:red;
             color:white;
-            padding:0 3px;
-            @include border-radius(2px);
-            font-size:10px;
+            padding:1px 3px;
+            font-size:11px;height:12px;line-height:12px;
             font-weight:bold;
             text-shadow:none;
             margin-left:5px;
-            position:relative;
-            top:-1px;
-            line-height:12px;
+            position:absolute;
+            top:-11px;right:5px;
+            @include border-radius(2px);
+            &:after {
+              content:"";
+              display:block;
+              border:solid 3px transparent;
+              border-left-color:red;
+              border-top-color:red;
+              position:absolute;
+              top:14px;
+              left:3px;
+            }
           }
         }
         li.active a {
@@ -1451,8 +1479,8 @@ img.page-avatar {
           box-shadow:none;
           padding-left:19px;
           padding-right:19px;
-          border-left:solid 1px #ddd;
-          border-right:solid 1px #ddd;
+          border-left:solid 1px #e7e7e7;
+          border-right:solid 1px #e7e7e7;
           &:hover {
             background:#f7f7f7;
           }
@@ -1488,14 +1516,21 @@ img.page-avatar {
     }
 
     .chapter {
-      border:solid 1px #ddd;
+      border:solid 1px #e7e7e7;
+      border-bottom:solid 1px #D6D6D6;
+      box-shadow:0 1px 0 #E7E7E7;
+      @include border-radius(3px);
+
       background-color:white;
       margin-bottom:20px;
 
       .ch-title {
-        padding:10px 20px;
-        border-bottom:solid 1px #ddd;
-        background-color:#fafafa;
+        padding:10px 20px 10px 15px;
+        background-color:#485566;
+        margin:5px;
+        @include border-radius(3px);
+        color:white;
+        i {opacity:0.75;margin-right:5px;}
       }
 
       .wares {
@@ -1609,8 +1644,7 @@ img.page-avatar {
 
     .page-chart.course-read-pie {
       border:0 none;
-      border-top:solid 1px #ddd;
-      margin:0 -20px 0;
+      margin:-20px -20px 20px;
       height:200px;
     }
 
@@ -1644,102 +1678,105 @@ img.page-avatar {
 .page-layout-course-show
 {
   .sidebar {
-    width:230px;
+    width:230px - 1px;
+    border:solid 1px #e7e7e7;
+    border-left:0 none;
+    border-bottom:solid 1px #D6D6D6;
+    box-shadow:0 1px 0 #E7E7E7;
+    background-color:white;
+    @include border-radius(0 3px 3px 0);
+
     margin-top:0px;
     margin-left:0px;
     float:left;
 
-    a.back {
+    a.course-link {
       display:block;
-      border:solid 1px #ddd;
-      border-left:none;
-      // border-bottom:none;
-      background-color:white;
       padding:15px;
+      text-decoration:none;
+
+      .cb {
+        color:#555;
+        i {opacity:0.75;}
+      }
+      &:hover {
+        .cb {
+          text-decoration:none;
+          i  {opacity:1;}
+        }
+      }
+    }
+
+    a.back {
+      display:none;
+
+      padding:0 15px;
       height:20px;line-height:20px;
       color:#555;
       margin-bottom:-1px;
 
       i {opacity: 0.25;}
       &:hover {
-        background-color:#f5f5f5;
+        // background-color:#f5f5f5;
         text-decoration:none;
         i {opacity: 0.75;}
       }
     }
 
-    a.course-link {
-      display:block;
-      border:solid 1px #ddd;
-      border-left:none 0;
-      color:#555;
-      background-color:#fafafa;
+    .user-card{
+      border-top:dotted 1px #ddd;
       padding:15px;
-      line-height:20px;
+      @include floatfix;
 
-      i { opacity:0.5; }
+      .avatar { float:left; 
+        img {width:50px;height:50px;}
+      }
 
-      &:hover {
-        background-color:#f7f9fc;
-        text-decoration:none;
-        i { opacity:0.8; }
+      .uinfo {
+        margin-left:65px;
+
+        .name {
+          margin-bottom:10px;
+          font-weight:bold;
+          height:20px;line-height:20px;
+        }
+
+        .percent {
+          @include floatfix;
+          margin-top:10px;
+
+          .d {
+            font-size:12px;
+            float:left;
+            line-height:16px;
+            margin-right:5px;
+          }
+
+          .page-progress {
+            width:133px;
+            float:left;
+            height:20px;
+            margin-bottom:0;
+            position:relative;
+          }
+          .p {
+            text-align:center;
+            font-size:12px;line-height:20px;
+            height:20px;
+            position:absolute;
+            top:0;left:0;right:0;
+          }
+        }
       }
     }
 
-    .user-card{
-      background-color:white;
+    .user-rank {
+      border-top:dotted 1px #ddd;
+      font-size:12px;
       padding:15px;
-      @include floatfix;
-      border:solid 1px #ddd;
-      border-top:0 none;
-      border-left:0 none;
-
-      .avatar {
-        float:left;
-      }
-
-      .info {
-        margin-left:74px;
-        .name {
-          margin-bottom:10px;
-          font-size:16px;
-          font-weight:bold;
-        }
-        .desc {
-          color:#666;
-        }
-      }
-
-      .percent {
-        clear:both;
-        @include floatfix;
-        margin-top:20px;
-        margin-bottom:5px;
-
-        .d {
-          font-size:12px;
-          float:left;
-          line-height:16px;
-          margin-right:5px;
-        }
-
-        .page-progress {
-          width:130px;
-          float:left;
-          height:16px;
-        }
-        .p {
-          text-align:center;
-          font-size:12px;line-height:16px;
-        }
-      }
-
-      .rank {
-        font-size:12px;
-        .r {
-          color:#DD0000;
-          margin-right:10px;
-        }
+      .r {
+        color:#DD0000;
+        margin-right:10px;
       }
     }
 
@@ -2361,19 +2398,17 @@ form .input.page-form-tag-inputer {
 }
 
 .page-course-users-rank {
-  margin:-21px -20px 20px;
+  margin:-21px -20px 0;
   min-height:300px;
   background-color:white;
-  border:solid 1px #ddd;
 
   .stat {
-    background-color:#f7f7f7;
-    border-bottom:solid 1px #ddd;
-    padding:20px;
+    padding:0px 20px 20px;
     .total {margin-right:20px;}
   }
 
   .users-head {
+    display:none;
     font-weight:bold;
     overflow:hidden;
     padding:10px 20px;
@@ -2396,25 +2431,26 @@ form .input.page-form-tag-inputer {
 
     .user {
       overflow:hidden;
-      border-bottom:solid 1px #ddd;
-      padding:10px 20px;
+      border-top:dotted 1px #ddd;
+      padding:15px 20px;
+      &.me {
+        background-color:#FFFFDA;
+      }
 
       .index {
         float:left;
         color:#999;
-        height:22px;line-height:22px;
-        width:22px;
+        height:24px;line-height:24px;
+        width:24px;
         margin-right:50px;
         text-align:center;
-        border:solid 1px white;
+        @include border-radius(50px);
       }
 
       &:nth-child(1) {
         .index {
           background-color:#FFAF32;
-          border:solid 1px #FF7E1B;
-          box-shadow:0 0 1px white inset;
-          color:white;
+          color:black;
         }
         .name {
           font-weight:bold;
@@ -2424,9 +2460,7 @@ form .input.page-form-tag-inputer {
       &:nth-child(2) {
         .index {
           background-color:#FFC263;
-          border:solid 1px #FF9E54;
-          box-shadow:0 0 1px white inset;
-          color:white;
+          color:black;
         }
         .name {
           font-weight:bold;
@@ -2436,9 +2470,7 @@ form .input.page-form-tag-inputer {
       &:nth-child(3) {
         .index {
           background-color:#FFD593;
-          border:solid 1px #FFBE8D;
-          box-shadow:0 0 1px white inset;
-          color:white;
+          color:black;
         }
         .name {
           font-weight:bold;
@@ -2454,12 +2486,22 @@ form .input.page-form-tag-inputer {
         float:left;
         height: 24px;line-height:24px;
         width:150px;
+        // a {color:#555;}
       }
       .prog{
         width:200px;
         float:left;
-        .page-progress{margin-bottom:0;margin-top:2px;}
-        .p{text-align:center;}
+        .page-progress{
+          margin-bottom:0;margin-top:2px;
+          position:relative;
+        }
+        .p{
+          position:absolute;
+          text-align:center;
+          top:0;left:0;right:0;
+          height:20px;line-height:20px;
+          font-size:12px;
+        }
       }
     }
   }
@@ -3479,14 +3521,10 @@ form .input.page-form-tag-inputer {
   margin-bottom:0 !important;
   .users {
     margin:0 -20px -20px;
-    padding:20px;
-    border-top:solid 1px #ddd;
+    padding:0 0px 20px 20px;
     .user {
       float:left;
       margin-right:15px;margin-bottom:15px;
-      &:nth-child(5n) {
-        margin-right:0;
-      }
 
       .avatar{
         img {width:50px;height:50px;}

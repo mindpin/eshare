@@ -89,6 +89,14 @@ class YoukuVideo
     end
   end
 
+  def video_title
+    @video_title ||= begin
+      @parser.get_json['data'][0]['title']
+    rescue Exception => e
+      ''
+    end
+  end
+
   def video_files
     json = @parser.get_json
 
