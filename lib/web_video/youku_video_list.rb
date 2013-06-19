@@ -90,7 +90,7 @@ class YoukuVideoList
         data[:chapters].each do |ch|
           chapter.course_wares.create(
             {
-              :title => '视频',
+              :title => ch[:title],
               :desc => '',
               :url => ch[:url],
               :kind => 'youku',
