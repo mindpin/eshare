@@ -195,4 +195,36 @@ describe FilesController do
       response.body.should == 'cannot upload a empty file.'
     }
   end
+
+
+  describe 'POST #upload_clipboard 不允许上传空文件' do
+    before do
+      sign_in(FactoryGirl.create(:user))
+      post :upload_clipboard, :file => nil
+    end
+
+    it{
+      response.code.should == "415"
+    }
+
+    it{
+      response.body.should == 'cannot upload a empty file.'
+    }
+  end
+
+  describe 'POST #upload_clipboard 上传文件' do
+    before do
+      sign_in(FactoryGirl.create(:user))
+      @file = File.new(Rails.root.join("spec/data/file_entity.jpg"))
+    end
+    
+    it{
+      expect {
+        file_entity = FileEntity.new(:attach => @file)
+        file_entity.save
+      }.to change {
+        FileEntity.all.count
+      }.by(1)
+    }
+  end
 end

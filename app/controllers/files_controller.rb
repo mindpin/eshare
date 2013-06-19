@@ -35,6 +35,18 @@ class FilesController < ApplicationController
     render :text => 'params or other error.', :status => 500
   end
 
+  def upload_clipboard
+    if params[:file].blank? 
+      return render :text => 'cannot upload a empty file.', :status => 415
+    end
+
+    file_entity = FileEntity.new(:attach => params[:file])
+    file_entity.save
+
+    return render :text => file_entity.attach.url
+  end
+
+
   private
     def _find_or_build_file_entity
       file_entity_id = params[:file_entity_id]
