@@ -107,12 +107,12 @@ module ApplicationHelper
   end
 
   # 获取课件的学习进度
-  def course_ware_read_percent(course_ware)
-    course_ware.read_percent(current_user)
+  def course_ware_read_percent(course_ware, user = current_user)
+    course_ware.read_percent(user)
   end
 
-  def course_ware_reading_css_class(course_ware)
-    percent = course_ware.read_percent(current_user)
+  def course_ware_reading_css_class(course_ware, user = current_user)
+    percent = course_ware.read_percent(user)
     return '' if percent == '0%'
     return 'read' if percent == '100%'
     return 'reading'

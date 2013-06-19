@@ -17,6 +17,16 @@ SimpleNavbar::Base.config do
         controller :'manage/survey_results'
       end
     end
+
+    if R::INTERNET
+      nav :user_opinions_view, :url => '/admin/user_opinions' do
+        controller :'admin/user_opinions'
+      end
+
+      nav :site_changes, :url => '/admin/site_changes' do
+        controller :'admin/site_changes'
+      end
+    end
   end
 
   # -------------------------
@@ -70,8 +80,10 @@ SimpleNavbar::Base.config do
       controller :index, :only => :dashboard
     end
 
-    nav :learning_plan, :url => '/plan' do
-      controller :index, :only => :plan
+    if R::INHOUSE
+      nav :learning_plan, :url => '/plan' do
+        controller :index, :only => :plan
+      end
     end
 
     nav :user, :url => '/users/me' do
@@ -123,6 +135,18 @@ SimpleNavbar::Base.config do
   rule :admin_account do
     nav :password, :url => '/account/edit' do
       controller :account, :only => :edit
+    end
+  end
+
+  if R::INTERNET
+    rule :help do
+      nav :user_opinion, :url => '/help/user_opinions/new' do
+        controller :'help/user_opinions'
+      end
+
+      nav :site_changes, :url => '/help/site_changes' do
+        controller :'help/site_changes'
+      end
     end
   end
 

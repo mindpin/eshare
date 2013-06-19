@@ -11,7 +11,7 @@ class CourseWare < ActiveRecord::Base
   include Note::CourseWareMethods
 
   attr_accessible :title, :desc, :url, :creator, :total_count
-  attr_accessible :title, :desc, :file_entity_id, :kind, :url, :as => :upload
+  attr_accessible :title, :desc, :file_entity_id, :kind, :url, :chapter_id, :as => :upload
   attr_accessible :title, :desc, :creator, :kind, :chapter, :url, :as => :import
 
   attr_accessible :cover_url_cache, :as => :update_cover
@@ -115,10 +115,9 @@ class CourseWare < ActiveRecord::Base
   delegate :converting?,      :to => :file_entity
   delegate :convert_failure?, :to => :file_entity
 
-  def output_images
+  def output_images(version = :normal)
     return [] if file_entity.blank?
-
-    return file_entity.output_images
+    return file_entity.output_images(version)
   end
 
   def cover_url

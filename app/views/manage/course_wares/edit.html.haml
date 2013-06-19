@@ -7,10 +7,18 @@
       .form-inputs
         = f.input :title, :input_html => {:class => 'xxlarge'}
         = f.input :desc, :input_html => {:rows => 6, :class => 'xxlarge'}
+        = f.input :chapter_id, :collection => @select_chapters.map{|chapter| [chapter.title, chapter.id]}, :label => '课件所在章节', :prompt => nil
         = f.input :file_entity_id, :as => :hidden
 
-        - if @course_ware.kind == 'youku' # 网络视频
-          = f.select :kind, [['优酷 YOUKU', 'youku']], :label => '网络视频来源'
+        - if @course_ware.is_web_video? # 网络视频
+          :ruby
+            s = [
+              ['优酷 YOUKU', 'youku'],
+              ['新浪视频 SINA', 'sina'],
+              ['土豆视频 TUDOU', 'tudou']
+            ]
+
+          = f.input :kind, :collection => s, :label => '网络视频来源', :prompt => nil
           = f.input :url, :label => '视频网址 URL', :input_html => {:class => 'xxlarge', :placeholder => 'http://'}
 
         - else

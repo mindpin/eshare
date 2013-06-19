@@ -1,0 +1,39 @@
+.chapters
+  - chapters = @course.chapters
+
+  - if @course.course_wares.count > 0
+    - chapters.each do |chapter|
+      - course_wares = chapter.course_wares
+      - if course_wares.present?
+        .chapter
+          - if chapters.count > 1
+            .ch-title= chapter.title
+          .wares
+            - chapter.course_wares.each do |cw|
+              %a.ware{:href => "/course_wares/#{cw.id}", :class => course_ware_reading_css_class(cw, @user)}
+                .line
+                %i{:class => cw.kind}
+                .title= cw.title
+                .read-percent
+                  :ruby
+                    rp = course_ware_read_percent(cw, @user)
+                    klass = rp == '0%' ? 'zero' : rp == '100%' ? 'full' : ''
+                  %span{:class => klass}= rp
+
+                - if cw.is_youku?
+                  .snapshots
+                    .snapshot.video.youku
+                      = fit_image cw.cover_url, :width => 80, :height => 45
+                - if cw.is_tudou?
+                  .snapshots
+                    .snapshot.video.tudou
+                      = fit_image cw.cover_url, :width => 80, :height => 45
+
+                - if cw.is_ppt? || cw.is_pdf?
+                  .snapshots
+                    - cw.output_images(:small)[0..3].compact.each do |img|
+                      .snapshot.docpage= fit_image img.url, :width => 80, :height => 45
+  - else
+    .blank 
+      %i.icon-info-sign
+      %span 课程下还没有任何内容

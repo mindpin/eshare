@@ -1,50 +1,16 @@
-.header
-  %h1= @course.name
-  .desc= @course.desc || t('common.course.course-no-desc')
-  = render_cell :tags, :public, :model => @course
-
-
 .page-course-show
-  .checkins
-    = render_cell :course, :checkin, :user => current_user, :course => @course
-    = render_cell :course, :student_select, :user => current_user, :course => @course
+  = render_cell :course, :header, :course => @course
 
-  = page_tile :chapters, @chapters do
-    - add_left :title do |chapter|
-      - if chapter.course_wares.count > 0
-        - cw = chapter.course_wares.first
-        = link_to chapter.title, cw
-      - else
-        = link_to chapter.title, 'javascript:;'
+  - if R::INHOUSE
+    .checkins
+      = render_cell :course, :checkin, :user => current_user, :course => @course
+      = render_cell :course, :student_select, :user => current_user, :course => @course
+      
+  = render_cell :course, :navbar, :course => @course
 
-    - add_left :desc
-    - add_left :chart do |chapter|
-      - if chapter.course_wares.count > 1
-        .page-chart-label.chapter-read-pie
-          .t 课件
-          .c= chapter.course_wares.count
-        .page-chart.chapter-read-pie{:data => {:url => "/charts/chapters/#{chapter.id}/read_pie"}}
-
-    - add :items do |chapter|
-      - chapter.course_wares.each do |cw|
-        %a.item{:href => "/course_wares/#{cw.id}", :class => course_ware_reading_css_class(cw)}
-          .line
-          %i{:class => cw.kind}
-          .title= cw.title
-          .read-percent
-            :ruby
-              rp = course_ware_read_percent cw
-              klass = rp == '0%' ? 'zero' : rp == '100%' ? 'full' : ''
-            %span{:class => klass}= rp
-
-          - if cw.is_youku?
-            .cover.video.youku
-              = fit_image cw.cover_url, :width => 80, :height => 45
-          - if cw.is_tudou?
-            .cover.video.tudou
-              = fit_image cw.cover_url, :width => 80, :height => 45
-
-          - if cw.is_ppt? || cw.is_pdf?
-            .pages.ppt
-              - cw.output_images[0..3].compact.each do |img|
-                -#.page.ppt= fit_image img.url, :width => 80, :height => 45
+  .mainp66
+    = render_cell :course, :show_chapters, :user => current_user, :course => @course
+  .sidep33
+    = render_cell :course, :learning_users, :course => @course
+    - if user_signed_in?
+      = render_cell :course, :learning_chart, :course => @course, :user => current_user

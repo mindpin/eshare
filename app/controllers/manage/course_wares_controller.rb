@@ -29,6 +29,7 @@ class Manage::CourseWaresController < ApplicationController
   def edit
     @course_ware = CourseWare.find(params[:id])
     @chapter = @course_ware.chapter
+    @select_chapters = @chapter.course.chapters
   end
 
   def update

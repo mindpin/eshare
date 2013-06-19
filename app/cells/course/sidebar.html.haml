@@ -1,0 +1,29 @@
+.sidebar
+  %a.back{:href => '/courses'}
+    %i.icon-chevron-left
+    %span 课程浏览
+  %a.course-link{:href => "/courses/#{@course.id}"}
+    %i.icon-book
+    %span.name= @course.name
+
+  - if @user.present?
+    .user-card
+      .avatar= avatar @user
+      .info
+        .name= @user.name
+        .desc 正在进行学习
+
+      .clearfix
+      .percent
+        .d 学习进度：
+        - percent = @course.read_percent(@user)
+        .page-progress.success.striped
+          .bar{:style => "width:#{percent};"}
+          .p= percent
+      .rank
+        .d 
+          %span 个人排名：
+          %span.r #{@course.user_rank_of(@user)}
+          %span= link_to '查看详细', "/courses/#{@course.id}/users_rank"
+
+  .items

@@ -1,0 +1,15 @@
+.page-site-changes
+  = simple_form_for SiteChange.new, :url => "/admin/site_changes" do |f|
+    = f.input :content, :input_html => {:rows => 6, :class => 'xxlarge'}
+    = f.button :submit, :class => 'success'
+
+  %br
+
+  = page_tile :site_changes, @site_changes do
+    - add :time do |sc|
+      = sc.created_at
+
+    - add :content do |sc|
+      = simple_format sc.content
+
+  = paginate @site_changes

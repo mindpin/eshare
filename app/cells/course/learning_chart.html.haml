@@ -1,0 +1,6 @@
+.pblock
+  .cpart.learning-chart
+    %h3 我的学习进度
+    .cc
+      .course-wares-count #{@course.course_wares.count}课时
+      .page-chart.course-read-pie{:data => {:url => "/charts/courses/#{@course.id}/read_pie"}}

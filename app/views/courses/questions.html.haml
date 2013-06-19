@@ -1,0 +1,21 @@
+.page-course-show
+  = render_cell :course, :header, :course => @course
+  = render_cell :course, :navbar, :course => @course
+
+  .mainp66
+    .pblock
+      .cpart.course-questions
+        %h3 总共 #{@course.questions.count} 个提问
+        = render_cell :questions, :list, :user => current_user, :questions => @questions
+  .sidep33
+    .pblock.course-questions-stat
+      .cpart
+        .st
+          %span 总提问数：
+          %span= @course.questions.count
+        .st
+          %span 总回答数：
+          %span= @course.question_answers.count
+        .st
+          %span 还没有被回答的问题数：
+          %span= @course.questions_without_answers_count

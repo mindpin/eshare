@@ -19,7 +19,7 @@ class OauthController < ApplicationController
       user = User.create_of_find_oauth_sign_user(oauth_hash)
       sign_in(:user, user)
 
-      redirect_to '/'
+      redirect_to after_sign_in_path_for(user)
     end
   end
 

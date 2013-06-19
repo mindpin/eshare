@@ -1,0 +1,16 @@
+- count = @course.learning_users.count
+- users = @course.learning_users.order('course_ware_readings.updated_at DESC').limit(20)
+
+.pblock
+  - if count > 0
+    .cpart.page-course-learning-users
+      %h3 #{count}人最近学习过这个课程
+      .users
+        - users.each do |user|
+          .user
+            .avatar= avatar_link user
+            .name= user_link user
+        .clearfix
+  - else
+    .cpart.page-course-learning-users.no-user
+      %h3 这个课程还没有人学习

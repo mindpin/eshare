@@ -127,6 +127,9 @@ Eshare::Application.routes.draw do
         post :do_import
       end
     end
+
+    resources :user_opinions
+    resources :site_changes
   end
 end
 
@@ -216,6 +219,7 @@ Eshare::Application.routes.draw do
       post :checkin
       post :student_select
       get :users_rank
+      get :questions
     end
 
     resources :chapters, :shallow => true do
@@ -241,6 +245,10 @@ Eshare::Application.routes.draw do
         get :all_courses_punch_card
       end
 
+      member do
+        get :read_pie
+      end
+
       resources :chapters, :shallow => true do
         member do
           get :read_pie
@@ -262,5 +270,13 @@ Eshare::Application.routes.draw do
     member do
       post :submit
     end
+  end
+end
+
+# 用户反馈 INTERNET
+Eshare::Application.routes.draw do
+  namespace :help do
+    resources :user_opinions, :shallow => true
+    resources :site_changes, :shallow => true
   end
 end

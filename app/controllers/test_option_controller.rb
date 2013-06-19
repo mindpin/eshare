@@ -1,4 +1,6 @@
 class TestOptionController < ApplicationController
+  before_filter :authenticate_user!
+
   def new
     @test_option = TestOption.new
   end
