@@ -134,6 +134,11 @@ class CourseWare < ActiveRecord::Base
     return cover_url
   end
 
+  def get_video_title
+    return self.youku_video.video_title if is_youku?
+    return self.tudou_video.video_title if is_tudou?
+  end
+
   def recent_reading_users(limit = 10)
     self.reading_users.limit(10).order('course_ware_readings.updated_at desc')
   end

@@ -50,6 +50,7 @@ class TudouVideo
   end
 
   attr_reader :url, :user_agent
+  attr_reader :parser
 
   # 土豆的视频解析是区分user_agent的，所以需要从浏览器把user_agent传过来
   def initialize(url, user_agent = '')
@@ -68,6 +69,17 @@ class TudouVideo
       match = @parser.get_page.match(/pic:(.+)/)
       match = match[1].match /(http:\/\/[^"']+)/
       return match[0]
+    rescue Exception => e
+      p "video_cover_url 解析错误"
+      ''
+    end
+  end
+
+  def video_title
+    @video_cover_url ||= begin
+      match = @parser.get_page.match(/kw:(.+)/)
+      str = match[1].gsub('"', '').gsub("'", '').strip
+      return str
     rescue Exception => e
       p "video_cover_url 解析错误"
       ''

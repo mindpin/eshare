@@ -7,7 +7,9 @@
       - if course_wares.present?
         .chapter
           - if chapters.count > 1
-            .ch-title= chapter.title
+            .ch-title
+              %i.icon-leaf.icon-white
+              %span= truncate_u chapter.title, 32
           .wares
             - chapter.course_wares.each do |cw|
               %a.ware{:href => "/course_wares/#{cw.id}", :class => course_ware_reading_css_class(cw, @user)}

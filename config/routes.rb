@@ -220,6 +220,7 @@ Eshare::Application.routes.draw do
       post :student_select
       get :users_rank
       get :questions
+      get :notes
     end
 
     resources :chapters, :shallow => true do
