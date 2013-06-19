@@ -114,6 +114,10 @@ class User < ActiveRecord::Base
     end
   }
 
+  # 用户自定义 tag
+  simple_taggable
+
+
   def self.create_of_find_oauth_sign_user(oauth_hash)
     return nil if R::INHOUSE
 
