@@ -6,10 +6,12 @@ class Manage::CourseWaresController < ApplicationController
   end
   
   def index
+    authorize! :manage, CourseWare
     @chapter = Chapter.find(params[:chapter_id])
   end
 
   def new
+    authorize! :manage, CourseWare
     @chapter = Chapter.find(params[:chapter_id])
     @course_ware = @chapter.course_wares.new
 
@@ -17,6 +19,7 @@ class Manage::CourseWaresController < ApplicationController
   end
 
   def create
+    authorize! :manage, CourseWare
     @chapter = Chapter.find(params[:chapter_id])
     @course_ware = @chapter.course_wares.build(params[:course_ware], :as => :upload)
     @course_ware.creator = current_user
@@ -28,12 +31,14 @@ class Manage::CourseWaresController < ApplicationController
 
   def edit
     @course_ware = CourseWare.find(params[:id])
+    authorize! :manage, @course_ware
     @chapter = @course_ware.chapter
     @select_chapters = @chapter.course.chapters
   end
 
   def update
     @course_ware = CourseWare.find(params[:id])
+    authorize! :manage, @course_ware
     @chapter = @course_ware.chapter
     if @course_ware.update_attributes(params[:course_ware], :as => :upload)
       return redirect_to "/manage/chapters/#{@chapter.id}"
@@ -43,6 +48,7 @@ class Manage::CourseWaresController < ApplicationController
 
   def destroy
     @course_ware = CourseWare.find(params[:id])
+    authorize! :manage, @course_ware
     @chapter = @course_ware.chapter
     @course_ware.destroy
     return redirect_to "/manage/chapters/#{@chapter.id}"
@@ -50,6 +56,7 @@ class Manage::CourseWaresController < ApplicationController
 
   def move_up
     @course_ware = CourseWare.find(params[:id])
+    authorize! :manage, @course_ware
     @chapter = @course_ware.chapter
     @course_ware.move_up
     return redirect_to "/manage/chapters/#{@chapter.id}"
@@ -57,6 +64,7 @@ class Manage::CourseWaresController < ApplicationController
 
   def move_down
     @course_ware = CourseWare.find(params[:id])
+    authorize! :manage, @course_ware
     @chapter = @course_ware.chapter
     @course_ware.move_down
     return redirect_to "/manage/chapters/#{@chapter.id}"
@@ -64,6 +72,7 @@ class Manage::CourseWaresController < ApplicationController
 
   def do_convert
     @course_ware = CourseWare.find(params[:id])
+    authorize! :manage, @course_ware
     @chapter = @course_ware.chapter
     
     @course_ware.file_entity.do_convert(true)
