@@ -142,8 +142,8 @@ describe Question do
     before {
       @user = FactoryGirl.create(:user)
       Timecop.travel(Time.now - 2.day) do
-        @updated_at = Time.now
-        @question     = FactoryGirl.create(:question)
+        @question   = FactoryGirl.create(:question)
+        @updated_at = @question.updated_at
       end
       
     }
