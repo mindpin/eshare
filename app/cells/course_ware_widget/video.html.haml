@@ -10,11 +10,13 @@
         .avatar= avatar mark.user, :small
         .ct #{mark.user.name} : #{mark.content}
 
-  .mark-inputer
-    .desc 浮动弹幕
-    .ipt
-      %input{:type => :text}
-    %a.btn.success.send{:href => 'javascript:;', :data => {:id => @course_ware.id}} 发送
+  - if @user.present?
+    .mark-inputer
+      .desc 浮动弹幕
+      .ipt
+        %input{:type => :text}
+      %a.btn.success.send{:href => 'javascript:;', :data => {:id => @course_ware.id}} 发送
 
-.stat.stat-video
-  = course_ware_read_count_html(@course_ware, @user)
+- if @user.present?
+  .stat.stat-video
+    = course_ware_read_count_html(@course_ware, @user)
