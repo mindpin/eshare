@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-source 'http://ruby.taobao.org'
+# source 'http://ruby.taobao.org'
 
 gem 'rails', '3.2.12' # RAILS #不要更新 3.2.13 有性能问题，等 3.2.14
 gem 'mysql2', '0.3.11' # MYSQL数据库连接
