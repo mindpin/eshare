@@ -136,6 +136,8 @@ end
 # 资源网盘
 Eshare::Application.routes.draw do
   post '/upload' => 'files#upload'
+  post '/upload_clipboard' => 'files#upload_clipboard'
+  
   post '/disk/create_folder' => 'disk#create_folder'
 
   get    '/disk'        => 'disk#index'
