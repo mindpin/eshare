@@ -91,6 +91,8 @@ module ApplicationHelper
   end
 
   def course_ware_read_count_html(course_ware, user)
+    return "" if user.blank? || course_ware.blank?
+
     # .read
     #   %span.desc 学习完成度
     #   %span.l= @read_count
@@ -108,10 +110,13 @@ module ApplicationHelper
 
   # 获取课件的学习进度
   def course_ware_read_percent(course_ware, user = current_user)
+    return '0%' if user.blank?
     course_ware.read_percent(user)
   end
 
   def course_ware_reading_css_class(course_ware, user = current_user)
+    return '' if user.blank?
+
     percent = course_ware.read_percent(user)
     return '' if percent == '0%'
     return 'read' if percent == '100%'

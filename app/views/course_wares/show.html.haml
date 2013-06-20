@@ -22,16 +22,21 @@
         .pblock
           .cpart.questions
             %h3 线上问答
-            .form
-              = simple_form_for Question.new, :url => [@course_ware, :questions] do |f|
-                .question-desc{:style => 'display:none;'}
-                  .p 请准确详尽的描述问题，方便他人理解你的疑问。
-                  .p 提问之前可以先查找有没有类似的问题已经被解答过，尽量避免提出重复的问题。
-                .form-inputs
-                  = f.input :title, :as => :text, :input_html => {:placeholder => '你可以在这里提问'}
-                .form-actions{:style => 'display:none;'}
-                  %a.btn.submit.success{:href => 'javascript:;'}= t('helpers.submit.question.create')
-                  %a.btn.cancel{:href => "javascript:;"}= t('common.form.cancel')
+            - if user_signed_in?
+              .form
+                = simple_form_for Question.new, :url => [@course_ware, :questions] do |f|
+                  .question-desc{:style => 'display:none;'}
+                    .p 请准确详尽的描述问题，方便他人理解你的疑问。
+                    .p 提问之前可以先查找有没有类似的问题已经被解答过，尽量避免提出重复的问题。
+                  .form-inputs
+                    = f.input :title, :as => :text, :input_html => {:placeholder => '你可以在这里提问'}
+                  .form-actions{:style => 'display:none;'}
+                    %a.btn.submit.success{:href => 'javascript:;'}= t('helpers.submit.question.create')
+                    %a.btn.cancel{:href => "javascript:;"}= t('common.form.cancel')
+            - else
+              .need-signed-in
+                %span 登录之后，你可以进行提问。
+                %a{:href => '/account/sign_in'} 在此登录
 
             = render_cell :questions, :list, :questions => @questions, :user => current_user
             - if @questions.length > 1
@@ -39,10 +44,11 @@
 
       .sidep33
         .side-info
-          .pblock
-            .chart
-              .bar 一周学习进度变化
-              .page-chart.course-ware.read-count-last-week{:data => {:url => "/charts/course_wares/#{@course_ware.id}/read_count_last_week"}}
+          - if user_signed_in?
+            .pblock
+              .chart
+                .bar 一周学习进度变化
+                .page-chart.course-ware.read-count-last-week{:data => {:url => "/charts/course_wares/#{@course_ware.id}/read_count_last_week"}}
 
           .pblock
             .learners
