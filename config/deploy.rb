@@ -14,6 +14,7 @@ set :shared_paths, [
   'config/database.yml',
   'db/schema.rb',
   'log', 
+  'tmp/pids',
   '.ruby-version', 
   'deploy/sh/property.yaml', 
   'public/YKAuth.txt', 
@@ -50,6 +51,9 @@ task :setup => :environment do
   queue! %[touch "#{deploy_to}/shared/public/YKAuth.txt"]
 
   queue! %[touch "#{deploy_to}/shared/.ruby-version"]
+
+  queue! %[mkdir -p "#{deploy_to}/shared/tmp/pids"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/tmp/pids"]
 
   queue  %[echo "-----> Be sure to edit 'shared/config/database.yml'."]
   queue  %[echo "-----> Be sure to edit 'shared/config/oauth_key.yaml'."]
