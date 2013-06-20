@@ -12,5 +12,8 @@
     = render_cell :course, :show_chapters, :user => current_user, :course => @course
   .sidep33
     = render_cell :course, :learning_users, :course => @course
+
     - if user_signed_in?
+      - if R::INTERNET
+        = render_cell :course, :user_attitudes_form, :course => @course, :user => current_user
       = render_cell :course, :learning_chart, :course => @course, :user => current_user

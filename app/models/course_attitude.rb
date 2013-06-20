@@ -38,6 +38,20 @@ class CourseAttitude < ActiveRecord::Base
           attitude_users_with_kind(kind).count
         end
       end
+
+      def get_user_attitude_kind_of(user)
+        ca = self.course_attitudes.where(:user_id => user.id).first
+
+        return 'NONE' if ca.blank?
+        return ca.kind
+      end
+
+      def get_user_attitude_content_of(user)
+        ca = self.course_attitudes.where(:user_id => user.id).first
+
+        return '' if ca.blank?
+        return ca.content
+      end
     end
   end
 

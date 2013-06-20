@@ -233,6 +233,8 @@ Eshare::Application.routes.draw do
       end
       resources :questions, :shallow => true
     end
+
+    resources :course_attitudes, :shallow => true
   end
 end
 

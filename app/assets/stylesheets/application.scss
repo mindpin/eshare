@@ -656,12 +656,24 @@ body.error {
 
 // ------------------------
 
-.btn.mini i {
+.btn.mini i, .btn.small i{
   margin-top:0 !important;
 }
 .btn {
   &.danger {
     color:#fff !important;
+  }
+
+  &.btn-link {
+    background: transparent none;
+    border-color: transparent;
+    color: #5A8DCD;
+    text-shadow: none;
+    box-shadow: none;
+    &:hover, &:focus, &:active, &.active, &.disabled, &[disabled] {
+      background-color: transparent;
+      text-decoration:underline;
+    }
   }
 
   &.follow{
@@ -1595,7 +1607,7 @@ img.page-avatar {
             }
           }
 
-          .title {line-height:20px;}
+          .title {line-height:20px;margin-right:35px;}
           .read-percent {
             position:absolute;
             height:20px;line-height:20px;
@@ -1785,7 +1797,7 @@ img.page-avatar {
     }
   }
 
-  .content {
+  .course-content {
     margin-left:250px;
     min-width:730px;
     max-width:1030px;
@@ -3524,7 +3536,7 @@ form .input.page-form-tag-inputer {
     padding:0 0px 20px 20px;
     .user {
       float:left;
-      margin-right:15px;margin-bottom:15px;
+      margin-right:20px;margin-bottom:20px;
 
       .avatar{
         img {width:50px;height:50px;}
@@ -3563,6 +3575,96 @@ form .input.page-form-tag-inputer {
     .time {
       color:#999;
       i {opacity:0.6;}
+    }
+  }
+}
+
+.page-course-attitudes-form {
+  .faces {
+    overflow:hidden;
+    a.face {
+      float:left;
+      width:48px;height:48px;
+      background:url(faces/course-faces-48.png) 0 -49px no-repeat;
+      margin-right:15px;
+      font-size:0;
+      overflow: hidden;
+      line-height: 20em;
+      margin-bottom:10px;
+      // position:relative;
+      // span {
+      //   position:absolute;
+      //   top:58px;
+      //   left:-6px;
+      //   font-size:12px;
+      //   width:60px;
+      //   height:20px;line-height:20px;
+      //   text-align:center;
+      // }
+
+      &.like   {background-position: 0     -49px;}
+      &.normal {background-position: -49px -49px;}
+      &.hate   {background-position: -98px -49px;}
+
+      &:hover, &.selected{
+        &.like   {background-position: 0     0px;}
+        &.normal {background-position: -49px 0px;}
+        &.hate   {background-position: -98px 0px;}
+      }
+    }
+
+    a.edit {
+
+    }
+  }
+
+  .form {
+    margin-top:10px;
+    margin-bottom: 20px;
+    textarea {
+      resize:none;
+      @include border-box;
+      width:100%;
+      background-color:#fafafa;
+    }
+  }
+
+  .attitudes {
+    margin-top:10px;
+    .blank {color:#999;}
+    .attitude {
+      border-top:dotted 1px #ddd;
+      padding:10px 0;
+      position:relative;
+
+      &:last-child {
+        padding-bottom:0;
+      }
+
+      .avatar {
+        float:left;
+        margin-top:1px;
+        img {width:32px;height:32px;}
+      }
+
+      .sface {
+        position:absolute;
+        width:24px;height:24px;
+        &.like {background:url(faces/course-faces-48.png) 0     -98px no-repeat;}
+        &.normal {background:url(faces/course-faces-48.png) -25px -98px no-repeat;}
+        &.hate {background:url(faces/course-faces-48.png) -50px -98px no-repeat;}
+
+        top:11px + 8px + 5px;left:8px + 10px;
+      }
+
+      .data {
+        margin-left:52px;
+        .nt {
+          font-size:12px;
+          .name {margin-right:5px;}
+          .time {color:#999;}
+        }
+      }
     }
   }
 }

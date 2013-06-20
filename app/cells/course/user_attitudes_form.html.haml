@@ -1,0 +1,50 @@
+.pblock
+  .cpart
+    .page-course-attitudes-form
+      %h3 觉得这个课程有用吗？
+      :ruby
+        attitudes = @course.course_attitudes.order('updated_at DESC').limit(5)
+
+        kind = @course.get_user_attitude_kind_of(@user).downcase
+        klass_like   = (kind == 'like' ? 'selected done' : '')
+        klass_normal = (kind == 'normal' ? 'selected done' : '')
+        klass_hate   = (kind == 'hate' ? 'selected done' : '')
+
+        show_edit = kind != 'none'
+
+        content = @course.get_user_attitude_content_of(@user).downcase
+
+      .faces
+        %a.face.like{:href => 'javascript:;', :title => '很有用！', :class => klass_like, :data => {:kind => 'LIKE'}}
+          %span 很有用！
+        %a.face.normal{:href => 'javascript:;', :title => '一般。', :class => klass_normal, :data => {:kind => 'NORMAL'}}
+          %span 一般。
+        %a.face.hate{:href => 'javascript:;', :title => '没什么用…', :class => klass_hate, :data => {:kind => 'HATE'}}
+          %span 没什么用…
+
+      .edi
+        %a.edit{:href => 'javascript:;', :style => show_edit ? '' : 'display:none;'} 修改我的评价
+
+      .form{:style => 'display:none;', :data => {:id => @course.id}}
+        %textarea.ipt{:rows => 2, :placeholder => '你可以在这里写一些评价', :autocomplete => :off, :value => content}
+        %a.btn.success.small.submit{:href => 'javascript:;'}
+          %i.icon-ok.icon-white
+          %span 确定
+        %a.btn.btn-link.small.cancel{:href => 'javascript:;'}
+          %span 取消
+
+      .attitudes
+        - if attitudes.blank?
+          .blank 现在还没有人给出评价
+        - else
+          - attitudes.each do |attitude|
+            .attitude
+              .avatar= avatar_link attitude.user
+              .sface{:class => attitude.kind.downcase}
+              .data
+                .nt
+                  %span.name= user_link attitude.user
+                  %span.time= timeago attitude.updated_at
+
+                .content= truncate_u attitude.content, 140
+              .clearfix

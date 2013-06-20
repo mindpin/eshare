@@ -86,4 +86,10 @@ class CourseCell < Cell::Rails
     @course = opts[:course]
     render
   end
+
+  def user_attitudes_form(opts = {})
+    @course = opts[:course]
+    @user = opts[:user]
+    render
+  end
 end
