@@ -14,6 +14,7 @@ class Course < ActiveRecord::Base
   include SelectCourseApply::CourseMethods
   include Note::CourseMethods
   include CourseAttitude::CourseMethods
+  include CourseUpdateStatusMethods
 
   simple_taggable
   BASE_TAGS = %w(
