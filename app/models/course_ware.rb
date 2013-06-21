@@ -83,6 +83,18 @@ class CourseWare < ActiveRecord::Base
     return true
   end
 
+  after_create :refresh_course_wares_count
+  after_destroy :refresh_course_wares_count
+  def refresh_course_wares_count
+    course = self.chapter.course
+
+    course.record_timestamps = false
+    course.course_wares_count = course.course_wares.count
+    course.updated_at = self.updated_at
+    course.save
+    course.record_timestamps = true
+  end
+
   # 刷新 total_count 值。此方法在 controller中被调用
   def refresh_total_count!
     self.total_count = _get_total_count_by_kind
