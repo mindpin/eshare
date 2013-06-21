@@ -279,6 +279,12 @@ module ApplicationHelper
                 haml_concat '课程下的'
                 haml_concat course_ware_link(course_ware)
               end
+            when 'update_user'
+              haml_concat user_link(feed.who)
+              haml_concat '把签名档改成了'
+              haml_concat "\""
+              haml_concat feed.data
+              haml_concat "\""
             else
               haml_concat feed.what
           end

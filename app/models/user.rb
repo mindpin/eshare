@@ -164,6 +164,9 @@ class User < ActiveRecord::Base
                         :callbacks => [ :update ],
                         :before_record_feed => lambda {|user, callback_type|
                           return user.tagline_changed?
+                        },
+                        :set_feed_data => lambda {|user, callback_type|
+                          return user.tagline
                         }
 
   include Redis::Search
