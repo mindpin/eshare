@@ -22,6 +22,10 @@ class Manage::CoursesController < ApplicationController
   def create
     @course = current_user.courses.build(params[:course])
     if @course.save
+      tags = params[:course_tags]
+      if tags.present?
+        @course.replace_public_tags(tags, current_user)
+      end
       return redirect_to :action => :index
     end
     render :action => :new
