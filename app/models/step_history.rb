@@ -47,7 +47,39 @@ class StepHistory < ActiveRecord::Base
     end
 
     def unpassed_users
-      tried_users - passed_users
+      User.find_by_sql(%`
+        SELECT 
+            DISTINCT users.* 
+        FROM 
+            users
+        INNER JOIN
+            step_histories ON step_histories.user_id = users.id
+        LEFT JOIN
+            (
+            SELECT 
+                DISTINCT users.* 
+            FROM 
+                users
+            INNER JOIN 
+                step_histories on step_histories.user_id = users.id
+            WHERE
+                step_histories.is_passed is TRUE 
+                AND 
+                step_histories.step_id = #{self.id} 
+                AND 
+                step_histories.step_type = '#{self.class.name}'
+            ) AS true_users
+        ON true_users.id = users.id
+        WHERE 
+            true_users.id is NULL 
+            AND
+            step_histories.is_passed is FALSE
+            AND
+            step_histories.step_id = #{self.id}
+            AND 
+            step_histories.step_type = '#{self.class.name}' 
+      `
+      )
     end
 
   end
