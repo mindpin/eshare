@@ -49,7 +49,9 @@
           %i.icon-edit
           %span= t('common.edit')
 
-        = link_to "/manage/courses/#{course.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger' do
+        - params_str = params[:q].present? ? "?q=#{params[:q]}" : ""
+
+        = link_to "/manage/courses/#{course.id}#{params_str}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger' do
           %i.icon-remove.icon-white
           %span= t('common.delete')
 

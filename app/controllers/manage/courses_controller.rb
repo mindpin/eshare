@@ -50,7 +50,12 @@ class Manage::CoursesController < ApplicationController
   def destroy
     @course = Course.find params[:id]
     @course.destroy
-    redirect_to :action => :index
+
+    if params[:q].present?
+      redirect_to :action => :index, :q => params[:q]
+    else
+      redirect_to :action => :index
+    end
   end
 
   def download_import_sample
