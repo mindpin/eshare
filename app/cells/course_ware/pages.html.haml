@@ -1,0 +1,25 @@
+- if false#@course_ware.file_entity.present? && @course_ware.convert_success?
+  .pages{:data => {:scroller => true}}
+    .images
+      - images = @course_ware.output_images
+
+      - if images.present?
+        :ruby
+          width = images.first.width
+          height = images.first.height
+          w = 658
+          h = w * height / width
+
+        - images.each do |img|
+          .image= fit_image img.url, :width => w, :height => h
+
+  .stat.stat-pages{:data => {:id => @course_ware.id}}
+    .page
+      %span.desc 当前页
+      %span.current 1
+      %span /
+      %span.total= @course_ware.total_count
+
+    = course_ware_read_count_html(@course_ware, @user)
+- else
+  .is-converting PPT/PDF文件格式转换没有成功，或正在进行转换

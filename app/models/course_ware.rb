@@ -103,6 +103,7 @@ class CourseWare < ActiveRecord::Base
 
   def _get_total_count_by_kind
     return 1000 if self.is_video?
+    return javascript_steps.count if self.is_javascript?
 
     if file_entity.present? && convert_success?
       return file_entity.output_images.count if file_entity.is_pdf?
