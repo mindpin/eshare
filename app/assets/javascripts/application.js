@@ -20,6 +20,8 @@
 //= require tag-it/tag-it
 //= require ckplayer/ckplayer
 
+//= require jqconsole/jqconsole
+
 //= require part-upload/part-upload
 //= require simple-images
 //= require_tree .

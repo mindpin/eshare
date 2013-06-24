@@ -1,0 +1,9 @@
+- # 视频
+- if @course_ware.is_video?
+  = render_cell :course_ware, :video, :course_ware => @course_ware, :user => @user
+
+- if @course_ware.is_pages?
+  = render_cell :course_ware, :pages, :course_ware => @course_ware, :user => @user
+
+- if @course_ware.is_javascript?
+  = render_cell :course_ware, :javascript, :course_ware => @course_ware, :user => @user

@@ -2,3 +2,5 @@
   .courses
     - @courses.each do |course|
       = render_cell :course, :minicard, :course => course, :user => current_user
+
+  = paginate @courses

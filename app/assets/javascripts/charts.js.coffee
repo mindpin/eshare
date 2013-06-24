@@ -299,7 +299,7 @@ jQuery ->
       series: [
         {
           type: 'pie'
-          name: '课件数'
+          name: '选择此项的人数'
           animation: false
           # innerSize: '20%'
           dataLabels:

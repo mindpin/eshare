@@ -29,4 +29,8 @@ class CourseWaresController < ApplicationController
       :avatar_url => mark.user.avatar.versions[:small].url
     }
   end
+
+  def show_javascript_steps
+    render "/javascript_steps/show"
+  end
 end

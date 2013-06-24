@@ -6,16 +6,7 @@
   .cbody
     .pblock
       .widget
-        - # 视频
-        - if @course_ware.is_video?
-          = render_cell :course_ware_widget, :video, :course_ware => @course_ware, :user => current_user
-
-        - elsif @course_ware.file_entity.present?
-          - if @course_ware.is_pdf? || @course_ware.is_ppt?
-            - if @course_ware.convert_success?
-              = render_cell :course_ware_widget, :pages, :course_ware => @course_ware, :user => current_user
-            - else
-              .is-converting PPT/PDF文件格式转换没有成功，或正在进行转换
+        = render_cell :course_ware, :widget, :course_ware => @course_ware, :user => current_user
 
     .infos
       .mainp66

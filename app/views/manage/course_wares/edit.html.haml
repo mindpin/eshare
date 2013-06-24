@@ -1,48 +1,55 @@
 - content_for :header do
   = render_cell :manage_courses_breadcrumb, :form, :model => @course_ware
 
+- content_for :javascript do
+  = javascript_include_tag '/ace/src-min-noconflict/ace.js'
+
 .page-course-ware-form
   .pblock.form
-    = simple_form_for @course_ware, :url => "/manage/course_wares/#{@course_ware.id}" do |f|
-      .form-inputs
-        = f.input :title, :input_html => {:class => 'xxlarge'}
-        = f.input :desc, :input_html => {:rows => 6, :class => 'xxlarge'}
-        = f.input :chapter_id, :collection => @select_chapters.map{|chapter| [chapter.title, chapter.id]}, :label => '课件所在章节', :prompt => nil
-        = f.input :file_entity_id, :as => :hidden
+    - if R::INTERNET && @course_ware.is_javascript?
+      = render_cell :course_ware, :javascript_steps_form, :course_ware => @course_ware, :current_step => @course_ware.javascript_steps.first
 
-        - if @course_ware.is_web_video? # 网络视频
-          :ruby
-            s = [
-              ['优酷 YOUKU', 'youku'],
-              ['新浪视频 SINA', 'sina'],
-              ['土豆视频 TUDOU', 'tudou']
-            ]
+    - else
+      = simple_form_for @course_ware, :url => "/manage/course_wares/#{@course_ware.id}" do |f|
+        .form-inputs
+          = f.input :title, :input_html => {:class => 'xxlarge'}
+          = f.input :desc, :input_html => {:rows => 6, :class => 'xxlarge'}
+          = f.input :chapter_id, :collection => @select_chapters.map{|chapter| [chapter.title, chapter.id]}, :label => '课件所在章节', :prompt => nil
+          = f.input :file_entity_id, :as => :hidden
 
-          = f.input :kind, :collection => s, :label => '网络视频来源', :prompt => nil
-          = f.input :url, :label => '视频网址 URL', :input_html => {:class => 'xxlarge', :placeholder => 'http://'}
+          - if @course_ware.is_web_video? # 网络视频
+            :ruby
+              s = [
+                ['优酷 YOUKU', 'youku'],
+                ['新浪视频 SINA', 'sina'],
+                ['土豆视频 TUDOU', 'tudou']
+              ]
 
-        - else
-          - if @course_ware.file_entity
-            .file
-              .linked
-                .desc 附件文件：
-                .name= @course_ware.file_entity.attach_file_name
-              .upload
-                - page_file_uploader
-                %a.btn.primary.course-ware-upload{:href => 'javascript:;'} 
-                  %i.icon-upload.icon-white
-                  %span 重新上传
+            = f.input :kind, :collection => s, :label => '网络视频来源', :prompt => nil
+            = f.input :url, :label => '视频网址 URL', :input_html => {:class => 'xxlarge', :placeholder => 'http://'}
+
           - else
-            .file
-              .linked{:style => 'display:none;'}
-                .desc 附件文件：
-                .name
-              .upload
-                - page_file_uploader
-                %a.btn.primary.course-ware-upload{:href => 'javascript:;'} 
-                  %i.icon-upload.icon-white
-                  %span 上传文件
+            - if @course_ware.file_entity
+              .file
+                .linked
+                  .desc 附件文件：
+                  .name= @course_ware.file_entity.attach_file_name
+                .upload
+                  - page_file_uploader
+                  %a.btn.primary.course-ware-upload{:href => 'javascript:;'} 
+                    %i.icon-upload.icon-white
+                    %span 重新上传
+            - else
+              .file
+                .linked{:style => 'display:none;'}
+                  .desc 附件文件：
+                  .name
+                .upload
+                  - page_file_uploader
+                  %a.btn.primary.course-ware-upload{:href => 'javascript:;'} 
+                    %i.icon-upload.icon-white
+                    %span 上传文件
 
-      .form-actions
-        = f.button :submit, :class => 'success'
-        %a.btn.cancel{:href => "/manage/chapters/#{@chapter.id}"}= t('common.form.cancel')
+        .form-actions
+          = f.button :submit, :class => 'success'
+          %a.btn.cancel{:href => "/manage/chapters/#{@chapter.id}"}= t('common.form.cancel')
