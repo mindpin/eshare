@@ -10,7 +10,7 @@ describe SqlStep do
   }
 
   after {
-    path = File.join(R::UPLOAD_BASE_PATH,'sqlite_dbs', "@user_#{@user.id}")
+    path = File.join(R::UPLOAD_BASE_PATH,'sqlite_dbs')
     FileUtils.rm_rf path
   }
 
