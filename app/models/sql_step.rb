@@ -26,5 +26,28 @@ class SqlStep < ActiveRecord::Base
     self.class.by_course_ware(course_ware).where('id > ?', self.id).first
   end
 
+  def run(input, user)
+    db = _init_sandbox_db(user)
+    begin
+      query = db.execute(input)
+    rescue Exception => e
+      exception = e.message
+    end
+
+    {:result => query, :exception => exception, :input => input}
+  end
+
   include StepHistory::StepMethods
+
+  private
+    def _init_sandbox_db(user)
+      path = File.join(R::UPLOAD_BASE_PATH,'sqlite_dbs', "user_#{user.id}", "#{user.id}.db")
+      FileUtils.mkdir_p(path) unless File.exists?(path)
+
+      db_file_path = File.join(path, "#{user.id}.db")
+
+      SQLite3::Database.new db_file_path
+    end
+
+  
 end

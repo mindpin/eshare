@@ -5,15 +5,12 @@ describe SqlStep do
     @user = FactoryGirl.create(:user)
     @sql_step = FactoryGirl.create(:sql_step)
 
-    @db_file_path = File.join(R::UPLOAD_BASE_PATH,'sqlite_dbs',"user_#{user.id}","#{user.id}.db")
-    @db = SQLite3::Database.new @db_file_path
+    @sql_step.run("create table articles (title varchar(200));", @user)
 
-    @db.execute <<-SQL
-      create table articles (
-        title varchar(200)
-      );
-    SQL
+  }
 
+  after {
+    # FileUtils.rm_rf @db_file_path
   }
 
 
