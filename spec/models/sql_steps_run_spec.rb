@@ -55,10 +55,27 @@ describe SqlStep do
       it "input 正常" do
         @query[:input].should == @input
       end
+
+      describe "删除语句" do
+        before {
+          @input = "delete from articles"
+          @query = @sql_step.run(@input, @user)
+        }
+
+        it "0条表记录" do
+          temp_query = @sql_step.run("select * from articles", @user)
+          temp_query[:result].count.should == 0
+        end
+
+        it "exception 为空" do
+          @query[:exception].should == nil
+        end
+
+      end
+
     end
 
-    describe "删除语句" do
-    end
+    
 
   end
 
