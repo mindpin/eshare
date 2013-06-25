@@ -29,12 +29,12 @@ class SqlStep < ActiveRecord::Base
   def run(input, user)
     db = _init_sandbox_db(user)
     begin
-      query = db.execute(input)
+      rows = db.execute(input)
     rescue Exception => e
       exception = e.message
     end
 
-    {:result => query, :exception => exception, :input => input}
+    {:result => rows, :exception => exception, :input => input}
   end
 
   include StepHistory::StepMethods

@@ -10,7 +10,8 @@ describe SqlStep do
   }
 
   after {
-    # FileUtils.rm_rf @db_file_path
+    path = File.join(R::UPLOAD_BASE_PATH,'sqlite_dbs', "@user_#{@user.id}")
+    FileUtils.rm_rf path
   }
 
 
@@ -23,27 +24,36 @@ describe SqlStep do
       }
 
       it "表记录为空" do
-        @query.result.should == []
+        @query[:result].should == []
       end
 
       it "exception 为空" do
-        @query.exception.should == ''
+        @query[:exception].should == nil
       end
 
       it "input 正常" do
-        @query.input.should == @input
+        @query[:input].should == @input
       end
 
     end
 
     describe "插入语句" do
       before {
-        @input = 'insert into numbers values ("title 1")'
+        @input = "INSERT INTO articles (title) VALUES ('title1')"
         @query = @sql_step.run(@input, @user)
       }
 
       it "1条表记录" do
-        @query.result.count.should == 1
+        temp_query = @sql_step.run("select * from articles", @user)
+        temp_query[:result].count.should == 1
+      end
+
+      it "exception 为空" do
+        @query[:exception].should == nil
+      end
+
+      it "input 正常" do
+        @query[:input].should == @input
       end
     end
 
