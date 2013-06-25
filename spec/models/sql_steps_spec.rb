@@ -79,7 +79,7 @@ describe SqlStep do
     }
 
     it{
-      FactoryGirl.create(:course_ware => @course_ware_2, :rule => "rule_6")
+      FactoryGirl.create(:sql_step, :course_ware => @course_ware_2, :rule => "rule_6")
       @course_ware_2.reload
       @course_ware_2.total_count.should == 4
     }
