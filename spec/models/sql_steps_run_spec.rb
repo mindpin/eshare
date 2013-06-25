@@ -10,7 +10,7 @@ describe SqlStep do
   }
 
   after {
-    path = File.join(R::UPLOAD_BASE_PATH,'sqlite_dbs')
+    path = File.join(R::UPLOAD_BASE_PATH, 'sqlite_dbs', "user_#{@user.id}")
     FileUtils.rm_rf path
   }
 
@@ -42,6 +42,7 @@ describe SqlStep do
         @input = "INSERT INTO articles (title) VALUES ('title1')"
         @query = @sql_step.run(@input, @user)
       }
+
 
       it "1条表记录" do
         temp_query = @sql_step.run("select * from articles", @user)
