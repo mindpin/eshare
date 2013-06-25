@@ -80,5 +80,24 @@ describe SqlStep do
   end
 
   describe "错误SQL" do
+    describe "查询语句" do
+      before {
+        @input = 'select * fr2om articles'
+        @query = @sql_step.run(@input, @user)
+      }
+
+      it "表记录为空" do
+        @query[:result].should == nil
+      end
+
+      it "exception 为空" do
+        @query[:exception].should == "near \"fr2om\": syntax error"
+      end
+
+      it "input 正常" do
+        @query[:input].should == @input
+      end
+
+    end
   end
 end
