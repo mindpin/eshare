@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-class SqlStep < ActiveRecord::Base
+class JavaStep < ActiveRecord::Base
   attr_accessible :course_ware, :title, :desc, :hint, :content, :rule, :init_code
 
   belongs_to :course_ware
@@ -14,7 +14,7 @@ class SqlStep < ActiveRecord::Base
   after_create  :set_course_ware_total_count
   after_destroy :set_course_ware_total_count
   def set_course_ware_total_count
-    count = course_ware.sql_steps.count
+    count = course_ware.java_steps.count
     course_ware.update_attributes(:total_count => count)
   end
 
@@ -26,14 +26,7 @@ class SqlStep < ActiveRecord::Base
     self.class.by_course_ware(course_ware).where('id > ?', self.id).first
   end
 
-  def run(input, user)
-    SqlStepChecker.new(self, input, user).run
-  end
-
-  def check(input, user)
-    SqlStepChecker.new(self, input, user).check
-  end
 
   include StepHistory::StepMethods
-
+  
 end
