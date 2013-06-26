@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 class JavaStep < ActiveRecord::Base
-  attr_accessible :course_ware, :content, :rule
+  attr_accessible :course_ware, :title, :desc, :hint, :content, :rule, :init_code
 
   belongs_to :course_ware
 
