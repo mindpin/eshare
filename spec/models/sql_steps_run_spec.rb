@@ -101,4 +101,32 @@ describe SqlStep do
 
     end
   end
+
+  describe 'check' do
+    before{
+      @sql_step.rule = %`
+      begin
+        rows = db.execute("select * from articles")
+      rescue Exception => e
+        return false
+      end
+
+      return rows.count == 1
+      `
+      @sql_step.save!
+
+      @query = @sql_step.run(@input, @user)
+      temp_query = @sql_step.run("select * from articles", @user)
+    }
+
+    it{
+      input = "INSERT INTO articles (title) VALUES ('title1')"
+      @sql_step.check(input, @user).should == true
+    }
+
+    it{
+      input = "select * from articles"
+      @sql_step.check(input, @user).should == false
+    }
+  end
 end
