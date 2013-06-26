@@ -189,16 +189,17 @@ Eshare::Application.routes.draw do
         end
 
         resources :course_wares, :shallow => true do
-          collection do
-            get :javascript_steps_form
-          end
-
           member do
             put :move_up
             put :move_down
             put :do_convert
           end
 
+          resources :javascript_steps, :shallow => true do
+            member do
+              get :form_html
+            end
+          end
         end
       end
 
@@ -243,7 +244,7 @@ Eshare::Application.routes.draw do
         member do
           put :update_read_count
           post :add_video_mark
-          get :show_javascript_steps
+          get :preview_javascript
         end
       end
       resources :questions, :shallow => true

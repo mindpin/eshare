@@ -6,12 +6,7 @@ class JavascriptStepsController < ApplicationController
     passed = params[:passed]
 
     step = JavascriptStep.find(params[:id])
-
-    step.step_histories.create({
-      :input => input,
-      :is_passed => passed,
-      :user => current_user  
-    })
+    step.record_input(current_user, input, passed)
 
     render :text => 'ok'
   end

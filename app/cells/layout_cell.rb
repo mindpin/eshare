@@ -1,6 +1,10 @@
 class LayoutCell < Cell::Rails
   helper :application
 
+  def google_analytics_code
+    render
+  end
+
   def topnav(opts = {})
     @user = opts[:user]
     render
@@ -8,6 +12,13 @@ class LayoutCell < Cell::Rails
 
   def topnav_admin(opts = {})
     @user = opts[:user]
+    render
+  end
+
+  def topnav_coding(opts = {})
+    @user = opts[:user]
+    @preview = opts[:preview]
+    @course_ware = opts[:course_ware]
     render
   end
 

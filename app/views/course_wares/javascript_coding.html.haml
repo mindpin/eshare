@@ -1,0 +1,114 @@
+:ruby
+  @user = current_user
+
+  steps = @course_ware.javascript_steps
+  steps_hash = steps.map {|step|
+    title = step.title.blank? ? '没有标题' : step.title
+    desc = step.desc.blank? ? '没有描述' : step.desc
+    content = step.content.blank? ? '没有说明' : step.content
+    hint = step.hint.blank? ? '没有提示' : step.hint
+
+    {
+      :id           => step.id,
+      :title        => title,
+
+      :desc         => desc,
+      :desc_html    => simple_format(desc),
+
+      :content      => content,
+      :content_html => simple_format(content),
+
+      :hint         => hint,
+      :hint_html    => simple_format(hint),
+
+      :init_code    => step.init_code,
+      :rule         => step.rule,
+
+      :pass_status => step.pass_status_of(@user)
+    }
+  }
+
+- content_for :javascript do
+  :javascript
+    _COURSE_WARE_STEPS = #{steps_hash.to_json}
+    _CURRENT_USER_ID = #{@user.present? ? @user.id : false}
+
+.page-coding.javascript
+  - @step = steps.first
+
+  - if @step
+    .current-step-info.nano{:data => {:id => @step.id}}
+      .info
+        .step-title= @step.title
+        .step-desc= simple_format @step.desc
+        .step-content= simple_format @step.content
+        .step-hint
+          .tt
+            %i.icon-question-sign
+            %span 提示
+          .cc= simple_format @step.hint
+
+    .steps-status{:style => 'display:none;'}
+      - last_pass_status = 'done'
+      - steps.each do |step|
+        :ruby
+          pass_status = step.pass_status_of(@user)
+
+          klass = []
+          klass << (@step == step ? 'current' : '' )
+          klass << pass_status
+
+          if pass_status == '' && last_pass_status == 'done'
+            klass << 'newest'
+          end
+          last_pass_status = pass_status
+
+        %a.step{:href => 'javascript:;', :class => klass, :data => {:id => step.id}, :title => step.title}
+
+      - passed_count = @course_ware.passed_step_count_of(@user)
+      - progress_klass = (passed_count >= steps.count ? 'finish' : '')
+      .progress{:class => progress_klass}
+        %span 已完成
+        %span.done{:data => {:done => passed_count}}= passed_count
+        %span /
+        %span.total= steps.count
+        %span.alldone
+          %span ，
+          %i.icon-ok.icon-white
+          %span 全部完成
+      .clearfix
+
+    .code-box
+      %pre#code-input{:style => 'display:none;'}= @step.init_code
+
+    .code-ops{:style => 'display:none;'}
+      .btns
+        %a.btn.submit-code{:href => 'javascript:;'}
+          %i.icon-upload.icon-white
+          %span 提交我的代码
+
+        %a.btn.reset-code{:href => 'javascript:;'}
+          %i.icon-refresh
+          %span 重置代码
+
+      .error{:style => 'display:none;'}
+        %span.tryagain 啊，不对，再试一次吧。
+        %span.message 请确定你输入的是数字
+        %a.close{:href => 'javascript:;'}
+          %i.icon-remove-sign.icon-white
+
+      .done{:style => 'display:none;'}
+        %span.good
+          %i.icon-ok.icon-white 
+          %span 恭喜你，代码正确！
+        %a.go-next{:href => 'javascript:;'}
+          %i.icon-chevron-right.icon-white
+          %span 前往下一小节
+        %a.finish{:href => 'javascript:;'}
+          %i.icon-chevron-right.icon-white
+          %span 结束本教程
+        %a.close{:href => "/courses/#{@course_ware.chapter.course.id}"}
+          %i.icon-remove-sign.icon-white
+
+    .code-console{:style => 'display:none;'}
+      .con

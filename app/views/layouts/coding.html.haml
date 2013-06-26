@@ -1,0 +1,21 @@
+- title = t('common.site.title.app')
+
+- content_for :css do
+  :css
+    html{
+      overflow-x:hidden;
+      overflow-y:hidden;
+    }
+
+- content_for :javascript do
+  = javascript_include_tag '/highcharts/js/highcharts'
+  = javascript_include_tag '/jquery-migrate/jquery-migrate-1.2.1.js'
+  = javascript_include_tag '/ace/src-min-noconflict/ace.js'
+  = render_cell :layout, :google_analytics_code if R::INTERNET
+
+!!!
+- simple_page_layout title, :html_lang => :zh, :body_class => 'coding' do
+  = render_cell :layout, :topnav_coding, :user => current_user, :course_ware => @course_ware
+
+  .page-layout-coding
+    = yield

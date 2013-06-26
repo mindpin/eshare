@@ -1,0 +1,7 @@
+.page-top-nav-coding
+  %a.back{:href => "/courses/#{@course_ware.chapter.course.id}"}
+    %i.icon-chevron-left.icon-white
+    %span 返回
+  .title= @course_ware.title
+  - if @user.present?
+    .avatar= avatar_link @user
