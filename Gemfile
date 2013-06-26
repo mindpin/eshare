@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# source 'http://ruby.taobao.org'
+source 'http://ruby.taobao.org'
 
 gem 'rails', '3.2.12' # RAILS #不要更新 3.2.13 有性能问题，等 3.2.14
 gem 'mysql2', '0.3.11' # MYSQL数据库连接
@@ -10,6 +10,9 @@ gem 'sunspot_rails', '2.0.0'
 gem 'chinese_pinyin', '0.4.2'
 gem 'rmmseg-cpp-huacnlee', '0.2.9'
 gem 'redis-search', :git => 'git://github.com/huacnlee/redis-search.git'
+
+gem 'sqlite3', "~> 1.3.7"
+
 
 group :assets do
   gem 'sass-rails', '~> 3.2.3'
