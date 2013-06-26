@@ -41,7 +41,7 @@ class SqlStep < ActiveRecord::Base
 
   private
     def _init_sandbox_db(user)
-      path = File.join(R::UPLOAD_BASE_PATH,'sqlite_dbs', "user_#{user.id}", "#{user.id}.db")
+      path = File.join(R::UPLOAD_BASE_PATH,'sqlite_dbs', "user_#{user.id}")
       FileUtils.mkdir_p(path) unless File.exists?(path)
 
       db_file_path = File.join(path, "#{user.id}.db")
