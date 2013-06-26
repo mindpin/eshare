@@ -308,8 +308,10 @@ jQuery ->
       @init_code_editor()
       @start_console()
       @init_ctrl_s_for_submit()
+      @init_window_onpopstate()
 
       @last_submitted_code = null
+      @last_submitted_step = null
 
     load_steps: ->
       steps = []
@@ -329,7 +331,8 @@ jQuery ->
       @steps = steps
 
     setup: ->
-      @current_step = @steps[0]
+      current_step_id = @$elm.find('.current-step-info').data('id')
+      @current_step = @get_step_by_id current_step_id
 
       @$elm.find('a.submit-code').click =>
         @submit_code()
@@ -351,23 +354,27 @@ jQuery ->
         $s = jQuery(this)
 
         return that.editor.focus() if $s.hasClass('current')
-        return that.editor.focus() if !(
-          $s.hasClass('done') || 
-          $s.hasClass('error') || 
-          $s.hasClass('newest')
-        )
 
-        id = $s.data('id')
-        jQuery(that.steps).each ->
-          if this.id == id
-            that.load_step this
+        # 这里先不限制，随意切换
+        # return that.editor.focus() if !(
+        #   $s.hasClass('done') || 
+        #   $s.hasClass('error') || 
+        #   $s.hasClass('newest')
+        # )
+
+        step_id = $s.data('id')
+        that.load_step that.get_step_by_id(step_id)
 
     submit_code: ->
       code = @editor.getSession().getValue()
       test_result = @current_step.test(code)
 
-      not_repeat_input = ( @last_submitted_code != code )
+      not_repeat_input = !(
+        @last_submitted_code == code && 
+        @last_submitted_step == @current_step
+      )
       @last_submitted_code = code
+      @last_submitted_step = @current_step
 
       if test_result.passed
         # 通过
@@ -382,6 +389,11 @@ jQuery ->
 
     set_code: (code)->
       @editor.getSession().setValue code
+
+    hide_all_message: ->
+      @hide_done_message()
+      @hide_error_message()
+
 
     show_error_message: (message)->
       # @jqconsole.Append(
@@ -455,27 +467,41 @@ jQuery ->
 
     start_console: ->
       @jqconsole = @$console_elm.jqconsole('', '> ')
-      @jqconsole.Write "调试结果将输出在这里", 'log'
+      @jqconsole.Write "调试结果将输出在这里：", 'output'
 
     go_next: ->
       @load_step @current_step.next
 
-    load_step: (step)->
-      return if step == null
+    get_step_by_id: (step_id)->
+      step = null
+      jQuery(@steps).each ->
+        if this.id == step_id
+          return step = this
+      return step
 
+    load_step: (step, save_history = true)->
+      return if step == null
+      
       @current_step = step
       step.set_current()
 
       @hide_done_message()
       @set_code step.init_code
 
-      @$elm.find('.current-step-info')
+      @$elm.find('.current-step-info').attr('data-id', step.id)
         .find('.step-title').html(step.title).end()
         .find('.step-desc').html(step.desc_html).end()
         .find('.step-content').html(step.content_html).end()
         .find('.step-hint .cc').html(step.hint_html).end()
+        .find('.info').hide().fadeIn()
+
+      @hide_all_message()
 
       @editor.focus()
+
+      if save_history
+        @push_step_histroy(step)
+
 
     init_ctrl_s_for_submit: ->
       jQuery(window).keypress (event)=>
@@ -484,6 +510,29 @@ jQuery ->
 
         @submit_code()
         return false
+
+    push_step_histroy: (step)->
+      state = { step_id : step.id }
+      window.history.pushState(
+        state, 
+        document.title, 
+        "/javascript_steps/#{step.id}"
+      )
+
+    init_window_onpopstate: ->
+      step = @current_step
+      state = { step_id : step.id }
+      window.history.replaceState(
+        state, 
+        document.title, 
+        "/javascript_steps/#{step.id}"
+      )
+
+      window.addEventListener 'popstate', (e)=>
+        that = this
+        if e.state
+          step_id = e.state.step_id
+          @load_step @get_step_by_id(step_id), false
 
 
   jQuery('.page-coding.javascript').each ->

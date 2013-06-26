@@ -3,10 +3,7 @@ class CourseWaresController < ApplicationController
 
   layout Proc.new { |controller|
     case controller.action_name
-    when 'show', 'preview_javascript'
-      course_ware = CourseWare.find params[:id]
-
-      return 'coding' if course_ware.is_javascript?
+    when 'show'
       return 'course_ware_show'
     else
       return 'application'
@@ -15,12 +12,10 @@ class CourseWaresController < ApplicationController
 
   def show
     _show()
-    return render :template => '/course_wares/javascript_coding' if @course_ware.is_javascript?
-  end
 
-  def preview_javascript
-    _show()
-    render :template => '/course_wares/javascript_coding'
+    if @course_ware.is_javascript? && @course_ware.javascript_steps.present?
+      return redirect_to "/javascript_steps/#{@course_ware.javascript_steps.first.id}"
+    end
   end
 
   def _show

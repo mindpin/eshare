@@ -76,7 +76,7 @@ jQuery ->
 
 
       @$preview.on 'click', =>
-        window.open "/course_wares/#{@course_ware_id}/preview_javascript"
+        window.open "/javascript_steps/#{@get_current_step_id()}"
 
       @$save.on 'click', =>
         @save_data()

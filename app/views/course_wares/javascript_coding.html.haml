@@ -34,7 +34,7 @@
     _CURRENT_USER_ID = #{@user.present? ? @user.id : false}
 
 .page-coding.javascript
-  - @step = steps.first
+  - @step = steps.first if !@step
 
   - if @step
     .current-step-info.nano{:data => {:id => @step.id}}
@@ -58,7 +58,7 @@
           klass << (@step == step ? 'current' : '' )
           klass << pass_status
 
-          if pass_status == '' && last_pass_status == 'done'
+          if @preview || ( pass_status == '' && last_pass_status == 'done' )
             klass << 'newest'
           end
           last_pass_status = pass_status

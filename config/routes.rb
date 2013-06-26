@@ -238,13 +238,13 @@ Eshare::Application.routes.draw do
         resources :javascript_steps, :shallow => true do
           member do
             post :record_input
+            get :preview
           end
         end
 
         member do
           put :update_read_count
           post :add_video_mark
-          get :preview_javascript
         end
       end
       resources :questions, :shallow => true
