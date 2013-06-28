@@ -8,35 +8,37 @@ describe Course do
     }
 
     it "course 对象存在" do
-      @course.nil?.should == false
+      @course.valid?.should == true
     end
 
     it "inhouse_kind 为空" do
-      @course.inhouse_kind.should == nil
+      @course.inhouse_kind.should be_blank
     end
   end
 
   describe "指定正确 inhouse_kind" do
     before {
-      @inhouse_course = FactoryGirl.create(:course, :inhouse_kind => COURSE_INHOUSE_KINDS[0])
+      @kind = COURSE_INHOUSE_KINDS.sample
+      @course = FactoryGirl.create(:course, :inhouse_kind => @kind)
     }
 
     it "course 对象存在" do
-      @course.nil?.should == false
+      @course.valid?.should == true
     end
 
     it "inhouse_kind 不为空" do
-      @inhouse_course.inhouse_kind.should == COURSE_INHOUSE_KINDS[0]
+      @course.inhouse_kind.should == @kind
     end
   end
 
   describe "指定错误 inhouse_kind" do
-    before {
-      @inhouse_course = FactoryGirl.create(:course, :inhouse_kind => 'test')
-    }
 
     it "course 对象不存在" do
-      @course.nil?.should == true
+      expect {
+        @course = FactoryGirl.create(:course, :inhouse_kind => 'test')
+      }.to raise_error(Exception)
+
+      @course.nil?.should == true 
     end
   end
 

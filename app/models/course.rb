@@ -73,6 +73,9 @@ class Course < ActiveRecord::Base
   validates :cid, :uniqueness => {:case_sensitive => false},
                   :presence => true
 
+
+  validates :inhouse_kind, inclusion: { :in => COURSE_INHOUSE_KINDS + [nil] }
+
   # 设置 apply_request_limit 默认值
   before_validation :set_default_apply_request_limit
   def set_default_apply_request_limit
