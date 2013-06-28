@@ -196,6 +196,36 @@ describe SelectCourseApply do
     end
   end
 
+  describe '#cancel_select_course(course) 学生自己主动取消选择一门课程' do
+    before{
+      user.select_course(course)
+    }
+
+    it { 
+      expect {
+        user.cancel_select_course(course)
+      }.to change {
+        SelectCourseApply.all.count
+      }.by(-1)
+    }
+
+    it { 
+      expect {
+        user.cancel_select_course(course1)
+      }.to change {
+        SelectCourseApply.all.count
+      }.by(0)
+    }
+
+    it { 
+      expect {
+        user1.cancel_select_course(course)
+      }.to change {
+        SelectCourseApply.all.count
+      }.by(0)
+    }
+  end
+
 
   describe '#request_select_course_applies 8 查询一个课程的所有”没有处理“的选课请求' do
     it {

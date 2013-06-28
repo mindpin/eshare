@@ -116,6 +116,11 @@ class SelectCourseApply < ActiveRecord::Base
       _apply_courses_by_status(STATUS_REJECT)
     end
 
+    # 学生自己主动取消选择一门课程
+    def cancel_select_course(course)
+      return if !self.apply_courses.include?(course)
+      self.select_course_applies.by_course(course).destroy_all
+    end
 
     private
       def _prepare_course_apply_for(course)
