@@ -36,6 +36,8 @@ class CourseWare < ActiveRecord::Base
   has_many :javascript_steps
   has_many :css_steps
   has_many :regex_steps
+  has_many :sql_steps
+  has_many :java_steps
 
   scope :by_course, lambda {|course|
     joins(:chapter).where('chapters.course_id = ?', course.id)
@@ -103,6 +105,7 @@ class CourseWare < ActiveRecord::Base
 
   def _get_total_count_by_kind
     return 1000 if self.is_video?
+    return javascript_steps.count if self.is_javascript?
 
     if file_entity.present? && convert_success?
       return file_entity.output_images.count if file_entity.is_pdf?

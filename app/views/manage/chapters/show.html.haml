@@ -12,6 +12,10 @@
     %a.btn.success{:href => "/manage/chapters/#{@chapter.id}/course_wares/new?for=web_video"}
       %i.icon-plus.icon-white
       %span 增加网络视频
+    - if R::INTERNET
+      %a.btn.success{:href => "/manage/chapters/#{@chapter.id}/course_wares/new?for=javascript"}
+        %i.icon-plus.icon-white
+        %span 增加 js 教程
 
 .page-manage-chapter-show
   .pblock.table

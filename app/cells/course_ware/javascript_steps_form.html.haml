@@ -1,0 +1,40 @@
+.javascript-steps-form{:data => {:'chapter-id' => @chapter.id}}
+  .ops
+    .back
+      %a.btn.cancel{:href => "/manage/chapters/#{@chapter.id}"}
+        %i.icon-chevron-left
+        %span 返回
+    .btns
+      %a.btn.success{:href => 'javascript:;'} 保存当前小节
+      %a.btn{:href => 'javascript:;'} 预览当前小节
+
+  .steps
+    - idx = 1
+    - @course_ware.javascript_steps.each do |step|
+      - klass = (idx == 1 ? 'current' : '')
+      %a.step{:href => 'javascript:;', :class => klass, :data => {:id => step.id}}= idx
+      - idx = idx + 1
+
+    %a.add-step{:href => 'javascript:;'}
+      %i.icon-plus.icon-white
+
+  - if @current_step.present?
+    .current-step{:data => {:id => @current_step.id}}
+      = simple_form_for @current_step do |f|
+        .baseinfo
+          = f.input :title
+          = f.input :desc, :input_html => {:rows => 5}
+          = f.input :content, :input_html => {:rows => 5}
+          = f.input :hint, :input_html => {:rows => 5}
+        .codes
+          %label 初始预置代码
+          .init-code
+            %pre#init-code= ''
+
+          %label 代码检查规则
+          .rule-ipt
+            %pre#step-rule= @current_step.rule
+
+
+  - else
+    blahblah

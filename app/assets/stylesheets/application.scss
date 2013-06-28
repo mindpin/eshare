@@ -2194,6 +2194,13 @@ img.page-avatar {
 }
 
 .page-course-ware-form {
+  .for {
+    background-color: #FFFFDA;
+    border-bottom:solid 1px #e7e7e7;
+    margin:-20px -20px 20px;
+    padding:20px;
+  }
+
   .form-inputs .file {
     background-color:#FFFFDA;
     border:solid 1px rgba(black, 0.1);
@@ -2219,6 +2226,96 @@ img.page-avatar {
         }
       }
       .course-ware-upload{ margin-bottom:10px; }
+    }
+  }
+
+  .javascript-steps-form {
+    overflow:hidden;
+    .ops {
+      padding-bottom:20px;
+      border-bottom:dotted 1px #ddd;
+      overflow:hidden;
+
+      .back {
+        float:left;
+      }
+      .btns {
+        float:right;
+      }
+    }
+
+    .steps {
+      float:left;
+      margin-bottom:20px;
+      padding-right:20px;
+      padding-top:20px;
+
+      a.step, a.add-step{
+        display:block;
+        color:white;
+        background-color:#4C4C4C;
+        width:24px;height:24px;line-height:24px;
+        text-align:center;
+        @include border-radius(3px);
+        margin-bottom:15px;
+        &:hover {
+          text-decoration:none;
+          background-color:#888;
+        }
+
+        &.current{
+          position:relative;
+          &:after {
+            content:"";
+            display:block;
+            position:absolute;
+            border:solid 6px transparent;
+            border-right-color:#4C4C4C;
+            top:5px;
+            left:23px;
+          }
+        }
+      }
+
+      a.add-step {
+        background-color:darken(#53CB02, 10%);
+        &:hover {
+          background-color:#53CB02;
+        }
+      }
+    }
+
+    .current-step {
+      margin-left:43px;
+      padding-left:20px;
+      border-left:dotted 1px #ddd;
+      overflow:hidden;
+      min-height:700px;
+      .loading {
+        padding-top:20px;
+      }
+
+      .baseinfo{
+        padding-top:20px;
+        float:left;
+      }
+      .codes {
+        padding-left:20px;
+        margin-left:342px;
+        padding-top:20px;
+        border-left:dotted 1px #ddd;
+
+        .init-code, .rule-ipt{
+          height:300px;
+          position:relative;
+          pre {
+            margin-top:0;
+            position:absolute;
+            top:0;left:0;bottom:0;right:0;
+            font-size:16px;
+          }
+        }
+      }
     }
   }
 }
@@ -2261,6 +2358,10 @@ img.page-avatar {
     margin-top:20px;
     border:0 none;
     height:200px;
+  }
+
+  &.read-count-last-week {
+    border:0 none;
   }
 }
 
@@ -3225,6 +3326,9 @@ form .input.page-form-tag-inputer {
   .courses {
     overflow:hidden;
   }
+  .pagination {
+    margin-bottom:20px !important;
+  }
 }
 
 .page-search {
@@ -3673,4 +3777,171 @@ form .input.page-form-tag-inputer {
       }
     }
   }
+}
+
+.page-code-steps {
+  margin-bottom:20px;
+  margin-left:15px;
+  
+  .step {
+    margin-top:1px;
+    box-shadow:0 0 2px rgba(black, 0.5);
+    border:solid 2px white;
+    padding:2px;
+    @include border-radius(30px);
+    float:left;
+    margin-right:20px;
+    width:16px;height:16px;
+    background-color:#ddd;
+    position:relative;
+
+    @include transition(background ease-out .5s);
+
+    &.error {background-color:#CB2C02;}
+    &.done {background-color:#53cb02;}
+
+    // &.current:before{
+    //   content:"";
+    //   position:absolute;
+    //   border:solid 6px transparent;
+    //   border-bottom-color:black;
+    //   top:21px;left:4px;
+    // }
+
+    &.current:after{
+      content:"";
+      position:absolute;
+      border:solid 6px transparent;
+      border-top-color:black;
+      top:-13px;left:4px;
+    }
+  }
+
+  .progress {
+    float:left;
+    padding:0 10px;
+    height:26px;line-height:26px;
+    .total, .done {
+      font-weight:bold;
+    }
+    .alldone {
+      display:none;
+    }
+
+    &.finish {
+      background-color:#00AA00;
+      color:white;
+      @include border-radius(3px);
+      .alldone {
+        display:inline;
+      }
+    }
+  }
+}
+.page-code-console {
+  position:relative;
+  border:solid 15px #4c4c4c;
+  @include border-radius(3px);
+  padding:0;
+  background-color:white;
+  @include border-box;
+
+  .console-box {
+    height:500px;
+    background-color:white;
+    font-family:"Monaco", "Courier New", monospace;
+    position:relative;
+  }
+
+  .jqconsole {
+    padding: 10px;
+
+    span.welcome, 
+    span.log, 
+    span.done, 
+    span.error{
+      display:block;
+      white-space: pre-wrap;
+      padding:10px;
+      color:#444;
+      @include border-radius(3px);
+      margin-bottom:10px;
+      background-color:#f5f5f5;
+    }
+
+    span.welcome {font-weight:bold;}
+    span.done { 
+      background-color:#00AA00;
+      color:white;
+    }
+    span.error { color:red; }
+
+    span.jqconsole-old-prompt, span.jqconsole-prompt, span.output {
+      display:block;
+      margin-bottom:10px;
+    }
+
+    span.output { color:green;}
+  }
+
+  .jqconsole-cursor {
+    background-color: #333;
+    -webkit-animation: cursorcolor 1s linear infinite;
+       -moz-animation: cursorcolor 1s linear infinite;
+        -ms-animation: cursorcolor 1s linear infinite;
+         -o-animation: cursorcolor 1s linear infinite;
+            animation: cursorcolor 1s linear infinite;
+  }
+  .jqconsole-blurred .jqconsole-cursor {
+    background-color: #666;
+  }
+  .jqconsole-prompt {
+    color: #333;
+  }
+  .jqconsole-old-prompt {
+    color: #555;
+    font-weight: normal;
+  }
+  .jqconsole-input {
+    color: #dd0;
+  }
+  .jqconsole-old-input {
+    color: #bb0;
+    font-weight: normal;
+  }
+  .brace {
+    color: #00FFFF;
+  }
+  .paran {
+    color: #FF00FF;
+  }
+  .bracket {
+    color: #FFFF00;
+  }
+  .jqconsole-composition {
+    background-color: red;
+  }
+}
+@keyframes cursorcolor {
+  0%   {background-color:#333;}
+  50%  {background-color:#ccc;}
+  100% {background-color:#333;}
+}
+
+@-moz-keyframes cursorcolor {
+  0%   {background-color:#333;}
+  50%  {background-color:#ccc;}
+  100% {background-color:#333;}
+}
+
+@-webkit-keyframes cursorcolor {
+  0%   {background-color:#333;}
+  50%  {background-color:#ccc;}
+  100% {background-color:#333;}
+}
+
+@-o-keyframes cursorcolor {
+  0%   {background-color:#333;}
+  50%  {background-color:#ccc;}
+  100% {background-color:#333;}
 }

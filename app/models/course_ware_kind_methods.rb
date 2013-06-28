@@ -1,7 +1,10 @@
 module CourseWareKindMethods
   CWKINDS = [
     'youku', 'sina', 'tudou',
-    'flv', 'ppt', 'pdf'
+    'flv', 
+    'ppt', 'pdf',
+    
+    'javascript'
   ]
 
   CWKINDS.each do |k|
@@ -9,6 +12,12 @@ module CourseWareKindMethods
       k == self.kind.to_s
     end
   end
+
+  def is_pages?
+    return is_ppt? || is_pdf?
+  end
+
+  # ---
 
   def is_video?
     return is_web_video? || is_local_video?

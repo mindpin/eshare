@@ -33,11 +33,53 @@ class StepHistory < ActiveRecord::Base
     end
 
     def is_passed_by?(user)
+      return false if user.blank?
+      
       self.step_histories.by_user(user).passed.present?
     end
 
+    def pass_status_of(user)
+      return '' if user.blank?
+
+      return 'done' if is_passed_by?(user)
+      return 'error' if self.step_histories.by_user(user).unpassed.present?
+      return ''
+    end
+
     def unpassed_users
-      tried_users - passed_users
+      User.find_by_sql(%`
+        SELECT 
+            DISTINCT users.* 
+        FROM 
+            users
+        INNER JOIN
+            step_histories ON step_histories.user_id = users.id
+        LEFT JOIN
+            (
+            SELECT 
+                DISTINCT users.* 
+            FROM 
+                users
+            INNER JOIN 
+                step_histories on step_histories.user_id = users.id
+            WHERE
+                step_histories.is_passed is TRUE 
+                AND 
+                step_histories.step_id = #{self.id} 
+                AND 
+                step_histories.step_type = '#{self.class.name}'
+            ) AS true_users
+        ON true_users.id = users.id
+        WHERE 
+            true_users.id is NULL 
+            AND
+            step_histories.is_passed is FALSE
+            AND
+            step_histories.step_id = #{self.id}
+            AND 
+            step_histories.step_type = '#{self.class.name}' 
+      `
+      )
     end
 
   end
@@ -48,10 +90,12 @@ class StepHistory < ActiveRecord::Base
     end
 
     def passed_step_count_of(user)
+      return 0 if user.blank?
       self.step_histories.by_user(user).passed.map{|history|history.step}.uniq.count
     end
 
     def is_passed_by?(user)
+      return false if user.blank?
       passed_step_count_of(user) == self.total_count
     end
   end

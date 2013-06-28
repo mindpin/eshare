@@ -14,6 +14,10 @@ class Manage::CourseWaresController < ApplicationController
     @course_ware = @chapter.course_wares.new
 
     @for_web_video = params[:for] == 'web_video'
+
+    if R::INTERNET
+      @for_javascript = params[:for] == 'javascript'
+    end
   end
 
   def create
@@ -69,6 +73,14 @@ class Manage::CourseWaresController < ApplicationController
     @course_ware.file_entity.do_convert(true)
 
     return redirect_to "/manage/chapters/#{@chapter.id}"
+  end
+
+  def javascript_steps_form
+    @step = JavascriptStep.find params[:step_id]
+    render :text => (
+      render_cell :course_ware, :javascript_steps_form, :course_ware => @step.course_ware,
+                                                      :current_step => @step
+    )
   end
 
 end
