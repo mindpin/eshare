@@ -227,6 +227,8 @@ jQuery ->
       @pass_status  = @step_data.pass_status
 
     test: (code)->
+      new JSAST code
+
       return new JavascriptStepTester(code, @rule, @page.jqconsole).test()
 
     get_dom: ->
@@ -290,7 +292,7 @@ jQuery ->
             input: input
             passed: passed
           success: (res)->
-            console.log(res)
+            # console.log(res)
 
     is_last: ->
       console.log @next
@@ -309,6 +311,8 @@ jQuery ->
       @start_console()
       @init_ctrl_s_for_submit()
       @init_window_onpopstate()
+
+      @reset_nanoscroller()
 
       @last_submitted_code = null
       @last_submitted_step = null
@@ -452,9 +456,17 @@ jQuery ->
     init_code_editor: ->
       @editor = ace.edit("code-input")
       @editor.setTheme("ace/theme/twilight")
+      @editor.setHighlightActiveLine(false)
+
+      @init_code_scroller_dom()
+      @reset_nanoscroller()
+
+      @editor.getSession().on 'change', =>
+        @reset_nanoscroller()
+
       @editor.getSession().setMode("ace/mode/javascript")
       @editor.getSession().setTabSize(2)
-      @editor.setHighlightActiveLine(false)
+      @editor.getSession().setUseWrapMode(true)
 
       jQuery('#code-input').fadeIn()
       @$elm.find('.code-ops').fadeIn()
@@ -474,7 +486,7 @@ jQuery ->
 
     get_step_by_id: (step_id)->
       step = null
-      jQuery(@steps).each ->
+      jQuery.each @steps, ->
         if this.id == step_id
           return step = this
       return step
@@ -488,13 +500,15 @@ jQuery ->
       @hide_done_message()
       @set_code step.init_code
 
-      @$elm.find('.current-step-info').attr('data-id', step.id)
-        .find('.step-title').html(step.title).end()
-        .find('.step-desc').html(step.desc_html).end()
-        .find('.step-content').html(step.content_html).end()
-        .find('.step-hint .cc').html(step.hint_html).end()
-        .find('.info').hide().fadeIn()
-
+      @$elm
+        .find('.current-step-info').attr('data-id', step.id)
+          .find('.step-title').html(step.title).end()
+          .find('.step-desc').html(step.desc_html).end()
+          .find('.step-content').html(step.content_html).end()
+          .find('.step-hint .cc').html(step.hint_html).end()
+          .find('.info').hide().fadeIn().end()
+        .end()
+      
       @hide_all_message()
 
       @editor.focus()
@@ -504,8 +518,8 @@ jQuery ->
 
 
     init_ctrl_s_for_submit: ->
-      jQuery(window).keypress (event)=>
-        if !(event.which == 115 && event.ctrlKey) && !(event.which == 19) 
+      jQuery(document).keypress (event)=>
+        if !(event.which == 13 && event.ctrlKey) && !(event.which == 10) 
           return true
 
         @submit_code()
@@ -533,6 +547,23 @@ jQuery ->
         if e.state
           step_id = e.state.step_id
           @load_step @get_step_by_id(step_id), false
+
+    init_code_scroller_dom: ->
+      $ace_nanoscroller = jQuery('<div class="nano"></div>')
+      $asb = jQuery('.ace_scrollbar')
+      $asb.after $ace_nanoscroller
+      $ace_nanoscroller.append $asb
+
+    reset_nanoscroller: ->
+      setTimeout =>
+        jQuery('.code-box .nano').nanoScroller
+          contentClass: 'ace_scrollbar'
+
+        jQuery('.info.nano-content').css('overflow-y', 'scroll')
+        jQuery('.current-step-info.nano').nanoScroller
+          contentClass: 'nano-content'
+
+      , 1
 
 
   jQuery('.page-coding.javascript').each ->

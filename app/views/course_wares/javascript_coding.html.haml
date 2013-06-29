@@ -38,7 +38,7 @@
 
   - if @step
     .current-step-info.nano{:data => {:id => @step.id}}
-      .info
+      .info.nano-content
         .step-title= @step.title
         .step-desc= simple_format @step.desc
         .step-content= simple_format @step.content
@@ -104,10 +104,10 @@
         %a.go-next{:href => 'javascript:;'}
           %i.icon-chevron-right.icon-white
           %span 前往下一小节
-        %a.finish{:href => 'javascript:;'}
+        %a.finish{:href => "/courses/#{@course_ware.chapter.course.id}"}
           %i.icon-chevron-right.icon-white
           %span 结束本教程
-        %a.close{:href => "/courses/#{@course_ware.chapter.course.id}"}
+        %a.close{:href => 'javascript:;'}
           %i.icon-remove-sign.icon-white
 
     .code-console{:style => 'display:none;'}

@@ -9,8 +9,9 @@
 
 - content_for :javascript do
   = javascript_include_tag '/highcharts/js/highcharts'
-  = javascript_include_tag '/jquery-migrate/jquery-migrate-1.2.1.js'
-  = javascript_include_tag '/ace/src-min-noconflict/ace.js'
+  = javascript_include_tag '/jquery-migrate/jquery-migrate-1.2.1'
+  = javascript_include_tag '/ace/src-min-noconflict/ace'
+  = javascript_include_tag '/parse-js/parse-js'
   = render_cell :layout, :google_analytics_code if R::INTERNET
 
 !!!
