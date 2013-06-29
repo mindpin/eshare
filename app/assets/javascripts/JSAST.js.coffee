@@ -9,52 +9,47 @@ class JSAST
 
   get_string: (tree)->
     return '' if tree == null
-    
-    first = tree[0]
-    
-    return tree[1] if first == 'num'
-    return tree[1] if first == 'name'
-    return JSON.stringify(tree[1]) if first == 'string'
 
-    return @get_string(tree[1]) + ";" if first == 'stat'
-
-    return @get_string_toplevel(tree) if first == 'toplevel'
-    return @get_string_object(tree)   if first == 'object'
-    return @get_string_call(tree)     if first == 'call'
-    return @get_string_binary(tree)   if first == 'binary'
-    return @get_string_array(tree)    if first == 'array'
-    return @get_string_new(tree)      if first == 'new'
-    return @get_string_assign(tree)   if first == 'assign'
-    return @get_string_var(tree)      if first == 'var'
-    return @get_string_defun(tree)    if first == 'defun'
-    return @get_string_return(tree)   if first == 'return'
-    return @get_string_function(tree) if first == 'function'
-    return @get_string_if(tree)       if first == 'if'
-    return @get_string_dot(tree)      if first == 'dot'
-    return @get_string_block(tree)    if first == 'block'
-    return @get_string_for(tree)      if first == 'for'
-    return @get_string_for_in(tree)   if first == 'for-in'
-    return @get_string_sub(tree)      if first == 'sub'
-    return @get_string_with(tree)     if first == 'with'
-    return @get_string_try(tree)      if first == 'try'
-    return @get_string_throw(tree)    if first == 'throw'
-    return @get_string_break(tree)    if first == 'break'
-    return @get_string_continue(tree) if first == 'continue'
-    return @get_string_switch(tree)   if first == 'switch'
-    return @get_string_do(tree)       if first == 'do'
-    return @get_string_while(tree)    if first == 'while'
-    return @get_string_regexp(tree)   if first == 'regexp'
-    return @get_string_seq(tree)      if first == 'seq'
-    return @get_string_label(tree)    if first == 'label'
-    return @get_string_const(tree)    if first == 'const'
-    return @get_string_directive(tree) if first == 'directive'
-    return @get_string_directive(tree) if first == 'directive'
-    return @get_string_unary_prefix(tree) if first == 'unary-prefix'
-    return @get_string_unary_postfix(tree) if first == 'unary-postfix'
-    return @get_string_conditional(tree) if first == 'conditional'
-
-    return JSON.stringify tree
-    # return 'ERROR...ERROR'
+    return switch tree[0]
+      when 'num', 'name'   then tree[1]
+      when 'string'        then JSON.stringify tree[1]
+      when 'stat'          then @get_string(tree[1]) + ";"
+      when 'toplevel'      then @get_string_toplevel tree
+      when 'object'        then @get_string_object tree
+      when 'call'          then @get_string_call tree 
+      when 'binary'        then @get_string_binary tree
+      when 'array'         then @get_string_array tree
+      when 'new'           then @get_string_new tree
+      when 'assign'        then @get_string_assign tree
+      when 'var'           then @get_string_var tree
+      when 'defun'         then @get_string_defun tree
+      when 'return'        then @get_string_return tree
+      when 'function'      then @get_string_function tree
+      when 'if'            then @get_string_if tree
+      when 'dot'           then @get_string_dot tree
+      when 'block'         then @get_string_block tree
+      when 'for'           then @get_string_for tree
+      when 'for-in'        then @get_string_for_in tree
+      when 'sub'           then @get_string_sub tree
+      when 'with'          then @get_string_with tree
+      when 'try'           then @get_string_try tree
+      when 'throw'         then @get_string_throw tree
+      when 'break'         then @get_string_break tree
+      when 'continue'      then @get_string_continue tree
+      when 'switch'        then @get_string_switch tree
+      when 'do'            then @get_string_do tree
+      when 'while'         then @get_string_while tree
+      when 'regexp'        then @get_string_regexp tree
+      when 'seq'           then @get_string_seq tree
+      when 'label'         then @get_string_label tree
+      when 'const'         then @get_string_const tree
+      when 'directive'     then @get_string_directive tree
+      when 'unary-prefix'  then @get_string_unary_prefix tree
+      when 'unary-postfix' then @get_string_unary_postfix tree
+      when 'conditional'   then @get_string_conditional tree
+      else
+        # JSON.stringify tree
+        'ERROR...ERROR'
 
   get_string_toplevel: (tree)->
     re = []
