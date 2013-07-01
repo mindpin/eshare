@@ -36,7 +36,7 @@ class JavascriptStepTester
           prints: @prints
           printed: (str)->
             for s in @prints
-              return true if str == s
+              return true if "#{str}" == "#{s}"
             return false
           calls: ast.calls
           array_equals: (a, b)->
@@ -217,7 +217,7 @@ jQuery ->
         @submit_code()
 
       @$elm.find('a.reset-code').click =>
-        @set_code @current_step.get_reset_code()
+        @set_code @current_step.init_code
 
       @$error.find('a.close').click =>
         @hide_error_message()
