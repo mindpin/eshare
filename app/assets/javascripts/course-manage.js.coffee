@@ -153,8 +153,7 @@ jQuery ->
       , 100
     
     init_ctrl_s_for_save: ->
-      jQuery(window).keypress (event)=>
-        console.log event.which
+      jQuery(document).keypress (event)=>
         if !(event.which == 115 && event.ctrlKey) && !(event.which == 19) 
           return true
 

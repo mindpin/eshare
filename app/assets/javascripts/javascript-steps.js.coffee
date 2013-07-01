@@ -43,7 +43,7 @@ jQuery ->
             input: input
             passed: passed
           success: (res)->
-            console.log(res)
+            # console.log(res)
 
 
   class JavascriptStepWidget
@@ -164,7 +164,18 @@ class JavascriptStepTester
     # 这里可以在当前 context 内重新设置一些变量 如 jQuery
     # 防止在 console 中调用
 
+    _console = console
     jQuery = undefined
+    window = {}
+
+    @prints = []
+    console =
+      log: =>
+        str = (arg for arg in arguments).join(' ')
+        @jqconsole.Write str, 'output'
+        @prints.push str
+        return null
+
     eval(@code)
 
   test: ->
@@ -176,7 +187,25 @@ class JavascriptStepTester
 
     try
 
-      func_str = "var f = function(){ #{@rule} }; f();"
+      MT = {}
+      try 
+        ast = new JSAST code
+
+        MT = 
+          prints: @prints
+          printed: (str)->
+            for s in @prints
+              return true if str == s
+            return false
+          calls: ast.calls
+
+      catch e
+        MT = 
+          prints: -> null
+          printed: -> null
+          calls: -> null
+
+      func_str = "(function(){#{@rule}})();"
       test_return = eval(func_str)
 
       if test_return == true
@@ -225,10 +254,12 @@ jQuery ->
       @rule         = @step_data.rule
 
       @pass_status  = @step_data.pass_status
+      @inputed_code = @step_data.inputed_code
+
+    get_reset_code: ->
+      return @inputed_code || @init_code
 
     test: (code)->
-      new JSAST code
-
       return new JavascriptStepTester(code, @rule, @page.jqconsole).test()
 
     get_dom: ->
@@ -250,11 +281,13 @@ jQuery ->
       @pass_status = 'done'
       @_save(code, true)
       @_set_dom_done()
+      @inputed_code = code
 
     save_error: (code)->
       @pass_status = 'error'
       @_save(code, false)
       @_set_dom_error()
+      @inputed_code = code
 
     _clear_dom_klass: ->
       return @get_dom().removeClass('error').removeClass('newest').removeClass('done')
@@ -292,10 +325,8 @@ jQuery ->
             input: input
             passed: passed
           success: (res)->
-            # console.log(res)
 
     is_last: ->
-      console.log @next
       return @next == null
 
   class JavascriptPage
@@ -342,7 +373,7 @@ jQuery ->
         @submit_code()
 
       @$elm.find('a.reset-code').click =>
-        @set_code @current_step.init_code
+        @set_code @current_step.get_reset_code()
 
       @$error.find('a.close').click =>
         @hide_error_message()
@@ -477,6 +508,8 @@ jQuery ->
       # n = @editor.getSession().getValue().split("\n").length
       # @editor.gotoLine(n)
 
+      @load_step @current_step
+
     start_console: ->
       @jqconsole = @$console_elm.jqconsole('', '> ')
       @jqconsole.Write "调试结果将输出在这里：", 'output'
@@ -498,7 +531,7 @@ jQuery ->
       step.set_current()
 
       @hide_done_message()
-      @set_code step.init_code
+      @set_code step.get_reset_code()
 
       @$elm
         .find('.current-step-info').attr('data-id', step.id)

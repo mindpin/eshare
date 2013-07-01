@@ -3,42 +3,77 @@ class JSAST
     @ast = UglifyJS.parse(code)
     @indent = 0
 
+    @call_arr = null
+
   output: ->
     # return JSON.stringify @ast
     return @get_string(@ast).join("\n")
 
+  calls: (function_name)=>
+    @call_arr ||= @__get_calls_tree(@ast)
+    re = []
+    for child in @call_arr
+      re.push child[1] if child[0] == function_name
+    re
+
+  method_calls: (object_name, function_name)->
+    @calls function_name
+
+  __get_calls_tree: (tree)->
+    re = []
+
+    if @is_kind tree, 'call'
+      arr = (@get_string child for child in tree[2])
+      re = re.concat [[@get_string(tree[1]), arr]]
+
+    if @has_subtree_in tree
+      for child in tree
+        if typeof(child) == 'object'
+          re = re.concat @__get_calls_tree(child)
+
+    re
+
   get_string: (tree)->
+    # return 'ERROR...ERROR' if tree == undefined
     return '' if tree == null
 
     return switch tree[0]
       when 'num', 'name'   then tree[1]
       when 'string'        then JSON.stringify tree[1]
-      when 'stat'          then @get_string(tree[1]) + ";"
+
+      when 'stat'          then @get_string(tree[1]) + ";\n"
+      
+      when 'return'        then @_return tree
+      when 'break'         then @_break tree
+      when 'continue'      then @_continue tree
+      when 'throw'         then @_throw tree
+
+      when 'binary'        then @_binary tree
+
+      when 'dot'           then @_dot tree
+      when 'call'          then @_call tree 
+      
+      when 'array'         then @_array tree
+
+      when 'if'            then @_if tree
+      when 'for'           then @_for tree
+      when 'for-in'        then @_for_in tree
+      when 'while'         then @_while tree
+      when 'do'            then @_do tree
+      when 'switch'        then @_switch tree
+
+      when 'try'           then @_try tree
+      
       when 'toplevel'      then @get_string_toplevel tree
       when 'object'        then @get_string_object tree
-      when 'call'          then @get_string_call tree 
-      when 'binary'        then @get_string_binary tree
-      when 'array'         then @get_string_array tree
       when 'new'           then @get_string_new tree
       when 'assign'        then @get_string_assign tree
       when 'var'           then @get_string_var tree
       when 'defun'         then @get_string_defun tree
-      when 'return'        then @get_string_return tree
       when 'function'      then @get_string_function tree
-      when 'if'            then @get_string_if tree
-      when 'dot'           then @get_string_dot tree
       when 'block'         then @get_string_block tree
-      when 'for'           then @get_string_for tree
-      when 'for-in'        then @get_string_for_in tree
-      when 'sub'           then @get_string_sub tree
+      when 'sub'           then @get_string_sub tree # arr[i]
       when 'with'          then @get_string_with tree
-      when 'try'           then @get_string_try tree
-      when 'throw'         then @get_string_throw tree
-      when 'break'         then @get_string_break tree
-      when 'continue'      then @get_string_continue tree
-      when 'switch'        then @get_string_switch tree
-      when 'do'            then @get_string_do tree
-      when 'while'         then @get_string_while tree
       when 'regexp'        then @get_string_regexp tree
       when 'seq'           then @get_string_seq tree
       when 'label'         then @get_string_label tree
@@ -51,6 +86,146 @@ class JSAST
         # JSON.stringify tree
         'ERROR...ERROR'
 
+  _return: (tree)->
+    @__1 tree
+
+  _break: (tree)->
+    @__1 tree
+
+  _continue: (tree)->
+    @__1 tree
+
+  _throw: (tree)->
+    @__1 tree
+
+  __1: (tree)->
+    p0 = tree[0]
+    p1 = 
+      if tree[1]
+        " " + @get_string tree[1]
+      else
+        ""
+    p2 = ";\n"
+    p0 + p1 + p2
+
+
+  _binary: (tree)->
+    "#{@get_string tree[2]} #{tree[1]} #{@get_string tree[3]}"
+
+  _dot: (tree)->
+    "#{@__2 tree[1]}.#{tree[2]}"
+
+  _call: (tree)->
+    "#{@__2 tree[1]}#{@_get_string_params tree[2]}"
+
+  __2: (tree)->
+    if @is_kind(tree, 'dot') || !@has_subtree_in(tree)
+      return @get_string tree
+    return "(#{@get_string tree})"
+
+
+  _array: (tree)->
+    "[" + (@get_string child for child in tree[1]).join(', ') + "]"
+
+  _if: (tree)->
+    p1 = "if (#{@get_string tree[1]}) "
+    p2 = @__3 tree[2]
+
+    return p1 + p2 if !tree[3]
+
+    p3 = "else "
+    p4 = @__3 tree[3]
+
+    return p1 + p2 + p3 + p4
+
+  _for: (tree)->
+    p1 = "for ("
+    p2 = (@get_string(tree[1]) + "; ").replace(/;; $/, "; ")
+    p3 = (@get_string(tree[2]) + "; ").replace(/;; $/, "; ")
+    p4 =  @get_string(tree[3])
+    p5 = ") "
+    p6 = @__3 tree[4]
+    
+    return p1 + p2 + p3 + p4 + p5 + p6
+
+  _for_in: (tree)->
+    p1 = "for ("
+    p2 = (@get_string(tree[1]) + " in ").replace("; in", " in")
+    p3 =  @get_string(tree[3])
+    p4 = ") "
+    p5 = @__3 tree[4]
+
+    return p1 + p2 + p3 + p4 + p5
+
+  _while: (tree)->
+    p1 = "while (#{@get_string tree[1]}) "
+    p2 = @__3 tree[2]
+    return p1 + p2
+
+  _do: (tree)->
+    p1 = "do "
+    p2 = @__3 tree[2]
+    p3 = "while (#{@get_string tree[1]})"
+    return p1 + p2 + p3
+
+  _switch: (tree)->
+    __case = (tree)=>
+      p1 =
+        if tree[0] == null
+          "default: "
+        else
+          "case #{@get_string tree[0]}: "
+      p2 = (@__3 child for child in tree[1]).join('')
+      p1 + p2
+
+    __cases = (tree)=>
+      p1 = "{\n"
+      p2 = @indent_block => 
+        ( 
+          @get_indent_string() + 
+          __case(child) + 
+          "\n" for child in tree
+        ).join('')
+      p3 = @get_indent_string() + "}"
+      p1 + p2 + p3
+
+    "switch (#{@get_string tree[1]}) #{__cases tree[2]}" 
+
+  __3: (tree)->
+    if (@is_kind tree, 'block') || (@is_kind tree, 'if')
+      @get_string tree
+    else
+      @indent_block =>
+        "\n" + @get_indent_string() + @get_string(tree) 
+
+  _try: (tree)->
+    p0 = "try "
+    p1 = @_get_string_try_block tree[1]
+    p2 = ''
+    p3 = ''
+
+    if tree[2]
+      p2 = " catch(#{tree[2][0]}) #{@_get_string_try_block tree[2][1]}"
+
+    if tree[3]
+      p3 = " finally #{@_get_string_try_block tree[3]}"
+
+    p0 + p1 + p2 + p3
+
+  _get_string_try_block: (tree)->
+    p1 = "{\n"
+    p2 = @indent_block => 
+      ( 
+        @get_indent_string() + 
+        @get_string(child) + 
+        "\n" for child in tree
+      ).join('')
+    p3 = @get_indent_string() + "}"
+
+    return p1 + p2 + p3
+
+# --------------
+
   get_string_toplevel: (tree)->
     re = []
     for subtree in tree[1]
@@ -59,33 +234,12 @@ class JSAST
 
     return re
 
-  get_string_call: (tree)->
-    # return JSON.stringify tree
-
-    if tree[1][0] == 'function' || tree[1][0] == 'binary' || tree[1][0] == 'object'
-      return "(" + @get_string(tree[1]) + ")" + @_get_string_params(tree[2])
-
-    @get_string(tree[1]) + @_get_string_params(tree[2])
-
   _get_string_params: (tree)->
     params = (@get_string subtree for subtree in tree)
     "(#{params.join(', ')})"
 
-  get_string_array: (tree)->
-    arr = (@get_string subtree for subtree in tree[1])
-    "[#{arr.join(', ')}]"
-
-  get_string_dot: (tree)->
-    if tree[1][0] == 'binary'
-      return "(#{@get_string tree[1]}).#{tree[2]}"
-
-    "#{@get_string tree[1]}.#{tree[2]}"
-
   get_string_function: (tree)->
     @get_string_defun(tree)
-
-  get_string_binary: (tree)->
-    "#{@get_string tree[2]} #{tree[1]} #{@get_string tree[3]}"
 
   get_string_new: (tree)->
     return "new #{@get_string tree[1]}" + @_get_string_params(tree[2])
@@ -147,11 +301,7 @@ class JSAST
 
     "{\n" +
     lines.join('') +
-    @get_indent_string() + "}"
-
-
-  get_string_return: (tree)->
-    "return #{@get_string tree[1]}"
+    @get_indent_string() + "} "
 
 
   get_string_object: (tree)->
@@ -166,48 +316,6 @@ class JSAST
       return "{}"
 
     return "{\n#{lines.join(",\n")}\n#{@get_indent_string()}}"
-
-  get_string_if: (tree)->
-    p1 = "if (#{@get_string tree[1]}) "
-    p2 = 
-      if tree[2][0] == 'block'
-        @get_string(tree[2])
-      else
-        @indent_block =>
-          "\n" + @get_indent_string() + @get_string(tree[2]) + "\n" 
-
-    return p1 + p2 if !tree[3]
-
-    p3 = " else "
-    p4 = @get_string(tree[3])
-    return p1 + p2 + p3 + p4
-
-  get_string_for: (tree)->
-    p1 = "for ("
-    p2 = (@get_string(tree[1]) + "; ").replace(";;", ";")
-    p3 = @get_string(tree[2]) + "; "
-    p4 = @get_string(tree[3])
-    p5 = ") "
-
-    p6 = 
-      if tree[4][0] == 'block'
-        @get_string(tree[4])
-      else
-        @indent_block =>
-          "\n" + @get_indent_string() + @get_string(tree[4]) + "\n" 
-    
-    # p6 = JSON.stringify tree[4]
-
-    return p1 + p2 + p3 + p4 + p5 + p6
-
-  get_string_for_in: (tree)->
-    p1 = "for ("
-    p2 = (@get_string(tree[1]) + " in ").replace(";", "")
-    p3 = @get_string(tree[3])
-    p4 = ") "
-    p5 = @get_string(tree[4])
-
-    return p1 + p2 + p3 + p4 + p5
 
   get_string_unary_prefix: (tree)->
     return tree[1] + " " + @get_string(tree[2])
@@ -234,84 +342,11 @@ class JSAST
   get_string_sub: (tree)->
     return "#{@get_string tree[1]}[#{@get_string tree[2]}]"
 
-  get_string_try: (tree)->
-    trystr = @_get_string_try_block tree[1]
-    catchstr = ''
-    finallystr = ''
-
-    if tree[2]
-      catchstr = " catch(#{tree[2][0]}) #{@_get_string_try_block tree[2][1]}"
-
-    if tree[3]
-      finallystr = " finally #{@_get_string_try_block tree[3]}"
-
-    return "try #{trystr}#{catchstr}#{finallystr}"
-
-  _get_string_try_block: (tree)->
-    p1 = "{\n"
-    lines = []
-    @indent_block =>
-      for subtree in tree
-        lines.push @get_indent_string() + @get_string(subtree) + "\n"
-    p3 = @get_indent_string() + "}"
-
-    return p1 + lines.join("") + p3
-
   get_string_directive: (tree)->
-    return "\"#{tree[1]}\""
-
-  get_string_throw: (tree)->
-    return "throw " + @get_string(tree[1])
+    return JSON.stringify tree[1]
 
   get_string_with: (tree)->
     return "with (#{@get_string tree[1]}) #{@get_string tree[2]}"
-
-  get_string_break: (tree)->
-    return "break"
-
-  get_string_continue: (tree)->
-    return "continue"
-
-  get_string_switch: (tree)->
-    return "switch (#{@get_string tree[1]}) " + @_get_string_cases(tree[2])
-
-  _get_string_cases: (tree)->
-    # return JSON.stringify tree
-
-    p1 = "{\n"
-    lines = []
-    @indent_block =>
-      for subtree in tree
-        lines.push @get_indent_string() + @_get_string_case(subtree) + "\n"
-    p2 = @get_indent_string() + "}"
-
-    return p1 + lines.join("") + p2
-
-  _get_string_case: (tree)->
-    # return JSON.stringify tree
-    p1 =
-      if tree[0] == null
-        "default:\n"
-      else
-        "case #{@get_string tree[0]}:\n"
-
-    lines = []
-    @indent_block =>    
-      for subtree in tree[1]
-        lines.push @get_indent_string() + @get_string(subtree)
-
-    p1 + lines.join("\n")
-
-  get_string_do: (tree)->
-    p1 = "do "
-    p2 = @get_string tree[2]
-    p3 = " while (#{@get_string tree[1]})"
-    return p1 + p2 + p3
-
-  get_string_while: (tree)->
-    p1 = "while (#{@get_string tree[1]}) "
-    p2 = @get_string tree[2]
-    return p1 + p2
 
   get_string_regexp: (tree)->
     exp = tree[1]
@@ -327,17 +362,30 @@ class JSAST
   get_string_label: (tree)->
     tree[1] + ": " + @get_string(tree[2])
 
-  get_indent_string: ->
-    a = ''
-    for i in [0...@indent]
-      a = a + '  '
 
-    return a
+
+  has_subtree_in: (tree)->
+    try
+      for child in tree
+        return true if typeof(child) == 'object'
+      return false
+    catch e
+      return false
+
+  is_kind: (tree, kind)->
+    try
+      tree[0] == kind
+    catch e
+      return false
+
+  get_indent_string: ->
+    re = ('  ' for i in [0...@indent])
+    re.join('')
 
   indent_block: (func)->
-    @indent = @indent + 1
+    @indent++
     re = func()
-    @indent = @indent - 1
+    @indent--
     return re
 
 window.JSAST = JSAST

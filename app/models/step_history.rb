@@ -60,6 +60,13 @@ class StepHistory < ActiveRecord::Base
         :is_passed => passed
       })
     end
+
+    def user_inputed_code(user)
+      return nil if user.blank?
+      last = self.step_histories.by_user(user).last()
+
+      last.blank? ? '' : last.input
+    end
   end
 
   module CourseWareMethods

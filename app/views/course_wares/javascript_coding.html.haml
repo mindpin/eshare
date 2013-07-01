@@ -24,7 +24,8 @@
       :init_code    => step.init_code,
       :rule         => step.rule,
 
-      :pass_status => step.pass_status_of(@user)
+      :pass_status  => step.pass_status_of(@user),
+      :inputed_code => step.user_inputed_code(@user)
     }
   }
 
