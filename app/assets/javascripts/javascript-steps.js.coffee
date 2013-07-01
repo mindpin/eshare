@@ -39,12 +39,15 @@ class JavascriptStepTester
               return true if str == s
             return false
           calls: ast.calls
+          array_equals: (a, b)->
+            JSON.stringify(a) == JSON.stringify(b)
 
       catch e
         MT = 
           prints: -> null
           printed: -> null
           calls: -> null
+          array_equals: -> null
 
       func_str = "(function(){#{@rule}})();"
       test_return = eval(func_str)
