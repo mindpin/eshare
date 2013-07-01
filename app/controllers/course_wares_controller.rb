@@ -1,8 +1,24 @@
 class CourseWaresController < ApplicationController
   before_filter :authenticate_user!, :except => [:show]
-  layout 'course_ware_show', :only => [:show]
+
+  layout Proc.new { |controller|
+    case controller.action_name
+    when 'show'
+      return 'course_ware_show'
+    else
+      return 'application'
+    end
+  }
 
   def show
+    _show()
+
+    if @course_ware.is_javascript? && @course_ware.javascript_steps.present?
+      return redirect_to "/javascript_steps/#{@course_ware.javascript_steps.first.id}"
+    end
+  end
+
+  def _show
     @course_ware = CourseWare.find params[:id]
     @course_ware.refresh_total_count!
     
@@ -28,9 +44,5 @@ class CourseWaresController < ApplicationController
       :user_name => mark.user.name,
       :avatar_url => mark.user.avatar.versions[:small].url
     }
-  end
-
-  def show_javascript_steps
-    render "/javascript_steps/show"
   end
 end

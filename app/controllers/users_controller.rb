@@ -13,23 +13,23 @@ class UsersController < ApplicationController
 
   def courses
     @user = User.find params[:id]
-    @courses = @user.learning_courses.page(1).per(20)
+    @courses = @user.learning_courses.page params[:page]
   end
 
   def questions
     @user = User.find params[:id]
-    @questions = @user.questions.page(1).per(20)
+    @questions = @user.questions.page params[:page]
   end
 
   def answers
     @user = User.find params[:id]
-    @answers = @user.answers.page(1).per(20)
+    @answers = @user.answers.page params[:page]
   end
 
   def course_applies
     @user = User.find params[:id]
     return render :text => '不能查看他人的选课记录', :status => 401 if @user != current_user
-    @applies = @user.select_course_applies.page(1).per(20)
+    @applies = @user.select_course_applies.page params[:page]
   end
 
   def complete_search

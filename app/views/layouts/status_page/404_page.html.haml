@@ -4,17 +4,17 @@
 - simple_page_layout title, :html_lang => :zh, :body_class => 'error' do
   = render_cell :layout, :topnav, :user => current_user
 
-  .page-content
-    .page-error-page
-      .box
-        .code 500
-        .info 系统遇到了一个错误
-        .back
-          %a.btn.login{:href => '/'} 返回首页
+  .page-error-page
+    .box
+      .code 404
+      .info= message
+      .back
+        %a.btn.inverse{:href => '/'}
+          %i.icon-chevron-left.icon-white
+          %span 返回首页
 
-      - if true #!Rails.env.production?
-        .message= message
-        .exception
-          .message= exception.message
-          - exception.backtrace.each do |m|
-            %div= m
+    .exception
+      .message= exception.message
+      - if !Rails.env.production?
+        - exception.backtrace.each do |m|
+          %div= m

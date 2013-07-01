@@ -81,7 +81,24 @@ class StepHistory < ActiveRecord::Base
       `
       )
     end
+    
+    def record_input(user, input, passed)
+      # 如果已经通过，则不再记录更多错误输入
+      return if self.is_passed_by?(user) && passed == false
 
+      self.step_histories.create({
+        :user => user,  
+        :input => input,
+        :is_passed => passed
+      })
+    end
+
+    def user_inputed_code(user)
+      return nil if user.blank?
+      last = self.step_histories.by_user(user).last()
+
+      last.blank? ? '' : last.input
+    end
   end
 
   module CourseWareMethods

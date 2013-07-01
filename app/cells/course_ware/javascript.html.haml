@@ -10,32 +10,36 @@
 
   passed_count = @course_ware.passed_step_count_of(@user)
 
-.page-code-steps
-  - idx = 0
-  - steps.each do |step|
-    :ruby
-      klass = []
-      klass << (idx == 0 ? 'current' : '')
-      klass << (step[:pass_status])
+- if steps.blank?
+  .steps-blank
+    课程正在维护中
+- else
+  .page-code-steps
+    - idx = 0
+    - steps.each do |step|
+      :ruby
+        klass = []
+        klass << (idx == 0 ? 'current' : '')
+        klass << (step[:pass_status])
 
-    .step{:class => klass.join(' ') }
-    - idx = idx + 1
+      .step{:class => klass.join(' ') }
+      - idx = idx + 1
 
 
-  - progress_klass = (passed_count >= steps.count ? 'finish' : '')
-  .progress{:class => progress_klass}
-    %span 目前的完成度
-    %span.done{:data => {:done => passed_count}}= passed_count
-    %span /
-    %span.total= steps.count
-    %span.alldone
-      %span ，
-      %i.icon-ok.icon-white
-      %span 全部完成
-  .clearfix
+    - progress_klass = (passed_count >= steps.count ? 'finish' : '')
+    .progress{:class => progress_klass}
+      %span 目前的完成度
+      %span.done{:data => {:done => passed_count}}= passed_count
+      %span /
+      %span.total= steps.count
+      %span.alldone
+        %span ，
+        %i.icon-ok.icon-white
+        %span 全部完成
+    .clearfix
 
-.page-code-console.javascript{:data => {:"course-ware-id" => @course_ware.id}}
-  :javascript
-    _COURSE_WARE_STEPS = #{steps.to_json}
-    _CURRENT_USER_ID = #{@user.present? ? @user.id : false}
-  .console-box
+  .page-code-console.javascript{:data => {:"course-ware-id" => @course_ware.id}}
+    :javascript
+      _COURSE_WARE_STEPS = #{steps.to_json}
+      _CURRENT_USER_ID = #{@user.present? ? @user.id : false}
+    .console-box

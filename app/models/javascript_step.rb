@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
 class JavascriptStep < ActiveRecord::Base
-  attr_accessible :course_ware, :content, :rule
+  attr_accessible :course_ware, :title, :desc, :content, :hint, :init_code, :rule
 
   belongs_to :course_ware
-
-  validates :course_ware, :content, :rule,
-            :presence => true
 
   default_scope order('id asc')
 
