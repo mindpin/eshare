@@ -20,7 +20,7 @@ class AddCourseWaresCountInCourses < ActiveRecord::Migration
         course.updated_at = course_wares.first.updated_at        
       end
       course.course_wares_count = course.course_wares.count
-      course.save
+      course.save(:validate => false)
 
       course.record_timestamps = true
 
