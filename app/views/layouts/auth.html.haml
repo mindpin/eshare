@@ -1,5 +1,6 @@
 - content_for :javascript do
   = javascript_include_tag '/pjax/jquery.pjax'
+  = render_cell :layout, :google_analytics_code if R::INTERNET
 
 !!!
 - simple_page_layout 'MINDPIN EduShare', :html_lang => :zh, :body_class => 'auth' do

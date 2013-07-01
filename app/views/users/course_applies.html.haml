@@ -6,3 +6,5 @@
       - table.add_column :status do |apply|
         = course_apply_status apply
       - table.add_column :updated_at
+
+    = paginate @applies

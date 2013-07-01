@@ -21,6 +21,7 @@
 //= require ckplayer/ckplayer
 
 //= require jqconsole/jqconsole
+//= require nanoscroller/jquery.nanoscroller.min
 
 //= require part-upload/part-upload
 //= require simple-images

@@ -91,6 +91,10 @@ SimpleNavbar::Base.config do
       controller :friends
     end
 
+    nav :learning_plan, :url => '/plan' do
+      controller :index, :only => :plan
+    end
+
     # nav :disk, :url => '/disk' do
     #   controller :disk
     # end

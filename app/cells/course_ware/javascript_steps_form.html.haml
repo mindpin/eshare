@@ -1,12 +1,18 @@
-.javascript-steps-form{:data => {:'chapter-id' => @chapter.id}}
+.javascript-steps-form{:data => {:'course-ware-id' => @course_ware.id}}
   .ops
     .back
       %a.btn.cancel{:href => "/manage/chapters/#{@chapter.id}"}
         %i.icon-chevron-left
         %span 返回
+      %span.tips{:style => 'margin-left:20px;'} 小提示：你可以使用 ctrl + s 保存编辑操作
+
     .btns
-      %a.btn.success{:href => 'javascript:;'} 保存当前小节
-      %a.btn{:href => 'javascript:;'} 预览当前小节
+      %a.btn.success.save{:href => 'javascript:;', :style => 'display:none;'}
+        %i.icon-ok.icon-white
+        %span 保存当前检查点
+      %a.btn.preview{:href => 'javascript:;', :style => 'display:none;'}
+        %i.icon-eye-open
+        %span 预览当前检查点
 
   .steps
     - idx = 1
@@ -15,21 +21,28 @@
       %a.step{:href => 'javascript:;', :class => klass, :data => {:id => step.id}}= idx
       - idx = idx + 1
 
-    %a.add-step{:href => 'javascript:;'}
+    %a.add-step{:href => 'javascript:;', :title => '增加一个检查点'}
       %i.icon-plus.icon-white
 
   - if @current_step.present?
     .current-step{:data => {:id => @current_step.id}}
-      = simple_form_for @current_step do |f|
+      = simple_form_for @current_step, :html => {:onsubmit => 'return false;'} do |f|
         .baseinfo
-          = f.input :title
-          = f.input :desc, :input_html => {:rows => 5}
-          = f.input :content, :input_html => {:rows => 5}
-          = f.input :hint, :input_html => {:rows => 5}
+          = f.input :title, :placeholder => '输入一个概括性的描述'
+          = f.input :desc, :input_html => {:rows => 5, :autocomplete => :off}, :placeholder => '输入检查步骤的简单介绍'
+          = f.input :content, :input_html => {:rows => 5, :autocomplete => :off}, :placeholder => '输入对于如何编码实现的简要说明'
+          = f.input :hint, :input_html => {:rows => 5, :autocomplete => :off}, :placeholder => '输入一些可选的提示信息'
+          = f.input :init_code, :as => :hidden, :input_html => {:autocomplete => :off}
+          = f.input :rule, :as => :hidden, :input_html => {:autocomplete => :off}
+
+          %a.btn.danger.delete.small{:href => 'javascript:;'}
+            %i.icon-remove.icon-white
+            %span 删除这个检查点
+
         .codes
           %label 初始预置代码
           .init-code
-            %pre#init-code= ''
+            %pre#init-code= @current_step.init_code
 
           %label 代码检查规则
           .rule-ipt
@@ -37,4 +50,4 @@
 
 
   - else
-    blahblah
+    .current-step

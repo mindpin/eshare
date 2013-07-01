@@ -75,12 +75,4 @@ class Manage::CourseWaresController < ApplicationController
     return redirect_to "/manage/chapters/#{@chapter.id}"
   end
 
-  def javascript_steps_form
-    @step = JavascriptStep.find params[:step_id]
-    render :text => (
-      render_cell :course_ware, :javascript_steps_form, :course_ware => @step.course_ware,
-                                                      :current_step => @step
-    )
-  end
-
 end
