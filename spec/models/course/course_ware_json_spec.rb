@@ -59,29 +59,8 @@ describe CourseWare do
 
   describe "验证导入" do
     before {
-      @json_data = {
-        :title => 'js title',
-        :desc => 'js desc',
-        :kind => 'javascript',
-        :steps => [
-          {
-            :content => 'content 1',
-            :rule => 'rule 1',
-            :title => 'title 1',
-            :desc => 'desc 1',
-            :hint => 'hint 1',
-            :init_code => 'init_code 1'
-          },
-          {
-            :content => 'content 2',
-            :rule => 'rule 2',
-            :title => 'title 2',
-            :desc => 'desc 2',
-            :hint => 'hint 2',
-            :init_code => 'init_code 2'
-          }
-        ]
-      }.to_json
+      
+      @json_data = @course_ware.export_json
 
       @user = FactoryGirl.create(:user)
       @chapter = FactoryGirl.create(:chapter)
@@ -118,11 +97,14 @@ describe CourseWare do
         @course_ware.javascript_steps.count.should == 2
       end
 
+
+
       describe "验证 steps" do
         before {
           @step1 = @course_ware.javascript_steps[0]
           @step2 = @course_ware.javascript_steps[1]
         }
+
 
         describe "step 1" do
           it "content" do
