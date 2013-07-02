@@ -9,17 +9,17 @@ describe TudouVideo do
   }
 
   it {
-    p iid = @video1.iid
+    p "视频一 iid: #{iid = @video1.iid}"
     iid.should_not be_blank
   }
 
   it {
-    p iid = @video2.iid
+    p "视频二 iid: #{iid = @video2.iid}"
     iid.should_not be_blank
   }
 
   it {
-    p iid = @video3.iid
+    p "视频三 iid: #{iid = @video3.iid}"
     iid.should_not be_blank
   }
 end

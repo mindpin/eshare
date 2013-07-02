@@ -52,8 +52,10 @@ class TudouVideo
   attr_reader :url, :user_agent
   attr_reader :parser
 
+  DEFAULT_USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.172 Safari/537.22'
+
   # 土豆的视频解析是区分user_agent的，所以需要从浏览器把user_agent传过来
-  def initialize(url, user_agent = '')
+  def initialize(url, user_agent = TudouVideo::DEFAULT_USER_AGENT)
     @url = url 
     @user_agent = user_agent
     # like http://www.tudou.com/albumplay/4NP7mtf2VYg/yqM7MXyWjPc.html
