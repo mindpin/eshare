@@ -15,7 +15,7 @@ class JavascriptStepTester
         str = (arg for arg in arguments).join(' ')
         @jqconsole.Write str, 'output'
         @prints.push str
-        return null
+        return
 
     eval(@code)
 
