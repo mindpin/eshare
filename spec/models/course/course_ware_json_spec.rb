@@ -57,14 +57,13 @@ describe CourseWare do
     }
   end
 
-=begin
   describe "验证导入" do
     before {
       @json_data = {
         :title => 'js title',
         :desc => 'js desc',
         :kind => 'javascript',
-        :total_count => 5,
+        :total_count => 2,
         :steps => [
           {
             :content => 'content 1',
@@ -105,7 +104,7 @@ describe CourseWare do
       end
 
       it "total_count" do
-        @course_ware.total_count.should == 5
+        @course_ware.total_count.should == 2
       end
 
       it "steps 数量" do
@@ -174,6 +173,5 @@ describe CourseWare do
 
     end
   end
-=end
 
 end
