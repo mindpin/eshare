@@ -90,6 +90,14 @@ describe CourseWare do
     }
 
     describe "导入正确" do
+      it "chapter" do
+        @course_ware.chapter.should == @chapter
+      end
+
+      it "user" do
+        @course_ware.creator.should == @user
+      end
+
       it "title" do
         @course_ware.title.should == 'js title'
       end
