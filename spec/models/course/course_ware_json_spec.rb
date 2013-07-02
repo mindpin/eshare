@@ -63,7 +63,6 @@ describe CourseWare do
         :title => 'js title',
         :desc => 'js desc',
         :kind => 'javascript',
-        :total_count => 2,
         :steps => [
           {
             :content => 'content 1',
