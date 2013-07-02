@@ -170,4 +170,28 @@ class CourseWare < ActiveRecord::Base
     chapter.course_wares.where('position > ?', position).first
   end
 
+  def export_json
+    if kind == 'javascript'
+      steps = []
+      javascript_steps.each do |s|
+        steps << {
+          :content => s.content,
+          :rule => s.rule,
+          :title => s.title,
+          :desc => s.desc,
+          :hint => s.hint,
+          :init_code => s.init_code
+        }
+      end
+
+      {
+        :title => title,
+        :desc => desc,
+        :kind => kind,
+        :total_count => total_count,
+        :steps => steps
+      }
+    end
+  end
+
 end
