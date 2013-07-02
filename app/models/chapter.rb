@@ -45,29 +45,32 @@ class Chapter < ActiveRecord::Base
   end
 
   def import_course_ware_form_json(json_data, user)
-    course_ware = course_wares.create(
-      {
-        :creator => user,
-        :title => json_data[:title],
-        :desc => json_data[:desc],
-        :kind => json_data[:kind]
-      }, { :as => :import }
-    )
-
-    json_data[:steps].each do |s|
-      course_ware.javascript_steps.create(
-        :content => s[:content],
-        :rule => s[:rule],
-        :title => s[:title],
-        :desc => s[:desc],
-        :hint => s[:hint],
-        :init_code => s[:init_code]
+    CourseWare.transaction do
+      course_ware = course_wares.create(
+        {
+          :creator => user,
+          :title => json_data[:title],
+          :desc => json_data[:desc],
+          :kind => json_data[:kind]
+        }, { :as => :import }
       )
-    end
 
-    course_ware.refresh_total_count!
+      json_data[:steps].each do |s|
+        course_ware.javascript_steps.create(
+          :content => s[:content],
+          :rule => s[:rule],
+          :title => s[:title],
+          :desc => s[:desc],
+          :hint => s[:hint],
+          :init_code => s[:init_code]
+        )
+      end
+
+      course_ware.refresh_total_count!
+
+      course_ware
+    end
     
-    course_ware
   end
 
 end
