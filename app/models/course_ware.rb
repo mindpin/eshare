@@ -190,7 +190,7 @@ class CourseWare < ActiveRecord::Base
         :kind => kind,
         :total_count => total_count,
         :steps => steps
-      }
+      }.to_json
     end
   end
 

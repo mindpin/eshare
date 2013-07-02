@@ -54,7 +54,7 @@ describe CourseWare do
           :init_code => 'init_code 2'
         }
       ]
-    }
+    }.to_json
   end
 
   describe "验证导入" do
@@ -81,7 +81,7 @@ describe CourseWare do
             :init_code => 'init_code 2'
           }
         ]
-      }
+      }.to_json
 
       @user = FactoryGirl.create(:user)
       @chapter = FactoryGirl.create(:chapter)
