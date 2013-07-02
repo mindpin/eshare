@@ -70,7 +70,8 @@ class JavascriptStepTester
 
     try
       @result = @_eval @code
-      @jqconsole.Write "=> #{@result}\n", 'output'
+      if @result != undefined
+        @jqconsole.Write "#{JSON.stringify @result}\n", 'output'
 
     catch err
       @error = err
