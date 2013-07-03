@@ -114,6 +114,7 @@ jQuery ->
       @hint_html    = @step_data.hint_html
       @init_code    = @step_data.init_code
       @rule         = @step_data.rule
+      @code_reset   = @step_data.code_reset
 
       @pass_status  = @step_data.pass_status
       @inputed_code = @step_data.inputed_code
@@ -235,7 +236,8 @@ jQuery ->
         @submit_code()
 
       @$elm.find('a.reset-code').click =>
-        @set_code @current_step.init_code
+        if @current_step.code_reset
+          @set_code @current_step.init_code
 
       @$error.find('a.close').click =>
         @hide_error_message()
@@ -393,7 +395,9 @@ jQuery ->
       step.set_current()
 
       @hide_done_message()
-      @set_code step.get_reset_code()
+
+      if step.code_reset
+        @set_code step.get_reset_code()
 
       @$elm
         .find('.current-step-info').attr('data-id', step.id)
