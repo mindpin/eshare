@@ -31,7 +31,10 @@ class JavascriptStepTester
             if arg == undefined
               strs.push "undefined"
             else
-              strs.push JSON.stringify(arg)
+              if typeof(arg) == 'string'
+                strs.push arg  
+              else
+                strs.push JSON.stringify(arg)
 
           str = strs.join(' ')
           @jqconsole.Write str, 'output'
