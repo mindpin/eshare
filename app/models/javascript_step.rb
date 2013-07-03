@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 class JavascriptStep < ActiveRecord::Base
-  attr_accessible :course_ware, :title, :desc, :content, :hint, :init_code, :rule
+  attr_accessible :course_ware, :title, :desc, :content, :hint, :init_code, :rule, :code_reset
 
   belongs_to :course_ware
 
@@ -13,6 +13,11 @@ class JavascriptStep < ActiveRecord::Base
   def set_course_ware_total_count
     count = course_ware.javascript_steps.count
     course_ware.update_attributes(:total_count => count)
+  end
+
+  before_validation :set_init_code_before_validation
+  def set_init_code_before_validation
+    self.init_code = '' if self.code_reset == false
   end
 
   def prev

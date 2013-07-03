@@ -40,9 +40,13 @@
             %span 删除这个检查点
 
         .codes
-          %label 初始预置代码
-          .init-code
-            %pre#init-code= @current_step.init_code
+          = f.input :code_reset, :label => '当本检查点加载时，重置代码', :input_html => {:autocomplete => :off}
+
+          - ic_klass = @current_step.code_reset? ? '' : 'disabled'
+          .ic{:class => ic_klass}
+            %label 初始预置代码
+            .init-code
+              %pre#init-code= @current_step.init_code
 
           %label 代码检查规则
           .rule-ipt

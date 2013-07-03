@@ -108,7 +108,18 @@ jQuery ->
               jQuery('.javascript-steps-form .steps .step').removeClass('current')
 
               @$current_step.html("<div class='deleted'>检查点已删除</div>")
+              @hide_btns()
 
+      jQuery(document).delegate '.javascript-steps-form form input#javascript_step_code_reset', 'change', =>
+        @change_code_reset()
+
+    change_code_reset: ->
+      if jQuery('.javascript-steps-form form input#javascript_step_code_reset').is(':checked')
+        @$elm.find('.codes .ic').removeClass('disabled')
+        @editor_init_code.setReadOnly(false)
+      else
+        @$elm.find('.codes .ic').addClass('disabled')
+        @editor_init_code.setReadOnly(true)
 
     select_step: ($step)->
       @origin_data = null
@@ -145,6 +156,7 @@ jQuery ->
 
     init_change_watcher: ->
       change_watcher = setInterval =>
+        return if jQuery('.current-step .deleted').length > 0
         return if @origin_data == null
         if @get_form_value() != @origin_data
           @show_save()
