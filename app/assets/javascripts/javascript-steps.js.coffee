@@ -5,7 +5,9 @@ class JavascriptStepTester
   test: ->
     # 暂时不用 @run_code()
 
-    return '没有输入任何代码' if !@code
+    code = @code
+
+    return '没有输入任何代码' if !code
 
     result = null
     error = null
@@ -29,7 +31,7 @@ class JavascriptStepTester
           _prints.push str
           return
 
-      result = eval @code
+      result = eval code
 
       if result != undefined
         @jqconsole.Write "#{JSON.stringify result}\n", 'output'
@@ -45,7 +47,7 @@ class JavascriptStepTester
 
       MT = {}
       try 
-        ast = new JSAST @code
+        ast = new JSAST code
 
         MT = 
           prints: _prints
