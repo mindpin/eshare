@@ -59,8 +59,14 @@ class JavascriptStepTester
         MT = 
           prints: _prints
           printed: (str)->
+            _str = 
+              if typeof(str) == 'string'
+                str
+              else
+                JSON.stringify str
+
             for s in _prints
-              return true if "#{str}" == "#{s}"
+              return true if "#{_str}" == "#{s}"
             return false
           calls: ast.calls
           array_equals: (a, b)->
