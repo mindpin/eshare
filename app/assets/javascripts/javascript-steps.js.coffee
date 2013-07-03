@@ -7,7 +7,7 @@ class JavascriptStepTester
 
     code = @code
 
-    return '没有输入任何代码' if !code
+    return return @pack(false, '你没有输入任何代码。') if !code
 
     result = null
     error = null
