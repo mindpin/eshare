@@ -26,7 +26,14 @@ class JavascriptStepTester
       _prints = []
       console =
         log: =>
-          str = (arg for arg in arguments).join(' ')
+          strs = []
+          for arg in arguments
+            if arg == undefined
+              strs.push "undefined"
+            else
+              strs.push JSON.stringify(arg)
+
+          str = strs.join(' ')
           @jqconsole.Write str, 'output'
           _prints.push str
           return
