@@ -1,41 +1,56 @@
 class JavascriptStepTester
   constructor: (@code, @rule, @jqconsole)->
-
-  _eval: ->
-    # 这里可以在当前 context 内重新设置一些变量 如 jQuery
-    # 防止在 console 中调用
-
-    _console = console
-    jQuery = undefined
-    window = {}
-
-    @prints = []
-    console =
-      log: =>
-        str = (arg for arg in arguments).join(' ')
-        @jqconsole.Write str, 'output'
-        @prints.push str
-        return null
-
-    eval(@code)
+    @window_console = console
 
   test: ->
-    @run_code()
+    # 暂时不用 @run_code()
 
-    code = @code
-    result = @result
-    error = @error
+    return '没有输入任何代码' if !@code
+
+    result = null
+    error = null
+
+    # 1，执行用户输入代码，获得 result, error, code 三个变量
+
+    try
+      # 暂时不用 @result = @_eval @code
+
+      # 这里可以在当前 context 内重新设置一些变量 如 jQuery
+      # 防止在 console 中调用
+
+      # 约束一些变量
+      jQuery = undefined
+      window = {}
+      _prints = []
+      console =
+        log: =>
+          str = (arg for arg in arguments).join(' ')
+          @jqconsole.Write str, 'output'
+          _prints.push str
+          return
+
+      result = eval @code
+
+      if result != undefined
+        @jqconsole.Write "#{JSON.stringify result}\n", 'output'
+
+    catch err
+      error = err
+      @jqconsole.Write "#{error}", 'error'
+
+
+    # 2, 用检查规则对代码做出检查
 
     try
 
       MT = {}
       try 
-        ast = new JSAST code
+        ast = new JSAST @code
 
         MT = 
-          prints: @prints
+          prints: _prints
           printed: (str)->
-            for s in @prints
+            for s in _prints
               return true if "#{str}" == "#{s}"
             return false
           calls: ast.calls
@@ -49,6 +64,10 @@ class JavascriptStepTester
           calls: -> null
           array_equals: -> null
 
+      # 恢复对变量的约束
+
+      console = @window_console
+
       func_str = "(function(){#{@rule}})();"
       test_return = eval(func_str)
 
@@ -59,22 +78,6 @@ class JavascriptStepTester
 
     catch e
       return @pack(false, '教程逻辑出错')
-
-
-  # 先 run 一遍代码，获取执行结果以及抛出的错误（如果有）
-  run_code: ->
-    return '没有输入任何代码' if !@code
-
-    @result = null
-    @error = null
-
-    try
-      @result = @_eval @code
-      @jqconsole.Write "=> #{@result}\n", 'output'
-
-    catch err
-      @error = err
-      @jqconsole.Write "#{@error}", 'error'
 
   pack: (passed, message)->
     return {
