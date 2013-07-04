@@ -45,7 +45,7 @@ module CourseWareKindMethods
     return SinaVideo.new self.url
   end
 
-  def tudou_video(user_agent = '')
+  def tudou_video(user_agent = TudouVideo::DEFAULT_USER_AGENT)
     return nil if !self.is_tudou?
     return TudouVideo.new self.url, user_agent
   end

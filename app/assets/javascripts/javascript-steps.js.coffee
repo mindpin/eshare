@@ -1,30 +1,57 @@
 class JavascriptStepTester
   constructor: (@code, @rule, @jqconsole)->
-
-  _eval: ->
-    # 这里可以在当前 context 内重新设置一些变量 如 jQuery
-    # 防止在 console 中调用
-
-    _console = console
-    jQuery = undefined
-    window = {}
-
-    @prints = []
-    console =
-      log: =>
-        str = (arg for arg in arguments).join(' ')
-        @jqconsole.Write str, 'output'
-        @prints.push str
-        return null
-
-    eval(@code)
+    @window_console = console
 
   test: ->
-    @run_code()
+    # 暂时不用 @run_code()
 
     code = @code
-    result = @result
-    error = @error
+
+    return return @pack(false, '你没有输入任何代码。') if !code
+
+    result = null
+    error = null
+
+    # 1，执行用户输入代码，获得 result, error, code 三个变量
+
+    try
+      # 暂时不用 @result = @_eval @code
+
+      # 这里可以在当前 context 内重新设置一些变量 如 jQuery
+      # 防止在 console 中调用
+
+      # 约束一些变量
+      jQuery = undefined
+      window = {}
+      _prints = []
+      console =
+        log: =>
+          strs = []
+          for arg in arguments
+            if arg == undefined
+              strs.push "undefined"
+            else
+              if typeof(arg) == 'string'
+                strs.push arg  
+              else
+                strs.push JSON.stringify(arg)
+
+          str = strs.join(' ')
+          @jqconsole.Write str, 'output'
+          _prints.push str
+          return
+
+      result = eval code
+
+      if result != undefined
+        @jqconsole.Write "#{JSON.stringify result}\n", 'output'
+
+    catch err
+      error = err
+      @jqconsole.Write "#{error}", 'error'
+
+
+    # 2, 用检查规则对代码做出检查
 
     try
 
@@ -33,10 +60,16 @@ class JavascriptStepTester
         ast = new JSAST code
 
         MT = 
-          prints: @prints
+          prints: _prints
           printed: (str)->
-            for s in @prints
-              return true if "#{str}" == "#{s}"
+            _str = 
+              if typeof(str) == 'string'
+                str
+              else
+                JSON.stringify str
+
+            for s in _prints
+              return true if "#{_str}" == "#{s}"
             return false
           calls: ast.calls
           array_equals: (a, b)->
@@ -49,6 +82,10 @@ class JavascriptStepTester
           calls: -> null
           array_equals: -> null
 
+      # 恢复对变量的约束
+
+      console = @window_console
+
       func_str = "(function(){#{@rule}})();"
       test_return = eval(func_str)
 
@@ -59,22 +96,6 @@ class JavascriptStepTester
 
     catch e
       return @pack(false, '教程逻辑出错')
-
-
-  # 先 run 一遍代码，获取执行结果以及抛出的错误（如果有）
-  run_code: ->
-    return '没有输入任何代码' if !@code
-
-    @result = null
-    @error = null
-
-    try
-      @result = @_eval @code
-      @jqconsole.Write "=> #{@result}\n", 'output'
-
-    catch err
-      @error = err
-      @jqconsole.Write "#{@error}", 'error'
 
   pack: (passed, message)->
     return {
@@ -94,14 +115,38 @@ jQuery ->
       @content_html = @step_data.content_html
       @hint         = @step_data.hint
       @hint_html    = @step_data.hint_html
-      @init_code    = @step_data.init_code
       @rule         = @step_data.rule
 
       @pass_status  = @step_data.pass_status
-      @inputed_code = @step_data.inputed_code
+      
+      @code_reset     = @step_data.code_reset
+      @init_code      = @step_data.init_code
+      @submitted_code = @step_data.submitted_code
+      @inputed_code   = null      
 
+    # reset 的逻辑
+    # 当 code_reset == true 时
+    #   很简单，直接取 init_code 即可
+    # 当 code_reset == false 时，reset的代码就和当前检查点无关了
+    #   所以，尝试获取上一个节点的显示代码（ui_code）即可
+    #   因为实际上 code_reset 设置为 false 的目的，就是让这个检查点继承上一个节点的代码
     get_reset_code: ->
-      return @inputed_code || @init_code
+      return @init_code if @code_reset
+      return @prev.get_ui_code() if @prev
+      return ''
+
+    # 获取显示代码 (ui_code) 的逻辑
+    # 当 code_reset == true 时，显示代码完全取决于检查点自身
+    #   按照 @inputed_code > @submitted_code > @init_code 的优先级取得即可
+    # 当 code_reset == false 是，显示代码按以下优先级取得
+    #   @inputed_code > @submitted_code > @get_reset_code()
+    # 
+    # 由于 当 code_reset = true 时，@get_reset_code() 一定返回 @init_code
+    # 所以，无论任何情况，都可以化简为
+    #   按照 @inputed_code > @submitted_code > @get_reset_code() 取得
+    get_ui_code: ->
+      return @inputed_code || @submitted_code || @get_reset_code()
+
 
     test: (code)->
       return new JavascriptStepTester(code, @rule, @page.jqconsole).test()
@@ -125,13 +170,13 @@ jQuery ->
       @pass_status = 'done'
       @_save(code, true)
       @_set_dom_done()
-      @inputed_code = code
+      @submitted_code = code
 
     save_error: (code)->
       @pass_status = 'error'
       @_save(code, false)
       @_set_dom_error()
-      @inputed_code = code
+      @submitted_code = code
 
     _clear_dom_klass: ->
       return @get_dom().removeClass('error').removeClass('newest').removeClass('done')
@@ -192,6 +237,8 @@ jQuery ->
       @last_submitted_code = null
       @last_submitted_step = null
 
+      @init_code_input_timer()
+
     load_steps: ->
       steps = []
       idx = 0
@@ -217,7 +264,7 @@ jQuery ->
         @submit_code()
 
       @$elm.find('a.reset-code').click =>
-        @set_code @current_step.init_code
+        @set_code @current_step.get_reset_code()
 
       @$error.find('a.close').click =>
         @hide_error_message()
@@ -375,7 +422,9 @@ jQuery ->
       step.set_current()
 
       @hide_done_message()
-      @set_code step.get_reset_code()
+
+      # 切换检查点时设置编辑区代码
+      @set_code step.get_ui_code()
 
       @$elm
         .find('.current-step-info').attr('data-id', step.id)
@@ -442,6 +491,21 @@ jQuery ->
 
       , 1
 
+    init_code_input_timer: ->
+      # 关键逻辑：
+      #   当代码没有发生变化（当前输入代码，相比于 get_reset_code()）时，
+      #   @inputed_code 赋值为 null
+
+      code_input_timer = setInterval =>
+        return if !@current_step
+        reset_code = @current_step.get_reset_code()
+        editor_value = @editor.getSession().getValue()
+
+        if editor_value == reset_code
+          @current_step.inputed_code = null
+        else
+          @current_step.inputed_code = editor_value
+      , 100
 
   jQuery('.page-coding.javascript').each ->
     new JavascriptPage jQuery(this)
