@@ -5,6 +5,8 @@
         %i.icon-chevron-left
         %span 返回
       %span.tips{:style => 'margin-left:20px;'} 小提示：你可以使用 ctrl + s 保存编辑操作
+      %a.export-json{:style => 'margin-left:20px;', :href => "/manage/course_wares/#{@course_ware.id}/export_json", :target => '_blank'} 导出字符串
+
 
     .btns
       %a.btn.success.save{:href => 'javascript:;', :style => 'display:none;'}

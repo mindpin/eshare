@@ -1,0 +1,12 @@
+.page-export-coding-json
+  .pblock
+    .desc
+      .p 
+        %span 你正在导出课件 
+        %a{:href => "/manage/course_wares/#{@course_ware.id}/edit"}##{@course_ware.id}
+      .p 类型：#{@course_ware.kind}
+      .p 标题：#{@course_ware.title}
+      .p 请复制下面的字符串
+    .json-code
+      %textarea{:readonly => true, :rows => 20}
+        = @course_ware.export_json

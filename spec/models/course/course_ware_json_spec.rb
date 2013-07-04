@@ -65,7 +65,7 @@ describe CourseWare do
       @user = FactoryGirl.create(:user)
       @chapter = FactoryGirl.create(:chapter)
 
-      @course_ware = @chapter.import_course_ware_form_json(@json_data, @user)
+      @course_ware = @chapter.import_javascript_course_ware_from_json(@json_data, @user)
     }
 
     describe "导入正确" do
