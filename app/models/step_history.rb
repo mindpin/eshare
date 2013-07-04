@@ -93,11 +93,11 @@ class StepHistory < ActiveRecord::Base
       })
     end
 
-    def user_inputed_code(user)
+    def user_submitted_code(user)
       return nil if user.blank?
       last = self.step_histories.by_user(user).last()
 
-      last.blank? ? '' : last.input
+      last.blank? ? nil : last.input
     end
   end
 
