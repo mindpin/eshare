@@ -16,7 +16,8 @@ describe CourseWare do
       :title => 'title 1',
       :desc => 'desc 1',
       :hint => 'hint 1',
-      :init_code => 'init_code 1'
+      :init_code => 'init_code 1',
+      :code_reset => true
     )
 
     @step2 = FactoryGirl.create(:javascript_step,
@@ -26,7 +27,19 @@ describe CourseWare do
       :title => 'title 2',
       :desc => 'desc 2',
       :hint => 'hint 2',
-      :init_code => 'init_code 2'
+      :init_code => 'init_code 2',
+      :code_reset => true
+    )
+
+    @step3 = FactoryGirl.create(:javascript_step,
+      :course_ware => @course_ware,
+      :content => 'content 3',
+      :rule => 'rule 3',
+      :title => 'title 3',
+      :desc => 'desc 3',
+      :hint => 'hint 3',
+      :init_code => '',
+      :code_reset => false
     )
   }
 
@@ -35,7 +48,7 @@ describe CourseWare do
       :title => 'js title',
       :desc => 'js desc',
       :kind => 'javascript',
-      :total_count => 2,
+      :total_count => 3,
       :steps => [
         {
           :content => 'content 1',
@@ -43,7 +56,8 @@ describe CourseWare do
           :title => 'title 1',
           :desc => 'desc 1',
           :hint => 'hint 1',
-          :init_code => 'init_code 1'
+          :init_code => 'init_code 1',
+          :code_reset => true
         },
         {
           :content => 'content 2',
@@ -51,7 +65,17 @@ describe CourseWare do
           :title => 'title 2',
           :desc => 'desc 2',
           :hint => 'hint 2',
-          :init_code => 'init_code 2'
+          :init_code => 'init_code 2',
+          :code_reset => true
+        },
+        {
+          :content => 'content 3',
+          :rule => 'rule 3',
+          :title => 'title 3',
+          :desc => 'desc 3',
+          :hint => 'hint 3',
+          :init_code => '',
+          :code_reset => false
         }
       ]
     }.to_json
@@ -90,11 +114,11 @@ describe CourseWare do
       end
 
       it "total_count" do
-        @course_ware.total_count.should == 2
+        @course_ware.total_count.should == 3
       end
 
       it "steps 数量" do
-        @course_ware.javascript_steps.count.should == 2
+        @course_ware.javascript_steps.count.should == 3
       end
 
 
@@ -103,6 +127,7 @@ describe CourseWare do
         before {
           @step1 = @course_ware.javascript_steps[0]
           @step2 = @course_ware.javascript_steps[1]
+          @step3 = @course_ware.javascript_steps[2]
         }
 
 
@@ -130,6 +155,10 @@ describe CourseWare do
           it "init_code" do
             @step1.init_code.should == 'init_code 1'
           end
+
+          it "code_reset" do
+            @step1.code_reset.should == true
+          end
         end
 
         describe "step 2" do
@@ -155,6 +184,40 @@ describe CourseWare do
 
           it "init_code" do
             @step2.init_code.should == 'init_code 2'
+          end
+
+          it "code_reset" do
+            @step2.code_reset.should == true
+          end
+        end
+
+        describe "step 3" do
+          it "content" do
+            @step3.content.should == 'content 3'
+          end
+
+          it "rule" do
+            @step3.rule.should == 'rule 3'
+          end
+
+          it "title" do
+            @step3.title.should == 'title 3'
+          end
+
+          it "desc" do
+            @step3.desc.should == 'desc 3'
+          end
+
+          it "hint" do
+            @step3.hint.should == 'hint 3'
+          end
+
+          it "init_code" do
+            @step3.init_code.should == ''
+          end
+
+          it "code_reset" do
+            @step3.code_reset.should == false
           end
         end
 
