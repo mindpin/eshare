@@ -180,7 +180,8 @@ class CourseWare < ActiveRecord::Base
           :title => s.title,
           :desc => s.desc,
           :hint => s.hint,
-          :init_code => s.init_code
+          :init_code => s.init_code,
+          :code_reset => s.code_reset
         }
       end
 

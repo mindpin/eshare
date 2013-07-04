@@ -44,7 +44,7 @@ class Chapter < ActiveRecord::Base
     }
   end
 
-  def import_course_ware_form_json(json_data, user)
+  def import_javascript_course_ware_from_json(json_data, user)
     hash_data = JSON.parse(json_data)
 
     CourseWare.transaction do
@@ -64,7 +64,8 @@ class Chapter < ActiveRecord::Base
           :title => s['title'],
           :desc => s['desc'],
           :hint => s['hint'],
-          :init_code => s['init_code']
+          :init_code => s['init_code'],
+          :code_reset => s['code_reset']
         )
       end
 

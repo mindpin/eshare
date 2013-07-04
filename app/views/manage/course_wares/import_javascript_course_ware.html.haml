@@ -1,0 +1,12 @@
+- content_for :header do
+  = render_cell :manage_courses_breadcrumb, :form, :model => @course_ware
+
+.page-course-ware-form
+  .pblock.form
+    .for 现在你正在通过字符串导入一个 javascript 编程教程
+    = simple_form_for @course_ware, :url => "/manage/chapters/#{@chapter.id}/course_wares/do_import_javascript_course_ware" do |f|
+      .form-inputs
+        %textarea.coding-json{:name => :json, :rows => 15, :autocomplete => :off}
+      .form-actions
+        = f.button :submit, :class => 'success'
+        %a.btn.cancel{:href => "/manage/chapters/#{@chapter.id}"}= t('common.form.cancel')
