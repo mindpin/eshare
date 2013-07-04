@@ -93,11 +93,11 @@ class StepHistory < ActiveRecord::Base
       })
     end
 
-    def user_inputed_code(user)
+    def user_submitted_code(user)
       return nil if user.blank?
       last = self.step_histories.by_user(user).last()
 
-      last.blank? ? '' : last.input
+      last.blank? ? nil : last.input
     end
   end
 
@@ -108,7 +108,9 @@ class StepHistory < ActiveRecord::Base
 
     def passed_step_count_of(user)
       return 0 if user.blank?
-      self.step_histories.by_user(user).passed.map{|history|history.step}.uniq.count
+      self.step_histories.by_user(user).passed.map do |history|
+        history.step
+      end.compact.uniq.count
     end
 
     def is_passed_by?(user)

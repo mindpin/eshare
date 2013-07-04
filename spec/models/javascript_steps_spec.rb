@@ -85,6 +85,29 @@ describe JavascriptStep do
     }
   end
 
-  
+  describe 'code_reset 相关设置' do
+    before {
+      @course_ware = FactoryGirl.create(:course_ware, :kind => 'javascript')
+      @step_1 = @course_ware.javascript_steps.create({
+        :content => "content_1", 
+        :rule => "rule_1",
+        :init_code => 'function(){}'
+      })
+      @step_2 = @course_ware.javascript_steps.create({
+        :content => "content_1", 
+        :rule => "rule_1",
+        :code_reset => false,
+        :init_code => 'function(){}'
+      })
+    }
+
+    it {
+      @step_1.init_code.should_not be_blank
+    }
+
+    it {
+      @step_2.init_code.should be_blank
+    }
+  end
 
 end

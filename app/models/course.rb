@@ -42,8 +42,12 @@ class Course < ActiveRecord::Base
     self.set_tag_list(tags_str, :user => user, :force_public => true)
   end
 
+  STATUS_UNPUBLISHED = 'UNPUBLISHED'
+  STATUS_PUBLISHED   = 'PUBLISHED'
+  STATUS_MAINTENANCE = 'MAINTENANCE'
+
   attr_accessible :name, :cid, :desc, :syllabus, :cover, :creator, :with_chapter, 
-                  :apply_request_limit, :enable_apply_request_limit
+                  :apply_request_limit, :enable_apply_request_limit, :status
 
   belongs_to :creator, :class_name => 'User', :foreign_key => :creator_id
   has_many :chapters
@@ -73,6 +77,18 @@ class Course < ActiveRecord::Base
   validates :cid, :uniqueness => {:case_sensitive => false},
                   :presence => true
 
+
+  validates :inhouse_kind, :inclusion => { :in => COURSE_INHOUSE_KINDS + [nil] }
+
+  validates :status, :inclusion => { :in => [STATUS_UNPUBLISHED, STATUS_PUBLISHED, STATUS_MAINTENANCE] }
+
+  scope :unpublished, :conditions => {:status => STATUS_UNPUBLISHED}
+  scope :published,   :conditions => {:status => STATUS_PUBLISHED}
+  scope :maintenance, :conditions => {:status => STATUS_MAINTENANCE}
+  scope :published_and_maintenance, :conditions => {
+    :status => [STATUS_PUBLISHED, STATUS_MAINTENANCE]
+  }
+  
   # 设置 apply_request_limit 默认值
   before_validation :set_default_apply_request_limit
   def set_default_apply_request_limit

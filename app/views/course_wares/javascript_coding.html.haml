@@ -2,11 +2,11 @@
   @user = current_user
 
   steps = @course_ware.javascript_steps
-  steps_hash = steps.map {|step|
-    title = step.title.blank? ? '没有标题' : step.title
-    desc = step.desc.blank? ? '没有描述' : step.desc
+  steps_arr = steps.map {|step|
+    title   = step.title.blank?   ? '没有标题' : step.title
+    desc    = step.desc.blank?    ? '没有描述' : step.desc
     content = step.content.blank? ? '没有说明' : step.content
-    hint = step.hint.blank? ? '没有提示' : step.hint
+    hint    = step.hint.blank?    ? '没有提示' : step.hint
 
     {
       :id           => step.id,
@@ -24,14 +24,16 @@
       :init_code    => step.init_code,
       :rule         => step.rule,
 
+      :code_reset   => step.code_reset,
+
       :pass_status  => step.pass_status_of(@user),
-      :inputed_code => step.user_inputed_code(@user)
+      :submitted_code => step.user_submitted_code(@user)
     }
   }
 
 - content_for :javascript do
   :javascript
-    _COURSE_WARE_STEPS = #{steps_hash.to_json}
+    _COURSE_WARE_STEPS = #{steps_arr.to_json}
     _CURRENT_USER_ID = #{@user.present? ? @user.id : false}
 
 .page-coding.javascript
@@ -40,14 +42,14 @@
   - if @step
     .current-step-info.nano{:data => {:id => @step.id}}
       .info.nano-content
-        .step-title= @step.title
-        .step-desc= simple_format @step.desc
-        .step-content= simple_format @step.content
+        .step-title
+        .step-desc
+        .step-content
         .step-hint
           .tt
             %i.icon-question-sign
             %span 提示
-          .cc= simple_format @step.hint
+          .cc
 
     .steps-status{:style => 'display:none;'}
       - last_pass_status = 'done'
@@ -80,7 +82,7 @@
       .clearfix
 
     .code-box
-      %pre#code-input{:style => 'display:none;'}= @step.init_code
+      %pre#code-input{:style => 'display:none;'}
 
     .code-ops{:style => 'display:none;'}
       .btns
@@ -94,7 +96,7 @@
 
       .error{:style => 'display:none;'}
         %span.tryagain 啊，不对，再试一次吧。
-        %span.message 请确定你输入的是数字
+        %span.message
         %a.close{:href => 'javascript:;'}
           %i.icon-remove-sign.icon-white
 

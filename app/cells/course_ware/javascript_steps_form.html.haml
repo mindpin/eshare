@@ -5,6 +5,8 @@
         %i.icon-chevron-left
         %span 返回
       %span.tips{:style => 'margin-left:20px;'} 小提示：你可以使用 ctrl + s 保存编辑操作
+      %a.export-json{:style => 'margin-left:20px;', :href => "/manage/course_wares/#{@course_ware.id}/export_json", :target => '_blank'} 导出字符串
+
 
     .btns
       %a.btn.success.save{:href => 'javascript:;', :style => 'display:none;'}
@@ -40,9 +42,13 @@
             %span 删除这个检查点
 
         .codes
-          %label 初始预置代码
-          .init-code
-            %pre#init-code= @current_step.init_code
+          = f.input :code_reset, :label => '当本检查点加载时，重置代码', :input_html => {:autocomplete => :off}
+
+          - ic_klass = @current_step.code_reset? ? '' : 'disabled'
+          .ic{:class => ic_klass}
+            %label 初始预置代码
+            .init-code
+              %pre#init-code= @current_step.init_code
 
           %label 代码检查规则
           .rule-ipt

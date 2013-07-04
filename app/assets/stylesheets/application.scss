@@ -2588,6 +2588,13 @@ img.page-avatar {
     }
   }
 
+  textarea.coding-json {
+    resize:none;
+    @include border-box;
+    width:100%;
+    font-family:"Monaco","Courier New",monospace;
+  }
+
   .javascript-steps-form {
     overflow:hidden;
     .ops {
@@ -2677,6 +2684,15 @@ img.page-avatar {
             top:0;left:0;bottom:0;right:0;
             font-size:16px;
           }
+        }
+
+        .ic.disabled {
+          opacity:0.4;
+          pointer-events:none;
+        }
+
+        .input.boolean.optional {
+          margin-bottom:10px;
         }
       }
     }
@@ -4311,4 +4327,22 @@ form .input.page-form-tag-inputer {
   0%   {background-color:#333;}
   50%  {background-color:#ccc;}
   100% {background-color:#333;}
+}
+
+
+.page-export-coding-json {
+  .desc {
+    margin:-20px -20px 20px;
+    background-color:#FFFFDA;
+    padding:20px;
+    border-bottom:solid 1px #e7e7e7;
+  }
+  .json-code {
+    margin-bottom:20px;
+    textarea {
+      @include border-box;
+      width:100%;
+      font-family:"Monaco","Courier New",monospace;
+    }
+  }
 }
