@@ -65,12 +65,12 @@ class Chapter < ActiveRecord::Base
           :desc => s['desc'],
           :hint => s['hint'],
           :init_code => s['init_code'],
-          :code_reset => s['code_reset']
+          :code_reset => s['code_reset'].nil? ? true : s['code_reset']
         )
       end
 
       course_ware.refresh_total_count!
-
+      
       course_ware
     end
     
