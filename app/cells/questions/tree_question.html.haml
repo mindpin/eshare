@@ -29,6 +29,7 @@
       .name= user_link @question.creator
       .time= @question.updated_at
 
-  .btb
-    .fo
-      = question_follow_button @user, @question
+  - if @user.present?
+    .btb
+      .fo
+        = question_follow_button @user, @question

@@ -3539,21 +3539,20 @@ form .input.page-form-tag-inputer {
 
       .edit-form {
         form {
-          margin:-20px -20px 0 -70px;
-          padding:20px 20px 30px 70px;
+          margin:-15px -15px 0 -65px;
+          padding:15px 15px 25px 65px;
           background-color:#fcfcfc;
-          border-bottom:solid 1px #ddd;
+          @include border-radius(5px);
         }
       }
     }
 
     .btb {
       background-color:#FCFCFC;
-      border-top:solid 1px #ddd;
-      margin:0 -20px;
-      padding:15px 20px;
+      margin:5px -15px;
+      padding:15px;
       overflow:hidden;
-
+      @include border-radius(5px);
       .fo {
         float:right;
         a.btn {width:60px;}
@@ -3611,10 +3610,10 @@ form .input.page-form-tag-inputer {
 
       .edit-form {
         form {
-          margin:-20px -20px 0 -70px;
-          padding:20px 20px 30px 70px;
+          margin:-15px -15px 0 -65px;
+          padding:15px 15px 25px 65px;
           background-color:#fcfcfc;
-          border-bottom:solid 1px #ddd;
+          @include border-radius(5px);
         }
       }
     }
@@ -3661,9 +3660,10 @@ form .input.page-form-tag-inputer {
   .my-answer {
     margin:0 -20px;
     .you-can-answer-only-once {
-      padding:20px;
-      border-top:solid 1px #ddd;
-      background-color:#FFFFDA;
+      padding:15px;
+      background:#FFFFDA;
+      margin:5px;
+      @include border-radius(5px);
     }
 
     .new_answer {
@@ -3673,6 +3673,13 @@ form .input.page-form-tag-inputer {
       background-color:#FCFCFC;
       label {display:none;}
     }
+  }
+
+  .need-signed-in {
+    padding:15px;
+    background:#FFFFDA;
+    margin:5px;
+    @include border-radius(5px);
   }
 }
 
