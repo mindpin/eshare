@@ -2,7 +2,7 @@ class Admin::SiteChangesController < ApplicationController
   layout 'admin'
 
   def index
-    @site_changes = SiteChange.page params[:page]
+    @site_changes = SiteChange.order('id DESC').page params[:page]
   end
 
   def create
