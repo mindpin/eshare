@@ -5,3 +5,9 @@
   .title= @course_ware.title
   - if @user.present?
     .avatar= avatar_link @user
+  - else
+    .need-signed-in
+      %a.btn.small{:href => '/account/sign_in'} 
+        %i.icon-chevron-right
+        %span 登录系统
+      %span 后，你将能够记录学习进度和保存代码
