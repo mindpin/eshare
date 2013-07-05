@@ -21,6 +21,9 @@ case "$1" in
     bundle exec unicorn_rails -c config/unicorn.rb -E $rails_env -D
     echo "eshare start .............$(command_status)"
   ;;
+  status)
+    check_run_status_from_pid_file $pid 'unicorn_eshare'
+  ;;
   stop)
     kill `cat $pid`
     echo "eshare stop .............$(command_status)"
@@ -38,7 +41,7 @@ case "$1" in
     $1 start
   ;;
   *)
-    echo "tip:(start|stop|restart|usr2_stop)"
+    echo "tip:(start|stop|restart|usr2_stop|status)"
     exit 5
   ;;
 esac
