@@ -968,6 +968,7 @@ body.coding {
     }
 
     .code-console {
+      display:none !important;
       position:fixed;
       right:20px;bottom:80px;
       max-width:480px;
@@ -3293,6 +3294,12 @@ form .input.page-form-tag-inputer {
       .joined{margin-bottom:10px;color:#eee;font-size:12px;}
       .tagline{color:white;}
     }
+  }
+
+  .ffollow {
+    position:absolute;
+    top:20px;right:20px;
+    .btn{width:80px;}
   }
 }
 
