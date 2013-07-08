@@ -46,10 +46,14 @@ class CoursesController < ApplicationController
 
   # 学生选课 INHOUSE
   def student_select
+    if params[:cancel]
+      current_user.cancel_select_course @course
+      render :json => { :status => 'cancel' }
+      return
+    end
+
     current_user.select_course @course
-    render :json => {
-      :status => 'request'
-    }
+    render :json => { :status => 'request' }
   end
 
   def questions

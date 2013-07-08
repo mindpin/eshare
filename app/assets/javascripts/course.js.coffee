@@ -23,6 +23,22 @@ jQuery ->
       success : (res)=>
         jQuery('.student-select-course').addClass(res.status)
 
+# 取消选课 - INHOUSE
+jQuery ->
+  jQuery(document).on 'click', '.page-course-show a.cancel-select', ->
+    if confirm('你确定不选这门课了吗？之后如果再次选课需要重新审核')
+      course_id = jQuery(this).data('id')
+      jQuery.ajax
+        url : "/courses/#{course_id}/student_select"
+        type : 'post'
+        data :
+          cancel : true
+        success : (res)=>
+          jQuery('.student-select-course')
+            .removeClass('request')
+            .removeClass('accept')
+            .removeClass('reject')
+
 # 课程适用度评价
 jQuery ->
   class CourseAttitudeInputer
