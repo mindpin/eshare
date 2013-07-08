@@ -24,5 +24,14 @@ class Manage::SurveysController < ApplicationController
 
   def show
     @survey = Survey.find params[:id]
+    if params[:teacher]
+      @teacher = User.find params[:teacher]
+    end
+  end
+
+  def destroy
+    @survey = Survey.find params[:id]
+    @survey.destroy
+    redirect_to :back
   end
 end

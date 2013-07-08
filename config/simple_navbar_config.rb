@@ -15,7 +15,7 @@ SimpleNavbar::Base.config do
       nav :course_applies_manage, :url => '/manage/applies' do
         controller :'manage/applies'
       end
-      nav :surveys_manage, :url => '/manage/surveys' do
+      nav :teacher_surveys_manage, :url => '/manage/surveys' do
         controller :'manage/surveys'
         controller :'manage/survey_results'
       end
@@ -111,7 +111,7 @@ SimpleNavbar::Base.config do
     end
 
     if R::INHOUSE
-      nav :surveys, :url => '/surveys' do
+      nav :'teacher-surveys', :url => '/surveys' do
         controller :surveys
       end
     end

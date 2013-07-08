@@ -315,6 +315,7 @@ Eshare::Application.routes.draw do
   resources :surveys, :shallow => true do
     member do
       post :submit
+      get :select_teacher
     end
   end
 end
