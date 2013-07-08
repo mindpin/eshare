@@ -1,0 +1,13 @@
+- content_for :header do
+  = render_cell :manage_courses_breadcrumb, :applies, :course => @course
+
+.page-course-applies
+  .flat-nav
+    = page_navbar do |navbar|
+      - navbar.add_item("<span>全部</span>".html_safe, "/manage/courses/#{@course.id}/applies")
+      - navbar.add_item("<span>待审核</span>".html_safe, "/manage/courses/#{@course.id}/applies/status_request")
+      - navbar.add_item("<span>已批准</span>".html_safe, "/manage/courses/#{@course.id}/applies/status_accept")
+      - navbar.add_item("<span>已拒绝</span>".html_safe, "/manage/courses/#{@course.id}/applies/status_reject")
+
+  = render_cell :course_apply, :manage_table, :applies => @applies
+  = paginate @applies

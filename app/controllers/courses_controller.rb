@@ -7,6 +7,8 @@ class CoursesController < ApplicationController
     case controller.action_name
     when 'show', 'users_rank', 'questions', 'notes'
       return 'course_show'
+    when 'index', 'sch_select'
+      return 'grid'
     else
       return 'application'
     end
@@ -17,6 +19,9 @@ class CoursesController < ApplicationController
   end
 
   def index
+  end
+
+  def sch_select
     @courses = Course.page(params[:page]).per(18)
   end
 
@@ -48,12 +53,35 @@ class CoursesController < ApplicationController
   def student_select
     if params[:cancel]
       current_user.cancel_select_course @course
-      render :json => { :status => 'cancel' }
+      
+      case params[:page]
+      when 'sch_select'
+        render :json => { 
+          :status => 'request',
+          :html => ( render_cell :course, :sch_select_table, 
+                                 :user => current_user, 
+                                 :courses => [@course] )
+        }
+      else
+        render :json => { :status => 'cancel' }
+      end
+
       return
     end
 
     current_user.select_course @course
-    render :json => { :status => 'request' }
+
+    case params[:page]
+    when 'sch_select'
+      render :json => { 
+        :status => 'request',
+        :html => ( render_cell :course, :sch_select_table, 
+                               :user => current_user, 
+                               :courses => [@course] )
+      }
+    else
+      render :json => { :status => 'request' }
+    end
   end
 
   def questions

@@ -1,0 +1,16 @@
+.pblock.table
+  = page_data_table(:courses, @courses, :striped, :bordered) do |table|
+    - table.add_column(:name) do |course|
+      = link_to course.name, course
+    - table.add_column(:cid)
+
+    - table.add_column(:select_status) do |course|
+      - sca = @user.select_course_applies.by_course(course).first
+      = course_apply_status sca
+
+    - table.add_column(:ops) do |course|
+      - sca = @user.select_course_applies.by_course(course).first
+      - if sca.blank?
+        %a.btn.success.mini.doselect{:href => 'javascript:;', :data => {:id => course.id}} 申请选课
+      - else
+        %a.btn.danger.mini.cancel-select{:href => 'javascript:;', :data => {:id => course.id}} 取消选课

@@ -1,15 +1,13 @@
 - content_for :header do
-  = render_cell :manage_courses_breadcrumb, :applies, :course => @course
+  %h1 选课管理
 
 .page-course-applies
-  .pblock.table
-    = page_data_table(:'course-applies', @applies, :striped, :bordered) do |table|
-      - table.add_column(:user) do |apply|
-        = user_link apply.user
-      - table.add_column(:status) do |apply|
-        = course_apply_status apply
-      - table.add_column(:ops) do |apply|
-        = link_to "/manage/applies/#{apply.id}/accept", :class => 'btn mini success', :method => :put do
-          %span 通过
-        = link_to "/manage/applies/#{apply.id}/reject", :class => 'btn mini danger', :method => :put do
-          %span 拒绝
+  .flat-nav
+    = page_navbar do |navbar|
+      - navbar.add_item("<span>全部</span>".html_safe, "/manage/applies")
+      - navbar.add_item("<span>待审核</span>".html_safe, "/manage/applies/status_request")
+      - navbar.add_item("<span>已批准</span>".html_safe, "/manage/applies/status_accept")
+      - navbar.add_item("<span>已拒绝</span>".html_safe, "/manage/applies/status_reject")
+
+  = render_cell :course_apply, :manage_table, :applies => @applies
+  = paginate @applies

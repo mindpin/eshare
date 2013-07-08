@@ -1,0 +1,5 @@
+.page-courses-sch-select
+  = render_cell :course, :index_navbar
+
+  = render_cell :course, :sch_select_table, :user => current_user, :courses => @courses
+  = paginate @courses

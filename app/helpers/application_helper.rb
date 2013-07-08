@@ -182,12 +182,17 @@ module ApplicationHelper
   end
 
   def course_apply_status(apply)
-    klass = apply.status.downcase
-    string = {
-      SelectCourseApply::STATUS_REQUEST => '申请',
-      SelectCourseApply::STATUS_ACCEPT => '批准',
-      SelectCourseApply::STATUS_REJECT => '拒绝'
-    }[apply.status]
+    if apply.blank?
+      klass = 'no'
+      string = '未选'
+    else
+      klass = apply.status.downcase
+      string = {
+        SelectCourseApply::STATUS_REQUEST => '审核中',
+        SelectCourseApply::STATUS_ACCEPT => '已批准',
+        SelectCourseApply::STATUS_REJECT => '已拒绝'
+      }[apply.status]
+    end
 
     capture_haml {
       haml_tag 'span', :class => "page-apply-status #{klass}" do

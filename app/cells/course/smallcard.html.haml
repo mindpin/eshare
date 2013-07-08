@@ -1,12 +1,9 @@
 .course.page-course.card.small
-  .cover
-    = link_to @course do
+  %a.course-link{:href => "/courses/#{@course.id}"}
+    .cover
       = fit_image @course.cover.versions[:normal].url, :height => 140
-  .data
-    .title
-      = link_to @course.name, @course
-    .desc= truncate_u @course.desc, 32
-    .study
-      %a.btn.learn{:href => "/courses/#{@course.id}"} 
-        %i.icon-chevron-right.icon-white
-        %span 开始学习
+    .desc
+      = simple_format truncate_u(@course.desc, 64)
+    .go-study
+      %span= truncate_u(@course.name, 8)
+      %i.icon-chevron-right.icon-white

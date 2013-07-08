@@ -8,10 +8,13 @@ SimpleNavbar::Base.config do
       controller :'manage/courses'
       controller :'manage/chapters'
       controller :'manage/course_wares'
-      controller :'manage/applies'
+      controller :'manage/course_applies'
     end
 
     if R::INHOUSE
+      nav :course_applies_manage, :url => '/manage/applies' do
+        controller :'manage/applies'
+      end
       nav :surveys_manage, :url => '/manage/surveys' do
         controller :'manage/surveys'
         controller :'manage/survey_results'

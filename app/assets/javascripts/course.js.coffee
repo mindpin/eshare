@@ -12,33 +12,6 @@ jQuery ->
           .find('.count').html(res.streak).end()
           .find('.order').html(res.order).end()
 
-
-# 选课 - INHOUSE
-jQuery ->
-  jQuery(document).on 'click', '.page-course-show a.doselect', ->
-    course_id = jQuery(this).data('id')
-    jQuery.ajax
-      url : "/courses/#{course_id}/student_select"
-      type : 'post'
-      success : (res)=>
-        jQuery('.student-select-course').addClass(res.status)
-
-# 取消选课 - INHOUSE
-jQuery ->
-  jQuery(document).on 'click', '.page-course-show a.cancel-select', ->
-    if confirm('你确定不选这门课了吗？之后如果再次选课需要重新审核')
-      course_id = jQuery(this).data('id')
-      jQuery.ajax
-        url : "/courses/#{course_id}/student_select"
-        type : 'post'
-        data :
-          cancel : true
-        success : (res)=>
-          jQuery('.student-select-course')
-            .removeClass('request')
-            .removeClass('accept')
-            .removeClass('reject')
-
 # 课程适用度评价
 jQuery ->
   class CourseAttitudeInputer
@@ -104,3 +77,58 @@ jQuery ->
 
   jQuery('.page-course-attitudes-form').each ->
     new CourseAttitudeInputer(jQuery(this))
+
+# ---------------
+# 选课和取消选课
+
+jQuery ->
+  # 课程页上选课 - INHOUSE
+  jQuery(document).on 'click', '.page-course-show a.doselect', ->
+    course_id = jQuery(this).data('id')
+    jQuery.ajax
+      url : "/courses/#{course_id}/student_select"
+      type : 'post'
+      success : (res)=>
+        jQuery('.student-select-course').addClass(res.status)
+
+  # 课程页上取消选课 - INHOUSE
+  jQuery(document).on 'click', '.page-course-show a.cancel-select', ->
+    if confirm('你确定不选这门课了吗？之后如果再次选课需要重新审核')
+      course_id = jQuery(this).data('id')
+      jQuery.ajax
+        url : "/courses/#{course_id}/student_select"
+        type : 'post'
+        data :
+          cancel : true
+        success : (res)=>
+          jQuery('.student-select-course')
+            .removeClass('request')
+            .removeClass('accept')
+            .removeClass('reject')
+
+  # 选课页选课
+  jQuery(document).on 'click', '.page-courses-sch-select .courses a.doselect', ->
+    course_id = jQuery(this).data('id')
+    jQuery.ajax
+      url : "/courses/#{course_id}/student_select?page=sch_select"
+      type : 'post'
+      success : (res)=>
+        $new_tr = jQuery(res.html).find('tr.course')
+        $old_tr = jQuery(this).closest('tr')
+        $old_tr.after $new_tr
+        $old_tr.remove()
+
+# 选课页取消选课
+  jQuery(document).on 'click', '.page-courses-sch-select .courses a.cancel-select', ->
+    if confirm('你确定不选这门课了吗？之后如果再次选课需要重新审核')
+      course_id = jQuery(this).data('id')
+      jQuery.ajax
+        url : "/courses/#{course_id}/student_select?page=sch_select"
+        type : 'post'
+        data :
+          cancel : true
+        success : (res)=>
+          $new_tr = jQuery(res.html).find('tr.course')
+          $old_tr = jQuery(this).closest('tr')
+          $old_tr.after $new_tr
+          $old_tr.remove()

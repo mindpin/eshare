@@ -6,23 +6,21 @@ class Manage::AppliesController < ApplicationController
   end
   
   def index
-    @course = Course.find(params[:course_id])
-    @applies = @course.select_course_applies
+    @applies = SelectCourseApply.page(params[:page])
   end
 
-  def accept
-    @apply = SelectCourseApply.find(params[:id])
-    @apply.status = SelectCourseApply::STATUS_ACCEPT
-    @apply.save
-
-    redirect_to "/manage/courses/#{@apply.course.id}/applies"
+  def status_request
+    @applies = SelectCourseApply.by_status(SelectCourseApply::STATUS_REQUEST).page(params[:page])
+    render :action => :index
   end
 
-  def reject
-    @apply = SelectCourseApply.find(params[:id])
-    @apply.status = SelectCourseApply::STATUS_REJECT
-    @apply.save
+  def status_accept
+    @applies = SelectCourseApply.by_status(SelectCourseApply::STATUS_ACCEPT).page(params[:page])
+    render :action => :index
+  end
 
-    redirect_to "/manage/courses/#{@apply.course.id}/applies"
+  def status_reject
+    @applies = SelectCourseApply.by_status(SelectCourseApply::STATUS_REJECT).page(params[:page])
+    render :action => :index
   end
 end

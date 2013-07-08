@@ -6,7 +6,7 @@
 
     -# REQUEST ACCEPT REJECT
 
-    .student-select-course{:class => 'reject'}
+    .student-select-course{:class => klass}
       - if @course.apply_request_is_full?
         .full 选课人数已满
 

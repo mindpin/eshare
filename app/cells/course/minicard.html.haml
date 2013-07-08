@@ -1,7 +1,9 @@
 .course.page-course.card.mini
-  .cover
-    = link_to @course do
+  %a.course-link{:href => "/courses/#{@course.id}"}
+    .cover
       = fit_image @course.cover.versions[:normal].url, :height => 100
-  .data
-    .title
-      = link_to @course.name, @course
+    .desc
+      = simple_format truncate_u(@course.desc, 64)
+    .go-study
+      %span= truncate_u(@course.name, 8)
+      %i.icon-chevron-right.icon-white

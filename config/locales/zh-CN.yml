@@ -6,6 +6,7 @@ zh-CN:
       categories_manage: 分类管理
       courses_manage: 课程管理
       surveys_manage: 调查管理
+      course_applies_manage: 选课管理
 
       #INTERNET
       user_opinions_view: 反馈意见 
@@ -263,7 +264,8 @@ zh-CN:
         ops: 操作
         chapters-count: 章节数
         creator: 创建者
-        select_apply: 选课人数
+        select_apply: 选课人数/上限
+        select_status: 选课状态
 
       chapters:
         title: 标题
@@ -289,6 +291,7 @@ zh-CN:
         ops: 操作
 
         course: 课程
+        cid: 课程ID
         updated_at: 更新时间
 
       questions:

@@ -87,8 +87,18 @@ class CourseCell < Cell::Rails
     render
   end
 
+  def index_navbar
+    render
+  end
+
   def user_attitudes_form(opts = {})
     @course = opts[:course]
+    @user = opts[:user]
+    render
+  end
+
+  def sch_select_table(opts = {})
+    @courses = opts[:courses]
     @user = opts[:user]
     render
   end
