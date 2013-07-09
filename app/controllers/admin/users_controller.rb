@@ -13,7 +13,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def update
-    _update_user(:change_base_info)
+    _update_user(:manage_change_base_info)
   end
 
   def new
