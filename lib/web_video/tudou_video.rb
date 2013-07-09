@@ -26,7 +26,10 @@ class TudouVideo
         site.read_timeout = 20
 
         path = uri.query.nil? ? uri.path : "#{uri.path}?#{uri.query}"
-        req  = Net::HTTP::Get.new(path, {'User-Agent' => @video.user_agent})
+        req  = Net::HTTP::Get.new(path, {
+          'User-Agent' => @video.user_agent,
+          'X-Forwarded-For' => @video.x_ip
+        })
       
         response = site.request(req)
       rescue Exception => ex
@@ -49,7 +52,7 @@ class TudouVideo
     end
   end
 
-  attr_reader :url, :user_agent
+  attr_reader :url, :user_agent, :x_ip
   attr_reader :parser
 
   DEFAULT_USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.172 Safari/537.22'
@@ -64,6 +67,11 @@ class TudouVideo
     # 好几种风格的地址
 
     @parser = Parser.new self
+    @x_ip = ''
+  end
+
+  def set_x_forwarded_for_ip(ip)
+    @x_ip = ip
   end
 
   def video_cover_url
