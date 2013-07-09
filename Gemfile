@@ -11,8 +11,9 @@ gem 'chinese_pinyin', '0.4.2'
 gem 'rmmseg-cpp-huacnlee', '0.2.9'
 gem 'redis-search', :git => 'git://github.com/huacnlee/redis-search.git'
 
-gem 'sqlite3', "~> 1.3.7"
-
+group :internet do
+  gem 'sqlite3', "~> 1.3.7"
+end
 
 group :assets do
   gem 'sass-rails', '~> 3.2.3'
