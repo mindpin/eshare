@@ -8,6 +8,7 @@ services:
   - redis-server
 
 before_script:
+  - cp config/deploy_env.rb.travis config/deploy_env.rb
   - cp config/database.yml.travis config/database.yml
   - rake db:drop RAILS_ENV=test
   - rake db:create RAILS_ENV=test
