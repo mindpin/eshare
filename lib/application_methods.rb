@@ -15,11 +15,23 @@ module ApplicationMethods
 
     case code
     when 404
-      render "layouts/status_page/404_page", :status => 404, :layout => false,
-        :locals=>{:exception => exception, :message => message}
+      render "layouts/status_page/404_page.html", 
+             :status => 404, 
+             :layout => false,
+             :locals => {
+               :exception => exception, 
+               :message => message
+             },
+             :content_type => 'text/html'
     when 500
-      render "layouts/status_page/500_page", :status => 500, :layout => false,
-        :locals=>{:exception => exception, :message => message}
+      render "layouts/status_page/500_page.html", 
+             :status => 500, 
+             :layout => false,
+             :locals => {
+               :exception => exception, 
+               :message => message
+             },
+             :content_type => 'text/html'
     end
   end
   #----------------------
