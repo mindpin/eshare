@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 source 'http://ruby.taobao.org'
 
+require File.expand_path('../config/deploy_env', __FILE__)
+
 gem 'rails', '3.2.12' # RAILS #不要更新 3.2.13 有性能问题，等 3.2.14
 gem 'mysql2', '0.3.11' # MYSQL数据库连接
 gem 'json', '1.7.7' # JSON解析，RAILS默认引入的
@@ -11,7 +13,7 @@ gem 'chinese_pinyin', '0.4.2'
 gem 'rmmseg-cpp-huacnlee', '0.2.9'
 gem 'redis-search', :git => 'git://github.com/huacnlee/redis-search.git'
 
-group :internet do
+if R::INTERNET
   gem 'sqlite3', "~> 1.3.7"
 end
 
