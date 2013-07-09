@@ -79,6 +79,34 @@ jQuery ->
     new CourseAttitudeInputer(jQuery(this))
 
 # ---------------
+# 课程描述展开与折叠
+jQuery ->
+  class LongDesc
+    constructor: (@$elm)->
+      @$open = @$elm.find('a.o')
+      @$close = @$elm.find('a.c')
+
+      @setup()
+
+    setup: ->
+      @$open.click =>
+        @open()
+
+      @$close.click =>
+        @close()
+
+    open: ->
+      @$elm.addClass('open').removeClass('closed')
+           # .hide().fadeIn(200)
+
+    close: ->
+      @$elm.addClass('closed').removeClass('open')
+           # .hide().fadeIn(200)
+
+  jQuery('.page-long-desc').each ->
+    new LongDesc jQuery(this)
+
+# ---------------
 # 选课和取消选课
 
 jQuery ->

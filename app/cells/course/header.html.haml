@@ -1,6 +1,29 @@
 .header
-  .cover= fit_image(@course.cover.versions[:normal].url, :width => 214, :height => 120)
+  .cover= fit_image(@course.cover.versions[:normal].url, :width => 214, :height => 140)
   .data
     %h1= @course.name
-    .desc= @course.desc || t('common.course.course-no-desc')
+
+    - desc  = @course.desc || t('common.course.course-no-desc')
+    - short = truncate_u(desc, 32)
+    - long  = simple_format desc
+
+    - if short == desc
+      .desc.open
+        .long
+          .txt= long
+
+    - else
+      .desc.closed.page-long-desc
+        .short
+          %span= short
+          %a.o{:href => 'javascript:;'}
+            %i.icon-chevron-down
+            %span 展开
+        .long
+          .txt= long
+          %a.c{:href => 'javascript:;'}
+            %i.icon-chevron-up
+            %span 收起
+
+
     = render_cell :tags, :public, :model => @course

@@ -1665,10 +1665,26 @@ img.page-avatar {
         font-size:21px;
         font-weight:normal;
         margin:0;
-        margin-bottom:10px;
+        margin-bottom:20px;
       }
 
-      .desc {display:none;}
+      .desc {
+        margin-bottom:20px;
+
+        i {
+          opacity:0.75;
+        }
+
+        &.closed {
+          .short {display:block;}
+          .long {display:none;}
+        }
+
+        &.open {
+          .short {display:none;}
+          .long {display:block;}
+        }
+      }
     }
 
   }
