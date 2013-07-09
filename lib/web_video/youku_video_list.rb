@@ -6,9 +6,12 @@ class YoukuVideoList
     @url = url
 
     # url like
-    # page_url http://www.youku.com/show_page/id_zbd8216202dfa11e2b2ac.html
-    # point_url http://www.youku.com/show_point_id_zbd8216202dfa11e2b2ac.html?dt=json&__rt=1&__ro=reload_point
-    # tab_url http://www.youku.com/show_point/id_zbd8216202dfa11e2b2ac.html?dt=json&divid=point_reload_201305&tab=0&__rt=1&__ro=point_reload_201305
+    # page_url 
+    #  http://www.youku.com/show_page/id_zbd8216202dfa11e2b2ac.html
+    # point_url 
+    #  http://www.youku.com/show_point_id_zbd8216202dfa11e2b2ac.html?dt=json&__rt=1&__ro=reload_point
+    # tab_url 
+    #  http://www.youku.com/show_point/id_zbd8216202dfa11e2b2ac.html?dt=json&divid=point_reload_201305&tab=0&__rt=1&__ro=point_reload_201305
   end
 
   def video_list_id

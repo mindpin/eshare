@@ -3770,6 +3770,12 @@ form .input.page-form-tag-inputer {
 .page-user-courses {
   .courses {
     overflow:hidden;
+    margin:0 -2px 20px - 2px;
+    .page-course {
+      width:25%;
+      margin-bottom:4px;
+    }
+
   }
   .pagination {
     margin-bottom:20px !important;
