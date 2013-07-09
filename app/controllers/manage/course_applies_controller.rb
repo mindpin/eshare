@@ -7,6 +7,10 @@ class Manage::CourseAppliesController < ApplicationController
   
   def index
     @course = Course.find(params[:course_id])
+    applies = @course.select_course_applies.page(params[:page])
+    applies.each do |apply|
+      apply.destroy if apply.course.blank?
+    end
     @applies = @course.select_course_applies.page(params[:page])
   end
 

@@ -6,6 +6,10 @@ class Manage::AppliesController < ApplicationController
   end
   
   def index
+    applies = SelectCourseApply.page(params[:page])
+    applies.each do |apply|
+      apply.destroy if apply.course.blank?
+    end
     @applies = SelectCourseApply.page(params[:page])
   end
 

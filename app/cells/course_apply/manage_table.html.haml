@@ -5,7 +5,7 @@
     - table.add_column(:course) do |apply|
       = course_link apply.course
     - table.add_column(:cid) do |apply|
-      = apply.course.cid
+      = apply.course.present? ? apply.course.cid : ''
     - table.add_column(:status) do |apply|
       = course_apply_status apply
     - table.add_column(:ops) do |apply|
