@@ -1469,6 +1469,7 @@ img.page-avatar {
           opacity:0;
           @include transition(opacity ease-out 0.2s);
           p {margin:0;}
+          overflow:hidden;
         }
 
         .go-study {
