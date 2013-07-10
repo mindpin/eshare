@@ -132,7 +132,7 @@ class YoukuVideoList
     end
 
     def api_url(page)
-      "http://v.youku.com/v_vpvideoplaylistv5?f=6096855&pl=50&pn=#{page}"
+      "http://v.youku.com/v_vpvideoplaylistv5?f=#{id}&pl=50&pn=#{page}"
     end
 
     def request(url)
