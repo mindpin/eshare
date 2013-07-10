@@ -1,17 +1,21 @@
 - content_for :header do
   %h1
-    %span= @query
+    %span
+      %b= @query
     %span 搜索到以下结果
 
 .page-search
   .cpart.courses
-    %h3 #{@course_search.total} 个课程
+    %h3.cp1 #{@course_search.total} 个课程
+    .clearfix
     .result
       - @course_search.results.each do |course|
-        = render_cell :course, :minicard, :course => course, :user => current_user
+        = render_cell :course, :smallcard, :course => course, :user => current_user
     .clearfix
 
   .cpart.questions
-    %h3 #{@question_search.total} 个问答
-    .result
-      = render_cell :questions, :list, :questions => @question_search.results, :user => current_user
+    %h3.cp1 #{@question_search.total} 个问答
+    .clearfix
+    .pblock
+      .result
+        = render_cell :questions, :list, :questions => @question_search.results, :user => current_user

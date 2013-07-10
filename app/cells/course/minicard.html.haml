@@ -3,7 +3,9 @@
     .cover
       = fit_image @course.cover.versions[:normal].url, :height => 100
     .desc
-      = simple_format truncate_u(@course.desc, 64)
+      = simple_format truncate_u(@course.desc, 32)
+    .update-status
+      = course_update_status @course
     .go-study
-      %span= truncate_u(@course.name, 8)
+      %span= truncate_u(@course.name, 6)
       %i.icon-chevron-right.icon-white

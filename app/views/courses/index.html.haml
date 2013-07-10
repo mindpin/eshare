@@ -1,33 +1,39 @@
 .page-courses-index
   = render_cell :course, :index_navbar
 
-  .pblock
-    .hot-courses.2week
-      %h3.cp 最近两周的热门课程
+  .hot-courses.2week
+    %h3.cp1 
+      %i.icon-leaf
+      %span 双周热门课程
+    .clearfix
 
-      :ruby
-        courses = Course.top_interactive_sums_of(Date.today, Date.today - 13).limit(5)
-      .courses
-        - courses.each do |course|
-          = render_cell :course, :smallcard, :course => course, :user => current_user
+    :ruby
+      courses = Course.top_interactive_sums_of(Date.today, Date.today - 13).limit(4)
+    .courses
+      - courses.each do |course|
+        = render_cell :course, :card, :course => course, :user => current_user
 
   .mainp75
     .all-courses
       - Course::BASE_TAGS.each do |bt|
         :ruby
           tagname = bt
-          courses = Course.by_tag(tagname).limit(10)
+          courses = Course.by_tag(tagname).limit(8)
 
         - if courses.present?
-          .pblock
-            .tag-courses
-              .tagname
-                %i.icon-tag
-                %a{:href => "/tags/courses/#{tagname}"}= tagname
+          .tag-courses
+            %h3.cp1.tagname
+              %i.icon-tag
+              %span= tagname
+              %a.count{:href => "/tags/courses/#{tagname}"}
+                %span= Course.by_tag(tagname).count
+                %span 项课程
 
-              .courses
-                - courses.each do |course|
-                  = render_cell :course, :minicard, :course => course, :user => current_user
+            .clearfix
+
+            .courses
+              - courses.each do |course|
+                = render_cell :course, :smallcard, :course => course, :user => current_user
 
   .sidep25
     - if R::INHOUSE && current_user.is_student?

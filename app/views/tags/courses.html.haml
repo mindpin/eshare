@@ -6,14 +6,17 @@
 .page-tag-show.courses
   .mainp66
     .cpart.tag-courses
-      %h3 课程列表
+      %h3.cp1 课程列表
+      .clearfix
 
       - if @courses.present?
-        - @courses.each do |course|
-          = render_cell :course, :card, :course => course, :user => current_user
+        .cs{:style => 'margin:0 -5px;'}
+          - @courses.each do |course|
+            = render_cell :course, :card, :course => course, :user => current_user
           
       - else
         %h2 该标签下暂时没有内容
 
   .sidep33
-    = render_cell :tags, :course_base
+    .pblock
+      = render_cell :tags, :course_base

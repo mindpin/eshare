@@ -124,6 +124,20 @@ body {
     margin:0 0 20px 0;
     font-weight:bold;
   }
+  h3.cp1 {
+    font-size:15px;
+    padding:10px 20px;
+    margin:0 0 15px 0;
+    // color:#777;
+    height:20px;line-height:20px;
+    float:left;
+    background-color:#fcfcfc;
+    @include border-radius(3px);
+    border:solid 1px #e7e7e7;
+    border-bottom:solid 1px #d6d6d6;
+    box-shadow:0 1px 0 #e7e7e7;
+    i {opacity:0.75;margin-top:2px;margin-left:-5px;margin-right:5px;}
+  }
 
   .pblock {
     border:solid 1px #e7e7e7;
@@ -581,11 +595,14 @@ body.admin, body.app, body.account, body.help, body.error, body.course{
       }
 
       .content-header {
-        border:solid 1px #ddd;
+        border:solid 1px #e7e7e7;
         background-color:white;
         padding:0 20px;
         margin:0;
         margin-bottom:20px;
+        box-shadow:0 1px 0 #e7e7e7;
+        border-bottom:solid 1px #D6D6D6;
+        @include border-radius(3px);
       }
     }
   }
@@ -1377,132 +1394,93 @@ img.page-avatar {
 
 .page-course {
   &.card {
+    @include border-box;
+    width:25%;
     float:left;
-    width:198px;
-    margin-bottom:20px;
-    margin-right:20px;
-    &:nth-child(4n) {
-      margin-right:0;
-    }
 
-    .cover {
-      font-size:0;
-      line-height:0;
-      padding:4px;
-      .page-fit-image {
-        background-color:#f7f7f7;
-      }
-    }
-    .data {
-      padding:5px 10px 10px;
-      .counts {
-        color:#999;font-size:12px;
-        margin-bottom:10px;
-        span {
-          margin-right:10px;
-        }
-      }
-      .title {
-        font-size:16px;
-        margin-bottom:10px;
-        height:22px;overflow:hidden;
-      }
-      .desc {
-        color:#999;
-        height:40px;
-      }
-    }
-    .progress {
-      border-top:solid 1px #E5E5E5;
-      padding:5px 5px 0;
-      .page-progress {
-        height: 10px;
-      }
-    }
-    .foot {
-      padding:5px;
-      @include floatfix;
-      .percent {
-        font-weight:bold;
-        color:#666;
-      }
-      .percent-str {
-        font-size:12px;
-        color:#999;
-      }
-    }
-
-    &.small, &.mini{
-      // border-color:transparent;
-      // box-shadow:none;
-      width:20%;
-      margin:0;
-      @include border-box;
-      margin-bottom:0;
+    a.course-link {
+      display:block;
+      background:white;
+      margin:0 5px;
+      margin-bottom:10px;
+      @include border-radius(3px);
+      box-shadow:0 1px 0 #e7e7e7;
+      border-bottom:solid 1px #d6d6d6;
+      overflow:hidden;
+      text-decoration:none;
       position:relative;
 
-      &:first-child {
-        margin-left:0;
+      .desc {
+        @include border-radius(3px 3px 0 0);
+        position:absolute;
+        top:0;left:0;right:0;
+        bottom:40px;
+        background-color:rgba(black, 0.6);
+        color:white;
+        padding:10px;
+        p {margin:0;}
+        opacity:0;
+        pointer-events:none;
+        font-size:13px;
+        @include transition(opacity ease-out 0.2s);
       }
 
-      a.course-link {
-        display:block;
-        margin:0 2px;
-        text-decoration:none;
-        text-shadow:0 0 3px rgba(black, 0.3);
-
-        .cover{
-          padding:0;
-        }
-
-        .desc {
+      .update-status {
+        position:absolute;
+        right:0;
+        bottom:42px + 0px;
+        span {
+          padding:4px 8px;
+          color:white;
           font-size:13px;
-          background:rgba(black, 0.5);
-          color:white;
+          text-shadow:0 0 1px black;
+          @include border-radius(3px 0 0 0);
+        }
+        span.new {
+          background-color:#ee3300;
+        }
+        span.updated {
+          background-color:#3399ff;
+          // background-color:#33cc00;
+        }
+      }
+
+      .go-study {
+        height:40px;line-height:40px;
+        padding:0 15px;
+        position:relative;
+        span.title {
+          color:#666;
+          font-weight:bold;
+        }
+        i {
           position:absolute;
-          top:0;
-          left:2px;
-          right:2px;
-          height:140px;
-          @include border-box;
-          padding:10px;
-          opacity:0;
-          @include transition(opacity ease-out 0.2s);
-          p {margin:0;}
-          overflow:hidden;
+          right:15px;top:13px;
+          opacity:0.75;
         }
+      }
 
-        .go-study {
-          background-color:#60A0FF;
-          color:white;
-          text-decoration:none;
-          display:block;
-          height:40px;
-          line-height:40px;
-          padding:0 15px;
-          i {float:right;margin-top:13px;}
-        }
-
-        &:hover {
-          .go-study {
-            background-color:#3580F0;
-          }
-          .desc {
-            opacity:1;
-          }
-        }
+      &:hover {
+        background-color:#ffffda;
+        box-shadow:0 1px 3px #ccc;
+        .go-study .title {color:#333;}
+        .desc {opacity:1;}
       }
     }
 
-    &.mini {
-      a.course-link .desc{
-        height:100px;
-        font-size:12px;
-      }
-      a.course-link .go-study {
-        height:30px;line-height:30px;
-        font-size:12px;
-        i{margin-top:8px;}
+    &.small {
+      a.course-link {
+        .desc {
+          bottom:30px;
+        }
+        .update-status {
+          bottom:32px + 0px;
+        }
+        .go-study {
+          height:30px;line-height:30px;
+          font-size:13px;
+          i {top:8px;margin-top:0;}
+        }
       }
     }
   }
@@ -1510,30 +1488,37 @@ img.page-avatar {
 
 .page-courses-index {
   .hot-courses {
-    margin-bottom:4px;
+    margin-bottom:20px;
     .courses {
-      margin:0 -18px;
-      @include floatfix;
+      overflow:hidden;
+      margin:0 -5px;
     }
-  }
-  .courses.grid {
-    @include floatfix;
   }
 
   .all-courses {
     .tag-courses{
-      margin:-20px -18px 4px;
-
+      margin-bottom:20px;
       .tagname {
-        margin:-20px -2px 4px;
-        border-bottom:solid 1px #e7e7e7;
-        padding:15px 20px;
-        height:20px;line-height:20px;
-        i {opacity:0.75;}
-        // a {color:#333;}
+        overflow:hidden;
+        .count {
+          display:inline-block;
+          background-color:#f7f7f7;
+          border-left:solid 1px #e7e7e7;
+          height:40px;line-height:40px;
+          margin-top:-10px;
+          margin-right:-20px;
+          padding:0 20px;
+          margin-left:20px;
+          &:hover{
+            background-color:#FFFFDA;
+            text-decoration:none;
+          }
+        }
       }
+
       .courses {
         overflow:hidden;
+        margin:0 -5px;
       }
     }
   }
@@ -1558,6 +1543,7 @@ img.page-avatar {
     }
   }
 
+  // inhouse 选课动态
   a.select-courses {
     height:50px;line-height:50px;
     margin-bottom:20px;
@@ -1573,6 +1559,7 @@ img.page-avatar {
     }
   }
 
+  // inhouse 选课动态
   .select-courses-dyna {
     .applies {
       margin:0 -20px;
@@ -1599,6 +1586,31 @@ img.page-avatar {
     }
   }
 }
+
+.page-user-courses{
+  .courses {
+    overflow:hidden;
+    margin:0 -5px 0px;
+    .course {
+      margin-bottom:20px;
+    }
+    .course .course-link {
+      border-bottom:none 0;
+      box-shadow:none !important;
+      .go-study {
+        text-align: center;
+        i {display:none;}
+      }
+    }
+  }
+}
+
+.page-user-courses {
+  .pagination {
+    margin-bottom:20px !important;
+  }
+}
+
 
 .page-account-avatar {
   .desc {
@@ -2793,6 +2805,7 @@ img.page-avatar {
 
 .page-chart.all-course-read-pie {
   border:0 none;
+  margin:0 -20px;
 }
 
 .page-chart.all-courses-punch-card{
@@ -3182,8 +3195,9 @@ form .input.page-form-tag-inputer {
   }
   &.learning-tags, &.course-base-tags {
     .tags {
-      border:solid 1px #ddd;
-      margin-bottom:20px;
+      margin:0 -20px -20px;
+      border:none;
+      border-top:solid 1px #ddd;
       .tag {
         display:block;height:20px;line-height:20px;
         padding:10px;
@@ -3208,13 +3222,6 @@ form .input.page-form-tag-inputer {
           opacity:1;
         }
       }
-    }
-  }
-  &.learning-tags {
-    .tags {
-      margin:0 -20px -20px;
-      border:none;
-      border-top:solid 1px #ddd;
     }
   }
 }
@@ -3768,22 +3775,15 @@ form .input.page-form-tag-inputer {
   }
 }
 
-.page-user-courses {
-  .courses {
-    overflow:hidden;
-    margin:0 -2px 20px - 2px;
-    .page-course {
-      width:25%;
-      margin-bottom:4px;
-    }
-
-  }
-  .pagination {
-    margin-bottom:20px !important;
-  }
-}
-
 .page-search {
+  .courses {
+    margin-bottom:20px;
+    .result {margin:0 -5px;}
+    .course {width:20%;}
+  }
+  .questions .result {
+    margin-bottom:20px;
+  }
   .questions .ops {
     display:none;
   }
