@@ -26,6 +26,9 @@ case "$1" in
     solr-server -p $port -d $index_dir -b $processor_pid
     echo "solr-server start ............... $(command_status)"
   ;;
+  status)
+    check_run_status_from_pid_file $processor_pid 'solr_server'
+  ;;
   stop)
     kill -9 `cat $processor_pid`
     echo "solr-server stop ................ $(command_status)"
@@ -36,7 +39,7 @@ case "$1" in
     $0 start
   ;;
   *)
-    echo "tip:(start|stop|restart)"
+    echo "tip:(start|stop|restart|status)"
     exit 5
   ;;
 esac
