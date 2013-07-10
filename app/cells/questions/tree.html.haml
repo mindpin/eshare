@@ -16,8 +16,13 @@
             end
           = str.html_safe
       - else
-        = simple_form_for [@question, Answer.new] do |f|
-          .form-inputs
-            = f.input :content, :as => :text, :input_html => {:rows => 5, :class => 'xxlarge'}
-          .form-actions
-            = f.button :submit, :class => 'success'
+        - if @user.present?
+          = simple_form_for [@question, Answer.new] do |f|
+            .form-inputs
+              = f.input :content, :as => :text, :input_html => {:rows => 5, :class => 'xxlarge'}
+            .form-actions
+              = f.button :submit, :class => 'success'
+        - else
+          .need-signed-in
+            %a{:href => '/account/sign_in'}> 登录网站
+            %span> 后，你就可以添加你的回答

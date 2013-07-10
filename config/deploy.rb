@@ -20,7 +20,9 @@ set :shared_paths, [
   'public/YKAuth.txt', 
   'public/project_key',
   'config/oauth_key.yaml',
-  'config/initializers/r.rb']
+  'config/initializers/r.rb',
+  'config/deploy_env.rb'
+]
 
 task :environment do
 end
@@ -62,6 +64,7 @@ task :setup => :environment do
   queue  %[echo "-----> Be sure to edit 'shared/.ruby-version'."]
   queue  %[echo "-----> Be sure to edit 'shared/deploy/sh/property.yaml'."]
   queue  %[echo "-----> Be sure to edit 'shared/public/YKAuth.txt'."]
+  queue  %[echo "-----> Be sure to edit 'shared/config/deploy_env.rb'."]
 end
 
 desc "init_verify_key"

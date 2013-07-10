@@ -41,6 +41,8 @@ class User < ActiveRecord::Base
 
   validates :tagline, :length => {:in => 0..150}
 
+  # 管理员修改基本信息
+  attr_accessible :login, :name, :email, :role, :as => :manage_change_base_info
   # 修改基本信息
   attr_accessible :login, :name, :email, :as => :change_base_info
   # 修改密码

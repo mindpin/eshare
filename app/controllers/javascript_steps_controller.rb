@@ -1,5 +1,5 @@
 class JavascriptStepsController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => [:show]
 
   layout Proc.new { |controller|
     case controller.action_name

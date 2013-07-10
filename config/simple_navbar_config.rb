@@ -8,11 +8,14 @@ SimpleNavbar::Base.config do
       controller :'manage/courses'
       controller :'manage/chapters'
       controller :'manage/course_wares'
-      controller :'manage/applies'
+      controller :'manage/course_applies'
     end
 
     if R::INHOUSE
-      nav :surveys_manage, :url => '/manage/surveys' do
+      nav :course_applies_manage, :url => '/manage/applies' do
+        controller :'manage/applies'
+      end
+      nav :teacher_surveys_manage, :url => '/manage/surveys' do
         controller :'manage/surveys'
         controller :'manage/survey_results'
       end
@@ -91,10 +94,6 @@ SimpleNavbar::Base.config do
       controller :friends
     end
 
-    nav :learning_plan, :url => '/plan' do
-      controller :index, :only => :plan
-    end
-
     # nav :disk, :url => '/disk' do
     #   controller :disk
     # end
@@ -108,7 +107,7 @@ SimpleNavbar::Base.config do
     end
 
     if R::INHOUSE
-      nav :surveys, :url => '/surveys' do
+      nav :'teacher-surveys', :url => '/surveys' do
         controller :surveys
       end
     end

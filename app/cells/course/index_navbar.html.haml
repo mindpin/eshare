@@ -1,0 +1,5 @@
+- if R::INHOUSE
+  .flat-nav
+    = page_navbar do |navbar|
+      - navbar.add_item("<span>浏览</span>".html_safe, "/courses")
+      - navbar.add_item("<span>选课</span>".html_safe, "/courses/sch_select")

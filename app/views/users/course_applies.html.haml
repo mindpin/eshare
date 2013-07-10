@@ -1,5 +1,5 @@
 .page-user-course-applies
-  .applies
+  .cpart.applies
     = page_data_table :'course-applies', @applies, :striped, :bordered do |table|
       - table.add_column :course do |apply|
         = course_link apply.course

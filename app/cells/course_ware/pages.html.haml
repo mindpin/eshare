@@ -1,4 +1,4 @@
-- if false#@course_ware.file_entity.present? && @course_ware.convert_success?
+- if @course_ware.file_entity.present? && @course_ware.convert_success?
   .pages{:data => {:scroller => true}}
     .images
       - images = @course_ware.output_images

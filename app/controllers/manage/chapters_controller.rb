@@ -7,16 +7,19 @@ class Manage::ChaptersController < ApplicationController
   
   def show
     @chapter = Chapter.find params[:id]
+    authorize! :manage, @chapter
     @course = @chapter.course
     @course_wares = @chapter.course_wares
   end
 
   def new
+    authorize! :manage, Chapter
     @course = Course.find(params[:course_id])
     @chapter = @course.chapters.new
   end
 
   def create
+    authorize! :manage, Chapter
     @course = Course.find(params[:course_id])
     @chapter = @course.chapters.build(params[:chapter])
     @chapter.creator = current_user
@@ -28,12 +31,14 @@ class Manage::ChaptersController < ApplicationController
 
   def edit
     @chapter = Chapter.find(params[:id])
+    authorize! :manage, @chapter
     @course = @chapter.course
   end
 
 
   def update
     @chapter = Chapter.find(params[:id])
+    authorize! :manage, @chapter
     @course = @chapter.course
     if @chapter.update_attributes params[:chapter]
       return redirect_to "/manage/courses/#{@course.id}"
@@ -43,6 +48,7 @@ class Manage::ChaptersController < ApplicationController
 
   def destroy
     @chapter = Chapter.find(params[:id])
+    authorize! :manage, @chapter
     @course = @chapter.course
     @chapter.destroy
     redirect_to "/manage/courses/#{@course.id}"
@@ -50,6 +56,7 @@ class Manage::ChaptersController < ApplicationController
 
   def move_up
     @chapter = Chapter.find(params[:id])
+    authorize! :manage, @chapter
     @course = @chapter.course
     @chapter.move_up
     return redirect_to "/manage/courses/#{@course.id}"
@@ -57,6 +64,7 @@ class Manage::ChaptersController < ApplicationController
 
   def move_down
     @chapter = Chapter.find(params[:id])
+    authorize! :manage, @chapter
     @course = @chapter.course
     @chapter.move_down
     return redirect_to "/manage/courses/#{@course.id}"

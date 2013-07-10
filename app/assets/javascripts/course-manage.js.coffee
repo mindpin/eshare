@@ -211,3 +211,30 @@ jQuery ->
 
   jQuery('.javascript-steps-form').each ->
     new JavascriptCourseWareForm jQuery(this)
+
+
+jQuery ->
+
+  # 课程管理批准
+  jQuery(document).on 'click', '.page-course-applies .course-applies a.accept', ->
+    apply_id = jQuery(this).data('id')
+    jQuery.ajax
+      url : "/manage/applies/#{apply_id}/accept"
+      type : 'put'
+      success : (res)=>
+        $new_tr = jQuery(res.html).find('tr.select_course_apply')
+        $old_tr = jQuery(this).closest('tr')
+        $old_tr.after $new_tr
+        $old_tr.remove()
+
+# 课程管理拒绝
+  jQuery(document).on 'click', '.page-course-applies .course-applies a.reject', ->
+    apply_id = jQuery(this).data('id')
+    jQuery.ajax
+      url : "/manage/applies/#{apply_id}/reject"
+      type : 'put'
+      success : (res)=>
+        $new_tr = jQuery(res.html).find('tr.select_course_apply')
+        $old_tr = jQuery(this).closest('tr')
+        $old_tr.after $new_tr
+        $old_tr.remove()

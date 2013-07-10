@@ -12,9 +12,10 @@
 
   .page-layout-course-ware-show
     .sidebar
-      %a.back{:href => "/courses/#{@course.id}"}
-        %i.icon-chevron-left
-        %span= truncate_u @course.name, 12
+      %a.course-link{:href => "/courses/#{@course.id}"}
+        .cb
+          %i.icon-book
+          %span.name= truncate_u @course.name, 24
 
       .items
         - @chapter.course_wares.each do |cw|

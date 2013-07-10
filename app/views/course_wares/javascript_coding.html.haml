@@ -41,10 +41,14 @@
 
   - if @step
     .current-step-info.nano{:data => {:id => @step.id}}
-      .info.nano-content
+      .info.nano-content{:style => 'display:none;'}
         .step-title
         .step-desc
         .step-content
+          .tt
+            %i.icon-info-sign
+            %span 你需要完成的任务
+          .cc
         .step-hint
           .tt
             %i.icon-question-sign

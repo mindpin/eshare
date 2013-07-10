@@ -1,0 +1,27 @@
+- content_for :header do
+  %h1 教师教学评价
+
+.page-surveys-index
+  - cur_user = current_user
+  = page_data_table(:'survey_teachers', @teachers, :striped, :bordered) do |table|
+    - table.add_column(:name)
+    - table.add_column(:status) do |teacher|
+      - if @survey.has_completed_for_teacher_by?(teacher, cur_user)
+        已评价
+      - else
+        未评价
+
+    - table.add_column(:ops) do |teacher|
+      - if @survey.has_completed_for_teacher_by?(teacher, cur_user)
+        %a.btn.mini{:href => "/surveys/#{@survey.id}?teacher=#{teacher.id}"}
+          %i.icon-list
+          %span 查看结果
+        %a.btn.mini{:href => "/surveys/#{@survey.id}?teacher=#{teacher.id}&refill=true", :data => {:confirm => '确定要重新填写吗？之前的填写结果将会被清除'}}
+          %i.icon-pencil
+          %span 重新填写
+      - else
+        %a.btn.success.mini{:href => "/surveys/#{@survey.id}?teacher=#{teacher.id}"}
+          %i.icon-pencil.icon-white
+          %span 填写调查
+
+  = paginate @teachers
