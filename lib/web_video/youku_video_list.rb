@@ -2,6 +2,8 @@
 require 'open-uri'
 
 class YoukuVideoList
+  attr_reader :parser
+
   def initialize(url)
     @parser = if url.match(OldPlaylist.url_pattern)
       OldPlaylist.new(url)
@@ -10,9 +12,8 @@ class YoukuVideoList
     end
   end
 
-  def parse
-    @parser.parse
-  end
+  delegate :parse,         :to => :parser
+  delegate :video_list_id, :to => :parser
 
   class Playlist
     def initialize(url)
@@ -90,6 +91,10 @@ class YoukuVideoList
       /http:\/\/www.youku.com\/playlist_show\/id_(?<id>\d+).html/
     end
     
+    def video_list_id
+      id
+    end
+
     def initialize(url)
       @url = url
       @id  = self.class.url_pattern.match(url)[:id]
