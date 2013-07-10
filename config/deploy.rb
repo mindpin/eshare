@@ -93,12 +93,12 @@ task :deploy => :environment do
       queue %[
         source /etc/profile
         ./deploy/sh/redis_server.sh restart
-        ./deploy/sh/sidekiq.sh restart
-        ./deploy/sh/unicorn_eshare.sh stop
-        ./deploy/sh/unicorn_eshare.sh start
         ./deploy/sh/solr_server.sh stop
         ./deploy/sh/solr_server.sh start
-        bundle exec thin restart -f -C config/thin.yml -R faye.ru
+        ./deploy/sh/sidekiq.sh restart
+        ./deploy/sh/faye.sh restart
+        ./deploy/sh/unicorn_eshare.sh stop
+        ./deploy/sh/unicorn_eshare.sh start
       ]
     end
   end
@@ -110,12 +110,12 @@ task :restart => :environment do
     source /etc/profile
     cd #{deploy_to}/#{current_path}
     ./deploy/sh/redis_server.sh restart
-    ./deploy/sh/sidekiq.sh restart
-    ./deploy/sh/unicorn_eshare.sh stop
-    ./deploy/sh/unicorn_eshare.sh start
     ./deploy/sh/solr_server.sh stop
     ./deploy/sh/solr_server.sh start
-    bundle exec thin restart -f -C config/thin.yml -R faye.ru
+    ./deploy/sh/sidekiq.sh restart
+    ./deploy/sh/faye.sh restart
+    ./deploy/sh/unicorn_eshare.sh stop
+    ./deploy/sh/unicorn_eshare.sh start
   ]
 end
 # For help in making your deploy script, see the Mina documentation:
