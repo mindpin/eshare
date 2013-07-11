@@ -23,6 +23,30 @@ class StepHistory < ActiveRecord::Base
     self.course_ware.update_read_count_by(self.user, count)
   end
 
+  after_create :give_medal
+  def give_medal
+    user = self.user
+    passed_count = StepHistory.passed_steps_count_of(user)
+
+    _give_medal_by_count(passed_count, 1  , user, :PASS_1_CODING_STEP)
+    _give_medal_by_count(passed_count, 10 , user, :PASS_10_CODING_STEP)
+    _give_medal_by_count(passed_count, 25 , user, :PASS_25_CODING_STEP)
+    _give_medal_by_count(passed_count, 50 , user, :PASS_50_CODING_STEP)
+    _give_medal_by_count(passed_count, 100, user, :PASS_100_CODING_STEP)
+  end
+
+  def _give_medal_by_count(passed_count, count, user, medal_name)
+    return if user.has_medal?(medal_name)
+    if passed_count >= count
+      Medal.get(medal_name).give_to(user)
+    end
+  end
+
+  # 获取指定用户通过教学步骤的数量
+  def self.passed_steps_count_of(user)
+    StepHistory.by_user(user).passed.count('DISTINCT step_id, step_type')
+  end
+
   module StepMethods
     def self.included(base)
       base.has_many :step_histories, :as => :step
