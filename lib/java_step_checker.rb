@@ -6,7 +6,7 @@ class JavaStepChecker
   end
 
   def check
-    client = TCPSocket.new '127.0.0.1', 10001
+    client = TCPSocket.new R::JAVA_STEP_TESTER_HOST, R::JAVA_STEP_TESTER_PORT
 
     request = { :input => @input , :rule => @java_step.rule }
     client.send(request.to_json + "\n", 0)
