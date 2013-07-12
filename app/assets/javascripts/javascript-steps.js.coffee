@@ -98,9 +98,15 @@ class JavascriptStepTester
       return @pack(false, '教程逻辑出错')
 
   pack: (passed, message)->
+    msg = 
+      if typeof(message) == 'string'
+        message
+      else
+        JSON.stringify message
+
     return {
       passed: passed
-      message: message
+      message: msg
     }
 
 jQuery ->
@@ -226,9 +232,9 @@ jQuery ->
       @$done  = @$elm.find('.code-ops .done')
 
       @load_steps()
+      @start_console()
       @setup()
       @init_code_editor()
-      @start_console()
       @init_ctrl_s_for_submit()
       @init_window_onpopstate()
 
@@ -236,6 +242,7 @@ jQuery ->
 
       @last_submitted_code = null
       @last_submitted_step = null
+      @last_test_result    = null
 
       @init_code_input_timer()
 
@@ -297,10 +304,12 @@ jQuery ->
 
       not_repeat_input = !(
         @last_submitted_code == code && 
-        @last_submitted_step == @current_step
+        @last_submitted_step == @current_step &&
+        @last_test_result    == test_result
       )
       @last_submitted_code = code
       @last_submitted_step = @current_step
+      @last_test_result    = test_result
 
       if test_result.passed
         # 通过
@@ -402,7 +411,11 @@ jQuery ->
       @load_step @current_step
 
     start_console: ->
-      @jqconsole = @$console_elm.jqconsole('', '> ')
+      if @jqconsole
+        @jqconsole.Reset()
+      else
+        @jqconsole = @$console_elm.jqconsole('', '> ')
+
       @jqconsole.Write "调试结果将输出在这里：", 'output'
 
     go_next: ->
@@ -430,11 +443,14 @@ jQuery ->
         .find('.current-step-info').attr('data-id', step.id)
           .find('.step-title').html(step.title).end()
           .find('.step-desc').html(step.desc_html).end()
-          .find('.step-content').html(step.content_html).end()
+          .find('.step-content .cc').html(step.content_html).end()
           .find('.step-hint .cc').html(step.hint_html).end()
           .find('.info').hide().fadeIn().end()
         .end()
-      
+
+      @$elm.find('.nano-content').scrollTop(0)
+      @start_console()
+
       @hide_all_message()
 
       @editor.focus()
@@ -487,7 +503,8 @@ jQuery ->
 
         jQuery('.info.nano-content').css('overflow-y', 'scroll')
         jQuery('.current-step-info.nano').nanoScroller
-          contentClass: 'nano-content'
+          contentClass: 'nano-content',
+          alwaysVisible: true
 
       , 1
 

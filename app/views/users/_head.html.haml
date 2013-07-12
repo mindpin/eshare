@@ -19,3 +19,6 @@
       .joined.quiet #{user.created_at} 加入
       .tagline= simple_format user.tagline
     .clearfix
+
+  - if @user != current_user
+    .ffollow= follow_button current_user, @user, :large

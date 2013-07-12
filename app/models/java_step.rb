@@ -26,6 +26,9 @@ class JavaStep < ActiveRecord::Base
     self.class.by_course_ware(course_ware).where('id > ?', self.id).first
   end
 
+  def check(input, user)
+    JavaStepChecker.new(self, input, user).check
+  end
 
   include StepHistory::StepMethods
   

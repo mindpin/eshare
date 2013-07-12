@@ -18,7 +18,7 @@ class SelectCourseApply < ActiveRecord::Base
 
   module CourseMethods
     def self.included(base)
-      base.has_many :select_course_applies
+      base.has_many :select_course_applies, :dependent => :delete_all
       base.has_many :apply_users, :through => :select_course_applies, :source => :user
     end
 

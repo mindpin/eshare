@@ -6,4 +6,9 @@ class CourseApplyCell < Cell::Rails
     @apply = opts[:apply]
     render
   end
+
+  def manage_table(opts = {})
+    @applies = opts[:applies]
+    render
+  end
 end

@@ -23,6 +23,22 @@ function assert_process_from_pid_file_not_exist()
   fi
 }
 
+function check_run_status_from_pid_file()
+{
+  local pid;
+  local service_name;
+  service_name=$2
+  if [ -f $1 ]; then
+    pid=$(cat $1)
+  fi
+
+  if [ $pid ] && [ "$(ps $pid|grep -v PID)" ]; then
+    echo -e "$service_name  [\e[1;32mrunning\e[0m]"
+  else
+    echo -e "$service_name  [\e[1;31mnot running\e[0m]"
+  fi
+}
+
 function get_sh_dir_path()
 {
   echo -n $(cd "$(dirname "$0")"; pwd)

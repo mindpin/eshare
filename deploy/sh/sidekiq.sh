@@ -20,6 +20,9 @@ case "$1" in
     echo $! > $processor_pid
     echo "sidekiq start ............... $(command_status)"
   ;;
+  status)
+    check_run_status_from_pid_file $processor_pid 'sidekiq'
+  ;;
   stop)
     kill -9 `cat $processor_pid`
     echo "sidekiq stop ................ $(command_status)"
@@ -30,7 +33,7 @@ case "$1" in
     $0 start
   ;;
   *)
-    echo "tip:(start|stop|restart)"
+    echo "tip:(start|stop|restart|status|status)"
     exit 5
   ;;
 esac

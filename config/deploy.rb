@@ -20,7 +20,9 @@ set :shared_paths, [
   'public/YKAuth.txt', 
   'public/project_key',
   'config/oauth_key.yaml',
-  'config/initializers/r.rb']
+  'config/initializers/r.rb',
+  'config/deploy_env.rb'
+]
 
 task :environment do
 end
@@ -62,6 +64,7 @@ task :setup => :environment do
   queue  %[echo "-----> Be sure to edit 'shared/.ruby-version'."]
   queue  %[echo "-----> Be sure to edit 'shared/deploy/sh/property.yaml'."]
   queue  %[echo "-----> Be sure to edit 'shared/public/YKAuth.txt'."]
+  queue  %[echo "-----> Be sure to edit 'shared/config/deploy_env.rb'."]
 end
 
 desc "init_verify_key"
@@ -90,12 +93,12 @@ task :deploy => :environment do
       queue %[
         source /etc/profile
         ./deploy/sh/redis_server.sh restart
-        ./deploy/sh/sidekiq.sh restart
-        ./deploy/sh/unicorn_eshare.sh stop
-        ./deploy/sh/unicorn_eshare.sh start
         ./deploy/sh/solr_server.sh stop
         ./deploy/sh/solr_server.sh start
-        bundle exec thin restart -f -C config/thin.yml -R faye.ru
+        ./deploy/sh/sidekiq.sh restart
+        ./deploy/sh/faye.sh restart
+        ./deploy/sh/unicorn_eshare.sh stop
+        ./deploy/sh/unicorn_eshare.sh start
       ]
     end
   end
@@ -107,12 +110,12 @@ task :restart => :environment do
     source /etc/profile
     cd #{deploy_to}/#{current_path}
     ./deploy/sh/redis_server.sh restart
-    ./deploy/sh/sidekiq.sh restart
-    ./deploy/sh/unicorn_eshare.sh stop
-    ./deploy/sh/unicorn_eshare.sh start
     ./deploy/sh/solr_server.sh stop
     ./deploy/sh/solr_server.sh start
-    bundle exec thin restart -f -C config/thin.yml -R faye.ru
+    ./deploy/sh/sidekiq.sh restart
+    ./deploy/sh/faye.sh restart
+    ./deploy/sh/unicorn_eshare.sh stop
+    ./deploy/sh/unicorn_eshare.sh start
   ]
 end
 # For help in making your deploy script, see the Mina documentation:

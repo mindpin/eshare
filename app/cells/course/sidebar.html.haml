@@ -1,13 +1,8 @@
 .sidebar
-
   %a.course-link{:href => "/courses/#{@course.id}"}
     .cb
       %i.icon-book
       %span.name= truncate_u @course.name, 24
-
-  %a.back{:href => '/courses'}
-    %i.icon-chevron-left
-    %span 返回
 
   - if @user.present?
     .user-card

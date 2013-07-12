@@ -41,7 +41,7 @@
           %span.text 问答
 
     .form-actions
-      %a.btn{:href => "/surveys/#{@survey.id}?refill=true", :data => {:confirm => '确定要重新填写吗？之前的填写结果将会被清除'}}
+      %a.btn{:href => "/surveys/#{@survey.id}?teacher=#{@teacher.id}&refill=true", :data => {:confirm => '确定要重新填写吗？之前的填写结果将会被清除'}}
         %i.icon-pencil
         %span 重新填写
-      %a.btn.cancel{:href => "/surveys"} 返回
+      %a.btn.cancel{:href => "/surveys/#{@survey.id}/select_teacher"} 返回

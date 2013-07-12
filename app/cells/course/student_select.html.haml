@@ -4,6 +4,8 @@
       sca = @user.select_course_applies.by_course(@course).first
       klass = sca.blank? ? '' : sca.status.downcase
 
+    -# REQUEST ACCEPT REJECT
+
     .student-select-course{:class => klass}
       - if @course.apply_request_is_full?
         .full 选课人数已满
@@ -18,13 +20,21 @@
               .desc 剩余名额
               .n= @course.remaining_apply_request_count
 
-
       .info.request
         %i.icon-info-sign
-        %span 选课等待审核
+        %span 选课审核中，
+        %a.btn.small.danger.cancel-select{:href => 'javascript:;', :data => {:id => @course.id}}
+          %i.icon-remove.icon-white
+          %span 取消选课
       .info.accept
         %i.icon-ok-sign
-        %span 选课已成功
+        %span 选课已成功，
+        %a.btn.small.danger.cancel-select{:href => 'javascript:;', :data => {:id => @course.id}}
+          %i.icon-remove.icon-white
+          %span 取消选课
       .info.reject
         %i.icon-info-sign
-        %span 选课未选中
+        %span 选课未选中，
+        %a.btn.small.danger.cancel-select{:href => 'javascript:;', :data => {:id => @course.id}}
+          %i.icon-remove.icon-white
+          %span 取消选课

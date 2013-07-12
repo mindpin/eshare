@@ -11,6 +11,8 @@
               %i.icon-exclamation-sign
               %span= v
 
+      %input{:type => :hidden, :value => @teacher.id, :name => "teacher_id"}
+
       .survey-items
         - item_number = 0
         - template.survey_template_items.each do |item|
@@ -44,4 +46,4 @@
 
       .form-actions
         %input.btn.success{:type => :submit, :value => '填写完毕，提交'}
-        %a.btn.cancel{:href => "/surveys"}= t('common.form.cancel')
+        %a.btn.cancel{:href => "/surveys/#{@survey.id}/select_teacher"}= t('common.form.cancel')

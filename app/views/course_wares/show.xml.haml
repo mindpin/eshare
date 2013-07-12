@@ -21,12 +21,22 @@
   %ckplayer
     %flashvars
     - user_agent = request.env['HTTP_USER_AGENT']
-    - @course_ware.tudou_video(user_agent).video_files.each do |f|
+    - user_ip = request.remote_ip
+
+    - tudou_video = @course_ware.tudou_video(user_agent)
+    - tudou_video.set_x_forwarded_for_ip user_ip
+
+    - tudou_video.video_files.each do |f|
       %video
         %file
           :cdata
             #{f.url}
         %seconds= f.seconds
+        %iid= tudou_video.iid
+        %vcode= tudou_video.vcode
+        %from_youku= tudou_video.is_from_youku?
+        %ua= user_agent
+        %uip= user_ip
 
 - if @course_ware.is_local_video?
   %ckplayer

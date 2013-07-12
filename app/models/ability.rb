@@ -41,8 +41,10 @@ class Ability
       # COURSE1-1 : 通过WEB增删课程，增删课程下章节，增删章节下课件/练习
       # COURSE1-2 : 通过WEB导出和导入课程包
       # COURSE1-3 : 给课程添加公共标签
-    if !user.blank? && user.is_admin?
+    if !user.blank? && (user.is_admin? || user.is_manager? || user.is_teacher?)
       can :manage, Course
+      can :manage, Chapter
+      can :manage, CourseWare
     end
 
     # COURSE2 : 课程浏览和学习进度记录

@@ -1,12 +1,24 @@
 class Survey < SimpleSurvey::Survey
   has_many :survey_result_items, :through => :survey_results
 
-  def has_completed_by?(user)
-    self.survey_results.where(:user_id => user.id).present?
+  def has_completed_for_teacher_by?(teacher, user)
+    self.survey_results.where(
+      'user_id = ? AND teacher_user_id = ?', 
+      user.id, teacher.id
+    ).present?
   end
 
-  def get_result_of(user)
-    self.survey_results.where(:user_id => user.id).first
+  def get_result_for_teacher_of(teacher, user)
+    self.survey_results.where(
+      'user_id = ? AND teacher_user_id = ?', 
+      user.id, teacher.id
+    ).first
+  end
+
+  def get_result_count_for_teacher(teacher)
+    self.survey_results.where(
+      'teacher_user_id = ?', teacher.id
+    ).count
   end
 
   # 获取指定的题目中选择各个选项的人数

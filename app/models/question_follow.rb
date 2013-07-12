@@ -39,6 +39,7 @@ class QuestionFollow < ActiveRecord::Base
     end
 
     def visit_by!(user)
+      return if user.blank?
       return if !self.followed_by?(user)
 
       question_follow = _get_follower_by(user)

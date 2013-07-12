@@ -4,7 +4,7 @@
     answer-#{answer.id}
 
   - add_left(:vote_up) do |answer|
-    - if answer.creator != user
+    - if user.present? && answer.creator != user
       - if answer.has_voted_up_by? user
         = link_to "/answers/#{answer.id}/vote_cancel", :method => :put, :class => 'cancel', :title => '已投赞成票，点击取消' do
           %i.icon-chevron-up
@@ -15,7 +15,7 @@
   - add_left(:vote_sum)
 
   - add_left(:vote_down) do |answer|
-    - if answer.creator != user
+    - if user.present? && answer.creator != user
       - if answer.has_voted_down_by? user
         = link_to "/answers/#{answer.id}/vote_cancel", :method => :put, :class => 'cancel', :title => '已投反对票，点击取消' do
           %i.icon-chevron-down
