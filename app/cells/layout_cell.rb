@@ -51,4 +51,9 @@ class LayoutCell < Cell::Rails
     @query = opts[:query]
     render
   end
+
+  def medals_coding(opts = {})
+    @user = opts[:user]
+    render
+  end
 end
