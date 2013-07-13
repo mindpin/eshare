@@ -35,9 +35,9 @@ class StepHistory < ActiveRecord::Base
     _give_medal_by_count(passed_count, 100, user, :PASS_100_CODING_STEP)
 
     error_count = StepHistory.error_steps_count_of(user)
-    _give_medal_by_count(passed_count, 1  , user, :ERROR_1_CODING_STEP)
-    _give_medal_by_count(passed_count, 10 , user, :ERROR_10_CODING_STEP)
-    _give_medal_by_count(passed_count, 25 , user, :ERROR_25_CODING_STEP)
+    _give_medal_by_count(error_count, 1  , user, :ERROR_1_CODING_STEP)
+    _give_medal_by_count(error_count, 10 , user, :ERROR_10_CODING_STEP)
+    _give_medal_by_count(error_count, 25 , user, :ERROR_25_CODING_STEP)
   end
 
   def _give_medal_by_count(passed_count, count, user, medal_name)
