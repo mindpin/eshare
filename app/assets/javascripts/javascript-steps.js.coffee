@@ -526,3 +526,105 @@ jQuery ->
 
   jQuery('.page-coding.javascript').each ->
     new JavascriptPage jQuery(this)
+
+jQuery ->
+  class JavascriptPageTips
+    constructor: (@elm)->
+      @tip1 = @elm.find('.ui-tip[data-num=1]')
+      @tip2 = @elm.find('.ui-tip[data-num=2]')
+      @tip3 = @elm.find('.ui-tip[data-num=3]')
+      @tip4 = @elm.find('.ui-tip[data-num=4]')
+
+      @setup()
+
+      @show_tip1()
+
+    show_tip1: ->
+      @tip1
+        .css
+          left: 0
+          opacity: 0
+        .show()
+        .animate
+          left: 80
+          opacity: 1
+        , 200
+
+    show_tip2: ->
+      @tip2
+        .css
+          top: 110
+          opacity: 0
+        .show()
+        .animate
+          top: 150
+          opacity: 1
+        , 200
+
+    show_tip3: ->
+      @tip3
+        .css
+          bottom: 40
+          opacity: 0
+        .show()
+        .animate
+          bottom: 80
+          opacity: 1
+        , 200
+
+    show_tip4: ->
+      @tip4
+        .css
+          bottom: 360
+          opacity: 0
+        .show()
+        .animate
+          bottom: 400
+          opacity: 1
+        , 200
+
+    setup: ->
+
+      jQuery('body.coding > .show-ui-tips').click =>
+        @elm.show()
+        @show_tip1()
+
+      @tip1.find('.btn.next').click =>
+        @tip1
+          .animate
+            left: 0
+            opacity: 0
+          , 200, =>
+            @tip1.hide()
+            @show_tip2()
+
+      @tip2.find('.btn.next').click =>
+        @tip2
+          .animate
+            top: 110
+            opacity: 0
+          , 200, =>
+            @tip2.hide()
+            @show_tip3()
+
+      @tip3.find('.btn.next').click =>
+        @tip3
+          .animate
+            bottom: 40
+            opacity: 0
+          , 200, =>
+            @tip2.hide()
+            @show_tip4()
+
+      @tip4.find('.btn.next').click =>
+        @tip4
+          .animate
+            bottom: 360
+            opacity: 0
+          , 200, =>
+            @tip4.hide()
+            @elm.hide()
+
+
+  jQuery('body.coding > .ui-tips-overlay').each ->
+    new JavascriptPageTips jQuery(this)

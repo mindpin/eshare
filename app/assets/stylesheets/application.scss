@@ -1093,6 +1093,92 @@ body.coding {
       }
     }
   }
+
+  .ui-tips-overlay {
+    position: fixed;
+    top:0;left:0;
+    width:100%;height:100%;
+    background-color:rgba(black, 0.5);
+    z-index: 99;
+
+    .ui-tip {
+      position:absolute;
+      display:none;
+      width:320px;
+      background-color:rgba(white, 0.99);
+      @include border-radius(3px);
+      color:black;
+      padding:20px;
+
+      &[data-num="1"] {
+        top:80px;left:100px;
+        &:before {
+          content:"";
+          position:absolute;
+          top:50px;left:-20px;
+          border:solid 10px transparent;
+          border-right:solid 10px white;
+        }
+      }
+
+      &[data-num="2"] {
+        top:150px;left:400px;
+        &:before {
+          content:"";
+          position:absolute;
+          top:-20px;left:60px;
+          border:solid 10px transparent;
+          border-bottom:solid 10px white;
+        }
+      }
+
+      &[data-num="3"] {
+        bottom:80px;left:300px;
+        &:before {
+          content:"";
+          position:absolute;
+          bottom:-20px;left:60px;
+          border:solid 10px transparent;
+          border-top:solid 10px white;
+        }
+      }
+
+      &[data-num="4"] {
+        bottom:400px;right:50px;
+        &:before {
+          content:"";
+          position:absolute;
+          bottom:-20px;left:60px;
+          border:solid 10px transparent;
+          border-top:solid 10px white;
+        }
+      }
+
+      .title {
+        font-weight:bold;
+        margin-bottom:15px;
+      }
+      .desc {
+        margin-bottom:15px;
+      }
+    }
+  }
+
+  a.show-ui-tips {
+    z-index:10;
+    position:fixed;
+    bottom:15px;right:15px;
+    height:30px;line-height:30px;
+    color:#eee;
+    background-color:rgba(white, 0.1);
+    @include border-radius(3px);
+    padding:0 10px;
+    &:hover {
+      color:white;
+      background-color:rgba(white, 0.2);
+      text-decoration:none;
+    }
+  }
 }
 
 .page-user-page-medals {
@@ -1226,6 +1312,19 @@ body.coding {
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
     &:hover, &:focus, &:active, &.active, &.disabled, &[disabled] {
       background:lighten(#E86649, 10%) !important;
+      color:#fff;
+    }
+  }
+
+  &.success-flat {
+    background: #51a351 !important;
+    background-repeat: repeat-x;
+    border-color:transparent;
+    box-shadow:none;
+    color:#fff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    &:hover, &:focus, &:active, &.active, &.disabled, &[disabled] {
+      background:#62c462 !important;
       color:#fff;
     }
   }
