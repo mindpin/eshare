@@ -19,7 +19,7 @@
   = render_cell :layout, :topnav_coding, :user => current_user, :course_ware => @course_ware
   = render_cell :layout, :medals_coding, :user => current_user
     
-  / - cookies.delete :show_coding_ui_tip
+  - cookies.delete :show_coding_ui_tip
 
   :ruby
     if cookies[:show_coding_ui_tip].present?
@@ -33,10 +33,16 @@
     .ui-tip{:data => {:num => 1}}
       .title 界面简介：左侧栏
       .desc
-        %span> 左边这里是左侧栏。
-        %span> 在每一个编程练习中，左侧栏的文字都包含了引言和任务目标。
-        %span> 引言是介绍当前知识点的文字。而任务目标告诉你需要做什么才能完成这个练习。
-        %span> 如果仍有疑惑，还可以查看提示。
+        %p
+          %span> 左边这里是左侧栏。
+          %span> 在每一个编程练习中，这里都包含了一些介绍文字和
+          %b> 任务目标
+          %span> 。
+        %p
+          %span> 请阅读介绍文字，然后从任务目标获知需要做什么才能完成这个练习。
+        %p
+          %span> 如果对于如何完成任务仍有疑惑，还可以查看任务提示。
+
       %a.btn.success-flat.next{:href=>'javascript:;'} 
         %span 继续
         %i.icon-chevron-right.icon-white
@@ -44,8 +50,12 @@
     .ui-tip{:data => {:num => 2}}
       .title 界面简介：代码编辑区
       .desc
-        %span> 中间这里是代码编辑区。
-        %span> 你可以在代码编辑区输入你的代码。
+        %p
+          %span> 中间这里是代码编辑区。
+        %p
+          %span> 你可以在代码编辑区
+          %b> 输入你的代码
+          %span> 。
       %a.btn.success-flat.next{:href=>'javascript:;'} 
         %span 继续
         %i.icon-chevron-right.icon-white
@@ -53,9 +63,16 @@
     .ui-tip{:data => {:num => 3}}
       .title 界面简介：代码提交按钮
       .desc
-        %span> 下面的按钮是代码提交按钮，你可以随时用它来提交并保存你的代码。
-        %span> 代码提交后，系统会运行你的代码，并检查你的代码是否满足任务目标的要求。
-        %span> 你也可以随时使用重置代码按钮来恢复当前练习的初始代码。
+        %p
+          %span> 下面的按钮是代码提交按钮，你可以随时用它来
+          %b> 提交并保存
+          %span 你的代码。
+        %p
+          %span> 代码提交后，系统会运行你的代码，并检查你的代码是否满足任务目标的要求。
+        %p
+          %span> 你也可以随时使用
+          %b> 重置代码
+          %span> 按钮来恢复当前练习的初始代码。
       %a.btn.success-flat.next{:href=>'javascript:;'} 
         %span 继续
         %i.icon-chevron-right.icon-white
@@ -63,9 +80,13 @@
     .ui-tip{:data => {:num => 4}}
       .title 界面简介：控制台
       .desc
-        %span> 右边这里是控制台。
-        %span> 当你提交代码后，这里会显示你的代码的运行结果或者错误信息。
-        %span> 这可以帮助你进行一些检查。
+        %p
+          %span> 右边这里是控制台。
+          %span> 当你提交代码后，这里会显示你的代码的
+          %b> 运行结果或者错误信息
+          %span 。
+        %p
+          %span> 这可以帮助你进行一些检查。
       %a.btn.success-flat.next{:href=>'javascript:;'} 
         %span 继续
         %i.icon-chevron-right.icon-white

@@ -1109,6 +1109,9 @@ body.coding {
       @include border-radius(3px);
       color:black;
       padding:20px;
+      p {
+        margin:0 0 10px 0;
+      }
 
       &[data-num="1"] {
         top:80px;left:100px;
