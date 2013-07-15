@@ -19,7 +19,7 @@
   = render_cell :layout, :topnav_coding, :user => current_user, :course_ware => @course_ware
   = render_cell :layout, :medals_coding, :user => current_user
     
-  - cookies.delete :show_coding_ui_tip
+  / - cookies.delete :show_coding_ui_tip
 
   :ruby
     if cookies[:show_coding_ui_tip].present?
