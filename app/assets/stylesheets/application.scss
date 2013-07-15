@@ -729,38 +729,72 @@ body.coding {
       margin-left:20px;
     }
 
+    .right {
+      float:right;
+    }
+
     .avatar {
+      float:left;
       font-size:0;
       line-height:0;
-      float:right;
-      width:50px;height:50px;
-      margin-top:5px;margin-right:5px;
-      img{width:50px;height:50px;}
+      width:30px;height:30px;
+      margin-top:15px;margin-right:15px;
+      margin-left:20px;
     }
 
     .need-signed-in {
-      float:right;
+      float:left;
       margin-right:20px;
+      margin-left:20px;
+    }
+
+    .share-btns {
+      float:left;
+
+      span {
+        float:left;
+      }
+      a.sre {
+        display:block;
+        float:left;
+        margin-right:5px;
+        font-size:0;
+        line-height:20em;
+        overflow:hidden;
+        width:25px;height:25px;
+        margin-top:17px;
+        // background-color:white;
+        background:url(sync/syncicon24-bgwhite.png) 0 0 no-repeat;
+        &.sinaminiblog{background-position: 0 0;}
+        &.qqmb{background-position: -90px 0;}
+        &.qzone{background-position: -60px 0;}
+        &.douban{background-position: -150px 0;}
+        &.renren{background-position: -120px 0;}
+        &.more{background-position: -330px 0;}
+      }
     }
   }
+
+  $pcwidth:320px;
 
   .page-coding {
     .current-step-info {
       position:fixed;
       top:60px;bottom:0;
-      left:0;width:280px;
+      left:0;width:$pcwidth;
       padding:15px;
       @include border-box;
       background-color:#fff;
       color:#333;
 
       .info {
-        padding:15px;
+        padding:15px 15px 0;
+        // padding-left:45px;
         overflow-y : hidden;
       }
 
       .step-title {
-        font-size:24px;
+        font-size:22px;
         font-weight:bold;
       }
       .step-desc {
@@ -768,27 +802,36 @@ body.coding {
       }
 
       .step-content{
+        border-top:solid 1px rgba(black, 0.1);
+        border-bottom:solid 1px rgba(black, 0.1);
         background-color:#FFFFDA;
-        padding:10px;
-        margin:0 -10px 20px;
-        @include border-radius(3px);
-        .tt {
-          font-weight:bold;
-        }
-      }
+        padding:15px 15px;
+        margin:0 -15px;
 
-      .step-hint {
-        background-color:#f4f4f4;
-        padding:10px;
-        margin:-15px -10px 20px;
-        @include border-radius(3px);
+        .tt {font-weight:bold;}
+
+        .step-hint {
+          .bx {display:none;}
+
+          &.open {
+            a.show-tip {display:none;}
+            .bx {
+              display:block;
+              background-color:rgba(white, 0.8);
+              border:solid 1px rgba(black, 0.2);
+              @include border-radius(3px);
+              padding:10px 10px 1px;
+              margin:0 -10px -10px;
+            }
+          }
+        }
       }
     }
 
     .steps-status {
       position:fixed;
       bottom:0px;height:59px;
-      left:570px;
+      left:$pcwidth + 290px;
       z-index:6;
 
       .step {
@@ -863,7 +906,7 @@ body.coding {
 
     .code-box {
       position:fixed;
-      top:60px;left:280px;
+      top:60px;left:$pcwidth;
       // right:600px;
       width:710px;
       bottom:0;
@@ -925,7 +968,7 @@ body.coding {
 
     .code-ops {
       position:fixed;
-      left:280px;
+      left:$pcwidth;
       bottom:0;right:0;
       height:59px;
       background-color:#141414;
@@ -1076,13 +1119,42 @@ body.coding {
         margin-top:8px;
         font-size:13px;
         height:16px;line-height:16px;
+        cursor:default;
       }
       .name {
         font-weight:bold;
         color:#444;
         margin-left:60px + 8px;
         margin-top:9px;
+        cursor:default;
       }
+      .desc {
+        display:none;
+        position:absolute;
+        width:180px;
+        left:-190px;top:0;
+        background-color:#ffffda;
+        color:black;
+        padding:11px 15px;
+        @include border-box;
+        @include border-radius(3px);
+        &:before {
+          content:"";
+          display:block;
+          border:solid 6px transparent;
+          border-left:solid 6px rgba(white, 0.9);
+          position:absolute;
+          top:13px;
+          right:-12px;
+        }
+      }
+
+      &:hover {
+        .desc {
+          display:block;
+        }
+      }
+
       a.close {
         position:absolute;
         top:3px;right:3px;
@@ -1275,6 +1347,32 @@ body.coding {
       color:#fff;
     }
     @include border-radius(3px);
+  }
+
+  &.show-tip {
+    background: rgba(black, 0.7) !important;
+    background-repeat: repeat-x;
+    border-color:transparent;
+    box-shadow:none;
+    color:#fff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    &:hover, &:focus, &:active, &.active, &.disabled, &[disabled] {
+      background:rgba(black, 0.6) !important;
+      color:#fff;
+    }
+  }
+
+  &.close-tip {
+    background: rgba(black, 0.7) !important;
+    background-repeat: repeat-x;
+    border-color:transparent;
+    box-shadow:none;
+    color:#fff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    &:hover, &:focus, &:active, &.active, &.disabled, &[disabled] {
+      background:rgba(black, 0.6) !important;
+      color:#fff;
+    }
   }
 
   &.sign-in{

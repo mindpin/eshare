@@ -31,9 +31,12 @@ jQuery ->
         console.log "无法连接到Faye即时聊天服务器"
 
     show_notice: (message)->
+      console.log message
+
       $medal = @elm.find('.medal').first().clone()
       $medal
         .find('.name').html(message.name).end()
+        .find('.desc').html(message.desc).end()
         .find('.icon').addClass(message.medal_name)
 
       @elm.append $medal
@@ -51,11 +54,18 @@ jQuery ->
       that = this
       jQuery(@elm).delegate '.medal a.close', 'click', ->
         $medal = jQuery(this).closest('.medal')
-        $medal
-          .animate
-            right: -240
-            opacity: 0
-          , 200, => $medal.remove()
+        that.close_medal $medal
+
+      jQuery(document).on 'load-coding-step', ->
+        that.elm.find('.medal').not(':first').each ->
+          that.close_medal jQuery(this)
+
+    close_medal: ($medal)->
+      $medal
+        .animate
+          right: -240
+          opacity: 0
+        , 200, => $medal.remove()
 
 
   # --------------------------
@@ -65,38 +75,38 @@ jQuery ->
 
 
 
-  class FayeChatBar
-    constructor: (@$chatbar)->
-      @user_id = @$chatbar.data('user-id')
-      @user_name = @$chatbar.data('user-name')
+  # class FayeChatBar
+  #   constructor: (@$chatbar)->
+  #     @user_id = @$chatbar.data('user-id')
+  #     @user_name = @$chatbar.data('user-name')
 
-      @init()
+  #     @init()
 
-    init: ->
-      @init_chat_box()
-      @init_notifier()
+  #   init: ->
+  #     @init_chat_box()
+  #     @init_notifier()
 
-    init_chat_box: ->
-      @chatbox = new FayeChatBox(this)
-      @chatbox.bind @$chatbar.find('.contacts .user')
+  #   init_chat_box: ->
+  #     @chatbox = new FayeChatBox(this)
+  #     @chatbox.bind @$chatbar.find('.contacts .user')
 
-      that = this
-      jQuery(@$chatbar).on 'click', '.contacts .user', (evt)->
-        that.chatbox.bind(jQuery(this))
+  #     that = this
+  #     jQuery(@$chatbar).on 'click', '.contacts .user', (evt)->
+  #       that.chatbox.bind(jQuery(this))
 
-    init_notifier: ->
-      host = window.location.host.split(':')[0]
-      faye_server_url = "http://#{host}:8080/faye"
+  #   init_notifier: ->
+  #     host = window.location.host.split(':')[0]
+  #     faye_server_url = "http://#{host}:8080/faye"
 
-      jQuery.getScript "#{faye_server_url}/client.js",
-      =>
-        notifier = new FayeNotifier(@user_id, faye_server_url)
-        notifier.subscribe (message)=>
-          # 在这里处理接收到的聊天信息
-          @chatbox.append_chatlog message
+  #     jQuery.getScript "#{faye_server_url}/client.js",
+  #     =>
+  #       notifier = new FayeNotifier(@user_id, faye_server_url)
+  #       notifier.subscribe (message)=>
+  #         # 在这里处理接收到的聊天信息
+  #         @chatbox.append_chatlog message
 
-      =>
-        console.log "无法连接到Faye即时聊天服务器"
+  #     =>
+  #       console.log "无法连接到Faye即时聊天服务器"
 
   # 暂时用不上
 

@@ -267,6 +267,16 @@ jQuery ->
       current_step_id = @$elm.find('.current-step-info').data('id')
       @current_step = @get_step_by_id current_step_id
 
+      @$elm.find('.current-step-info a.show-tip').click =>
+        @$elm.find('.current-step-info .step-hint').addClass('open')
+        $ct = @$elm.find('.nano-content')
+        $ct.animate 
+          scrollTop: $ct[0].scrollHeight
+        , 300
+
+      @$elm.find('.current-step-info a.close-tip').click =>
+        @$elm.find('.current-step-info .step-hint').removeClass('open')
+
       @$elm.find('a.submit-code').click =>
         @submit_code()
 
@@ -444,7 +454,8 @@ jQuery ->
           .find('.step-title').html(step.title).end()
           .find('.step-desc').html(step.desc_html).end()
           .find('.step-content .cc').html(step.content_html).end()
-          .find('.step-hint .cc').html(step.hint_html).end()
+          .find('.step-hint').removeClass('open').end()
+          .find('.step-hint .txt').html(step.hint_html).end()
           .find('.info').hide().fadeIn().end()
         .end()
 
@@ -457,6 +468,8 @@ jQuery ->
 
       if save_history
         @push_step_histroy(step)
+
+      jQuery(document).trigger('load-coding-step')
 
 
     init_ctrl_s_for_submit: ->
@@ -628,3 +641,17 @@ jQuery ->
 
   jQuery('body.coding > .ui-tips-overlay').each ->
     new JavascriptPageTips jQuery(this)
+
+jQuery ->
+  jQuery('body.coding .share-btns a').click (evt)->
+    bShare.addEntry
+      summary: '我正在 MINDPIN 学习在线 javascript 编程教程，体验很有趣。大家一起来试试吧。'
+      pic: "http://#{window.location.host}/assets/sync/javascript-128.png"
+      url: "http://#{window.location.host}#{window._SHARE_URL}"
+
+    _for = jQuery(this).data('for')
+          
+    if _for == 'more'
+      bShare.more evt
+    else 
+      bShare.share evt, _for

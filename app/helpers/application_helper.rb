@@ -65,7 +65,7 @@ module ApplicationHelper
       end
     end
 
-    link_to "/users/#{user.id}", :class => 'u-avatar' do
+    link_to "/users/#{user.id}", :class => 'u-avatar', :title => user.name do
       avatar user, style
     end
   end

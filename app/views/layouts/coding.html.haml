@@ -12,6 +12,7 @@
   = javascript_include_tag '/jquery-migrate/jquery-migrate-1.2.1'
   = javascript_include_tag '/ace/src-min-noconflict/ace'
   = javascript_include_tag '/parse-js/parse-js'
+  = javascript_include_tag 'http://static.bshare.cn/b/buttonLite.js#uuid=57bc5d98-618c-410c-83cd-299d859bba76&style=-1'
   = render_cell :layout, :google_analytics_code if R::INTERNET
 
 !!!
@@ -39,7 +40,9 @@
           %b> 任务目标
           %span> 。
         %p
-          %span> 请阅读介绍文字，然后从任务目标获知需要做什么才能完成这个练习。
+          %span> 请阅读介绍文字，然后
+          %b> 从任务目标获知需要做什么才能完成这个练习
+          %span> 。
         %p
           %span> 如果对于如何完成任务仍有疑惑，还可以查看任务提示。
 

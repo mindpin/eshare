@@ -63,6 +63,7 @@ class Medal
       hash = {
         :type => 'got_medal',
         :name => self.medal.name,
+        :desc => self.medal.desc,
         :medal_name => self.medal_name
       }
 

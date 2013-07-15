@@ -35,6 +35,7 @@
   :javascript
     _COURSE_WARE_STEPS = #{steps_arr.to_json}
     _CURRENT_USER_ID = #{@user.present? ? @user.id : false}
+    _SHARE_URL = "/javascript_steps/#{steps.first.id}"
 
 .page-coding.javascript
   - @step = steps.first if !@step
@@ -49,11 +50,19 @@
             %i.icon-info-sign
             %span 任务目标
           .cc
-        .step-hint
-          .tt
-            %i.icon-question-sign
-            %span 任务提示
-          .cc
+
+          .step-hint
+            %a.btn.show-tip{:href => 'javascript:;'}
+              %i.icon-question-sign.icon-white
+              %b 有麻烦？
+              %span 查看提示
+            .bx
+              %a.btn.close-tip{:href => 'javascript:;'} 
+                %i.icon-chevron-up.icon-white
+                %span 收起提示
+              .txt
+
+
 
     .steps-status{:style => 'display:none;'}
       - last_pass_status = 'done'
