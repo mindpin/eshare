@@ -210,6 +210,20 @@ module ApplicationHelper
     }
   end
 
+  def course_update_status(course)
+    status = course.get_update_status
+    klass = status.downcase
+    str = {
+      :NOCHANGE => '',
+      :UPDATED => '更新',
+      :NEW => '新课程'
+    }[status.to_sym]
+
+    capture_haml {
+      haml_tag 'span.course-update-status', str, :class => klass
+    }
+  end
+
   module FeedHelper
     def feed_icon(feed)
       capture_haml {

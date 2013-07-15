@@ -13,7 +13,7 @@ class ServiceStatus
         check_redis
         check_solr
         check_sidekiq
-        check_faye
+        #check_faye
       end
     end
 

@@ -1,0 +1,8 @@
+- if @user.present?
+  .page-medal-notice{:data => {:'user-id' => @user.id}}
+    .medal{:style => 'display:none;'}
+      .icon
+      .got 你获得了新的徽章！
+      .name 旅途的第一步
+      %a.close{:href => 'javascript:;'}
+        %i.icon-remove-sign

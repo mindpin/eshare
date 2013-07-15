@@ -17,6 +17,7 @@
 !!!
 - simple_page_layout title, :html_lang => :zh, :body_class => 'coding' do
   = render_cell :layout, :topnav_coding, :user => current_user, :course_ware => @course_ware
+  = render_cell :layout, :medals_coding, :user => current_user
 
   .page-layout-coding
     = yield

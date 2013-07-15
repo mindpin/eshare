@@ -21,6 +21,19 @@
         .pblock.nopadding
           = render_cell :follow, :stat, :user => @user
 
+        - if R::INTERNET
+          - if @user.user_medals.present?
+            .pblock
+              .cpart
+                %h3 已经获得的徽章
+                .page-user-page-medals
+                  - @user.user_medals.each do |um|
+                    - medal = um.medal
+                    - klass = medal.medal_name
+                    - title = "#{medal.name}：#{medal.desc}"
+                    %a.medal{:href => 'javascript:;', :title => title}
+                      .icon{:class => klass}
+
         .pblock
           = render_cell :tags, :learning, :user => @user
 
