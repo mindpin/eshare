@@ -54,7 +54,7 @@ class StepHistory < ActiveRecord::Base
 
     count1 = 
       StepHistory
-        .by_user(User.find(22)).passed
+        .by_user(user).passed
         .joins("JOIN course_wares ON course_wares.id = step_histories.course_ware_id")
         .joins("JOIN chapters ON course_wares.chapter_id = chapters.id AND chapters.id = #{chapter.id}")
         .count('DISTINCT step_id, step_type')
