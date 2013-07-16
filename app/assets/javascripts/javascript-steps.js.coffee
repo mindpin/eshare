@@ -547,6 +547,7 @@ jQuery ->
       @tip2 = @elm.find('.ui-tip[data-num=2]')
       @tip3 = @elm.find('.ui-tip[data-num=3]')
       @tip4 = @elm.find('.ui-tip[data-num=4]')
+      @tip5 = @elm.find('.ui-tip[data-num=5]')
 
       @setup()
 
@@ -596,11 +597,30 @@ jQuery ->
           opacity: 1
         , 200
 
+    show_tip5: ->
+      @tip5
+        .css
+          top: 40
+          opacity: 0
+        .show()
+        .animate
+          top: 80
+          opacity: 1
+        , 200
+
     setup: ->
 
       jQuery('body.coding > .show-ui-tips').click =>
         @elm.show()
         @show_tip1()
+
+      @elm.find('a.close-ui-tip').click =>
+        @tip1.hide()
+        @tip2.hide()
+        @tip3.hide()
+        @tip4.hide()
+        @tip5.hide()
+        @elm.fadeOut(200)
 
       @tip1.find('.btn.next').click =>
         @tip1
@@ -636,6 +656,15 @@ jQuery ->
             opacity: 0
           , 200, =>
             @tip4.hide()
+            @show_tip5()
+
+      @tip5.find('.btn.next').click =>
+        @tip5
+          .animate
+            top: 40
+            opacity: 0
+          , 200, =>
+            @tip5.hide()
             @elm.hide()
 
 

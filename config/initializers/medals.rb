@@ -1,7 +1,7 @@
 MEDALS = {
-  :PASS_1_CODING_LESSON => {
-    :name => '编程新手',
-    :desc => '成功完成一个编程教学小节下的所有练习',
+  :PASS_JS_CODING_CHAPTER => {
+    :name => 'JS章节通过！',
+    :desc => '成功完成一个 javascript 教学章节下的所有练习',
   },
 
   :PASS_1_CODING_STEP => {
@@ -15,12 +15,12 @@ MEDALS = {
   },
 
   :PASS_25_CODING_STEP => {
-    :name => '二十五块路牌',
+    :name => '朝气蓬勃',
     :desc => '成功完成二十五个编程教学练习'
   },
 
   :PASS_50_CODING_STEP => {
-    :name => '五十个硬币',
+    :name => '踌躇满志',
     :desc => '成功完成五十个编程教学练习'
   },
 
@@ -64,7 +64,8 @@ class Medal
         :type => 'got_medal',
         :name => self.medal.name,
         :desc => self.medal.desc,
-        :medal_name => self.medal_name
+        :medal_name => self.medal_name,
+        :data => self.data
       }
 
       FayeClient.publish "/users/#{self.user_id}/medal", hash

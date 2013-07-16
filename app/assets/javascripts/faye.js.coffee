@@ -39,6 +39,9 @@ jQuery ->
         .find('.desc').html(message.desc).end()
         .find('.icon').addClass(message.medal_name)
 
+      if message.data
+        $medal.addClass('with-data').find('.data').html(message.data)
+
       @elm.append $medal
       $medal
         .css
