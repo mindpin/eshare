@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :course_depend do
-    before_course
-    after_course
+    sequence(:before_course_id){|n| "#{n}" }
+    sequence(:after_course_id){|n| "#{n}" }
   end
 end
