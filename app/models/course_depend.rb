@@ -9,10 +9,10 @@ class CourseDepend < ActiveRecord::Base
 
   module CourseMethods
     def self.included(base)
-      base.has_many :a_course_depends, :class_name => 'CourseDepend', :foreign_key => :before_course_id
-      base.has_many :after_courses, :through => :a_course_depends, :source => :after_course
-      base.has_many :b_course_depends, :class_name => "CourseDepend", :foreign_key => :after_course_id
-      base.has_many :before_courses, :through => :b_course_depends, :source => :before_course
+      base.has_many :before_course_depends, :class_name => 'CourseDepend', :foreign_key => :before_course_id
+      base.has_many :after_courses, :through => :before_course_depends, :source => :after_course
+      base.has_many :after_course_depends, :class_name => "CourseDepend", :foreign_key => :after_course_id
+      base.has_many :before_courses, :through => :after_course_depends, :source => :before_course
 
       base.send :include, InstanceMethods
     end
@@ -21,11 +21,11 @@ class CourseDepend < ActiveRecord::Base
 
 
       def add_before_course(course)
-        b_course_depends.where(:before_course_id => course.id).first_or_create
+        after_course_depends.where(:before_course_id => course.id).first_or_create
       end
 
       def add_after_course(course)
-        a_course_depends.where(:after_course_id => course.id).first_or_create
+        before_course_depends.where(:after_course_id => course.id).first_or_create
       end
 
     end
