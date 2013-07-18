@@ -7,7 +7,9 @@ class Manage::CoursesController < ApplicationController
   
   def index
     authorize! :manage, Course
-    if (query = @query = params[:q]).blank?
+    query = @query = (params[:q].blank? ? '' : params[:q].strip)
+
+    if query.blank?
       @courses = Course.page(params[:page])
     else
       @courses = @search = Course.search {
@@ -62,11 +64,7 @@ class Manage::CoursesController < ApplicationController
     authorize! :manage, @course
     @course.destroy
 
-    if params[:q].present?
-      redirect_to :action => :index, :q => params[:q]
-    else
-      redirect_to :action => :index
-    end
+    redirect_to :action => :index, :q => cookies[:last_course_filter]
   end
 
   def download_import_sample
