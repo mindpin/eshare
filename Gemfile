@@ -11,7 +11,7 @@ gem 'docsplit', '0.7.2'
 gem 'sunspot_rails', '2.0.0'
 gem 'chinese_pinyin', '0.4.2'
 gem 'rmmseg-cpp-huacnlee', '0.2.9'
-gem 'redis-search', :git => 'git://github.com/huacnlee/redis-search.git'
+gem 'redis-search', :git => 'git://github.com/mindpin/redis-search.git'
 
 if R::INTERNET
   gem 'sqlite3', "~> 1.3.7"
