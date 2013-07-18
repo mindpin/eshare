@@ -3342,11 +3342,11 @@ img.page-avatar {
 
   &.step2 {
     .desc {margin-bottom:20px;}
-    .cname {font-size:16px;font-weight:bold;margin-bottom:20px;}
-    .cdesc {margin-bottom:20px;}
-    .chapters {
+    .cname {font-size:16px;font-weight:bold;margin-bottom:10px;}
+    .ccount {margin-bottom:20px;}
+    .videos {
       margin-bottom:20px;
-      .churl {
+      .video-url {
         margin-bottom:10px;
         font-size:12px;
       }

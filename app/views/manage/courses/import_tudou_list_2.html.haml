@@ -12,13 +12,13 @@
       .desc 即将导入以下内容
       
       .cname= @data[:name]
-      .cdesc= @data[:desc]
+      .ccount 共 #{@data[:videos].length} 个视频
 
-      .chapters
-        - @data[:chapters].each do |c|
-          .chapter
-            .cht= c[:title]
-            .churl
+      .videos
+        - @data[:videos].each do |c|
+          .video
+            .video-title= c[:title]
+            .video-url
               %a{:href => c[:url], :target => '_blank'}= c[:url]
 
       %input{:type => :hidden, :name => :url, :value => @url}
