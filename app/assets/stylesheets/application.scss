@@ -2036,6 +2036,14 @@ img.page-avatar {
 
 
 .page-account-avatar {
+  .error {
+    background-color:#ffffda;
+    border-bottom:solid 1px #e7e7e7;
+    margin:-20px;
+    padding:20px;
+    margin-bottom:20px;
+  }
+
   .desc {
     margin-bottom: 20px;
   }
