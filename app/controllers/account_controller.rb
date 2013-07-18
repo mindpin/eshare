@@ -88,6 +88,7 @@ class AccountController < Devise::RegistrationsController
     if params[:user].present? && params[:user][:avatar].present?
       user.avatar = params[:user][:avatar]
       user.save
+      flash[:success] = "你的头像成功更新了"
     else
       flash[:error] = "你没有选择需要上传的图片"
     end

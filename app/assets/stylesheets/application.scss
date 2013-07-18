@@ -593,7 +593,7 @@ body.admin, body.app, body.account, body.help, body.error, body.course{
     .content-header {
       $h:59px;
       height:59px;
-      border-bottom:solid 1px #ddd;
+      border-bottom:solid 1px #e7e7e7;
       margin:-20px -20px 20px -20px;
       padding:0 20px;
 
@@ -725,7 +725,7 @@ body.account, body.help {
     margin-top:20px;
     margin-right:20px;
     margin-bottom:30px;
-    border:solid 1px #ddd;
+    border:solid 1px #e7e7e7;
     
     position:relative;
   }
@@ -2042,6 +2042,15 @@ img.page-avatar {
     margin:-20px;
     padding:20px;
     margin-bottom:20px;
+  }
+
+  .fsuccess {
+    background-color:#eeffda;
+    border-bottom:solid 1px #e7e7e7;
+    margin:-20px;
+    padding:20px;
+    margin-bottom:20px;
+    color:green;
   }
 
   .desc {
