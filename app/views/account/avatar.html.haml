@@ -3,21 +3,28 @@
   .page-desc 修改你的用户头像
 
 .page-account-avatar
-  - if flash[:error].present?
-    .error= flash[:error]
-
-  - if flash[:success].present?
-    .fsuccess
-      %i.icon-ok
-      %span= flash[:success]
-
-  .desc 上传一张图片，系统会自动替你裁成不同尺寸
+  .desc 上传一张图片，然后进行裁切
 
   .crop-avatars
     .img= avatar current_user, :large
     .img= avatar current_user, :normal
     .img= avatar current_user, :small
 
-  = simple_form_for current_user, :url => '/account/avatar' do |f|
-    = f.input :avatar, :required => true, :hint => '选择一张图片并上传'
-    = f.button :submit, :class => 'success', :disable_with => '正在提交'
+  .upload
+    - page_file_uploader
+    %a.btn.primary-flat.avatar-upload{:href => 'javascript:;'} 
+      %i.icon-upload.icon-white
+      %span 上传图片
+
+  .form{:style => 'display:none;'}
+    = simple_form_for current_user, :url => '/account/avatar' do |f|
+      .form-inputs
+        .right
+          .preview
+          %a.btn.success-flat{:href => 'javascript:;'} 
+            %i.icon-ok.icon-white
+            %span 确定
+          %a.btn.gray-flat{:href => 'javascript:;'} 
+            %i.icon-remove
+            %span 取消
+        .image{:style => 'max-width:60%;'}

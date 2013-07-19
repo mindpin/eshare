@@ -75,8 +75,9 @@ class FilesController < ApplicationController
 
     def _build_json(file_entity)
       return {
-        :file_entity_id => file_entity.id,
-        :saved_size     => file_entity.saved_size
+        :file_entity_id  => file_entity.id,
+        :file_entity_url => file_entity.attach.url,
+        :saved_size      => file_entity.saved_size
       }
     end
 end

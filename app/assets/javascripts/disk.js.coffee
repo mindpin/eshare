@@ -52,11 +52,12 @@ jQuery ->
         .find('.percent').html(@file.percent()).end()
         .find('.bar').css('width', @file.percent()).end()
 
-    mark_success: =>
+    mark_success: (func)=>
       setTimeout =>
         @$elm
           .find('.page-progress').addClass('success').removeClass('active').end()
-      , 700
+        func() if func
+      , 600
 
 # ----------------------
   
@@ -117,3 +118,66 @@ jQuery ->
           .find('span').html('重新上传')
       , 700
   }
+
+# ------------------------
+
+  if jQuery('.page-account-avatar').length > 0
+
+    # 头像上传
+    new PageFileUploader jQuery('.page-file-uploader'), {
+      url : '/upload'
+      multiple : false
+      button : jQuery('.page-account-avatar a.btn.avatar-upload')
+      on_file_success : (file) ->
+        if file.uploader_item
+          file.uploader_item.mark_success =>
+
+            $img = jQuery("<img src='#{file.file_entity_url}' />")
+            $pimg = $img.clone()
+
+            $img.hide().fadeIn().css('max-width', '100%')
+            $img.on 'load', =>
+
+              origin_width = $img.width()
+              origin_height = $img.height()
+              console.log origin_width, origin_height
+
+              jQuery('.page-account-avatar .crop-avatars').slideUp(200)
+              jQuery('.page-account-avatar .upload .btn').hide()
+              jQuery('.page-account-avatar .form').show()
+
+              jQuery('.form-inputs .image').html $img
+              jQuery('.form-inputs .preview').html $pimg
+
+              boundx = null
+              boundy = null
+
+              update_preview = (c)->
+                if boundx && parseInt(c.w) > 0
+                  rx = 180 / c.w;
+                  ry = 180 / c.h;
+
+                  console.log rx
+
+                  $pimg.css
+                    width      : Math.round(rx * boundx)
+                    height     : Math.round(ry * boundy)
+                    marginLeft : - Math.round(rx * c.x)
+                    marginTop  : - Math.round(ry * c.y)
+
+              $img.Jcrop
+                bgColor: 'black'
+                bgOpacity: 0.4
+                setSelect: [ 0, 0, 180, 180 ]
+                addClass: 'jcrop-dark'
+                bgFade: true
+                aspectRatio: 1
+                onChange: update_preview
+                onSelect: update_preview
+              , ->
+                this.ui.selection.addClass('jcrop-selection');
+                
+                bounds = this.getBounds()
+                boundx = bounds[0]
+                boundy = bounds[1]
+    }
