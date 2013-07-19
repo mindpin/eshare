@@ -3,12 +3,17 @@
   .page-desc 修改你的用户头像
 
 .page-account-avatar
+  - if flash[:success].present?
+    .fsuccess
+      %i.icon-ok
+      %span= flash[:success]
+
   .desc 上传一张图片，然后进行裁切
 
   .crop-avatars
-    .img= avatar current_user, :large
-    .img= avatar current_user, :normal
-    .img= avatar current_user, :small
+    .img.s1= avatar current_user, :large
+    .img.s2= avatar current_user, :normal
+    .img.s3= avatar current_user, :small
 
   .upload
     - page_file_uploader
@@ -21,10 +26,21 @@
       .form-inputs
         .right
           .preview
-          %a.btn.success-flat{:href => 'javascript:;'} 
+          %a.btn.success-flat.submit{:href => 'javascript:;'} 
             %i.icon-ok.icon-white
             %span 确定
-          %a.btn.gray-flat{:href => 'javascript:;'} 
+          %a.btn.gray-flat.cancel{:href => 'javascript:;'} 
             %i.icon-remove
             %span 取消
+
         .image{:style => 'max-width:60%;'}
+
+        %input{:name => :file_entity_id}
+        %input{:name => :origin_width}
+        %input{:name => :origin_height}
+        %input{:name => :page_width}
+        %input{:name => :page_height}
+        %input{:name => :cx}
+        %input{:name => :cy}
+        %input{:name => :cw}
+        %input{:name => :ch}

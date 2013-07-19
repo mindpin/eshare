@@ -82,27 +82,32 @@ class AccountController < Devise::RegistrationsController
   def avatar
   end
 
-  def avatar_crop
-    user = User.find(current_user.id)
-
-    if params[:user].present? && params[:user][:avatar].present?
-      # create file_entity
-    end
-
-    flash[:error] = "你没有选择需要上传的图片"
-    redirect_to :action => :avatar
-  end
-
   def avatar_update
-    user = User.find(current_user.id)
 
-    if params[:user].present? && params[:user][:avatar].present?
-      user.avatar = params[:user][:avatar]
-      user.save
-      flash[:success] = "你的头像成功更新了"
-    else
-      flash[:error] = "你没有选择需要上传的图片"
-    end
+    origin_width  = params[:origin_width].to_f
+    origin_height = params[:origin_height].to_f
+    page_width    = params[:page_width].to_i
+    page_height   = params[:page_height].to_i
+    cx = params[:cx].to_i
+    cy = params[:cy].to_i
+    cw = params[:cw].to_i
+    ch = params[:ch].to_i
+
+    ratiox = origin_width / page_width
+    ratioy = origin_height / page_height
+
+    s = [(cw * ratiox).round, (ch * ratioy).round].min
+
+    user = User.find(current_user.id)
+    user.avatar_cw = s
+    user.avatar_ch = s
+    user.avatar_cx = (cx * ratiox).round
+    user.avatar_cy = (cy * ratioy).round
+
+    user.avatar = FileEntity.find(params[:file_entity_id]).attach
+    user.save
+
+    flash[:success] = "你的头像成功更新了"
     redirect_to :action => :avatar
   end
 
