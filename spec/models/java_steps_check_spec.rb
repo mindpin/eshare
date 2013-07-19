@@ -30,8 +30,7 @@ describe JavaStep do
         return a + b;
       }
     `
-    json = step.check(input,@user)
-    hash = JSON.parse(json)
+    hash = step.check(input,@user)
     hash.should == {
       "error"   => "",
       "success" => true,
@@ -74,8 +73,7 @@ describe JavaStep do
     `
 
     step = FactoryGirl.create(:java_step, :course_ware => @course_ware_1, :rule => rule)
-    json = step.check(input,@user)
-    hash = JSON.parse(json)
+    hash = step.check(input,@user)
 
     hash.should == {
       "error"   => "",
@@ -119,8 +117,7 @@ describe JavaStep do
     `
 
     step = FactoryGirl.create(:java_step, :course_ware => @course_ware_1, :rule => rule)
-    json = step.check(input,@user)
-    hash = JSON.parse(json)
+    hash = step.check(input,@user)
     hash.should == {
       "error"   => "",
       "success" => false,
@@ -163,8 +160,7 @@ describe JavaStep do
     `
 
     step = FactoryGirl.create(:java_step, :course_ware => @course_ware_1, :rule => rule)
-    json = step.check(input,@user)
-    hash = JSON.parse(json)
+    hash = step.check(input,@user)
     hash.should == {
       "error"   => "代码编译异常",
       "success" => false,
@@ -196,8 +192,7 @@ describe JavaStep do
     `
 
     step = FactoryGirl.create(:java_step, :course_ware => @course_ware_1, :rule => rule)
-    json = step.check(input,@user)
-    hash = JSON.parse(json)
+    hash = step.check(input,@user)
     hash.should == {
       "error"   => "代码编译异常",
       "success" => false,
@@ -229,8 +224,7 @@ describe JavaStep do
     `
 
     step = FactoryGirl.create(:java_step, :course_ware => @course_ware_1, :rule => rule)
-    json = step.check(input,@user)
-    hash = JSON.parse(json)
+    hash = step.check(input,@user)
     hash.should == {
       "error"   => "代码编译异常",
       "success" => false,

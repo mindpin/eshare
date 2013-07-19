@@ -224,8 +224,7 @@ describe JavaStep do
     0.upto(5) do |i|
       thxs << Thread.new{
         p ">>>>>>>>>  #{i}"
-        json = @steps[i].check(@inputs[i],@user)
-        hash = JSON.parse(json)
+        hash = @steps[i].check(@inputs[i],@user)
         
         p "<<<<<<<<<<<<<< #{i} #{hash} #{hash == @results[i]}"
         hash.should == @results[i]
