@@ -74,6 +74,9 @@ class JavascriptStepTester
           calls: ast.calls
           array_equals: (a, b)->
             JSON.stringify(a) == JSON.stringify(b)
+          code: code
+          result: result
+          error: error
 
       catch e
         MT = 
@@ -81,6 +84,9 @@ class JavascriptStepTester
           printed: -> null
           calls: -> null
           array_equals: -> null
+          code: code
+          result: result
+          error: error
 
       # 恢复对变量的约束
 
