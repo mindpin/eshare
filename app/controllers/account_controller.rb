@@ -82,6 +82,17 @@ class AccountController < Devise::RegistrationsController
   def avatar
   end
 
+  def avatar_crop
+    user = User.find(current_user.id)
+
+    if params[:user].present? && params[:user][:avatar].present?
+      # create file_entity
+    end
+
+    flash[:error] = "你没有选择需要上传的图片"
+    redirect_to :action => :avatar
+  end
+
   def avatar_update
     user = User.find(current_user.id)
 

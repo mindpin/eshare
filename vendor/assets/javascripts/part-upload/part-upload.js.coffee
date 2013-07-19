@@ -177,9 +177,11 @@ class ResumableFile
 
   set_some_info_from_json: (json_string) ->
     json = jQuery.parseJSON json_string
-    @file_entity_id = json.file_entity_id
-    @saved_size = json.saved_size
-    console.log json
+    @file_entity_id  = json.file_entity_id
+    @file_entity_url = json.file_entity_url
+    @saved_size      = json.saved_size
+
+    # console.log json
     # 可能需要捕捉异常？
 
   bootstrap: ->

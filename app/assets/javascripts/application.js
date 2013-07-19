@@ -25,4 +25,7 @@
 
 //= require part-upload/part-upload
 //= require simple-images
+
+//= require jcrop/jquery.Jcrop.min
+
 //= require_tree .
