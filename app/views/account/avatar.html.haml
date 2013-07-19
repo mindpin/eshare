@@ -3,6 +3,14 @@
   .page-desc 修改你的用户头像
 
 .page-account-avatar
+  - if flash[:error].present?
+    .error= flash[:error]
+
+  - if flash[:success].present?
+    .fsuccess
+      %i.icon-ok
+      %span= flash[:success]
+
   .desc 上传一张图片，系统会自动替你裁成不同尺寸
 
   .crop-avatars

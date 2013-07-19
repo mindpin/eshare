@@ -267,6 +267,16 @@ jQuery ->
       current_step_id = @$elm.find('.current-step-info').data('id')
       @current_step = @get_step_by_id current_step_id
 
+      @$elm.find('.current-step-info a.show-tip').click =>
+        @$elm.find('.current-step-info .step-hint').addClass('open')
+        $ct = @$elm.find('.nano-content')
+        $ct.animate 
+          scrollTop: $ct[0].scrollHeight
+        , 300
+
+      @$elm.find('.current-step-info a.close-tip').click =>
+        @$elm.find('.current-step-info .step-hint').removeClass('open')
+
       @$elm.find('a.submit-code').click =>
         @submit_code()
 
@@ -444,7 +454,8 @@ jQuery ->
           .find('.step-title').html(step.title).end()
           .find('.step-desc').html(step.desc_html).end()
           .find('.step-content .cc').html(step.content_html).end()
-          .find('.step-hint .cc').html(step.hint_html).end()
+          .find('.step-hint').removeClass('open').end()
+          .find('.step-hint .txt').html(step.hint_html).end()
           .find('.info').hide().fadeIn().end()
         .end()
 
@@ -457,6 +468,8 @@ jQuery ->
 
       if save_history
         @push_step_histroy(step)
+
+      jQuery(document).trigger('load-coding-step')
 
 
     init_ctrl_s_for_submit: ->
@@ -526,3 +539,148 @@ jQuery ->
 
   jQuery('.page-coding.javascript').each ->
     new JavascriptPage jQuery(this)
+
+jQuery ->
+  class JavascriptPageTips
+    constructor: (@elm)->
+      @tip1 = @elm.find('.ui-tip[data-num=1]')
+      @tip2 = @elm.find('.ui-tip[data-num=2]')
+      @tip3 = @elm.find('.ui-tip[data-num=3]')
+      @tip4 = @elm.find('.ui-tip[data-num=4]')
+      @tip5 = @elm.find('.ui-tip[data-num=5]')
+
+      @setup()
+
+      @show_tip1()
+
+    show_tip1: ->
+      @tip1
+        .css
+          left: 0
+          opacity: 0
+        .show()
+        .animate
+          left: 80
+          opacity: 1
+        , 200
+
+    show_tip2: ->
+      @tip2
+        .css
+          top: 110
+          opacity: 0
+        .show()
+        .animate
+          top: 150
+          opacity: 1
+        , 200
+
+    show_tip3: ->
+      @tip3
+        .css
+          bottom: 40
+          opacity: 0
+        .show()
+        .animate
+          bottom: 80
+          opacity: 1
+        , 200
+
+    show_tip4: ->
+      @tip4
+        .css
+          bottom: 360
+          opacity: 0
+        .show()
+        .animate
+          bottom: 400
+          opacity: 1
+        , 200
+
+    show_tip5: ->
+      @tip5
+        .css
+          top: 40
+          opacity: 0
+        .show()
+        .animate
+          top: 80
+          opacity: 1
+        , 200
+
+    setup: ->
+
+      jQuery('body.coding > .show-ui-tips').click =>
+        @elm.show()
+        @show_tip1()
+
+      @elm.find('a.close-ui-tip').click =>
+        @tip1.hide()
+        @tip2.hide()
+        @tip3.hide()
+        @tip4.hide()
+        @tip5.hide()
+        @elm.fadeOut(200)
+
+      @tip1.find('.btn.next').click =>
+        @tip1
+          .animate
+            left: 0
+            opacity: 0
+          , 200, =>
+            @tip1.hide()
+            @show_tip2()
+
+      @tip2.find('.btn.next').click =>
+        @tip2
+          .animate
+            top: 110
+            opacity: 0
+          , 200, =>
+            @tip2.hide()
+            @show_tip3()
+
+      @tip3.find('.btn.next').click =>
+        @tip3
+          .animate
+            bottom: 40
+            opacity: 0
+          , 200, =>
+            @tip2.hide()
+            @show_tip4()
+
+      @tip4.find('.btn.next').click =>
+        @tip4
+          .animate
+            bottom: 360
+            opacity: 0
+          , 200, =>
+            @tip4.hide()
+            @show_tip5()
+
+      @tip5.find('.btn.next').click =>
+        @tip5
+          .animate
+            top: 40
+            opacity: 0
+          , 200, =>
+            @tip5.hide()
+            @elm.hide()
+
+
+  jQuery('body.coding > .ui-tips-overlay').each ->
+    new JavascriptPageTips jQuery(this)
+
+jQuery ->
+  jQuery('body.coding .share-btns a').click (evt)->
+    bShare.addEntry
+      summary: '我正在 MINDPIN 学习在线 javascript 编程教程，体验很有趣。大家一起来试试吧。'
+      pic: "http://#{window.location.host}/assets/sync/javascript-128.png"
+      url: "http://#{window.location.host}#{window._SHARE_URL}"
+
+    _for = jQuery(this).data('for')
+          
+    if _for == 'more'
+      bShare.more evt
+    else 
+      bShare.share evt, _for

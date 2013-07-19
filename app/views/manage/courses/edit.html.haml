@@ -30,4 +30,4 @@
 
       .form-actions
         = f.button :submit, :class => 'success'
-        %a.btn.cancel{:href => "/manage/courses"}= t('common.form.cancel')
+        %a.btn.cancel{:href => "/manage/courses?q=#{cookies[:last_course_filter]}"}= t('common.form.cancel')
