@@ -1,17 +1,11 @@
 .course.page-course.card
-  .cover
-    %a{:href => "/courses/#{@course.id}"}
-      = fit_image @course.cover.versions[:normal].url, :height => 140
-  .data
-    .counts
-      %span.chapters-count= "#{@chapters_count} 个章节"
-      %span.questions-count= "#{@questions_count} 个问答"
-    .title
-      = link_to @course.name, @course
-    .desc= truncate_u @course.desc, 20
-  .progress
-    .page-progress.success.striped
-      .bar{:style => "width:#{@percent};"}
-  .foot
-    %span.percent= @percent
-    %span.percent-str 学习进度
+  %a.course-link{:href => "/courses/#{@course.id}"}
+    .cover
+      = fit_image @course.cover.versions[:normal].url, :height => 160
+    .desc
+      = simple_format truncate_u(@course.desc, 64)
+    .update-status
+      = course_update_status @course
+    .go-study
+      %span.title= truncate_u(@course.name, 8)
+      %i.icon-chevron-right

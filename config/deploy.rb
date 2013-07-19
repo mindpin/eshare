@@ -104,6 +104,14 @@ task :deploy => :environment do
   end
 end
 
+desc "update code only"
+task :update_code => :environment do
+  deploy do
+    invoke :'git:clone'
+    invoke :'deploy:link_shared_paths'
+  end
+end
+
 desc "restart server"
 task :restart => :environment do
   queue %[

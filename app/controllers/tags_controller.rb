@@ -1,6 +1,15 @@
 class TagsController < ApplicationController
   before_filter :authenticate_user!
 
+  layout Proc.new { |controller|
+    case controller.action_name
+    when 'courses'
+      return 'grid'
+    else
+      return 'application'
+    end
+  }
+
   def index
   end
 

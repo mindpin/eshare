@@ -2,23 +2,29 @@
   = render_cell :manage_courses_breadcrumb, :display, :model => @chapter
 
   .btns
-    %a.btn{:href => "/manage/chapters/#{@chapter.id}/edit"}
+    %a.btn.gray-flat{:href => "/manage/chapters/#{@chapter.id}/edit"}
       %i.icon-edit
       %span= t('common.edit')
 
-    %a.btn.success{:href => "/manage/chapters/#{@chapter.id}/course_wares/new"}
-      %i.icon-plus.icon-white
-      %span 增加课件
-    %a.btn.success{:href => "/manage/chapters/#{@chapter.id}/course_wares/new?for=web_video"}
-      %i.icon-plus.icon-white
-      %span 增加网络视频
-    - if R::INTERNET
-      %a.btn.success{:href => "/manage/chapters/#{@chapter.id}/course_wares/new?for=javascript"}
-        %i.icon-plus.icon-white
-        %span 增加 js 教程
-      %a.btn.success{:href => "/manage/chapters/#{@chapter.id}/course_wares/import_javascript_course_ware"}
-        %i.icon-plus.icon-white
-        %span 导入 js 教程
+    .down-btns
+      %a.btn.down.success-flat{:href => 'javascript:;'}
+        %i.icon-chevron-down.icon-white
+        %span 增加课件
+
+      .menu
+        %a.btn.success-flat{:href => "/manage/chapters/#{@chapter.id}/course_wares/new"}
+          %i.icon-plus.icon-white
+          %span 一般课件
+        %a.btn.success-flat{:href => "/manage/chapters/#{@chapter.id}/course_wares/new?for=web_video"}
+          %i.icon-plus.icon-white
+          %span 增加网络视频
+        - if R::INTERNET
+          %a.btn.success-flat{:href => "/manage/chapters/#{@chapter.id}/course_wares/new?for=javascript"}
+            %i.icon-plus.icon-white
+            %span 增加 js 教程
+          %a.btn.success-flat{:href => "/manage/chapters/#{@chapter.id}/course_wares/import_javascript_course_ware"}
+            %i.icon-plus.icon-white
+            %span 导入 js 教程
 
 .page-manage-chapter-show
   .pblock.table
@@ -40,11 +46,11 @@
 
       - table.add_column :ops do |cw|
 
-        %a.btn.mini{:href => "/manage/course_wares/#{cw.id}/edit"}
+        %a.btn.mini.gray-flat{:href => "/manage/course_wares/#{cw.id}/edit"}
           %i.icon-edit
           %span= t('common.edit')
 
-        = link_to "/manage/course_wares/#{cw.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger' do
+        = link_to "/manage/course_wares/#{cw.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger-flat' do
           %i.icon-remove.icon-white
           %span= t('common.delete')
 

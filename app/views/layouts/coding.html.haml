@@ -12,11 +12,116 @@
   = javascript_include_tag '/jquery-migrate/jquery-migrate-1.2.1'
   = javascript_include_tag '/ace/src-min-noconflict/ace'
   = javascript_include_tag '/parse-js/parse-js'
+  = javascript_include_tag 'http://static.bshare.cn/b/buttonLite.js#uuid=57bc5d98-618c-410c-83cd-299d859bba76&style=-1'
   = render_cell :layout, :google_analytics_code if R::INTERNET
 
 !!!
 - simple_page_layout title, :html_lang => :zh, :body_class => 'coding' do
   = render_cell :layout, :topnav_coding, :user => current_user, :course_ware => @course_ware
+  = render_cell :layout, :medals_coding, :user => current_user
+    
+  / - cookies.delete :show_coding_ui_tip
+
+  :ruby
+    if cookies[:show_coding_ui_tip].present?
+      show_tip = false
+    else
+      cookies[:show_coding_ui_tip] = { :value => "true", :expires => 1.years.from_now }
+      show_tip = true
+    end
+
+  .ui-tips-overlay{:style => show_tip ? '' : 'display:none;'}
+    .ui-tip{:data => {:num => 1}}
+      .title 界面简介：左侧栏
+      .desc
+        %p
+          %span> 左边这里是左侧栏。
+          %span> 在每一个编程练习中，这里都包含了一些介绍文字和
+          %b> 任务目标
+          %span> 。
+        %p
+          %span> 请阅读介绍文字，然后
+          %b> 从任务目标获知需要做什么才能完成这个练习
+          %span> 。
+        %p
+          %span> 如果对于如何完成任务仍有疑惑，还可以查看任务提示。
+
+      %a.btn.success-flat.next{:href=>'javascript:;'} 
+        %span 继续
+        %i.icon-chevron-right.icon-white
+      %a.btn.close-ui-tip{:href=>'javascript:;'} 
+        %span 关闭
+
+    .ui-tip{:data => {:num => 2}}
+      .title 界面简介：代码编辑区
+      .desc
+        %p
+          %span> 中间这里是代码编辑区。
+        %p
+          %span> 你可以在代码编辑区
+          %b> 输入你的代码
+          %span> 。
+      %a.btn.success-flat.next{:href=>'javascript:;'} 
+        %span 继续
+        %i.icon-chevron-right.icon-white
+      %a.btn.close-ui-tip{:href=>'javascript:;'} 
+        %span 关闭
+
+    .ui-tip{:data => {:num => 3}}
+      .title 界面简介：代码提交按钮
+      .desc
+        %p
+          %span> 下面的按钮是代码提交按钮，你可以随时用它来
+          %b> 提交并保存
+          %span 你的代码。
+        %p
+          %span> 代码提交后，系统会运行你的代码，并检查你的代码是否满足任务目标的要求。
+        %p
+          %span> 你也可以随时使用
+          %b> 重置代码
+          %span> 按钮来恢复当前练习的初始代码。
+      %a.btn.success-flat.next{:href=>'javascript:;'} 
+        %span 继续
+        %i.icon-chevron-right.icon-white
+      %a.btn.close-ui-tip{:href=>'javascript:;'} 
+        %span 关闭
+
+    .ui-tip{:data => {:num => 4}}
+      .title 界面简介：控制台
+      .desc
+        %p
+          %span> 右边这里是控制台。
+          %span> 当你提交代码后，这里会显示你的代码的
+          %b> 运行结果或者错误信息
+          %span 。
+        %p
+          %span> 这可以帮助你进行一些检查。
+      %a.btn.success-flat.next{:href=>'javascript:;'} 
+        %span 继续
+        %i.icon-chevron-right.icon-white
+      %a.btn.close-ui-tip{:href=>'javascript:;'} 
+        %span 关闭
+
+    .ui-tip{:data => {:num => 5}}
+      .title 界面简介：分享按钮
+      .desc
+        %p
+          %span> 如果你喜欢这个网站的课程，希望和你的朋友一起来学习，
+          %span> 你可以通过这些按钮把课程地址
+          %b> 一键分享
+          %span> 到新浪微博等网站。
+        %p 
+          %span> 我们会陆续推出新的课程 :)
+      / %a.btn.success-flat.next{:href=>'javascript:;'} 
+      /   %span 继续
+      /   %i.icon-chevron-right.icon-white
+      %a.btn.close-ui-tip{:href=>'javascript:;'} 
+        %span 关闭
+
+
+  %a.show-ui-tips{:href => 'javascript:;'}
+    %i.icon-question-sign.icon-white
+    %span 查看界面说明
 
   .page-layout-coding
     = yield

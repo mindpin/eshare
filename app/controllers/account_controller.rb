@@ -84,8 +84,14 @@ class AccountController < Devise::RegistrationsController
 
   def avatar_update
     user = User.find(current_user.id)
-    user.avatar = params[:user][:avatar]
-    user.save
+
+    if params[:user].present? && params[:user][:avatar].present?
+      user.avatar = params[:user][:avatar]
+      user.save
+      flash[:success] = "你的头像成功更新了"
+    else
+      flash[:error] = "你没有选择需要上传的图片"
+    end
     redirect_to :action => :avatar
   end
 

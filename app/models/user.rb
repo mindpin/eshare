@@ -209,4 +209,5 @@ class User < ActiveRecord::Base
   include WeiboFriends
   include Note::UserMethods
   include CourseAttitude::UserMethods
+  include Medal::UserMethods
 end

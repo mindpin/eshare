@@ -1,22 +1,21 @@
 class JavaStepChecker
-  def initialize(java_step, input, user)
-    @java_step = java_step
+  def initialize(rule, input)
+    @rule = rule
     @input = input
-    @user = user
   end
 
   def check
-    client = TCPSocket.new '127.0.0.1', 10001
+    client = TCPSocket.new R::JAVA_STEP_TESTER_HOST, R::JAVA_STEP_TESTER_PORT
 
-    request = { :input => @input , :rule => @java_step.rule }
+    request = { :input => @input , :rule => @rule }
     client.send(request.to_json + "\n", 0)
     client.flush
 
     response = client.gets
-    client.send('bye' + "\n", 0)
-    client.flush
     client.close
 
-    response
+    JSON.parse(response)
+  rescue Errno::EPIPE => e
+    return {'error' => '服务器忙，请稍后再试', 'success' => false}
   end
 end

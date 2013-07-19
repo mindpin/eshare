@@ -159,3 +159,7 @@ gem 'mina',
 gem 'simple-survey',
     :git => 'git://github.com/mindpin/simple-survey.git',
     :tag => '0.0.8'
+
+gem 'simple-medals',
+    :git => 'git://github.com/kaid/simple-medals.git',
+    :tag => '0.0.2'

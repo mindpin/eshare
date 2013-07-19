@@ -15,6 +15,7 @@ class TudouVideoList
                                         :creator => chapter.creator,
                                         :url     => item.url)
         ware.kind = 'tudou'
+        ware.cover_url_cache = item.pic_url
         ware.save
       end
 
@@ -43,21 +44,24 @@ class TudouVideoList
     end
 
     def desc
-      @desc ||= JSON.parse(desc_json)["message"]["description"]
+      # @desc ||= JSON.parse(desc_json)["message"]["description"]
+      # 0718 性能过低。暂时先不使用
     end
     
     def url
       "http://www.tudou.com/programs/view/#{code}/"
     end
 
+    def pic_url
+      self.picUrl
+    end
+
     private
-
-      def desc_json_url
-        "http://www.tudou.com/playlist/service/getItemDetail.html?code=#{code}"
-      end
-
       def desc_json
-        @desc_json ||= open(desc_json_url).read
+        @desc_json ||= begin
+          url = "http://www.tudou.com/playlist/service/getItemDetail.html?code=#{code}"
+          open(url).read
+        end
       end
 
       def define_methods
@@ -119,16 +123,14 @@ class TudouVideoList
     list = List.new(@url)
 
     title = list.title
-    desc = ''
 
-    chapters = list.items.map {|item|
-      { :title => item.title, :url => item.url, :desc => item.desc }
+    videos = list.items.map {|item|
+      { :title => item.title, :url => item.url }
     }
 
     return {
       :name => title,
-      :desc => desc,
-      :chapters => chapters
+      :videos => videos
     }
   end
 

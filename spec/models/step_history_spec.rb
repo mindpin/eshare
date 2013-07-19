@@ -236,4 +236,23 @@ describe StepHistory do
     }
   end
 
+  describe 'StepHistory.passed_steps_count_of(user)' do
+    before {
+      @cstep_2_1.step_histories.create(:user => @user_1, :input => "xx", :is_passed => false)
+      @cstep_2_1.step_histories.create(:user => @user_1, :input => "xx", :is_passed => true)
+      @cstep_2_1.step_histories.create(:user => @user_1, :input => "xx", :is_passed => false)
+      @cstep_2_1.step_histories.create(:user => @user_1, :input => "xx", :is_passed => true)
+    }
+
+    it {
+      StepHistory.passed_steps_count_of(@user_1).should == 1
+    }
+
+    it {
+      @cstep_2_2.step_histories.create(:user => @user_1, :input => "xx", :is_passed => true)
+      @cstep_2_2.step_histories.create(:user => @user_1, :input => "xx", :is_passed => true)
+
+      StepHistory.passed_steps_count_of(@user_1).should == 2
+    }
+  end
 end

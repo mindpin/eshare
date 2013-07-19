@@ -27,7 +27,7 @@ class JavaStep < ActiveRecord::Base
   end
 
   def check(input, user)
-    JavaStepChecker.new(self, input, user).check
+    JavaStepChecker.new(self.rule, input).check
   end
 
   include StepHistory::StepMethods

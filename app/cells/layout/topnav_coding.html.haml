@@ -3,11 +3,22 @@
     %i.icon-chevron-left.icon-white
     %span 返回
   .title= @course_ware.title
-  - if @user.present?
-    .avatar= avatar_link @user
-  - else
-    .need-signed-in
-      %a.btn.small{:href => '/account/sign_in'} 
-        %i.icon-chevron-right
-        %span 登录系统
-      %span 后，你将能够记录学习进度和保存代码
+
+  .right
+    .share-btns{:style => ''}
+      %span 分享到：
+      %a.sre.sinaminiblog{:href => 'javascript:;', :'data-for' => :sinaminiblog, :title => '新浪微博'} 新浪微博
+      %a.sre.qqmb{:href => 'javascript:;', :'data-for' => :qqmb, :title => '腾讯微博'} 腾讯微博
+      %a.sre.qzone{:href => 'javascript:;', :'data-for' => :qzone, :title => 'QQ空间'} QQ空间
+      %a.sre.douban{:href => 'javascript:;', :'data-for' => :douban, :title => '豆瓣'} 豆瓣
+      %a.sre.renren{:href => 'javascript:;', :'data-for' => :renren, :title => '人人网'} 人人网
+      %a.sre.more{:href => 'javascript:;', :'data-for' => :more, :title => '更多'} 更多
+
+    - if @user.present?
+      .avatar= avatar_link @user, :small
+    - else
+      .need-signed-in
+        %a.btn.small{:href => '/account/sign_in'} 
+          %i.icon-chevron-right
+          %span 登录系统
+        %span 后，你将能够记录学习进度和保存代码

@@ -23,6 +23,70 @@ class StepHistory < ActiveRecord::Base
     self.course_ware.update_read_count_by(self.user, count)
   end
 
+  after_create :give_medal
+  def give_medal
+    self._give_pass_medals
+    self._give_error_medals
+    self._give_chapter_medals
+  end
+
+  def _give_pass_medals
+    user = self.user
+    passed_count = StepHistory.passed_steps_count_of(user)
+    _give_medal_by_count(passed_count, 1  , user, :PASS_1_CODING_STEP)
+    _give_medal_by_count(passed_count, 10 , user, :PASS_10_CODING_STEP)
+    _give_medal_by_count(passed_count, 25 , user, :PASS_25_CODING_STEP)
+    _give_medal_by_count(passed_count, 50 , user, :PASS_50_CODING_STEP)
+    _give_medal_by_count(passed_count, 100, user, :PASS_100_CODING_STEP)
+  end
+
+  def _give_error_medals
+    user = self.user
+    error_count = StepHistory.error_steps_count_of(user)
+    _give_medal_by_count(error_count, 1  , user, :ERROR_1_CODING_STEP)
+    _give_medal_by_count(error_count, 10 , user, :ERROR_10_CODING_STEP)
+    _give_medal_by_count(error_count, 25 , user, :ERROR_25_CODING_STEP)
+  end
+
+  def _give_chapter_medals
+    user = self.user
+    chapter = self.step.course_ware.chapter
+
+    count1 = 
+      StepHistory
+        .by_user(user).passed
+        .joins("JOIN course_wares ON course_wares.id = step_histories.course_ware_id")
+        .joins("JOIN chapters ON course_wares.chapter_id = chapters.id AND chapters.id = #{chapter.id}")
+        .count('DISTINCT step_id, step_type')
+
+    count2 = chapter.course_wares.sum{|x| x.javascript_steps.count}
+
+    if count1 == count2
+      Medal
+        .get(:PASS_JS_CODING_CHAPTER)
+        .give_to(user, :data => "通过章节：#{chapter.title}", :model => chapter)
+    end
+
+  rescue
+    nil
+  end
+
+  def _give_medal_by_count(passed_count, count, user, medal_name)
+    return if user.has_medal?(medal_name)
+    if passed_count >= count
+      Medal.get(medal_name).give_to(user)
+    end
+  end
+
+  # 获取指定用户通过教学步骤的数量
+  def self.passed_steps_count_of(user)
+    StepHistory.by_user(user).passed.count('DISTINCT step_id, step_type')
+  end
+
+  def self.error_steps_count_of(user)
+    StepHistory.by_user(user).unpassed.count('DISTINCT step_id, step_type')
+  end
+
   module StepMethods
     def self.included(base)
       base.has_many :step_histories, :as => :step
