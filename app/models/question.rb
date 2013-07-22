@@ -15,8 +15,14 @@ class Question < ActiveRecord::Base
   belongs_to :course_ware
 
   belongs_to :best_answer, :class_name => 'Answer', :foreign_key => :best_answer_id
+  belongs_to :step, polymorphic: true
+  belongs_to :step_history
+
+
   has_many :answers
   has_many :question_votes, :dependent => :delete_all
+
+
 
   default_scope order('vote_sum desc')
 
@@ -59,9 +65,15 @@ class Question < ActiveRecord::Base
 
   before_save :update_course_related_attrs
   def update_course_related_attrs
-    if self.course_ware.present?
+    if self.step.present?
+      self.course_ware = self.step.course_ware
       self.chapter = self.course_ware.chapter
       self.course = self.chapter.course
+
+    elsif self.course_ware.present?
+      self.chapter = self.course_ware.chapter
+      self.course = self.chapter.course
+      
     elsif self.chapter.present?
       self.course = self.chapter.course
     end

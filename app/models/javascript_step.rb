@@ -28,6 +28,15 @@ class JavascriptStep < ActiveRecord::Base
     self.class.by_course_ware(course_ware).where('id > ?', self.id).first
   end
 
+  def create_question(user, question_attr_hash, include_code)
+    question = Question.new(question_attr_hash)
+    question.creator = user
+    question.step = self
+    question.step_history = step_histories.by_user(user).last if include_code
+
+    question.save
+    question
+  end
 
 
   include StepHistory::StepMethods
