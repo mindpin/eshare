@@ -28,5 +28,7 @@ class JavascriptStep < ActiveRecord::Base
     self.class.by_course_ware(course_ware).where('id > ?', self.id).first
   end
 
+
+
   include StepHistory::StepMethods
 end
