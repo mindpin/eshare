@@ -27,23 +27,23 @@ describe YoukuVideoList do
   end
 
   describe YoukuVideoList::OldPlaylist do
-    let(:url)  {"http://www.youku.com/playlist_show/id_6096855.html"}
+    let(:url)  {"http://www.youku.com/playlist_show/id_623203.html"}
     let(:list) {YoukuVideoList::OldPlaylist.new url}
     let(:item) {
       {
-        :title => "左轮吉他初级入门教程《人人可以弹吉他》第一课《如何选择学什么吉他》",
-        :url   => "http://v.youku.com/v_show/id_XMjY4MjI0ODQ0.html?f=6096855"
+        :title => "Photoshop从头学起第01集",
+        :url   => "http://v.youku.com/v_show/id_XODM3NTQ2MA==.html?f=623203"
       }
     }
     subject    {list}
 
-    its(:id)    {should eq "6096855"}
-    its(:count) {should be 105}
-    its(:pages) {should be 3}
+    its(:id)    {should eq "623203"}
+    its(:count) {should be 84}
+    its(:pages) {should be 2}
     its(:items) {should include item}
 
-    its(:course_name) {should include "左轮民谣吉他"}
-    its(:course_desc) {should include "焦作滚石琴行"}
+    its(:course_name) {should include "Photoshop视频教程全集"}
+    its(:course_desc) {should include "大量Photoshop视频教程"}
   end
 
   describe YoukuVideoList::CourseMethods do
@@ -51,7 +51,7 @@ describe YoukuVideoList do
     let(:urls) {
       [
         'http://www.youku.com/show_page/id_z7a3c4ddaaed011e1b52a.html',
-        "http://www.youku.com/playlist_show/id_6096855.html"
+        "http://www.youku.com/playlist_show/id_623203.html"
       ]
     }
     subject {Course.import_youku_video_list(urls[rand 2], user)}
