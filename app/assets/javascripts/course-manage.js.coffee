@@ -1,56 +1,3 @@
-# aj方式，暂时用不上
-jQuery ->
-  class CourseManager
-    constructor: (@$elm)->
-      @setup()
-      @current_chapter_id = null
-
-    setup: ->
-      jQuery(document).on 'click', '.chapters a.chapter', (evt)=>
-        jQuery.pjax.click evt, '#pjax-container'
-        @current_chapter_id = jQuery(evt.target).data('id')
-
-      jQuery(document).on 'click', 'a.add-chapter', (evt)=>
-        jQuery.pjax.click evt, '#pjax-container'
-        @current_chapter_id = null
-
-      jQuery(document).on 'submit', 'form', (evt)=>
-        # jQuery.pjax.submit evt, '#pjax-container'
-
-      jQuery(document).on 'pjax:complete', =>
-        jQuery('a.chapter').removeClass('current')
-
-        if @current_chapter_id
-          jQuery("a.chapter[data-id=#{@current_chapter_id}]").addClass('current')
-
-  jQuery('.page-course-manage-aj').each ->
-    new CourseManager jQuery(this)
-
-# 设置选课人数上限的表单事件相关 INHOUSE
-jQuery ->
-  class CourseForm
-    constructor: (@$form)->
-      @setup()
-
-    setup: ->
-      that = @
-      jQuery(@$form).on 'click', '#course_enable_apply_request_limit', ->
-        $checkbox = jQuery(this)
-        if $checkbox.is(':checked')
-          that.show_limit()
-        else
-          that.hide_limit()
-
-    show_limit: ->
-      @$form.find('.limit-inputer').fadeIn(200).find('input').val('')
-
-    hide_limit: ->
-      @$form.find('.limit-inputer').fadeOut(200).find('input').val('')
-
-
-  jQuery('.page-course-form form').each ->
-    new CourseForm jQuery(this)
-
 # javascript 教程编辑表单
 jQuery ->
   class JavascriptCourseWareForm
@@ -212,29 +159,102 @@ jQuery ->
   jQuery('.javascript-steps-form').each ->
     new JavascriptCourseWareForm jQuery(this)
 
-
+# 课程章节排序
 jQuery ->
+  class CourseSortTable
+    constructor: (@$table)->
+      @setup()
 
-  # 课程管理批准
-  jQuery(document).on 'click', '.page-course-applies .course-applies a.accept', ->
-    apply_id = jQuery(this).data('id')
-    jQuery.ajax
-      url : "/manage/applies/#{apply_id}/accept"
-      type : 'put'
-      success : (res)=>
-        $new_tr = jQuery(res.html).find('tr.select_course_apply')
-        $old_tr = jQuery(this).closest('tr')
-        $old_tr.after $new_tr
-        $old_tr.remove()
+    setup: ->
+      that = this
+      @$table.delegate 'td.position a.btn.move-up', 'click', ->
+        url = jQuery(this).data('url')
+        old_tr = jQuery(this).closest('tr')
 
-# 课程管理拒绝
-  jQuery(document).on 'click', '.page-course-applies .course-applies a.reject', ->
-    apply_id = jQuery(this).data('id')
-    jQuery.ajax
-      url : "/manage/applies/#{apply_id}/reject"
-      type : 'put'
-      success : (res)=>
-        $new_tr = jQuery(res.html).find('tr.select_course_apply')
-        $old_tr = jQuery(this).closest('tr')
-        $old_tr.after $new_tr
-        $old_tr.remove()
+        jQuery.ajax
+          url: url
+          type: 'put'
+          success: (res)->
+            new_tr = jQuery(res.html).find('tbody tr')
+            that.up_down_animate old_tr.prev(), old_tr, new_tr
+
+            old_tr.prev().before(new_tr)
+            old_tr.remove()
+
+
+      @$table.delegate 'td.position a.btn.move-down', 'click', ->
+        url = jQuery(this).data('url')
+        old_tr = jQuery(this).closest('tr')
+
+        jQuery.ajax
+          url: url
+          type: 'put'
+          success: (res)->
+            new_tr = jQuery(res.html).find('tbody tr')
+            that.up_down_animate old_tr, old_tr.next(), new_tr
+
+            old_tr.next().after(new_tr)
+            old_tr.remove()
+
+    up_down_animate: ($up_tr, $down_tr, $new_tr)->
+      $up_tr_temp_table   = @_build_animate_table $up_tr
+      $down_tr_temp_table = @_build_animate_table $down_tr
+
+      $up_tr.css('opacity', 0)
+      $down_tr.css('opacity', 0)
+      $new_tr.css('opacity', 0)
+
+      doh = $down_tr.outerHeight()
+      uoh = $up_tr.outerHeight()
+
+      $up_tr_temp_table
+        .animate
+          top: "+=#{doh}"
+        , 400, -> 
+          $up_tr_temp_table.remove()
+          $up_tr.css('opacity', 1)
+          $new_tr.css('opacity', 1)
+
+      $down_tr_temp_table
+        .animate
+          top: "-=#{uoh}"
+        , 400, -> 
+          $down_tr_temp_table.remove()
+          $down_tr.css('opacity', 1)
+
+    _build_animate_table: ($tr)->
+      $tr_clone = @_clone_tr($tr)
+
+      width = @$table.outerWidth()
+      offset = $tr.offset()
+
+      return jQuery('<table><tbody></tbody></table>')
+        .addClass('page-data-table')
+        .addClass('striped')
+        .addClass('bordered')
+        .css
+          'border-top': '0 none'
+          position: 'absolute'
+          'background-color': '#ffffda'
+          width: width
+          left: offset.left
+          top: offset.top
+
+        .find('tbody').append($tr_clone).end()
+        .find('td').css('background-color', 'transparent').end() 
+        .appendTo(jQuery('body'))
+
+    _clone_tr: ($tr)->
+      $clone_tr = $tr.clone()
+
+      $tr.find('td').each (index)->
+        width = jQuery(this).width()
+        $clone_tr.find('td').eq(index).width(width)
+
+      return $clone_tr
+
+  jQuery('table.page-data-table.course-wares').each ->
+    new CourseSortTable jQuery(this)
+
+  jQuery('table.page-data-table.chapters').each ->
+    new CourseSortTable jQuery(this)

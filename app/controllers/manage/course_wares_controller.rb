@@ -74,6 +74,14 @@ class Manage::CourseWaresController < ApplicationController
     authorize! :manage, @course_ware
     @chapter = @course_ware.chapter
     @course_ware.move_up
+
+    if request.xhr?
+      return render :json => {
+        :status => 'ok',
+        :html => (render_cell :course_ware, :manage_table, :course_wares => [@course_ware])
+      }
+    end
+
     return redirect_to "/manage/chapters/#{@chapter.id}"
   end
 
@@ -82,6 +90,14 @@ class Manage::CourseWaresController < ApplicationController
     authorize! :manage, @course_ware
     @chapter = @course_ware.chapter
     @course_ware.move_down
+
+    if request.xhr?
+      return render :json => {
+        :status => 'ok',
+        :html => (render_cell :course_ware, :manage_table, :course_wares => [@course_ware])
+      }
+    end
+
     return redirect_to "/manage/chapters/#{@chapter.id}"
   end
 
