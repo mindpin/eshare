@@ -3,12 +3,15 @@
 
   .btns
     - if R::INHOUSE
-      %a.btn{:href => "/manage/courses/#{@course.id}/applies"}
+      %a.btn.gray-flat{:href => "/manage/courses/#{@course.id}/applies"}
         %i.icon-list-alt
         %span 选课管理
     %a.btn.gray-flat{:href => "/manage/courses/#{@course.id}/edit"}
       %i.icon-edit
       %span= t('common.edit')
+    %a.btn.gray-flat{:href => "/courses/#{@course.id}?preview=true"}
+      %i.icon-eye-open
+      %span 预览
     %a.btn.success-flat{:href => "/manage/courses/#{@course.id}/chapters/new"}
       %i.icon-plus.icon-white
       %span 增加章节
