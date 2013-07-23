@@ -29,16 +29,26 @@ class Report < ActiveRecord::Base
     end
 
     def report(model,desc) #question,answer,user等
-      report_user =  model.class==User ? model : model.creator||model.user
       Report.create(
                     :user => self, 
-                    :report_user => report_user,
+                    :report_user => _report_user(model),
                     :model => model, 
                     :desc => desc,
                     :status => UNPROCESSED
                    )
     end
 
+    private
+      def _report_user(model)
+        if model.is_a? User
+          report_user = model
+        elsif model.respond_to?(:creator)
+          report_user = model.creator
+        elsif model.respond_to?(:user)
+          report_user = model.user
+        end
+        report_user
+      end
   end           
   # 管理员审核举报成功
   def confirm(admin_reply)
