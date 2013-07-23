@@ -1,4 +1,4 @@
-
+=begin
 # 这个测试用到 java_step_tester server travis 上没有办法测试
 # 所以注释掉，需要时解除注释单独跑
 require 'spec_helper'
