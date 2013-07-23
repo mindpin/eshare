@@ -2050,6 +2050,15 @@ img.page-avatar {
 
 
 .page-account-avatar {
+  .fsuccess {
+    background-color:#eeffda;
+    border-bottom:solid 1px #e7e7e7;
+    margin:-20px;
+    padding:20px;
+    margin-bottom:20px;
+    color:green;
+  }
+
   .desc {
     background-color:#ffffda;
     border-bottom:solid 1px #e7e7e7;
@@ -2064,6 +2073,12 @@ img.page-avatar {
     .img {
       float:left;
       margin-right:15px;
+      &.s1 {width:180px;height:180px;}
+      &.s2 {width:64px;height:64px;}
+      &.s3 {width:30px;height:30px;}
+      border:solid 3px #e7e7e7;
+      @include border-radius(3px);
+      margin-right:10px;
     }
   }
 
@@ -2099,7 +2114,7 @@ img.page-avatar {
 .page-account-userpage {
   .curr-desc {
     border-top:solid 1px #ddd;
-    margin:20px 0 10px;;
+    margin:20px 0 10px;
     padding-top:20px;
   }
 

@@ -54,6 +54,7 @@ class User < ActiveRecord::Base
   # carrierwave
   mount_uploader :avatar, AvatarUploader
   attr_accessible :name, :tagline, :avatar
+  attr_accessor :avatar_cw, :avatar_ch, :avatar_cx, :avatar_cy
 
   mount_uploader :userpage_head, UserPageHeadUploader
   attr_accessible :userpage_head

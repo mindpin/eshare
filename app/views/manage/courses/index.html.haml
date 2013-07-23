@@ -59,6 +59,10 @@
           %i.icon-edit
           %span= t('common.edit')
 
+        %a.btn.mini.gray-flat{:href => "/courses/#{course.id}?preview=true"}
+          %i.icon-eye-open
+          %span 预览
+
         = link_to "/manage/courses/#{course.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger-flat' do
           %i.icon-remove.icon-white
           %span= t('common.delete')

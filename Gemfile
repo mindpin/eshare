@@ -163,3 +163,7 @@ gem 'simple-survey',
 gem 'simple-medals',
     :git => 'git://github.com/kaid/simple-medals.git',
     :tag => '0.0.2'
+
+gem 'simple-credit',
+    :git => 'git://github.com/kaid/simple-credit.git',
+    :tag => '0.0.1-p1'

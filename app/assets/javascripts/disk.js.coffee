@@ -122,62 +122,94 @@ jQuery ->
 # ------------------------
 
   if jQuery('.page-account-avatar').length > 0
+    _upload_f = ->
+      origin_width = null
+      origin_height = null
+      page_width  = null
+      page_height = null
+      $img = null
+      $pimg = null
 
-    # 头像上传
-    new PageFileUploader jQuery('.page-file-uploader'), {
-      url : '/upload'
-      multiple : false
-      button : jQuery('.page-account-avatar a.btn.avatar-upload')
-      on_file_success : (file) ->
-        if file.uploader_item
-          file.uploader_item.mark_success =>
+      update_preview = (c)->
+        if page_width && parseInt(c.w) > 0
+          rx = 180 / c.w;
+          ry = 180 / c.h;
 
-            $img = jQuery("<img src='#{file.file_entity_url}' />")
-            $pimg = $img.clone()
+          $pimg.css
+            width      : Math.round(rx * page_width)
+            height     : Math.round(ry * page_height)
+            marginLeft : - Math.round(rx * c.x)
+            marginTop  : - Math.round(ry * c.y)
 
-            $img.hide().fadeIn().css('max-width', '100%')
-            $img.on 'load', =>
+          jQuery('input[name=cx]').val c.x
+          jQuery('input[name=cy]').val c.y
+          jQuery('input[name=cw]').val c.w
+          jQuery('input[name=ch]').val c.h
 
-              origin_width = $img.width()
-              origin_height = $img.height()
-              console.log origin_width, origin_height
 
-              jQuery('.page-account-avatar .crop-avatars').slideUp(200)
-              jQuery('.page-account-avatar .upload .btn').hide()
-              jQuery('.page-account-avatar .form').show()
+      jQuery('.page-account-avatar a.btn.cancel').on 'click', ->
+        jQuery('.page-account-avatar .crop-avatars').slideDown(200)
+        jQuery('.page-account-avatar .upload .btn').show()
+        jQuery('.page-account-avatar .form').hide()
+        jQuery('.page-file-uploader .item:not(.sample)').remove()
 
-              jQuery('.form-inputs .image').html $img
-              jQuery('.form-inputs .preview').html $pimg
+      jQuery('.page-account-avatar a.btn.submit').on 'click', ->
+        jQuery('.page-account-avatar form').submit()
 
-              boundx = null
-              boundy = null
 
-              update_preview = (c)->
-                if boundx && parseInt(c.w) > 0
-                  rx = 180 / c.w;
-                  ry = 180 / c.h;
+      # 头像上传
+      new PageFileUploader jQuery('.page-file-uploader'), {
+        url : '/upload'
+        multiple : false
+        button : jQuery('.page-account-avatar a.btn.avatar-upload')
+        on_file_success : (file) ->
+          if file.uploader_item
+            jQuery('input[name=file_entity_id]').val file.file_entity_id
 
-                  console.log rx
+            file.uploader_item.mark_success =>
 
-                  $pimg.css
-                    width      : Math.round(rx * boundx)
-                    height     : Math.round(ry * boundy)
-                    marginLeft : - Math.round(rx * c.x)
-                    marginTop  : - Math.round(ry * c.y)
+              $img = jQuery("<img src='#{file.file_entity_url}' />")
+              $pimg = $img.clone()
 
-              $img.Jcrop
-                bgColor: 'black'
-                bgOpacity: 0.4
-                setSelect: [ 0, 0, 180, 180 ]
-                addClass: 'jcrop-dark'
-                bgFade: true
-                aspectRatio: 1
-                onChange: update_preview
-                onSelect: update_preview
-              , ->
-                this.ui.selection.addClass('jcrop-selection');
-                
-                bounds = this.getBounds()
-                boundx = bounds[0]
-                boundy = bounds[1]
-    }
+              $img.hide().fadeIn()
+              $img.on 'load', =>
+                jQuery('.form-inputs .image').html $img
+                jQuery('.form-inputs .preview').html $pimg
+
+                jQuery('.page-account-avatar .crop-avatars').slideUp(200)
+                jQuery('.page-account-avatar .upload .btn').hide()
+                jQuery('.page-account-avatar .form').show()
+              
+                setTimeout =>
+                  origin_width  = jQuery('.form-inputs .image img').width()
+                  origin_height = jQuery('.form-inputs .image img').height()
+                  jQuery('input[name=origin_width]').val origin_width
+                  jQuery('input[name=origin_height]').val origin_height
+
+                  $img.css('max-width', '100%')
+
+                  $img.Jcrop
+                    bgColor: 'black'
+                    bgOpacity: 0.4
+                    setSelect: [ 0, 0, 180, 180 ]
+                    addClass: 'jcrop-dark'
+                    bgFade: true
+                    aspectRatio: 1
+                    onChange: update_preview
+                    onSelect: update_preview
+                  , ->
+                    this.ui.selection.addClass('jcrop-selection');
+                    bounds = this.getBounds()
+                    page_width = bounds[0]
+                    page_height = bounds[1]
+
+                    jQuery('input[name=page_width]').val page_width
+                    jQuery('input[name=page_height]').val page_height
+                    jQuery('input[name=cx]').val 0
+                    jQuery('input[name=cy]').val 0
+                    jQuery('input[name=cw]').val 180
+                    jQuery('input[name=ch]').val 180
+                , 1
+      }
+
+    _upload_f()
