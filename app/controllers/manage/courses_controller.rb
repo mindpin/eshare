@@ -64,6 +64,10 @@ class Manage::CoursesController < ApplicationController
     authorize! :manage, @course
     @course.destroy
 
+    if request.xhr?
+      return render :json => {:status => 'ok'}
+    end
+
     redirect_to :action => :index, :q => cookies[:last_course_filter]
   end
 

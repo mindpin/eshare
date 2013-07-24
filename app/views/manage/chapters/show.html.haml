@@ -28,43 +28,4 @@
 
 .page-manage-chapter-show
   .pblock.table
-    = page_data_table :'course-wares', @course_wares, :striped, :bordered do |table|
-      - table.add_column :title do |cw|
-        = cw.title
-      - table.add_column :kind
-      - table.add_column :convert_status do |cw|
-        - if cw.convert_status.present?
-          %span.status{:class => cw.convert_status}= cw.convert_status
-          %a.btn.mini.convert{:href => "/manage/course_wares/#{cw.id}/do_convert", :data => {:method => :put}}
-            %i.icon-repeat
-            %span 重转码
-
-        - elsif cw.file_entity && cw.file_entity.can_be_converted?
-          %a.btn.mini.convert{:href => "/manage/course_wares/#{cw.id}/do_convert", :data => {:method => :put}}
-            %i.icon-repeat
-            %span 开始转码
-
-      - table.add_column :ops do |cw|
-
-        %a.btn.mini.gray-flat{:href => "/manage/course_wares/#{cw.id}/edit"}
-          %i.icon-edit
-          %span= t('common.edit')
-
-        = link_to "/manage/course_wares/#{cw.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger-flat' do
-          %i.icon-remove.icon-white
-          %span= t('common.delete')
-
-      - table.add_column :position do |cw|
-        - if cw.next.present?
-          = link_to "/manage/course_wares/#{cw.id}/move_down", :method => :put, :class => 'btn mini move-down' do
-            %i.icon-arrow-down
-        - else
-          %a.btn.disabled.mini{:href=>'javascript:;'}
-            %i.icon-arrow-down
-
-        - if cw.prev.present?
-          = link_to "/manage/course_wares/#{cw.id}/move_up", :method => :put, :class => 'btn mini move-up' do
-            %i.icon-arrow-up
-        - else
-          %a.btn.disabled.mini{:href=>'javascript:;'}
-            %i.icon-arrow-up
+    = render_cell :course_ware, :manage_table, :course_wares => @course_wares
