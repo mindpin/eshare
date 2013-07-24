@@ -258,3 +258,29 @@ jQuery ->
 
   jQuery('table.page-data-table.chapters').each ->
     new CourseSortTable jQuery(this)
+
+# 删除课程，章节，课件
+jQuery ->
+  class DeleteOp
+    constructor: (@$table)->
+      @setup()
+
+    setup: ->
+      @$table.delegate 'td a.btn.delete', 'click', ->
+        if confirm '确定要删除吗？'
+          url = jQuery(this).data('url')
+          tr = jQuery(this).closest('tr')
+          jQuery.ajax
+            url: url
+            type: 'DELETE'
+            success: ->
+              tr.fadeOut -> tr.remove()
+
+  jQuery('.page-data-table.courses').each ->
+    new DeleteOp jQuery(this)
+
+  jQuery('.page-data-table.chapters').each ->
+    new DeleteOp jQuery(this)
+
+  jQuery('.page-data-table.course-wares').each ->
+    new DeleteOp jQuery(this)

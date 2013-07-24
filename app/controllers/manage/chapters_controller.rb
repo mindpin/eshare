@@ -51,6 +51,11 @@ class Manage::ChaptersController < ApplicationController
     authorize! :manage, @chapter
     @course = @chapter.course
     @chapter.destroy
+
+    if request.xhr?
+      return render :json => {:status => 'ok'}
+    end
+
     redirect_to "/manage/courses/#{@course.id}"
   end
 

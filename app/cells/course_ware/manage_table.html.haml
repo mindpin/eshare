@@ -20,7 +20,7 @@
       %i.icon-edit
       %span= t('common.edit')
 
-    = link_to "/manage/course_wares/#{cw.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger-flat' do
+    %a.btn.mini.danger-flat.delete{:href => 'javascript:;', :data => {:url => "/manage/course_wares/#{cw.id}"}}
       %i.icon-remove.icon-white
       %span= t('common.delete')
 

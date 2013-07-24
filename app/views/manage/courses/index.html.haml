@@ -63,7 +63,7 @@
           %i.icon-eye-open
           %span 预览
 
-        = link_to "/manage/courses/#{course.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger-flat' do
+        %a.btn.mini.danger-flat.delete{:href => 'javascript:;', :data => {:url => "/manage/courses/#{course.id}"}}
           %i.icon-remove.icon-white
           %span= t('common.delete')
 
