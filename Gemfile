@@ -166,4 +166,4 @@ gem 'simple-medals',
 
 gem 'simple-credit',
     :git => 'git://github.com/kaid/simple-credit.git',
-    :tag => '0.0.1-p1'
+    :tag => '0.0.2'

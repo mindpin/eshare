@@ -211,5 +211,6 @@ class User < ActiveRecord::Base
   include Note::UserMethods
   include CourseAttitude::UserMethods
   include Medal::UserMethods
+  include SimpleCredit::UserMethods
   include Report::UserMethods
 end

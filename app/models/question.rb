@@ -5,7 +5,7 @@ class Question < ActiveRecord::Base
   include QuestionVote::QuestionMethods
   
   attr_accessible :title, :content, :ask_to_user_id, :creator, :best_answer,
-                  :course, :chapter, :course_ware
+                  :course, :chapter, :course_ware, :reward
 
   belongs_to :creator, :class_name => 'User', :foreign_key => :creator_id
   belongs_to :ask_to, :class_name => 'User', :foreign_key => :ask_to_user_id
@@ -87,6 +87,31 @@ class Question < ActiveRecord::Base
   def answer_of(user)
     return nil if user.blank?
     return self.answers.by_user(user).first
+  end
+
+  # 设置悬赏值
+  def set_reward(new_reward)
+    old_reward = self.reward||0
+    reward_change = new_reward - old_reward
+
+    if new_reward < old_reward
+      raise '设置的悬赏值不能小于以前的设置' 
+    end
+    if creator.credit_value < reward_change
+      raise '你的贡献值不足以支付设置的悬赏值' 
+    end
+
+    self.update_attributes(:reward => new_reward)
+    creator.add_credit(-reward_change, :deduct_reward_of_question, self)
+    return true
+  end
+
+  def set_best_answer(answer)
+    self.update_attributes(:best_answer => answer)
+    reward_value = self.reward||0
+    if reward_value > 0
+      answer.creator.add_credit(reward_value, :add_reward_of_best_answer, self)
+    end
   end
 
   module UserMethods
