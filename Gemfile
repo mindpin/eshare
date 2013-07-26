@@ -89,6 +89,10 @@ gem 'omniauth-weibo-oauth2'
 gem "weibo_2", "~> 0.1.1"
 gem 'rmmseg-cpp'
 
+
+# 假删除
+gem "acts_as_paranoid", "~>0.4.0"
+
 # 自己写的 gem，都不指定版本号，如果有重大修改，通过GIT TAG解决
 
 ## 用户角色
@@ -166,4 +170,4 @@ gem 'simple-medals',
 
 gem 'simple-credit',
     :git => 'git://github.com/kaid/simple-credit.git',
-    :tag => '0.0.2'
+    :tag => '0.0.5'

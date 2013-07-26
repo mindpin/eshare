@@ -1,9 +1,12 @@
+# -*- coding: utf-8 -*-
 class QuestionVote < ActiveRecord::Base
   class Kind
     VOTE_UP     = 'VOTE_UP'
     VOTE_DOWN   = 'VOTE_DOWN'
     VOTE_CANCEL = 'VOTE_CANCEL'
   end
+
+  include SimpleCredit::ModelMethods
 
   attr_accessible :question, :kind, :user
 
@@ -31,6 +34,16 @@ class QuestionVote < ActiveRecord::Base
     return true
   end
 
+  record_credit(:scene => :vote,
+                :on    => [:save],
+                :user  => lambda {|model| model.question.creator},
+                :delta => lambda {|model|
+                  case model.kind
+                  when QuestionVote::Kind::VOTE_UP     then 5
+                  when QuestionVote::Kind::VOTE_DOWN   then -2
+                  when QuestionVote::Kind::VOTE_CANCEL then 0
+                  end
+                })
 
   def point
     return  1 if self.kind == Kind::VOTE_UP
