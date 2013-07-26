@@ -18,6 +18,7 @@ class Answer < ActiveRecord::Base
 
   scope :anonymous, :conditions => ['is_anonymous = ?', true]
   scope :onymous, :conditions => ['is_anonymous = ?', false]
+  scope :fine,    :conditions => 'answers.vote_sum > 0'
 
   # 记录用户活动
   record_feed :scene => :questions,
@@ -45,6 +46,24 @@ class Answer < ActiveRecord::Base
       qu.save
       qu.record_timestamps = true
     end
+  end
+
+  # 当有5个优秀答案的时候还没有设置最佳答案时
+  # 优秀答案的悬赏值自动分配给优秀答案的创建者
+  after_save :receive_reward_of_fine_answer_when_five
+  def receive_reward_of_fine_answer_when_five
+    reward_value = self.question.reward || 0
+    return true if reward_value == 0
+    return true if self.question.fine_answer_rewarded?
+    fine_answers = self.question.answers.fine
+    return true if fine_answers.count < 5
+
+    fine_answers.each do |answer|
+      answer.creator.add_credit(reward_value/2, :add_reward_of_fine_answer, answer)
+    end
+    self.question.update_attributes(:fine_answer_rewarded => true)
+
+    return true
   end
 
   def has_voted_by?(user)
