@@ -289,6 +289,7 @@ Eshare::Application.routes.draw do
       collection do
         get :all_courses_read_pie
         get :all_courses_punch_card
+        get :all_courses_select_apply_pie
       end
 
       member do

@@ -7,6 +7,15 @@ class Manage::CoursesController < ApplicationController
   
   def index
     authorize! :manage, Course
+
+    if params[:select_apply_status]
+      @courses = 
+        SelectCourseApply
+          .select_apply_status_courses(params[:select_apply_status])
+          .page(params[:page])
+      return
+    end
+
     query = @query = (params[:q].blank? ? '' : params[:q].strip)
 
     if query.blank?

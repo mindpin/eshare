@@ -14,4 +14,8 @@ class Charts::CoursesController < ApplicationController
     @course = Course.find params[:id]
     render :json => @course.course_wares_read_stat_of(current_user)
   end
+
+  def all_courses_select_apply_pie
+    render :json => SelectCourseApply.course_status_stat
+  end
 end

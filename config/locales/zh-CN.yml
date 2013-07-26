@@ -266,6 +266,7 @@ zh-CN:
         creator: 创建者
         select_apply: 选课人数/上限
         select_status: 选课状态
+        select_apply_status: 选课情况
 
       chapters:
         title: 标题

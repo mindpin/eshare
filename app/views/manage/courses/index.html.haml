@@ -21,13 +21,29 @@
 
 
 .page-manage-courses
-  .pblock.filter
-    :ruby
-      cookies[:last_course_filter] = { 
-        :value => @query, 
-        :expires => 1.years.from_now 
-      }
-    = render_cell :layout, :manage_courses_filter, :query => @query
+  - if params[:select_apply_status]
+    .pblock.select_apply_status
+      %span 以下显示选课情况为
+      :ruby
+        h = {
+          'empty' => '空选',
+          'full' => '选满',
+          'notfull' => '未满',
+          'over' => '超选',
+        }[params[:select_apply_status]]
+
+      %b= h
+      %span 的课程。
+      %span
+        = link_to '点此返回选课管理', '/manage/applies'
+  - else
+    .pblock.filter
+      :ruby
+        cookies[:last_course_filter] = { 
+          :value => @query, 
+          :expires => 1.years.from_now 
+        }
+      = render_cell :layout, :manage_courses_filter, :query => @query
 
   .pblock.table
     = page_data_table(:courses, @courses, :striped, :bordered) do |table|
@@ -47,6 +63,9 @@
           %span #{course.apply_users.count}
           %span /
           %span #{limit}
+
+        - table.add_column(:select_apply_status) do |course|
+          = manage_course_select_apply_status course
 
       - table.add_column(:ops) do |course|
 

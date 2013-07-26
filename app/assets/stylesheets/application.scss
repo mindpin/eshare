@@ -23,11 +23,11 @@ body {
   font-family:arial, sans-serif;
 
   a{
-    color:#5A8DCD;
+    color:#4672BF;
     text-decoration:none;
     outline:none !important;
     &:hover{
-      color:#7594b3;
+      color:lighten(#4672BF, 10%);
       text-decoration:underline;
     }
   }
@@ -1912,6 +1912,14 @@ img.page-avatar {
     .desc {
       margin-bottom:10px;
     }
+  }
+}
+
+.page-manage-courses {
+  .pblock.select_apply_status {
+    margin-top:-21px;
+    padding-bottom:20px;
+    background-color:#ffffda;
   }
 }
 
@@ -5028,6 +5036,12 @@ form .input.page-form-tag-inputer {
   100% {background-color:#333;}
 }
 
+.page-course-applies {
+  .page-chart.all-courses-select-apply-pie{
+    background-color:white;
+    margin-bottom:20px;
+  }
+}
 
 .page-export-coding-json {
   .desc {
