@@ -80,7 +80,7 @@ describe Question do
     }
 
     it{
-      @creator.credit_value.should == 950
+      @creator.credit_value.should == 955
       @user_1.credit_value.should == 80
       @user_2.credit_value.should == 35
       @user_3.credit_value.should == 0
@@ -97,7 +97,7 @@ describe Question do
       }
 
       it{
-        @creator.credit_value.should == 950
+        @creator.credit_value.should == 955
         @user_1.credit_value.should == 35
         @user_2.credit_value.should == 80
         @user_3.credit_value.should == 0
@@ -132,8 +132,8 @@ describe Question do
     }
 
     it{
-      @question.fine_answer_rewarded.should == true
-      @question.best_answer_rewarded.should == false
+      @question.fine_answer_rewarded?.should == true
+      @question.best_answer_rewarded?.should == false
     }
 
     it{
@@ -152,7 +152,7 @@ describe Question do
       }
 
       it{
-        @creator.credit_value.should == 950
+        @creator.credit_value.should == 955
         @user_1.credit_value.should == 80
         @user_2.credit_value.should == 35
         @user_3.credit_value.should == 35
@@ -172,7 +172,7 @@ describe Question do
         }
 
         it{
-          @creator.credit_value.should == 950
+          @creator.credit_value.should == 955
           @user_1.credit_value.should == 35
           @user_2.credit_value.should == 80
           @user_3.credit_value.should == 35

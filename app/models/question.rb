@@ -131,6 +131,9 @@ class Question < ActiveRecord::Base
     # 分配最佳答案贡献值
     answer_creator.add_credit(20, :add_credit_of_best_answer, self.best_answer)
 
+    # 问题创建者指定最佳答案，获得贡献
+    self.creator.add_credit(5, :add_credit_of_set_best_answer, self)
+
     # 分配悬赏值
     reward_value = self.reward||0
     if reward_value > 0
@@ -153,13 +156,13 @@ class Question < ActiveRecord::Base
     # 设置最佳答案
     self.update_attributes(:best_answer => answer)
     # 分配最佳答案贡献值
-    old_best_answer.creator.add_credit(-20, :cancel_add_credit_of_best_answer, old_best_answer)
+    old_best_answer.creator.cancel_add_credit(:add_credit_of_best_answer, old_best_answer)
     self.best_answer.creator.add_credit(20, :add_credit_of_best_answer, self.best_answer)
     # 分配悬赏值
     reward_value = self.reward||0
     return if reward_value == 0
 
-    old_best_answer.creator.add_credit(-reward_value/2, :cancel_add_reward_of_best_answer, old_best_answer)
+    old_best_answer.creator.cancel_add_credit(:add_reward_of_best_answer, old_best_answer)
     self.best_answer.creator.add_credit(reward_value/2, :add_reward_of_best_answer, self.best_answer)
   end
 

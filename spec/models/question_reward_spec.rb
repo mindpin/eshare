@@ -74,21 +74,5 @@ describe Question do
         @question.reward.should == 200
       }
     end
-
-    context '设置最佳答案' do
-      before{
-        @user_2 = FactoryGirl.create(:user)
-        @answer = @question.answers.create!(:content => "yy", :creator => @user_2)
-      }
-
-      it{
-        @user_2.credit_value.should == 0
-      }
-
-      it{
-        @question.set_best_answer(@answer)
-        @user_2.credit_value.should == 100
-      }
-    end
   end
 end
