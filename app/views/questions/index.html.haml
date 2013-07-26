@@ -1,13 +1,12 @@
 - content_for :header do
   %h1= t('page.questions.index')
   .btn-group
-    %a.btn.success{:href => '/questions/new'}
+    %a.btn.success-flat{:href => '/questions/new'}
       %i.icon-plus.icon-white
       %span 发起提问
 
 .page-questions-index
   .mainp66
-    .cpart
-      %h3 最新动态
-      = paginate @feeds
-      = render_cell :timeline, :render_feeds, :user => current_user, :feeds => @feeds
+    .pblock
+      %h3.cp 问答
+      = render_cell :questions, :gridlist, :questions => @questions, :user => current_user

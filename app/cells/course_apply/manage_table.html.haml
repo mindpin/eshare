@@ -9,5 +9,5 @@
     - table.add_column(:status) do |apply|
       = course_apply_status apply
     - table.add_column(:ops) do |apply|
-      %a.btn.mini.success.accept{:href => 'javascript:;', :data => {:id => apply.id}} 批准
-      %a.btn.mini.danger.reject{:href => 'javascript:;', :data => {:id => apply.id}} 拒绝
+      %a.btn.mini.success-flat.accept{:href => 'javascript:;', :data => {:id => apply.id}} 批准
+      %a.btn.mini.danger-flat.reject{:href => 'javascript:;', :data => {:id => apply.id}} 拒绝

@@ -2,8 +2,8 @@
   .inner
     %a.homepage{:href => '/'} 首页
     .sf
-      %input{:name => :q, :type => :text, :placeholder => '搜索课程和其他内容…'}
-      %a.btn.info.do-search{:href => 'javascript:;'}
+      %input.flat{:name => :q, :type => :text, :placeholder => '搜索课程和其他内容…'}
+      %a.btn.inverse-flat.do-search{:href => 'javascript:;'}
         %i.icon-search.icon-white
     - if @user.present?
       .usri

@@ -4,6 +4,8 @@ class QuestionsController < ApplicationController
   before_filter :pre_load
   layout Proc.new { |controller|
     case controller.action_name
+    when 'index'
+      return 'grid'
     when 'show'
       return 'question_page'
     else
@@ -16,7 +18,7 @@ class QuestionsController < ApplicationController
   end
 
   def index
-    @feeds = Feed.on_scene(:questions).page params[:page]
+    @questions = Question.page(params[:page]).per(20)
   end
 
   def new

@@ -188,7 +188,7 @@ module ApplicationHelper
     else
       klass = apply.status.downcase
       string = {
-        SelectCourseApply::STATUS_REQUEST => '审核中',
+        SelectCourseApply::STATUS_REQUEST => '待审核',
         SelectCourseApply::STATUS_ACCEPT => '已批准',
         SelectCourseApply::STATUS_REJECT => '已拒绝'
       }[apply.status]
