@@ -97,7 +97,7 @@ class SelectCourseApply < ActiveRecord::Base
 
     # 用户发起一个选课请求
     def select_course(course)
-      return false if course.apply_request_is_full?
+      return if self.apply_courses.include?(course)
       _prepare_course_apply_for(course).update_attributes :status => STATUS_REQUEST
     end
 
