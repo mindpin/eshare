@@ -13,8 +13,9 @@ class AnswerVote < ActiveRecord::Base
                 :user  => lambda {|model| model.answer.creator},
                 :delta => lambda {|model|
                   case model.kind
-                  when AnswerVote::Kind::VOTE_UP   then 10
-                  when AnswerVote::Kind::VOTE_DOWN then -1
+                  when AnswerVote::Kind::VOTE_UP     then 10
+                  when AnswerVote::Kind::VOTE_DOWN   then -1
+                  when AnswerVote::Kind::VOTE_CANCEL then 0
                   end
                 })
 
