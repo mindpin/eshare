@@ -170,4 +170,4 @@ gem 'simple-medals',
 
 gem 'simple-credit',
     :git => 'git://github.com/kaid/simple-credit.git',
-    :tag => '0.0.4-p2'
+    :tag => '0.0.5'
