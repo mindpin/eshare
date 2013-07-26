@@ -177,10 +177,11 @@ describe SelectCourseApply do
     it { 
       expect {
         user.select_course(course)
-        user.select_course_applies.by_course(course).first.update_attributes :status => 'REJECT'
+        select_course = user.select_course_applies.by_course(course).first
+        select_course.update_attributes :status => 'REJECT'
         user.select_course(course)
       }.to change {
-        user.request_selected_courses.all.count
+        user.reject_selected_courses.all.count
       }.by(1)
     }
 
@@ -192,7 +193,13 @@ describe SelectCourseApply do
         user3.select_course(course)
         @user4 = FactoryGirl.create(:user)
       end
-      it { @user4.select_course(course).should  == false }
+      it { 
+        expect {
+          @user4.select_course(course)
+        }.to change {
+          SelectCourseApply.all.count
+        }.by(1)  
+      }
     end
   end
 
