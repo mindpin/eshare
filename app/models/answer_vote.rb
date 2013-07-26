@@ -1,9 +1,22 @@
+# -*- coding: utf-8 -*-
 class AnswerVote < ActiveRecord::Base
   class Kind
     VOTE_UP     = 'VOTE_UP'
     VOTE_DOWN   = 'VOTE_DOWN'
     VOTE_CANCEL = 'VOTE_CANCEL'
   end
+
+  include SimpleCredit::ModelMethods
+
+  record_credit(:scene => :vote,
+                :on    => [:save],
+                :user  => lambda {|model| model.answer.creator},
+                :delta => lambda {|model|
+                  case model.kind
+                  when AnswerVote::Kind::VOTE_UP   then 10
+                  when AnswerVote::Kind::VOTE_DOWN then -1
+                  end
+                })
 
   attr_accessible :answer, :kind, :user
 
