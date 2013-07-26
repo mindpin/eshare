@@ -82,6 +82,11 @@ describe Question do
     it "deleted" do
       @question.deleted?.should == true
     end
+
+    it "not real deleted" do
+      @question.reload
+      @question.valid?.should == true
+    end
   end
 
 end
