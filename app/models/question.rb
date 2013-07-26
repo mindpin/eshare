@@ -1,4 +1,6 @@
 class Question < ActiveRecord::Base
+  acts_as_paranoid
+
   include CourseInteractive::QuestionMethods
   include QuestionFeedTimelime::QuestionMethods
   include QuestionFollow::QuestionMethods
@@ -112,6 +114,15 @@ class Question < ActiveRecord::Base
     if reward_value > 0
       answer.creator.add_credit(reward_value, :add_reward_of_best_answer, self)
     end
+  end
+
+  def destroy_by_creator
+    return if answers.count >= 2
+    if answers.count == 1
+      return if answers.first.answer_votes.map(&:kind).include? AnswerVote::Kind::VOTE_UP
+    end
+
+    self.destroy
   end
 
   module UserMethods
