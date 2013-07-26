@@ -118,9 +118,7 @@ class Question < ActiveRecord::Base
 
   def destroy_by_creator
     return if answers.count >= 2
-    if answers.count == 1
-      return if answers.first.answer_votes.map(&:kind).include? AnswerVote::Kind::VOTE_UP
-    end
+    return if answers.count == 1 && answers.first.vote_sum > 0
 
     self.destroy
   end
