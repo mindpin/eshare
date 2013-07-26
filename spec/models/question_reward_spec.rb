@@ -25,6 +25,21 @@ describe Question do
     }
   end
 
+  context '设置的悬赏值不是10的倍数，设置失败' do
+    before{
+      @user.add_credit(1000, :test, @user)
+    }
+
+    it{
+      expect {
+        @question.set_reward(99)
+      }.to raise_error(RuntimeError)
+      @question = @question.reload
+      @user.credit_value.should == 1000
+      @question.reward.should == nil
+    }
+  end
+
   context '贡献值设置成功' do
     before{
       @user.add_credit(1000, :test, @user)

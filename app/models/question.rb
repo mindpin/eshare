@@ -94,6 +94,9 @@ class Question < ActiveRecord::Base
     old_reward = self.reward||0
     reward_change = new_reward - old_reward
 
+    if new_reward % 10 != 0
+      raise '设置的悬赏值必须是 10 的倍数'
+    end
     if new_reward < old_reward
       raise '设置的悬赏值不能小于以前的设置' 
     end
