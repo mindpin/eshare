@@ -25,6 +25,21 @@ describe Question do
     }
   end
 
+  context '设置的悬赏值不是10的倍数，设置失败' do
+    before{
+      @user.add_credit(1000, :test, @user)
+    }
+
+    it{
+      expect {
+        @question.set_reward(99)
+      }.to raise_error(RuntimeError)
+      @question = @question.reload
+      @user.credit_value.should == 1000
+      @question.reward.should == nil
+    }
+  end
+
   context '贡献值设置成功' do
     before{
       @user.add_credit(1000, :test, @user)
@@ -57,22 +72,6 @@ describe Question do
       it{
         @user.credit_value.should == 800
         @question.reward.should == 200
-      }
-    end
-
-    context '设置最佳答案' do
-      before{
-        @user_2 = FactoryGirl.create(:user)
-        @answer = @question.answers.create!(:content => "yy", :creator => @user_2)
-      }
-
-      it{
-        @user_2.credit_value.should == 0
-      }
-
-      it{
-        @question.set_best_answer(@answer)
-        @user_2.credit_value.should == 100
       }
     end
   end
