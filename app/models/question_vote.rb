@@ -41,7 +41,7 @@ class QuestionVote < ActiveRecord::Base
                   case model.kind
                   when QuestionVote::Kind::VOTE_UP     then 5
                   when QuestionVote::Kind::VOTE_DOWN   then -2
-                  when QuestionVote::Kind::VOTE_CANCEL then 0
+                  when QuestionVote::Kind::VOTE_CANCEL then :cancel
                   end
                 })
 
