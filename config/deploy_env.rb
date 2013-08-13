@@ -1,5 +1,5 @@
 class R
-  INHOUSE = true
+  INHOUSE = false
   INTERNET = !INHOUSE
 
   JAVA_STEP_TESTER_HOST = '127.0.0.1'
