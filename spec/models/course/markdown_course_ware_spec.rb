@@ -67,5 +67,29 @@ describe CourseWare do
         ![image](#{entity.attach.url}) 图片
       `
     }
+
+    context '修改' do
+      before{
+        @outer_url = "http://iamge.baidu.com/static/widget/common/header/img/wantu-logo-big_63c2ebcc29.gif"
+        @outer_url2 = "http://www.baidu.com/img/bdlogo.gif"
+        @markdown_content = %`
+          内容内容内容
+          ![image](#{@outer_url}) 图片
+          ![image](#{@outer_url2})
+        `
+        @course_ware.markdown = @markdown_content
+        @course_ware.save
+        @course_ware.reload
+      }
+
+      it{
+        @course_ware.markdown.should == @markdown_content
+        @course_ware.markdown(:replace_outer_url => true).should == %`
+          内容内容内容
+          ![image](#{FileEntity.get_outer_image(@outer_url).url}) 图片
+          ![image](#{FileEntity.get_outer_image(@outer_url2).url})
+        `
+      }
+    end
   end
 end
