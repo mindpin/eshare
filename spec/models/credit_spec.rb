@@ -24,6 +24,12 @@ describe Question do
     it_should_behave_like("vote", :question, :up, 5)
     it_should_behave_like("vote", :question, :down, -2)
     it_should_behave_like("vote", :question, :down, 0, :zero => true)
+
+    context "cancel" do
+      before {subject.vote_up_by!(user_B)}
+
+      it_should_behave_like("vote", :question, :cancel, -5)
+    end
   end
 
   context "answer vote" do
@@ -32,5 +38,11 @@ describe Question do
     it_should_behave_like("vote", :answer, :up, 10)
     it_should_behave_like("vote", :answer, :down, -1)
     it_should_behave_like("vote", :answer, :down, 0, :zero => true)
+
+    context "cancel" do
+      before {subject.vote_up_by!(user_B)}
+
+      it_should_behave_like("vote", :answer, :cancel, -10)
+    end
   end
 end

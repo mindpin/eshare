@@ -9,10 +9,12 @@ class CourseWare < ActiveRecord::Base
   include CourseWareReadingDelta::CourseWareMethods
   include StepHistory::CourseWareMethods
   include Note::CourseWareMethods
+  include CourseWareMarkdownMethods
 
   attr_accessible :title, :desc, :url, :creator, :total_count
   attr_accessible :title, :desc, :file_entity_id, :kind, :url, :chapter_id, :as => :upload
   attr_accessible :title, :desc, :creator, :kind, :chapter, :url, :as => :import
+  attr_accessible :title, :desc, :creator, :kind, :chapter, :file_entity, :markdown, :as => :markdown
 
   attr_accessible :cover_url_cache, :as => :update_cover
 
@@ -63,7 +65,6 @@ class CourseWare < ActiveRecord::Base
 
       resource = MediaResource.put_file_entity(creator, path, file_entity)
       kind = file_entity.content_kind
-      
       self.kind = kind
       self.media_resource = resource
     end

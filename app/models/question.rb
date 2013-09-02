@@ -7,7 +7,9 @@ class Question < ActiveRecord::Base
   include QuestionVote::QuestionMethods
   
   attr_accessible :title, :content, :ask_to_user_id, :creator, :best_answer,
-                  :course, :chapter, :course_ware, :reward
+                  :course, :chapter, :course_ware, :reward,
+                  :fine_answer_rewarded,
+                  :best_answer_rewarded
 
   belongs_to :creator, :class_name => 'User', :foreign_key => :creator_id
   belongs_to :ask_to, :class_name => 'User', :foreign_key => :ask_to_user_id
@@ -96,6 +98,9 @@ class Question < ActiveRecord::Base
     old_reward = self.reward||0
     reward_change = new_reward - old_reward
 
+    if new_reward % 10 != 0
+      raise '设置的悬赏值必须是 10 的倍数'
+    end
     if new_reward < old_reward
       raise '设置的悬赏值不能小于以前的设置' 
     end
@@ -108,12 +113,57 @@ class Question < ActiveRecord::Base
     return true
   end
 
+  # 设置最佳答案
   def set_best_answer(answer)
-    self.update_attributes(:best_answer => answer)
+    if self.best_answer.present?
+      _set_best_answer__change(answer)
+    else
+      _set_best_answer__first(answer)
+    end
+  end
+
+  def _set_best_answer__first(answer)
+    self.best_answer = answer
+    return if !self.valid?
+
+    answer_creator = self.best_answer.creator
+
+    # 分配最佳答案贡献值
+    answer_creator.add_credit(20, :add_credit_of_best_answer, self.best_answer)
+
+    # 问题创建者指定最佳答案，获得贡献
+    self.creator.add_credit(5, :add_credit_of_set_best_answer, self)
+
+    # 分配悬赏值
     reward_value = self.reward||0
     if reward_value > 0
-      answer.creator.add_credit(reward_value, :add_reward_of_best_answer, self)
+      if !self.fine_answer_rewarded?
+        fine_answers = self.answers.fine
+        fine_answers.each do |answer|
+          answer.creator.add_credit(reward_value/2, :add_reward_of_fine_answer, answer)
+        end
+      end
+      answer_creator.add_credit(reward_value/2, :add_reward_of_best_answer, self.best_answer)
+      self.fine_answer_rewarded = true
+      self.best_answer_rewarded = true
     end
+
+    self.save
+  end
+
+  def _set_best_answer__change(answer)
+    old_best_answer = self.best_answer
+    # 设置最佳答案
+    self.update_attributes(:best_answer => answer)
+    # 分配最佳答案贡献值
+    old_best_answer.creator.cancel_add_credit(:add_credit_of_best_answer, old_best_answer)
+    self.best_answer.creator.add_credit(20, :add_credit_of_best_answer, self.best_answer)
+    # 分配悬赏值
+    reward_value = self.reward||0
+    return if reward_value == 0
+
+    old_best_answer.creator.cancel_add_credit(:add_reward_of_best_answer, old_best_answer)
+    self.best_answer.creator.add_credit(reward_value/2, :add_reward_of_best_answer, self.best_answer)
   end
 
   def destroy_by_creator
