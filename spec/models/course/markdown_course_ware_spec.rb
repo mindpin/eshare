@@ -2,6 +2,16 @@ require "spec_helper"
 require 'sidekiq/testing'
 
 describe CourseWare do
+  context 'new' do
+    before{
+      chapter = FactoryGirl.create(:chapter)
+      @course_ware = chapter.course_wares.new
+    }
+
+    it{
+      @course_ware.markdown.should == ""
+    }
+  end
   context '创建基本的 markdown 教程' do
     before{
       @markdown_content = %`
