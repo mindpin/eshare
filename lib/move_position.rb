@@ -9,8 +9,10 @@ module MovePosition
     
     module InstanceMethods
       def set_position
-        self.position = self.id
-        self.save
+        self.class.where('id = ?', self.id).update_all(
+          "position = #{self.id}"
+        )
+        self.reload
       end
 
       def move_down
