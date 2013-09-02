@@ -9,9 +9,14 @@ module CourseWareMarkdownMethods
   end
 
   def markdown(options = {})
-    content = @markdown || (
-      File.open(self.file_entity.attach.path).read
-    )
+    if new_record?
+      content = @markdown || ""
+    else
+      content = @markdown || (
+        File.open(self.file_entity.attach.path).read
+      )
+    end
+
     bool_replace = !!options[:replace_outer_url]
     if bool_replace
       content = content.gsub(IMAGE_REGEX) do |match|
