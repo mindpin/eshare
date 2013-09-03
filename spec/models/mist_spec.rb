@@ -84,8 +84,7 @@ describe Mist do
       mist.save!
 
       find_mist = Mist.find(mist.id)
-      old_content = File.open(find_mist.file_entity.attach.path).read
-      old_content.should === "123"
+      find_mist.content.should === "123"
     end
   end
 end

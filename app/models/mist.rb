@@ -20,7 +20,7 @@ class Mist < ActiveRecord::Base
   end
 
   def content
-    if @content.blank?
+    if new_record?
       content = @content || ""
     else
       content = @content || (File.open(self.file_entity.attach.path).read)
