@@ -65,5 +65,27 @@ describe Mist do
         old_content = File.open(@mist.file_entity.attach.path).read
         old_content.should === content
     end
+
+    it " content save nil" do
+      mist = Mist.new
+      mist.content.should === ""
+    end
+    it "content no save" do
+      mist = Mist.new
+      mist.content = "123"
+      mist.content.should === "123"
+    end
+
+    it "content save" do
+      mist = Mist.new
+      mist.desc = "desc1"
+      mist.kind = "text"
+      mist.content = "123"
+      mist.save!
+
+      find_mist = Mist.find(mist.id)
+      old_content = File.open(find_mist.file_entity.attach.path).read
+      old_content.should === "123"
+    end
   end
 end
