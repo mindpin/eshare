@@ -65,6 +65,12 @@ gem 'simple_form', '2.0.2' # 用于简化表单创建
 gem 'pacecar', '1.5.3' # 给模型添加实用的scope
 gem 'kaminari', '0.14.1' # 分页支持
 
+# markdown 渲染
+gem 'redcarpet', '3.0.0' # 标准的 markdown 渲染库
+
+# 代码高亮
+gem 'coderay', '1.0.9'
+
 # 文件上传（fushang318增加） 
 gem "carrierwave", "0.8.0"
 # carrierwave 用到的图片切割

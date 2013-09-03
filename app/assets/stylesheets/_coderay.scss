@@ -1,0 +1,54 @@
+.CodeRay {
+  background-color: #232323;
+  border: 1px solid rgba(black, 0.8);
+  font-family: 'Courier New', 'Terminal', monospace;
+  color: #E6E0DB;
+  padding: 5px;
+  overflow: auto;
+  font-size: 13px;
+  margin: 13px 0;
+
+  pre {
+    margin: 0px;
+    padding: 0px;
+    line-height:19px;
+
+    span.line-numbers {color:#999;margin-right:5px;}
+    .comment  {color:#605A60;/*font-style: italic;*/} 
+    .constant {color:#9B859D;}
+    .function {color:#FFC56D;}
+    .keyword {color:#CB7832;}
+    .symbol {color:#CF6A4C;}
+
+    .regexp { 
+      color:#E9C062;
+      .delimiter{color:darken(#E9C062, 20%);}
+      .char{color:#CF7026;}
+    }
+    .string {
+      color:#A4C260;
+      .delimiter{color:darken(#A4C260, 20%);}
+    }
+    .predefined-constant{ color:lighten(#0085E3, 10%);}
+
+    .doctype {color:#4682B4;}
+    .tag {color:#AC885B;}
+    .attribute-name {color:#E7BE69;}
+
+    .class {color:#9B703F;}
+    .key {color:#9B859D;}
+    .value {color:#CF6A4C;}
+    .type {color:#E0C589;}
+    .pseudo-class{color:#E0C589;}
+
+    .float{color:#CA7840;}
+    .integer{color:#CA7840;}
+
+    .instance-variable{color:#D0CFFE;}
+    .class-variable{color:#D0CFFE;}
+    .global-variable{color:#D0CFFE;}
+
+    .escaped-character{color:#509E4F;}
+    .inline-code{background:#151515;}
+  }
+}

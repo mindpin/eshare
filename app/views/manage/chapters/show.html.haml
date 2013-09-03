@@ -18,13 +18,17 @@
         %a.btn.success-flat{:href => "/manage/chapters/#{@chapter.id}/course_wares/new?for=web_video"}
           %i.icon-plus.icon-white
           %span 增加网络视频
-        - if R::INTERNET
-          %a.btn.success-flat{:href => "/manage/chapters/#{@chapter.id}/course_wares/new?for=javascript"}
-            %i.icon-plus.icon-white
-            %span 增加 js 教程
-          %a.btn.success-flat{:href => "/manage/chapters/#{@chapter.id}/course_wares/import_javascript_course_ware"}
-            %i.icon-plus.icon-white
-            %span 导入 js 教程
+
+        %a.btn.success-flat{:href => "/manage/chapters/#{@chapter.id}/course_wares/new?for=javascript"}
+          %i.icon-plus.icon-white
+          %span 增加 js 教程
+        %a.btn.success-flat{:href => "/manage/chapters/#{@chapter.id}/course_wares/import_javascript_course_ware"}
+          %i.icon-plus.icon-white
+          %span 导入 js 教程
+
+        %a.btn.success-flat{:href => "/manage/chapters/#{@chapter.id}/course_wares/new?for=markdown"}
+          %i.icon-plus.icon-white
+          %span 增加 markdown 图文课程
 
 .page-manage-chapter-show
   .pblock.table

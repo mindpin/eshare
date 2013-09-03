@@ -328,3 +328,8 @@ Eshare::Application.routes.draw do
     resources :site_changes, :shallow => true
   end
 end
+
+# mist
+Eshare::Application.routes.draw do
+  resources :mists, :shallow => true
+end

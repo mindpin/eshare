@@ -8,6 +8,7 @@
 //=require jcrop/jquery.Jcrop.min
 
 @import 'mixins';
+@import 'coderay';
 
 html{
   overflow-x:hidden;
@@ -682,6 +683,10 @@ body.admin, body.app, body.account, body.help, body.error, body.course{
       }
     }
   }
+}
+
+body.app.mists {
+  padding-top:32px;
 }
 
 body.admin {
@@ -5131,5 +5136,29 @@ form .input.page-form-tag-inputer {
         color:#666;
       }
     }
+  }
+}
+
+.page-mists-form {
+  form {
+    margin-bottom:20px;
+  }
+
+  label[for=mist_desc] {
+    display:none;
+  }
+  textarea#mist_desc {
+    width:100%;
+    @include border-box;
+    resize:none;
+  }
+
+  label[for=mist_content] {
+    display:none;
+  }
+  textarea#mist_content {
+    width:100%;
+    @include border-box;
+    resize:none;
   }
 }

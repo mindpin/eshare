@@ -4,7 +4,9 @@ module CourseWareKindMethods
     'flv', 
     'ppt', 'pdf',
     
-    'javascript'
+    'javascript',
+
+    'markdown'
   ]
 
   CWKINDS.each do |k|
