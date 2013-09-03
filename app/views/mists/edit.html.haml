@@ -1,0 +1,11 @@
+.page-mists-form
+  .pblock.form
+    = simple_form_for @mist do |f|
+      .form-inputs
+        = f.input :desc, :input_html => {:placeholder => '输入描述信息', :rows => 3, :class => :xxlarge}
+        %label 选择语言类型
+        = f.select :kind, Mist::KIND_DATA.map {|k, v| [k, k]}
+        = f.input :content, :as => :text, :input_html => {:rows => 12, :class => :xxlarge}
+
+      .form-actions
+        = f.button :submit, '确定创建', :class => 'success-flat'

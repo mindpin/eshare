@@ -10,6 +10,18 @@ class MistsController < ApplicationController
     end
   end
 
+  def edit
+    @mist = Mist.find(params[:id])
+  end
+
+  def update
+    @mist = Mist.find(params[:id])
+
+    if @mist.update_attributes(params[:mist])
+      redirect_to @mist
+    end
+  end
+
   def show
     @mist = Mist.find(params[:id])
   end
