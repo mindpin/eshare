@@ -10,6 +10,7 @@ class CourseWare < ActiveRecord::Base
   include StepHistory::CourseWareMethods
   include Note::CourseWareMethods
   include CourseWareMarkdownMethods
+  include MarkdownImageRegexMethods
 
   attr_accessible :title, :desc, :url, :creator, :total_count
   attr_accessible :title, :desc, :creator, :kind, :chapter, :url, :as => :import

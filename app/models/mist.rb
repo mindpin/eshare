@@ -36,11 +36,9 @@ class Mist < ActiveRecord::Base
       return true if old_content == @content
     end
 
-    file = Tempfile.new(['file_name', KIND_DATA[self.kind]])
-    file.write(@content)
-    file.rewind
-    self.file_entity = FileEntity.create!(:attach => file)
-    file.unlink
+    self.file_entity = FileEntity.create_by_text!(
+      @content, :ext => KIND_DATA[self.kind]
+    )
 
     return true
   end

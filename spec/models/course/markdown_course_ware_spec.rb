@@ -19,15 +19,16 @@ describe CourseWare do
       `
       chapter = FactoryGirl.create(:chapter)
       creator = FactoryGirl.create(:user)
-      @course_ware = CourseWare.create!({
+      @course_ware = CourseWare.new({
         :title   => 'title',
         :desc    => 'desc',
-        :chapter => chapter,
-        :creator => creator,
+        :chapter_id => chapter.id,
         :markdown => @markdown_content
         },
         :as => :markdown
       )
+      @course_ware.creator = creator
+      @course_ware.save!
     }
 
     it{
@@ -46,15 +47,16 @@ describe CourseWare do
       `
       chapter = FactoryGirl.create(:chapter)
       creator = FactoryGirl.create(:user)
-      @course_ware = CourseWare.create!({
+      @course_ware = CourseWare.new({
         :title   => 'title',
         :desc    => 'desc',
-        :chapter => chapter,
-        :creator => creator,
+        :chapter_id => chapter.id,
         :markdown => @markdown_content
         },
         :as => :markdown
       )
+      @course_ware.creator = creator
+      @course_ware.save!
       @course_ware.reload
     }
 

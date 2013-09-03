@@ -110,5 +110,15 @@ module FileEntityOuterUrlMethods
         :outer_url => outer_url
       )
     end
+
+    def create_by_text!(content, options)
+      ext = options[:ext] || '.txt'
+      file = Tempfile.new(['content', ext])
+      file.write(content)
+      file.rewind
+      entity = FileEntity.create!(:attach => file)
+      file.unlink
+      entity
+    end
   end
 end
