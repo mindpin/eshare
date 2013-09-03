@@ -1,4 +1,5 @@
 class Mist < ActiveRecord::Base
+  include MarkdownImageRegexMethods
   KIND_DATA = {
     "markdown" => '.md',
     "java"     => ".java",
@@ -19,11 +20,15 @@ class Mist < ActiveRecord::Base
     @content = content
   end
 
-  def content
+  def content(options = {})
     if new_record?
       content = @content || ""
     else
       content = @content || (File.open(self.file_entity.attach.path).read)
+    end
+    bool_replace = !!options[:replace_outer_url]
+    if bool_replace
+      content = get_replace_outer_image_url(content)
     end
     content
   end
@@ -31,6 +36,7 @@ class Mist < ActiveRecord::Base
   def build_content_file_entity
     return true if @content.blank?
 
+    build_outer_image_file_entity(@content)
     if !self.file_entity.blank?
       old_content = File.open(self.file_entity.attach.path).read
       return true if old_content == @content

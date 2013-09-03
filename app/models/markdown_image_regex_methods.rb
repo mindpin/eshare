@@ -4,7 +4,7 @@ module MarkdownImageRegexMethods
   def build_outer_image_file_entity(content)
     matchs = content.gsub(IMAGE_REGEX)
     matchs.each do |match|
-      FileEntity.get_outer_image(match)
+      FileEntity.get_outer_image($1)
     end
   end
 
