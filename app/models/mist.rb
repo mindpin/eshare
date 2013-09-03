@@ -1,16 +1,17 @@
 class Mist < ActiveRecord::Base
-  MARKDOWN  = "markdown"
-  JAVA      = 'java'
-  JAVASCRPT = 'javascript'
-  RUBY      = 'ruby'
-  TEXT      = 'text'
+  KIND_DATA = {
+    "markdown" => '.md',
+    "java"     => ".java",
+    "javascript" => '.js',
+    "ruby"     => '.rb',
+    "text"     => '.text'
+  }
 
   attr_accessible :desc, :kind, :file_entity, :content
 
   belongs_to :file_entity
   
-  validates :kind, :presence => true, 
-                   :inclusion  => [MARKDOWN, JAVA, JAVASCRPT, RUBY, TEXT]
+  validates :kind, :presence => true, :inclusion  => KIND_DATA.keys
 
   before_save :build_content_file_entity
 
@@ -26,7 +27,7 @@ class Mist < ActiveRecord::Base
       return true if old_content == @content
     end
 
-    file = Tempfile.new(['file_name', _file_by_kind])
+    file = Tempfile.new(['file_name', KIND_DATA[self.kind]])
     file.write(@content)
     file.rewind
     self.file_entity = FileEntity.create!(:attach => file)
@@ -34,23 +35,4 @@ class Mist < ActiveRecord::Base
 
     return true
   end
-
-  private
-    def _file_by_kind
-      suffix = '.txt'
-
-      case self.kind
-      when MARKDOWN
-        suffix = '.md'
-      when JAVA
-        suffix = '.java'
-      when JAVASCRPT
-        suffix = '.js'
-      when RUBY
-        suffix = '.rb'
-      when TEXT
-        suffix = '.txt'
-      end
-      return suffix
-    end
 end

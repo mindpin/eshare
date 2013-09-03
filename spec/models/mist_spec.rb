@@ -55,5 +55,15 @@ describe Mist do
 
     end
 
+    it " content  " do
+        content = 'content1afasdfasfasdfsf'
+        @mist = Mist.create!(
+                     :desc => 'desc1',
+                     :kind => 'ruby',
+                     :content => content
+                    )
+        old_content = File.open(@mist.file_entity.attach.path).read
+        old_content.should === content
+    end
   end
 end
