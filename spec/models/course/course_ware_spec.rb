@@ -546,4 +546,18 @@ describe CourseWare do
     it { @cw_flv.youku_video.should be_blank }
   end
 
+
+  describe '#UserMethods' do
+    before{
+      @user_1 = FactoryGirl.create(:user)
+      @user_2 = FactoryGirl.create(:user)
+      @course_ware = FactoryGirl.create :course_ware, :creator => @user_1
+    }
+    it {
+      @user_1.created_course_wares.include?(@course_ware).should === true
+    }
+    it {
+      @user_2.created_course_wares.include?(@course_ware).should === false
+    }
+  end
 end

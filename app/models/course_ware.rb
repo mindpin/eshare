@@ -196,4 +196,10 @@ class CourseWare < ActiveRecord::Base
     end
   end
 
+  module UserMethods
+    def self.included(base)
+      base.has_many :created_course_wares, :class_name => 'CourseWare', :foreign_key => :creator_id
+    end
+  end
+
 end
