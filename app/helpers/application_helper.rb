@@ -188,7 +188,7 @@ module ApplicationHelper
     else
       klass = apply.status.downcase
       string = {
-        SelectCourseApply::STATUS_REQUEST => '审核中',
+        SelectCourseApply::STATUS_REQUEST => '待审核',
         SelectCourseApply::STATUS_ACCEPT => '已批准',
         SelectCourseApply::STATUS_REJECT => '已拒绝'
       }[apply.status]
@@ -199,6 +199,17 @@ module ApplicationHelper
         haml_tag 'span', "#{string}"
       end
     }
+  end
+
+  def manage_course_select_apply_status(course)
+    count = course.apply_users.count
+
+    return '空选' if count == 0
+    return '未满' if !course.have_apply_request_limit? 
+
+    return '未满' if course.apply_request_limit > count
+    return '选满' if course.apply_request_limit == count
+    return '超选' if course.apply_request_limit < count
   end
 
   def user_page_head_bg(user)

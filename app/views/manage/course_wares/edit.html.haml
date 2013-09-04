@@ -28,6 +28,9 @@
             = f.input :kind, :collection => s, :label => '网络视频来源', :prompt => nil
             = f.input :url, :label => '视频网址 URL', :input_html => {:class => 'xxlarge', :placeholder => 'http://'}
 
+          - elsif @course_ware.is_markdown? # 图文课程
+            = f.input :markdown, :as => :text, :label => 'markdown 正文', :input_html => {:rows => 16, :class => 'xxlarge'}
+
           - else
             - if @course_ware.file_entity
               .file

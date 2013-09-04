@@ -6,7 +6,7 @@
     .pblock
       .cpart.course-questions
         %h3 总共 #{@course.questions.count} 个提问
-        = render_cell :questions, :list, :user => current_user, :questions => @questions
+        = render_cell :questions, :gridlist, :user => current_user, :questions => @questions
   .sidep33
     .pblock.course-questions-stat
       .cpart

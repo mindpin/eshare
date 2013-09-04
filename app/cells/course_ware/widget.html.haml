@@ -7,3 +7,6 @@
 
 - if @course_ware.is_javascript?
   = render_cell :course_ware, :javascript, :course_ware => @course_ware, :user => @user
+
+- if @course_ware.is_markdown?
+  = render_cell :course_ware, :markdown, :course_ware => @course_ware, :user => @user

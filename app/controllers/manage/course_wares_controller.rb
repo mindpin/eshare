@@ -16,10 +16,9 @@ class Manage::CourseWaresController < ApplicationController
     @course_ware = @chapter.course_wares.new
 
     @for_web_video = params[:for] == 'web_video'
+    @for_javascript = params[:for] == 'javascript'
+    @for_markdown = params[:for] == 'markdown'
 
-    if R::INTERNET
-      @for_javascript = params[:for] == 'javascript'
-    end
   end
 
   def import_javascript_course_ware
@@ -36,11 +35,19 @@ class Manage::CourseWaresController < ApplicationController
   def create
     authorize! :manage, CourseWare
     @chapter = Chapter.find(params[:chapter_id])
-    @course_ware = @chapter.course_wares.build(params[:course_ware], :as => :upload)
+
+    if params[:course_ware][:markdown].present?
+      @course_ware = @chapter.course_wares.build(params[:course_ware], :as => :markdown)
+    else
+      @course_ware = @chapter.course_wares.build(params[:course_ware], :as => :upload)
+    end
+    
     @course_ware.creator = current_user
+
     if @course_ware.save
       return redirect_to "/manage/chapters/#{@chapter.id}"
     end
+
     render :action => :new
   end
 
@@ -55,9 +62,17 @@ class Manage::CourseWaresController < ApplicationController
     @course_ware = CourseWare.find(params[:id])
     authorize! :manage, @course_ware
     @chapter = @course_ware.chapter
-    if @course_ware.update_attributes(params[:course_ware], :as => :upload)
+
+    if params[:course_ware][:markdown].present?
+      result = @course_ware.update_attributes(params[:course_ware], :as => :markdown)
+    else
+      result = @course_ware.update_attributes(params[:course_ware], :as => :upload)
+    end
+
+    if result
       return redirect_to "/manage/chapters/#{@chapter.id}"
     end
+
     render :action => :edit
   end
 
@@ -66,6 +81,11 @@ class Manage::CourseWaresController < ApplicationController
     authorize! :manage, @course_ware
     @chapter = @course_ware.chapter
     @course_ware.destroy
+
+    if request.xhr?
+      return render :json => {:status => 'ok'}
+    end
+
     return redirect_to "/manage/chapters/#{@chapter.id}"
   end
 
@@ -74,6 +94,14 @@ class Manage::CourseWaresController < ApplicationController
     authorize! :manage, @course_ware
     @chapter = @course_ware.chapter
     @course_ware.move_up
+
+    if request.xhr?
+      return render :json => {
+        :status => 'ok',
+        :html => (render_cell :course_ware, :manage_table, :course_wares => [@course_ware])
+      }
+    end
+
     return redirect_to "/manage/chapters/#{@chapter.id}"
   end
 
@@ -82,6 +110,14 @@ class Manage::CourseWaresController < ApplicationController
     authorize! :manage, @course_ware
     @chapter = @course_ware.chapter
     @course_ware.move_down
+
+    if request.xhr?
+      return render :json => {
+        :status => 'ok',
+        :html => (render_cell :course_ware, :manage_table, :course_wares => [@course_ware])
+      }
+    end
+
     return redirect_to "/manage/chapters/#{@chapter.id}"
   end
 

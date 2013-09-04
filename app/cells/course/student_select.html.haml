@@ -7,34 +7,21 @@
     -# REQUEST ACCEPT REJECT
 
     .student-select-course{:class => klass}
-      - if @course.apply_request_is_full?
-        .full 选课人数已满
-
-      - else
-        %a.doselect{:href => 'javascript:;', :data => {:id => @course.id}}
-          %span 我要选课
-        - if @course.have_apply_request_limit?
-          - if @course.apply_request_is_full?
-          - else
-            .limit
-              .desc 剩余名额
-              .n= @course.remaining_apply_request_count
+      %a.doselect{:href => 'javascript:;', :data => {:id => @course.id}}
+        %span 我要选课
 
       .info.request
         %i.icon-info-sign
         %span 选课审核中，
-        %a.btn.small.danger.cancel-select{:href => 'javascript:;', :data => {:id => @course.id}}
+        %a.btn.small.danger-flat.cancel-select{:href => 'javascript:;', :data => {:id => @course.id}}
           %i.icon-remove.icon-white
           %span 取消选课
       .info.accept
         %i.icon-ok-sign
         %span 选课已成功，
-        %a.btn.small.danger.cancel-select{:href => 'javascript:;', :data => {:id => @course.id}}
+        %a.btn.small.danger-flat.cancel-select{:href => 'javascript:;', :data => {:id => @course.id}}
           %i.icon-remove.icon-white
           %span 取消选课
       .info.reject
         %i.icon-info-sign
-        %span 选课未选中，
-        %a.btn.small.danger.cancel-select{:href => 'javascript:;', :data => {:id => @course.id}}
-          %i.icon-remove.icon-white
-          %span 取消选课
+        %span 选课未选中

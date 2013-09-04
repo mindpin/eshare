@@ -7,6 +7,15 @@ class Manage::CoursesController < ApplicationController
   
   def index
     authorize! :manage, Course
+
+    if params[:select_apply_status]
+      @courses = 
+        SelectCourseApply
+          .select_apply_status_courses(params[:select_apply_status])
+          .page(params[:page])
+      return
+    end
+
     query = @query = (params[:q].blank? ? '' : params[:q].strip)
 
     if query.blank?
@@ -63,6 +72,10 @@ class Manage::CoursesController < ApplicationController
     @course = Course.find params[:id]
     authorize! :manage, @course
     @course.destroy
+
+    if request.xhr?
+      return render :json => {:status => 'ok'}
+    end
 
     redirect_to :action => :index, :q => cookies[:last_course_filter]
   end

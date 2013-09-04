@@ -7,6 +7,12 @@ class QuestionsCell < Cell::Rails
     render
   end
 
+  def gridlist(opts = {})
+    @user = opts[:user]
+    @questions = opts[:questions]
+    render
+  end
+
   def tree(opts = {})
     @user = opts[:user]
     @question = opts[:question]

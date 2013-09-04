@@ -18,34 +18,4 @@
 
 .page-manage-course-show
   .pblock.table
-    = page_data_table :chapters, @chapters, :striped, :bordered do |table|
-      - table.add_column :title do |ch|
-        %a{:href => "/manage/chapters/#{ch.id}"}= ch.title
-      - table.add_column :'course-wares-count' do |ch|
-        = ch.course_wares.count
-      - table.add_column :'practices-count' do |ch|
-        = ch.practices.count
-      - table.add_column :updated_at
-
-      - table.add_column(:ops) do |ch|
-        %a.btn.mini.gray-flat{:href => "/manage/chapters/#{ch.id}/edit"}
-          %i.icon-edit
-          %span= t('common.edit')
-        = link_to "/manage/chapters/#{ch.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger-flat' do
-          %i.icon-remove.icon-white
-          %span= t('common.delete')
-
-      - table.add_column :position do |ch|
-        - if ch.next.present?
-          = link_to "/manage/chapters/#{ch.id}/move_down", :method => :put, :class => 'btn mini move-down' do
-            %i.icon-arrow-down
-        - else
-          %a.btn.disabled.mini{:href=>'javascript:;'}
-            %i.icon-arrow-down
-
-        - if ch.prev.present?
-          = link_to "/manage/chapters/#{ch.id}/move_up", :method => :put, :class => 'btn mini move-up' do
-            %i.icon-arrow-up
-        - else
-          %a.btn.disabled.mini{:href=>'javascript:;'}
-            %i.icon-arrow-up
+    = render_cell :course_ware, :manage_chapter_table, :chapters => @chapters

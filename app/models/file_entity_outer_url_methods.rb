@@ -40,6 +40,14 @@ module FileEntityOuterUrlMethods
     return true
   end
 
+  def try_download_enqueue_if_need
+    return true if download_queue_wait?
+    return true if download_downloading?
+    return true if download_success?
+
+    download_enqueue
+  end
+
   # 调用队列进行下载
   def download_enqueue
     if Rails.env.test?
@@ -61,12 +69,28 @@ module FileEntityOuterUrlMethods
     self.download_status == DownloadStatus::READY
   end
 
+  def download_queue_wait?
+    self.download_status == DownloadStatus::QUEUE_WAIT
+  end
+
+  def download_downloading?
+    self.download_status == DownloadStatus::DOWNLOADING
+  end
+
   def download_success?
     self.download_status == DownloadStatus::SUCCESS
   end
 
   def download_failed?
     self.download_status == DownloadStatus::FAILURE
+  end
+
+  def download_queue_down?
+    self.download_status == DownloadStatus::QUEUE_DOWN
+  end
+  
+  def download_redis_down?
+    self.download_status == DownloadStatus::REDIS_DOWN
   end
 
   def download_downloading!
@@ -102,13 +126,26 @@ module FileEntityOuterUrlMethods
   module ClassMethods
     def get_outer_image(outer_url)
       file_entity = self.find_by_outer_url(outer_url)
-      return file_entity if file_entity.present?
+      if file_entity.present?
+        file_entity.try_download_enqueue_if_need
+        return file_entity 
+      end
 
       self.create!(
         :attach_file_name => 'ready', 
         :attach_file_size => 0,
         :outer_url => outer_url
       )
+    end
+
+    def create_by_text!(content, options)
+      ext = options[:ext] || '.txt'
+      file = Tempfile.new(['content', ext])
+      file.write(content)
+      file.rewind
+      entity = FileEntity.create!(:attach => file)
+      file.unlink
+      entity
     end
   end
 end

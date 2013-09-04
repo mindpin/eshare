@@ -11,6 +11,11 @@
     - table.add_column(:ops) do |course|
       - sca = @user.select_course_applies.by_course(course).first
       - if sca.blank?
-        %a.btn.success.mini.doselect{:href => 'javascript:;', :data => {:id => course.id}} 申请选课
+        %a.btn.success-flat.mini.doselect{:href => 'javascript:;', :data => {:id => course.id}}
+          %i.icon-star.icon-white 
+          %span 申请选课
       - else
-        %a.btn.danger.mini.cancel-select{:href => 'javascript:;', :data => {:id => course.id}} 取消选课
+        - if sca.status != SelectCourseApply::STATUS_REJECT
+          %a.btn.danger-flat.mini.cancel-select{:href => 'javascript:;', :data => {:id => course.id}}
+            %i.icon-remove.icon-white 
+            %span 取消选课

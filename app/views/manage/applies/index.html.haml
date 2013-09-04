@@ -2,12 +2,16 @@
   %h1 选课管理
 
 .page-course-applies
+  .chart
+    .page-chart.all-courses-select-apply-pie
+
   .flat-nav
     = page_navbar do |navbar|
       - navbar.add_item("<span>全部</span>".html_safe, "/manage/applies")
       - navbar.add_item("<span>待审核</span>".html_safe, "/manage/applies/status_request")
       - navbar.add_item("<span>已批准</span>".html_safe, "/manage/applies/status_accept")
       - navbar.add_item("<span>已拒绝</span>".html_safe, "/manage/applies/status_reject")
+
 
   = render_cell :course_apply, :manage_table, :applies => @applies
   = paginate @applies

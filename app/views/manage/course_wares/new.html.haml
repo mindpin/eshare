@@ -3,7 +3,7 @@
 
 .page-course-ware-form
   .pblock.form
-    - if R::INTERNET && @for_javascript
+    - if @for_javascript
       .for 现在你正在添加一个 javascript 编程教程，先创建教程后才能编辑教程具体内容
       = simple_form_for @course_ware, :url => "/manage/chapters/#{@chapter.id}/course_wares" do |f|
         .form-inputs
@@ -30,6 +30,9 @@
 
             = f.input :kind, :collection => s, :label => '网络视频来源', :prompt => nil
             = f.input :url, :label => '视频网址 URL', :input_html => {:class => 'xxlarge', :placeholder => 'http://'}
+
+          - elsif @for_markdown # 图文课程
+            = f.input :markdown, :as => :text, :label => 'markdown 正文', :input_html => {:rows => 16, :class => 'xxlarge'}
 
           - else
             = f.input :file_entity_id, :as => :hidden

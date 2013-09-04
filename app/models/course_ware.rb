@@ -10,11 +10,13 @@ class CourseWare < ActiveRecord::Base
   include StepHistory::CourseWareMethods
   include Note::CourseWareMethods
   include CourseWareMarkdownMethods
+  include MarkdownImageRegexMethods
 
   attr_accessible :title, :desc, :url, :creator, :total_count
-  attr_accessible :title, :desc, :file_entity_id, :kind, :url, :chapter_id, :as => :upload
   attr_accessible :title, :desc, :creator, :kind, :chapter, :url, :as => :import
-  attr_accessible :title, :desc, :creator, :kind, :chapter, :file_entity, :markdown, :as => :markdown
+  
+  attr_accessible :title, :desc, :file_entity_id, :kind, :chapter_id, :url, :as => :upload
+  attr_accessible :title, :desc, :file_entity_id, :kind, :chapter_id, :markdown, :as => :markdown
 
   attr_accessible :cover_url_cache, :as => :update_cover
 

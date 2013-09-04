@@ -1,10 +1,10 @@
 - content_for :header do
   %h1 用户管理
   .btns
-    %a.btn.success{:href => '/admin/users/new'}
+    %a.btn.success-flat{:href => '/admin/users/new'}
       %i.icon-plus.icon-white
       %span 新增用户
-    %a.btn.success{:href => '/admin/users/import'}
+    %a.btn.success-flat{:href => '/admin/users/import'}
       %i.icon-upload.icon-white
       %span 导入Excel
 
@@ -25,10 +25,10 @@
       - table.add_column(:email)
       - table.add_column(:ops) do |user|
         - if !user.is_admin?
-          = link_to [:edit, :admin, user], :class => 'edit btn mini' do
+          = link_to [:edit, :admin, user], :class => 'edit btn mini gray-flat' do
             %i.icon-edit
             %span= t('common.user.edit')
-          = link_to [:admin, user], :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger' do
+          = link_to [:admin, user], :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn mini danger-flat' do
             %i.icon-remove.icon-white
             %span= t('common.delete')
 

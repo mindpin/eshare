@@ -34,10 +34,10 @@
 
     - if answer.creator == user
       - add(:ops) do
-        %a.btn.success.mini.edit{:href => "javascript:;"}
+        %a.btn.success-flat.mini.edit{:href => "javascript:;"}
           %i.icon-edit.icon-white
           %span= t('common.edit')
-        = link_to "/answers/#{answer.id}", :method => :delete, :confirm => t('common.delete_confirm'), :class => 'btn danger mini delete' do
+        %a.btn.danger-flat.mini.delete{:href => "/answers/#{answer.id}", :data => {:method => :delete, :confirm => t('common.delete_confirm')}}
           %i.icon-minus.icon-white
           %span= t('common.delete')
 
@@ -47,5 +47,5 @@
             .form-inputs
               = f.input :content, :as => :text, :input_html => {:rows => 5, :class => 'xxlarge'}
             .form-actions
-              = f.button :submit, :class => 'success'
-              %a.btn.cancel{:href => 'javascript:;'}= t('common.form.cancel')
+              = f.button :submit, :class => 'success-flat'
+              %a.btn.cancel.gray-flat{:href => 'javascript:;'}= t('common.form.cancel')

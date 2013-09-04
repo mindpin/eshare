@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 Eshare::Application.routes.draw do
-  default_url_options :host => "edushare.mindpin.com" # devise 发邮件需要用到
+  default_url_options :host => "www.mindpin.com" # devise 发邮件需要用到
   # 参考
   # https://github.com/plataformatec/devise/wiki/How-To:-Create-custom-layouts
   # 来设置 devise 的布局
@@ -289,6 +289,7 @@ Eshare::Application.routes.draw do
       collection do
         get :all_courses_read_pie
         get :all_courses_punch_card
+        get :all_courses_select_apply_pie
       end
 
       member do
@@ -326,4 +327,9 @@ Eshare::Application.routes.draw do
     resources :user_opinions, :shallow => true
     resources :site_changes, :shallow => true
   end
+end
+
+# mist
+Eshare::Application.routes.draw do
+  resources :mists, :shallow => true
 end

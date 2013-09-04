@@ -1,4 +1,9 @@
 .page-filter.admin-users
-  %input{:name => :q, :type => :text, :placeholder => '查找用户', :value => @query}
-  %a.btn.info.do-search{:href => 'javascript:;'}
+  %input.flat{:name => :q, :type => :text, :placeholder => '查找用户', :value => @query}
+
+  - if @query.present?
+    %a.clear-filter{:href => '/admin/users', :title => '清除搜索词'}
+      %i.icon-remove-sign
+
+  %a.btn.inverse-flat.do-search{:href => 'javascript:;'}
     %i.icon-search.icon-white

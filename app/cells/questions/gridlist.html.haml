@@ -1,0 +1,17 @@
+.page-questions-grid-list
+  = page_tile :questions, @questions do
+    - add_foot :counts do |question|
+      .votes
+        %span.c= question.vote_sum
+        %span 投票
+      .answers
+        %span.c= question.answers_count
+        %span 回答
+
+    - add :title do |question|
+      = link_to question.title, question
+
+    - add_foot :creator do |question|
+      .avatar= avatar_link question.creator, :small
+      .name= user_link question.creator
+      .date= timeago question.created_at

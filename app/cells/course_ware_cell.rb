@@ -41,4 +41,21 @@ class CourseWareCell < Cell::Rails
     
     render
   end
+
+  def manage_table(opts = {})
+    @course_wares = opts[:course_wares]
+    render
+  end
+
+  def manage_chapter_table(opts = {})
+    @chapters = opts[:chapters]
+    render
+  end
+
+  # markdown
+  def markdown(opts = {})
+    @course_ware = opts[:course_ware]
+    @user = opts[:user]
+    render
+  end
 end
