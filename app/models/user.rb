@@ -213,5 +213,4 @@ class User < ActiveRecord::Base
   include Medal::UserMethods
   include SimpleCredit::UserMethods
   include Report::UserMethods
-  include CourseWare::UserMethods
 end
