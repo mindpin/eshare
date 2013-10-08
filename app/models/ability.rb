@@ -59,8 +59,6 @@ class Ability
       can :show, CourseWare
       can :show, Chapter
       can :record, CourseWareReading
-      can :show, Practice
-      can :submit, Practice
     end
     # COURSE2-4 : 课程首页签到 [ALL 全部]
     if !user.blank?

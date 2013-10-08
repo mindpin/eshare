@@ -52,7 +52,6 @@ class Course < ActiveRecord::Base
 
   belongs_to :creator, :class_name => 'User', :foreign_key => :creator_id
   has_many :chapters
-  has_many :practices, :through => :chapters
   has_many :course_wares, :through => :chapters
   has_many :course_ware_readings, :through => :course_wares
 
@@ -61,13 +60,8 @@ class Course < ActiveRecord::Base
   has_many :learning_users, :through => :directly_course_ware_readings,
                             :source => :user,
                             :uniq => true
-
-  has_many :test_questions
-  has_one  :test_option
   
   has_many :course_signs
-
-  has_many :test_papers
 
   has_many :questions
   has_many :question_answers, :through => :questions,
