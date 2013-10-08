@@ -55,12 +55,6 @@ module CourseZipImporter
                                          :desc    => chapter_info[:desc],
                                          :creator => creator)
 
-        chapter_info[:practices].each do |practice_info|
-          chapter.practices.create(:title   => practice_info[:title],
-                                   :chapter => chapter,
-                                   :creator => creator)
-        end if chapter_info[:practices]
-
         chapter_info[:wares].each do |courseware|
           ware = chapter.course_wares.new(
             :title => courseware[:name],
