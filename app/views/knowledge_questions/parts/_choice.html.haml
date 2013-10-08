@@ -1,4 +1,4 @@
 = f.label :answer, "答案"
 = f.text_field :answer
 = f.label :choices, "选项"
-= f.text_area :choices
+= f.text_area :choices, :value => question.choices_str

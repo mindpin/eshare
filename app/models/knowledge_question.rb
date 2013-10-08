@@ -55,15 +55,19 @@ class KnowledgeQuestion < ActiveRecord::Base
 
   def choices=(input)
     array = input.is_a?(String) ? input.split("\n").map(&:strip) : input
-    write_attribute :options, array.to_json
+    write_attribute :choices, array.to_json
   end
 
   def choices
-    JSON.parse read_attribute(:options) || "[]"
+    JSON.parse(read_attribute(:choices) || "[]")
   end
 
   def self.make(kind, attrs = {})
     self.create attrs.merge(:kind => kind), :as => kind.to_sym
+  end
+
+  def choices_str
+    self.choices.join("\n")
   end
 
   private

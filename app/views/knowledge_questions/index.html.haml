@@ -7,6 +7,6 @@
 
 .page-data-tile
   - @questions.each do |question|
-    = link_to knowledge_question_path(question), :class => "tile-item" do
+    = link_to edit_knowledge_question_path(question), :class => "tile-item" do
       = question.kind(:zh => true)
       = question.title
