@@ -84,8 +84,13 @@ class TudouVideoList
       @response ||= open(@url).read
     end
 
+    def response_xml
+      @response_xml ||= Nokogiri::XML(response)
+    end
+
     def title
-      @title ||= Nokogiri::XML(response).at_css('h1#plCaption').content
+      @title ||= response_xml.at_css('.sec_2 .caption').content
+      # 10月8日，土豆页面结构更改，宋亮 fix
     end
 
     def lid
@@ -93,7 +98,8 @@ class TudouVideoList
     end
 
     def count
-      @count ||= Nokogiri::XML(response).at_css('span.dd').content.to_i
+      @count ||= response_xml.css('.mod_box_bd .summary.fix')[1].css('i')[0].content.to_i
+      # 10月8日，土豆页面结构更改，宋亮 fix
     end
 
     def items
