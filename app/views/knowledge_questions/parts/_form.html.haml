@@ -6,7 +6,7 @@
   = f.text_field :title
   - locals = {:f => f, :question => @question}
   - case @question.kind
-  - when :single_choice, :multiple_chioces
+  - when :single_choice, :multiple_choices
     = render :partial => "knowledge_questions/parts/choice", :locals => locals
   - when :true_false
     = render :partial => "knowledge_questions/parts/true_false", :locals => locals
