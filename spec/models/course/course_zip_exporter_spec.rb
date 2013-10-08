@@ -42,17 +42,6 @@ describe "导出 Course 相关数据到 zip" do
       :url => "http://v.youku.com/v_show/id_XNTM5MzYxNTE2.html"
     )
 
-    @practice_1_1 = FactoryGirl.create(
-      :practice, 
-      :chapter => @chapter_1,
-      :title => "practice title one"
-    )
-
-    @practice_1_2 = FactoryGirl.create(
-      :practice, 
-      :chapter => @chapter_1,
-      :title => "practice title two"
-    )
 
 
     @chapter_2 = FactoryGirl.create(
@@ -76,12 +65,6 @@ describe "导出 Course 相关数据到 zip" do
       :title => "video one",
       :kind => 'youku',
       :url => "http://v.youku.com/v_show/id_XNTM5MzQ2ODI0.html"
-    )
-
-    @practice_2_1 = FactoryGirl.create(
-      :practice, 
-      :chapter => @chapter_2,
-      :title => "practice title one"
     )
 
   }
@@ -122,14 +105,6 @@ describe "导出 Course 相关数据到 zip" do
                 :kind => "youku",
                 :url => @ware_1_2.url,
               }
-            ],
-            :practices => [
-              {
-                :title => @practice_1_1.title,
-              },
-              {
-                :title => @practice_1_2.title
-              }
             ]
           },
           {
@@ -145,11 +120,6 @@ describe "导出 Course 相关数据到 zip" do
                 :name => @ware_2_2.title,
                 :kind => "youku",
                 :url => @ware_2_2.url,
-              }
-            ],
-            :practices => [
-              {
-                :title => @practice_2_1.title,
               }
             ]
           }
