@@ -189,8 +189,6 @@ class User < ActiveRecord::Base
   include Announcement::UserMethods
   include Follow::UserMethods
   include QuestionFollow::UserMethods
-  include Practice::UserMethods
-  include PracticeRecord::UserMethods
   include Activity::UserMethods
   include UserFeedStream
   include MediaShare::UserMethods

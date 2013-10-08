@@ -52,15 +52,11 @@ module CourseZipExporter
           copy_ware_files(ware)
         end
 
-        practices = build_practices(chapter)
-
         hash = {
           :title => chapter.title,
           :desc => chapter.desc,
           :wares => wares,
         }
-
-        hash.merge!(:practices => practices) if !practices.blank?
 
         chapters_arr << hash
       end
@@ -79,16 +75,6 @@ module CourseZipExporter
        
     end
 
-
-
-    def build_practices(chapter)
-      practices = []
-
-      chapter.practices.each do |practice|
-        practices << {:title => practice.title}
-      end
-      practices
-    end
 
     def copy_cover
       filename = File.basename(self.cover.path)

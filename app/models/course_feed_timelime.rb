@@ -24,15 +24,6 @@ module CourseFeedTimelime
           and
             scene = 'questions'
 
-        UNION
-
-          SELECT * FROM feeds
-          WHERE
-            what = 'create_practice_record'
-          and
-            user_id = #{self.id}
-          and
-            scene = 'practice_records'
 
         order by id desc
       `)
@@ -79,27 +70,6 @@ module CourseFeedTimelime
             questions.course_id = #{self.id}
           and
             feeds.scene = 'questions'
-
-        UNION
-
-          SELECT feeds.* FROM feeds
-            INNER JOIN practice_records
-              ON
-            feeds.to_type = 'PracticeRecord'
-              and
-            feeds.to_id = practice_records.id
-            INNER JOIN practices
-              ON
-            practices.id = practice_records.practice_id
-            INNER JOIN chapters
-              ON
-            chapters.id = practices.chapter_id
-          WHERE
-            feeds.what = 'create_practice_record'
-          and
-            chapters.course_id = #{self.id}
-          and
-            feeds.scene = 'practice_records'
 
         order by id desc
       `)

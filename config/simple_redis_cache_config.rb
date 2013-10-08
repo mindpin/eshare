@@ -92,10 +92,6 @@ SimpleRedisCache.config do
             if feed.to.course.present? && feed.what == "create_question"
               add_to_cache(feed.id, user)
             end
-          when PracticeRecord
-            if feed.what == "create_practice_record"
-              add_to_cache(feed.id, user)
-            end
           end
       end
 
@@ -125,11 +121,7 @@ SimpleRedisCache.config do
               course = feed.to.course
               add_to_cache(feed.id, course)
             end
-          when PracticeRecord
-            if feed.what == "create_practice_record"
-              course = feed.to.practice.chapter.course
-              add_to_cache(feed.id, course)
-            end
+          
           end
 
       end
