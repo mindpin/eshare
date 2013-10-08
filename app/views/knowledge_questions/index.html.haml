@@ -1,0 +1,12 @@
+.content-header
+  %h1 添加知识问题
+
+  - KnowledgeQuestion::KINDS.each do |en, zh|
+    - path = new_knowledge_question_path(:kind => en)
+    = link_to zh, path, :class => "btn success-flat"
+
+.page-data-tile
+  - @questions.each do |question|
+    = link_to knowledge_question_path(question), :class => "tile-item" do
+      = question.kind(:zh => true)
+      = question.title
