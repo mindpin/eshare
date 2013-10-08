@@ -5,8 +5,9 @@
     - path = new_knowledge_question_path(:kind => en)
     = link_to zh, path, :class => "btn success-flat"
 
-.page-data-tile
+.knowledge-questions
   - @questions.each do |question|
-    = link_to edit_knowledge_question_path(question), :class => "tile-item" do
-      = question.kind(:zh => true)
-      = question.title
+    .knowledge-question
+      = link_to edit_knowledge_question_path(question) do
+        = question.kind(:zh => true)
+        = question.title
