@@ -231,10 +231,6 @@ Eshare::Application.routes.draw do
       end
     end
 
-    resources :surveys, :shallow => true do
-      resources :survey_results, :shallow => true
-    end
-
     namespace :aj do
       resources :courses, :shallow => true do
         resources :chapters, :shallow => true
@@ -307,16 +303,6 @@ Eshare::Application.routes.draw do
           end
         end
       end
-    end
-  end
-end
-
-# 调查
-Eshare::Application.routes.draw do
-  resources :surveys, :shallow => true do
-    member do
-      post :submit
-      get :select_teacher
     end
   end
 end

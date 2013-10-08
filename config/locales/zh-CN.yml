@@ -5,7 +5,6 @@ zh-CN:
       users_manage: 用户管理
       categories_manage: 分类管理
       courses_manage: 课程管理
-      teacher_surveys_manage: 教师评价
       course_applies_manage: 选课管理
 
       #INTERNET
@@ -32,7 +31,6 @@ zh-CN:
       questions: 问答
 
       learning_plan: 计划
-      teacher-surveys: 教师评价
 
     account:
       edit: 基础信息设置
@@ -66,8 +64,6 @@ zh-CN:
       user:
         create: 创建用户
         update: 确定更新
-      survey:
-        create: 创建调查表
       user_opinion:
         create: 提交
 
@@ -109,9 +105,6 @@ zh-CN:
         content: 具体描述
       answer:
         content: 回答正文
-
-      survey:
-        title: 调查表标题
 
       user_opinion:
         title: 标题
@@ -164,15 +157,6 @@ zh-CN:
           attributes:
             title:
               blank: 必须填写问题
-        survey:
-          attributes:
-            title:
-              blank: 必须填写调查表标题
-
-        simple_survey/survey_result:
-          attributes:
-            survey_id:
-              taken: 不能重复填写一个调查表
 
         user_opinion:
           attributes:
@@ -316,23 +300,6 @@ zh-CN:
         lft: left
         rgt: right
         ops: 操作
-
-      surveys:
-        id: ID
-        title: 调查表标题
-        ops: 操作
-        count: 已填写份数
-
-      survey_results:
-        user: 被调查人
-        time: 调查时间
-        ops: 操作
-
-      survey_teachers:
-        name: 教师
-        status: 评价状态
-        ops: 操作
-        count: 已提交问卷数
 
   devise:
     failure:

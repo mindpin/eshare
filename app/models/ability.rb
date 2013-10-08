@@ -146,20 +146,6 @@ class Ability
       can :chart, TestQuestion
     end
 
-    ## SURVEY : 调查
-    # SURVEY1 : 调查编辑/发布 [MANAGER 教学管理员]
-    if !user.blank? && user.is_manager?
-      can :manage, Survey
-    end
-    # SURVEY2 : 填写调查问卷和提交 [ALL 全部]
-    if !user.blank?
-      can :use, Survey
-    end
-    # SURVEY3 : 查看调查问卷统计和报告 [MANAGER 教学管理员]
-    if !user.blank? && user.is_manager?
-      can :chart, Survey
-    end
-
     ## NOTICE : 通知
     # NOTICE1 : 通知的编辑/发布 [MANAGER 教学管理员]
     if !user.blank? && user.is_manager?
