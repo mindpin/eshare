@@ -75,16 +75,7 @@ describe CourseZipImporter do
           end
         end
 
-        describe "检查 practices" do
-          before {
-            @practices = @chapter_1.practices
-            @practice_1 = @practices.first
-          }
 
-          it "title 正确" do
-            @practice_1.title.should == '章节1作业1'
-          end
-        end
       end
 
       describe "第二个 chapter" do
