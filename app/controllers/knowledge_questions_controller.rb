@@ -15,7 +15,8 @@ class KnowledgeQuestionsController < ApplicationController
   def update
     question = KnowledgeQuestion.find(params[:id])
     question.update_attributes(params[:knowledge_question], :as => question.kind)
-    redirect_to :action => :index
+    return redirect_to :action => :index if question.valid?
+    redirect_to :back
   end
 
   def create
