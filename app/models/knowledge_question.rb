@@ -47,6 +47,8 @@ class KnowledgeQuestion < ActiveRecord::Base
             :code_type,
             :presence => {:if => :is_code?}
 
+
+
   def kind(zh: false)
     raw = (read_attribute(:kind) || "").to_sym
     return KINDS[raw] if zh
@@ -91,4 +93,7 @@ class KnowledgeQuestion < ActiveRecord::Base
   def is_code?
     self.kind == :code
   end
+
+
+  include KnowledgeAnswerRecord::KnowledgeQuestionMethods
 end
