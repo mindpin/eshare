@@ -126,24 +126,6 @@ class Ability
       can :follow, SimpleComment::Comment
     end
 
-    ## TEST : 题库/组卷
-    # TEST1 : 题库编辑/发布 [MANAGER 教学管理员]
-      # TEST1-1 : 创建题库/增加多类型试题
-      # TEST1-2 : 设定组卷参数
-    if !user.blank? && user.is_manager?
-      can :manage, TestQuestion
-    end
-    # TEST2 : 做题 [STUDENT 学生]
-      # TEST2-1 : 根据组卷参数生成试卷
-      # TEST2-2 : 提交试卷和自动打分
-    if !user.blank? && user.is_student?
-      can :use, TestQuestion
-    end
-    # TEST3 : 成绩统计和报告 [MANAGER 教学管理员]
-    if !user.blank? && user.is_manager?
-      can :chart, TestQuestion
-    end
-
     ## NOTICE : 通知
     # NOTICE1 : 通知的编辑/发布 [MANAGER 教学管理员]
     if !user.blank? && user.is_manager?
