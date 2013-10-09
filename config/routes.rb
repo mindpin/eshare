@@ -323,4 +323,5 @@ end
 # KnowledgeQuestion 添加表单
 Eshare::Application.routes.draw do
   resources :knowledge_questions, :shallow => true
+  resources :knowledge_answer_records, :shallow => true
 end
