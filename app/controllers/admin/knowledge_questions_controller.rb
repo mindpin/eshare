@@ -1,4 +1,6 @@
-class KnowledgeQuestionsController < ApplicationController
+class Admin::KnowledgeQuestionsController < ApplicationController
+  before_filter :authenticate_user!
+
   def index
     @questions = KnowledgeQuestion.all
   end

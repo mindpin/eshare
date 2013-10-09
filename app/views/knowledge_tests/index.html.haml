@@ -1,0 +1,14 @@
+.content-header
+  %h1 知识水平测试
+
+.knowledge-net
+  - @nodes.each do |node|
+    %h2= node.name
+    .knowledge-questions
+      - questions = KnowledgeQuestion.where(:knowledge_node_id => node.id)
+      - questions.each do |question|
+        .knowledge-question
+          %span #{question.kind(:zh => true)} #{question.title}
+          %span 答对: #{question.correct_count_of_user(current_user)}次
+          %span 答错: #{question.error_count_of_user(current_user)}次
+          = link_to "做题", new_knowledge_test_path(:knowledge_question_id => question.id), :class => "btn success-flat"

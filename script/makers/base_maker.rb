@@ -2,7 +2,7 @@ require 'bundler'
 Bundler.require(:examples)
 
 class BaseMaker
-  attr_reader :type, :data, :progressbar
+  attr_reader :data, :progressbar
 
   def initialize(yaml=nil)
     load_yaml(yaml)
@@ -12,7 +12,7 @@ class BaseMaker
 
   def load_yaml(yaml=nil)
     yaml_name = yaml ? yaml : model_name
-    @type,  @data = YAML.load_file("./script/data/#{yaml_name}.yaml")
+    @type, @data = YAML.load_file("./script/data/#{yaml_name}.yaml")
   end
 
   def model_name
@@ -36,12 +36,5 @@ private
 
   def _make_progress
     SimpleProgress.create data.count
-  end
-
-  def _make_progressbar
-    ProgressBar.create(title:  type.pluralize.capitalize,
-                       length: 64,
-                       total:  data.count,
-                       format: '%t: |%b>>%i| %p%%')
   end
 end
