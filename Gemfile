@@ -13,9 +13,7 @@ gem 'chinese_pinyin', '0.4.2'
 gem 'rmmseg-cpp-huacnlee', '0.2.9'
 gem 'redis-search', :git => 'git://github.com/huacnlee/redis-search.git'
 
-if R::INTERNET
-  gem 'sqlite3', "~> 1.3.7"
-end
+gem 'sqlite3', "~> 1.3.7"
 
 group :assets do
   gem 'sass-rails', '~> 3.2.3'
@@ -173,3 +171,7 @@ gem 'simple-medals',
 gem 'simple-credit',
     :git => 'git://github.com/kaid/simple-credit.git',
     :tag => '0.0.7'
+
+gem 'knowledge-space-net-lib',
+    :git => 'git://github.com/mindpin/knowledge-space-net-lib.git',
+    :tag => '0.1.1'
