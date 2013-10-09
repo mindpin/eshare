@@ -255,7 +255,6 @@ zh-CN:
       chapters:
         title: 标题
         course-wares-count: 课件数目
-        practices-count: 练习数目
         updated_at: 更新时间
         ops: 操作
         position: 排序位置
