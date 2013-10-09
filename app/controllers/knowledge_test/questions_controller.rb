@@ -6,7 +6,7 @@ class KnowledgeTest::QuestionsController < ApplicationController
   end
 
   def index
-    @questions = KnowledgeQuestion.page(params[:page])
+    @questions = KnowledgeQuestion.page(params[:page]).per(10)
   end
 
   def show
@@ -14,13 +14,16 @@ class KnowledgeTest::QuestionsController < ApplicationController
   end
 
   def submit_answer
-    question = KnowledgeQuestion.find(params[:question_id])
+    question = KnowledgeQuestion.find(params[:id])
     result = question.evaluate(params[:result])
     if result
       question.increase_correct_count_of_user(current_user)
     else
       question.increase_error_count_of_user(current_user)
     end
-    render :text => 'ok', :status => 200
+
+    render :json => {
+      :result => result
+    }
   end
 end

@@ -5057,6 +5057,7 @@ form .input.page-form-tag-inputer {
 .page-knowledge-test-index {
   .questions {
     background-color:white;
+    margin-bottom:20px;
     .question {
       &:before {
         content:'js';
@@ -5074,6 +5075,13 @@ form .input.page-form-tag-inputer {
         margin-left:15px;
         line-height:24px;
         margin-top:4px;
+      }
+      .kind {
+        float:right;
+        margin-left:15px;
+        line-height:24px;
+        margin-top:4px;
+        color:#999;
       }
     }
   }
@@ -5111,6 +5119,9 @@ form .input.page-form-tag-inputer {
       .desc {
         padding-bottom:15px;
       }
+      .kind {
+        margin-bottom:15px;
+      }
       .choices {
         a.choice {
           display:block;
@@ -5134,7 +5145,11 @@ form .input.page-form-tag-inputer {
             margin-left:15px;
           }
 
-          &:hover {
+          &:hover{
+            background-color:#ffffda;
+          }
+
+          &.selected{
             background-color:#4A4D54;
             border-top:solid 1px #4A4D54;
             color:white;
@@ -5164,6 +5179,7 @@ form .input.page-form-tag-inputer {
         .my-choice {
           float:left;
           height:30px;line-height:30px;
+          .answer {font-weight:bold;}
         }
         .btns {
           float:right;
