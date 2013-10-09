@@ -1,7 +1,7 @@
 = form_for @question do |f|
   = hidden_field_tag :kind, @question.kind
   = f.label :knowledge_node_id, "知识点"
-  = f.select :knowledge_node_id, [1, 2, 3, 4]
+  = f.select :knowledge_node_id, @nodes.map {|node|[node.name, node.id]}
   = f.label :title, "标题"
   = f.text_field :title
 
