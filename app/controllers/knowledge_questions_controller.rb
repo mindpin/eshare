@@ -23,7 +23,5 @@ class KnowledgeQuestionsController < ApplicationController
     puts params[:kind], params[:knowledge_question]
     question = KnowledgeQuestion.make(params[:kind], params[:knowledge_question])
     redirect_to :action => :index
-  rescue Exception => ex
-    redirect_to :back
   end
 end
