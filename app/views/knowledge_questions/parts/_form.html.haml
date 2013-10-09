@@ -4,14 +4,17 @@
   = f.select :knowledge_node_id, [1, 2, 3, 4]
   = f.label :title, "标题"
   = f.text_field :title
+
   - locals = {:f => f, :question => @question}
+  - form_part = ->(part) {render :partial => "knowledge_questions/parts/#{part}", :locals => locals}
+
   - case @question.kind
   - when :single_choice, :multiple_choices
-    = render :partial => "knowledge_questions/parts/choice", :locals => locals
+    = form_part.call("choice")
   - when :true_false
-    = render :partial => "knowledge_questions/parts/true_false", :locals => locals
+    = form_part.call("true_false")
   - when :code
-    = render :partial => "knowledge_questions/parts/code", :locals => locals
+    = form_part.call("code")
   %div
     = f.submit "提交", :class => "btn success-flat"
     = link_to "返回", :back, :class => "btn success-flat"
