@@ -2,7 +2,7 @@ require 'bundler'
 Bundler.require(:examples)
 
 class BaseMaker
-  attr_reader :data, :progressbar
+  attr_reader :type, :data, :progressbar
 
   def initialize(yaml=nil)
     load_yaml(yaml)
