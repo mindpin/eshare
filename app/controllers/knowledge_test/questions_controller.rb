@@ -14,6 +14,13 @@ class KnowledgeTest::QuestionsController < ApplicationController
   end
 
   def submit_answer
-    # TODO
+    question = KnowledgeQuestion.find(params[:question_id])
+    result = question.evaluate(params[:result])
+    if result
+      question.increase_correct_count_of_user(current_user)
+    else
+      question.increase_error_count_of_user(current_user)
+    end
+    render :text => 'ok', :status => 200
   end
 end
