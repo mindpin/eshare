@@ -13,22 +13,6 @@ course_names.each_with_index do |name,index|
   courses << course
 end
 
-team_1_teacher = teachers[5]
-team_2_teacher = teachers[6]
-team_1_students = students[0..9]
-team_2_students = students[10..19]
-# 创建两个班级
-team_1 = Team.create!(:name => '一班', :teacher_user => team_1_teacher)
-team_1_students.each do |user|
-  team_1.add_member(user)
-end
-
-team_2 = Team.create!(:name => '二班', :teacher_user => team_2_teacher)
-team_2_students.each do |user|
-  team_2.add_member(user)
-end
-
-has_intent_users = team_1_students[0..4] + team_2_students[5..9]
 # 10 个 随机选择随机选择志愿
 has_intent_users.each do |user|
   first_index = rand(5)
