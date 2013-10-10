@@ -210,4 +210,5 @@ class User < ActiveRecord::Base
   include SimpleCredit::UserMethods
   include Report::UserMethods
   include KnowledgeAnswerRecord::UserMethods
+  include KnowledgeQuestionNote::UserMethods
 end

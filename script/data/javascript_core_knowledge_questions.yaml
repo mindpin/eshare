@@ -301,15 +301,15 @@
   kind: multiple_choices
   title: 下面哪些写法是正确的
   choices:
-    - var book = {"main title": "javascript"}
-    - var book = {maintitle : "javascript"}
-    - var book = {main_title : "javascript"}
-    - var book = {main-title : "javascript"}
+    - "var book = {'main title': 'javascript'}"
+    - "var book = {maintitle : 'javascript'}"
+    - "var book = {main_title : 'javascript'}"
+    - "var book = {main-title : 'javascript'}"
   answer: ABC
 
 - knowledge_node_id: n49
   kind: multiple_choices
-  title: 对象 o = {x: 1} 下面哪些返回结果为 true
+  title: "对象 o = {x: 1} 下面哪些返回结果为 true"
   choices:
     - delete o.x;
     - delete o.toString;
@@ -319,7 +319,7 @@
 
 - knowledge_node_id: n50
   kind: multiple_choices
-  title: 对象 o = {x: 1} 下面哪些返回结果为 true
+  title: "对象 o = {x: 1} 下面哪些返回结果为 true"
   choices:
     - "o.hasOwnProperty('x')"
     - "o.hasOwnProperty('toString')"
@@ -460,113 +460,331 @@
     - delete a[1]
   answer: ACE
 
-########################
-# <node id="n66">
-#   <name>数组遍历</name>
-#   <desc/>
-# </node>
-# <node id="n67">
-#   <name>多维数组</name>
-#   <desc/>
-# </node>
-# <node id="n68">
-#   <name>数组基础方法</name>
-#   <desc/>
-# </node>
-# <node id="n69">
-#   <name>数组ES5高级方法</name>
-#   <desc/>
-# </node>
-# <node id="n70">
-#   <name>数组类型</name>
-#   <desc/>
-# </node>
-# <node id="n71">
-#   <name>数组操作</name>
-#   <desc/>
-# </node>
-# <node id="n72">
-#   <name>函数</name>
-#   <desc/>
-# </node>
-# <node id="n73">
-#   <name>函数的定义</name>
-#   <desc/>
-# </node>
-# <node id="n74">
-#   <name>函数的参数</name>
-#   <desc/>
-# </node>
-# <node id="n75">
-#   <name>函数的调用</name>
-#   <desc/>
-# </node>
-# <node id="n76">
-#   <name>作为值的函数</name>
-#   <desc/>
-# </node>
-# <node id="n77">
-#   <name>作为命名空间的函数</name>
-#   <desc/>
-# </node>
-# <node id="n78">
-#   <name>闭包</name>
-#   <desc/>
-# </node>
-# <node id="n79">
-#   <name>函数的属性，方法，构造函数</name>
-#   <desc/>
-# </node>
-# <node id="n80">
-#   <name>类与构造函数</name>
-#   <desc/>
-# </node>
-# <node id="n81">
-#   <name>类与原型</name>
-#   <desc/>
-# </node>
-# <node id="n82">
-#   <name>类的定义</name>
-#   <desc/>
-# </node>
-# <node id="n83">
-#   <name>类与类型</name>
-#   <desc/>
-# </node>
-# <node id="n84">
-#   <name>子类</name>
-#   <desc/>
-# </node>
-# <node id="n85">
-#   <name>类与对象</name>
-#   <desc/>
-# </node>
-# <node id="n86">
-#   <name>模块组织</name>
-#   <desc/>
-# </node>
-# <node id="n87">
-#   <name>ES5类相关概念</name>
-#   <desc/>
-# </node>
-# <node id="n88">
-#   <name>类的综合使用</name>
-#   <desc/>
-# </node>
-# <node id="n89">
-#   <name>正则表达式</name>
-#   <desc/>
-# </node>
-# <node id="n90">
-#   <name>模式匹配</name>
-#   <desc/>
-# </node>
-# <node id="n91">
-#   <name>RegExp对象</name>
-#   <desc/>
-# </node>
-# <node id="n92">
-#   <name>正则表达式高级技巧</name>
-#   <desc/>
-# </node>
+- knowledge_node_id: n66
+  kind: code
+  code_type: javascript
+  title: 遍历数组
+  desc: |
+    用 for 语句打印 arr 的所有元素(打印用 console.log(x) 方法)
+  init_code: |
+    var arr = [1,3,5,6,7]
+    // input code
+  rule: |
+    if(MT.error){
+      return '代码有错误'
+    }
+    if(MT.code.match(/for/) === null){
+      return '没有用到 for'
+    }
+    return MT.array_equals(MT.prints, ["1","3","5","6","7"])
 
+- knowledge_node_id: n67
+  kind: single_choice
+  title: 数组 arr = ["a",["b","c","d"]],如何可以取到 "d"
+  choices:
+    - arr[1][2]
+    - arr[2][3]
+    - arr[2][1]
+    - arr[3][2]
+  answer: A
+
+- knowledge_node_id: n68
+  kind: multiple_choices
+  title: 下面正确的是
+  choices:
+    - "[1,2,3].join(',') === '1,2,3'"
+    - "[1,2,3].reverse().join(',') === '3,2,1'"
+    - "[1,2,3,4,5].slice(1,3).join(',') === '2,3'"
+    - "arr = [1];arr.push(2);arr.join(',') === '1,2'"
+    - "arr = [1];arr.unshift(2);arr.join(',') === '1,2'"
+  answer: ABCD
+
+- knowledge_node_id: n69
+  kind: multiple_choices
+  title: 下面哪些是 ECMAScript 5 中提供的数组方法 
+  choices:
+    - join
+    - map
+    - push
+    - pop
+    - filter
+  answer: BE
+
+- knowledge_node_id: n70
+  kind: multiple_choices
+  title: 数组 arr = [1,2,3],下面正确的是
+  choices:
+    - arr.constructor == Array
+    - arr.prototype == Array
+    - arr instanceof Array == true
+    - Array.isArray(arr) == true
+  answer: ACD
+
+- knowledge_node_id: n73
+  kind: multiple_choices
+  title: 下面哪些可以正确定义一个函数
+  choices:
+    - var fun = function(a){return a+1}
+    - function fun(a){return a+1}
+    - var fun(a){return a+1}
+    - var function fun(a){return a+1}
+  answer: AB
+
+- knowledge_node_id: n74
+  kind: single_choice
+  title: |
+    下面代码中，第二次 x 输出的值是多少
+    function f(x) {
+      console.log(x);
+      arguments[0] = null;
+      console.log(x);
+    }
+  choices:
+    - "null"
+    - "0"
+    - "undefined"
+    - "x"
+  answer: A
+
+- knowledge_node_id: n75
+  kind: single_choice
+  title: |
+    下面代码中，最后的变量 value 的值是
+    var calculator = {
+      operand1: 3,
+      operand2: 5,
+      add: function() {
+        this.result = this.operand1 + this.operand2;
+      }
+    }
+    var value = calculator.result
+
+  choices:
+    - "0"
+    - "null"
+    - "8"
+    - "undefined"
+  answer: D
+
+- knowledge_node_id: n76
+  kind: single_choice
+  title: |
+    下面代码中，最后的变量 value 的值是
+    function square(x) { return x * x }
+    var s = square;
+    var value = s(5);
+  choices:
+    - "null"
+    - "undefined"
+    - "25"
+    - "0"
+  answer: C
+
+- knowledge_node_id: n77
+  kind: single_choice
+  title: |
+    下面代码中，最后的变量 value 的值是
+    var jspy = (function() {
+      var _count = 0;
+      var incrementCount = function() {
+        _count++;
+      }
+      var getCount = function() {
+        return _count;
+      }
+      return {
+        incrementCount: incrementCount,
+        getCount: getCount
+      };
+    })();
+    jspy.incrementCount();
+    var value = jspy.getCount();
+  choices:
+    - "0"
+    - "null"
+    - "1"
+    - "undefined"
+  answer: C
+
+- knowledge_node_id: n78
+  kind: single_choice
+  title: |
+    下面代码中， checkscope()() 返回值是
+    var scope = 'global scope';
+    function checkscope() {
+      var scope = 'local scope';
+      function f() { return scope; };
+      return f;
+    }
+    checkscope()()
+  choices:
+    - "null"
+    - "undefined"
+    - "'global scope'"
+    - "'local scope'"
+  answer: D
+
+- knowledge_node_id: n79
+  kind: single_choice
+  title: |
+    下面代码中，constructFunction()() 返回值是
+    var scope = 'global';
+    function constructFunction() {
+      var scope = 'local';
+      return new Function('return scope');
+    }
+    constructFunction()();
+  choices:
+    - "'global'"
+    - "null"
+    - "'local'"
+    - "undefined"
+  answer: C
+
+- knowledge_node_id: n80
+  kind: single_choice
+  title: var a = new A(),下面那个是正确的
+  choices:
+    - a.prototype == A
+    - a.constructor == A
+    - a.prototype.constructor == A
+    - a.constructor.prototype == A
+  answer: B
+
+- knowledge_node_id: n81
+  kind: single_choice
+  title: 对象 a 会从下面那个对象上继承属性
+  choices:
+    - a.constructor
+    - a.prototype
+    - a.prototype.constructor
+    - a.constructor.prototype
+  answer: D
+
+- knowledge_node_id: n83
+  kind: multiple_choices
+  title: var a = new A(), 下面哪些成立
+  choices:
+    - a instanceof A == true
+    - a.constructor == A
+    - a instanceof A.prototype == true
+    - a.constructor == A.prototype
+  answer: AB
+
+- knowledge_node_id: n84
+  kind: single_choice
+  title: |
+    在 insert_code 处插入什么代码，才能使 value 变量等于 1
+    function A() {
+      this.x = 1;
+    }
+    function B(){}
+    // insert_code
+    b = new B()
+    var value = b.x
+  choices:
+    - B.prototype = A
+    - B.prototype = new A()
+    - B.constructor = A
+    - B.constructor = new A()
+  answer: B
+ 
+- knowledge_node_id: n85
+  kind: code
+  code_type: javascript
+  title: 类与对象
+  desc: |
+    在下面注释位置增加代码,使最后几行的输出都是 true
+  init_code: |
+    var Book = // input_code
+    var title = "javascript 语言精粹"
+    var price = 28
+    var book = new Book(title,price)
+    console.log(book.title == title)
+    console.log(book.price == price)
+    console.log(book.pricing() == price * 0.8)
+  rule: |
+    if(MT.error){
+      return '代码有错误'
+    }
+    return MT.array_equals(MT.prints, ["true","true","true"])
+
+- knowledge_node_id: n86
+  kind: single_choice
+  title: |
+    在下面的代码中，my_module.fun() 返回值是多少
+    var my_module = {
+      name : 'app',
+      fun : function(){
+        var name = "app2"
+        return this.name;
+      }
+    }
+  choices:
+    - "'app'"
+    - "'app2'"
+    - null
+    - undefined
+  answer: A
+
+- knowledge_node_id: n87
+  kind: code
+  code_type: javascript
+  title: 定义一个不可变的类 
+  desc: |
+    Range 方法的目的是定义一个不可变的类(from to 属性不可写)
+    请实现 freezeProps 方法(使用 Object.defineProperty )
+  init_code: |
+    function Range(from, to) {
+      this.from = from;
+      this.to = to;
+      freezeProps(this);
+    }
+    function freezeProps(obj){
+      // input_code
+    }
+  rule: |
+    if(MT.error){
+      return '代码有错误'
+    }
+    try{
+      var r = new Range(1,1);
+      r.from = 2
+      r.to = 2
+      return r.from == 1 && r.to == 1
+    }catch(e){
+      return false      
+    }
+
+- knowledge_node_id: n89
+  kind: multiple_choices
+  title: "该正则表达式 /java(script)?/ 能匹配下面哪些"
+  choices:
+    - "'java'"
+    - "'javascript'"
+    - "'script'"
+    - "'undefiend'"
+  answer: AB
+
+- knowledge_node_id: n90
+  kind: single_choice
+  title: "'JavaScript'.search(/script/i) 返回值是"
+  choices:
+    - "3"
+    - "0"
+    - "undefined"
+    - "4"
+  answer: D
+
+- knowledge_node_id: n91
+  kind: single_choice
+  title: |
+    下面代码的返回值是什么
+    var pattern = /java/i;
+    pattern.test('JavaScript');
+  choices:
+    - "true"
+    - "false"
+    - "undefined"
+    - "null"
+  answer: A
