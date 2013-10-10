@@ -10,6 +10,8 @@ class KnowledgeQuestionPostComment < ActiveRecord::Base
              :class_name => "KnowledgeQuestionPostComment",
              :foreign_key => :reply_comment_id
 
+  belongs_to :file_entity
+
   has_many   :reply_comments,
              :class_name => "KnowledgeQuestionPostComment",
              :foreign_key => :reply_comment_id

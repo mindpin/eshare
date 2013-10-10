@@ -9,6 +9,8 @@ class KnowledgeQuestionPost < ActiveRecord::Base
              :class_name => "KnowledgeQuestionPostComment",
              :foreign_key => :knowledge_question_post_id
 
+  belongs_to :file_entity
+
   validates :knowledge_question_id, :presence => true
   validates :creator_id, :presence => true
   validates_with KnowledgeQuestionPostAndCommentValidator

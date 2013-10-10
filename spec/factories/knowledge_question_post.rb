@@ -3,7 +3,7 @@ FactoryGirl.define do
     knowledge_question
 
     content   "xxxx"
-    image     "http://xxx/x.jpg"
+    file_entity
     code      "var x = 1"
     code_type "blascript"
     creator
