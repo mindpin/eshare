@@ -12,10 +12,11 @@ class KnowledgeQuestionPost < ActiveRecord::Base
   validates :knowledge_question_id, :presence => true
   validates :creator_id, :presence => true
   validates_with KnowledgeQuestionPostAndCommentValidator
+  default_scope {order(:likes_count => :desc, :created_at => :desc)}
 
   module UserMethods
     def self.included(base)
-      base.has_many :activities, :foreign_key => :creator_id
+      base.has_many :knowledge_question_posts, :foreign_key => :creator_id
     end
   end
 
@@ -26,4 +27,6 @@ class KnowledgeQuestionPost < ActiveRecord::Base
                     :foreign_key => :knowledge_question_id
     end
   end
+
+  include Like::ModelMethods
 end
