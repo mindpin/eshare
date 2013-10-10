@@ -106,4 +106,5 @@ class KnowledgeQuestion < ActiveRecord::Base
 
 
   include KnowledgeAnswerRecord::KnowledgeQuestionMethods
+  include KnowledgeQuestionPost::KnowledgeQuestionMethods
 end
