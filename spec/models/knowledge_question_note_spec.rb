@@ -8,6 +8,9 @@ describe KnowledgeQuestionNote do
       @knowledge_question     = FactoryGirl.create :knowledge_question
       @user         = FactoryGirl.create :user
 
+      tmpfile = Tempfile.new('panda')
+      tmpfile.write('hello world')
+      @file_entity = FileEntity.create(:attach => tmpfile)
       @content = 'test content'
       @code_type = 'javascript'
       note_hash = {:creator => @user, :content => @content, :code_type => @code_type}
@@ -15,25 +18,25 @@ describe KnowledgeQuestionNote do
     }
 
     describe "invalid note_hash" do
-      it "empty content, image, code" do
+      it "empty content, file_entity, code" do
         note_hash = {:creator => @user, :code_type => @code_type}
         @note = @knowledge_question.knowledge_question_notes.create(note_hash)
         @note.id.blank?.should == true
       end
 
-      it "empty image, code" do
+      it "empty file_entity, code" do
         note_hash = {:creator => @user, :content => @content, :code_type => @code_type}
         @note = @knowledge_question.knowledge_question_notes.create(note_hash)
         @note.id.blank?.should == false
       end
 
       it "empty content, code" do
-        note_hash = {:creator => @user, :image => 'test image', :code_type => @code_type}
+        note_hash = {:creator => @user, :file_entity => @file_entity, :code_type => @code_type}
         @note = @knowledge_question.knowledge_question_notes.create(note_hash)
         @note.id.blank?.should == false
       end
 
-      it "empty content, image" do
+      it "empty content, file_entity" do
         note_hash = {:creator => @user, :code => 'test code', :code_type => @code_type}
         @note = @knowledge_question.knowledge_question_notes.create(note_hash)
         @note.id.blank?.should == false
@@ -56,8 +59,8 @@ describe KnowledgeQuestionNote do
       @knowledge_question_note.code_type.should == @code_type
     end
 
-    it "knowledge_question_note image" do
-      @knowledge_question_note.image.should == nil
+    it "knowledge_question_note file_entity" do
+      @knowledge_question_note.file_entity.should == nil
     end
 
     it "knowledge_question_note code" do
