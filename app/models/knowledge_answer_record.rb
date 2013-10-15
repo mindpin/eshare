@@ -5,7 +5,7 @@ class KnowledgeAnswerRecord < ActiveRecord::Base
   belongs_to :knowledge_question
   belongs_to :user
 
-  validates :knowledge_question, :user,
+  validates :knowledge_question, :user, :correct_count, :error_count,
             :presence => true
 
 
@@ -36,6 +36,12 @@ class KnowledgeAnswerRecord < ActiveRecord::Base
 
     private
     def _answer_record_of(user)
+      if self.knowledge_answer_records.blank?
+        return self.knowledge_answer_records.build(
+          :user => user, 
+          :correct_count => 0, 
+          :error_count => 0)
+      end
       self.knowledge_answer_records.where(:user_id => user.id).first
     end
 
