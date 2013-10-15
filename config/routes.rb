@@ -319,3 +319,8 @@ end
 Eshare::Application.routes.draw do
   resources :mists, :shallow => true
 end
+
+# KnowledgeQuestion 添加表单
+Eshare::Application.routes.draw do
+  resources :knowledge_questions, :shallow => true
+end
