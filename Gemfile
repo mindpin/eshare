@@ -174,4 +174,4 @@ gem 'simple-credit',
 
 gem 'knowledge-space-net-lib',
     :git => 'git://github.com/mindpin/knowledge-space-net-lib.git',
-    :tag => '0.1.1'
+    :tag => '0.1.2'
