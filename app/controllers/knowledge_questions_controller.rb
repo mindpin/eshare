@@ -4,11 +4,13 @@ class KnowledgeQuestionsController < ApplicationController
   end
 
   def new
+    @nodes = get_knet.knowledge_nodes
     @question = KnowledgeQuestion.new
     @question.kind = params[:kind]
   end
 
   def edit
+    @nodes = get_knet.knowledge_nodes
     @question = KnowledgeQuestion.find(params[:id])
   end
 
@@ -23,5 +25,11 @@ class KnowledgeQuestionsController < ApplicationController
     puts params[:kind], params[:knowledge_question]
     question = KnowledgeQuestion.make(params[:kind], params[:knowledge_question])
     redirect_to :action => :index
+  end
+
+  private
+
+  def get_knet
+    KnowledgeNet.load_xml_file("config/knowledge_nets/javascript_core.xml")
   end
 end
