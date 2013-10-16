@@ -1,0 +1,11 @@
+:ruby
+
+.page-knowledge-test-index
+  .questions.flat-list.bordered.zebra
+    - @questions.each do |question|
+      %a.question.flat-li{:href => "/knowledge_test/questions/#{question.id}"}
+        .title= question.title
+        .kind= question.kind(:zh => true)
+        .clearfix
+
+  = paginate @questions

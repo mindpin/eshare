@@ -328,3 +328,10 @@ Eshare::Application.routes.draw do
 
   resources :knowledge_tests, :shallow => true
 end
+
+# 一般用户进行知识水平测试
+Eshare::Application.routes.draw do
+  namespace :knowledge_test do
+    resources :questions, :shallow => true
+  end
+end

@@ -1,0 +1,78 @@
+- kind = @question.kind
+
+.page-knowledge-test-question-show
+  .question.flat-panel.bordered
+    .qhead
+      .title= @question.title
+      .clearfix
+    .qbody
+      .desc= @question.desc
+      .kind= @question.kind(:zh => true)
+
+      - if kind == :single_choice
+        .choices
+          - arr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
+          - @question.choices.each_with_index do |choice, idx|
+            %a.choice{:href => 'javascript:;'}
+              .oc= arr[idx]
+              .text= choice
+
+        .result
+          .my-choice
+            我的选择：A, B, D
+
+          .btns
+            %a.submit.btn.success-flat{:href => 'javascript:;'}
+              %i.icon-ok
+              %span 确定
+
+      - if kind == :multiple_choices
+        .choices
+          - arr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
+          - @question.choices.each_with_index do |choice, idx|
+            %a.choice{:href => 'javascript:;'}
+              .oc= arr[idx]
+              .text= choice
+
+        .result
+          .my-choice
+            我的选择：A, B, D
+
+          .btns
+            %a.submit.btn.success-flat{:href => 'javascript:;'}
+              %i.icon-ok
+              %span 确定
+
+      - if kind == :true_false
+        .choices.decide
+          %a.choice.correct{:href => 'javascript:;'}
+            .oc
+              %i.icon-ok
+            .text 正确
+          %a.choice.error{:href => 'javascript:;'}
+            .oc
+              %i.icon-remove
+            .text 错误
+
+        .result
+          .my-choice
+            %span 我的判断：
+            %i.icon-ok
+
+          .btns
+            %a.submit.btn.success-flat{:href => 'javascript:;'}
+              %i.icon-ok
+              %span 确定
+
+      - if kind == :code
+        .input-code
+          %pre#code= @question.init_code
+
+        .result
+          .btns
+            %a.reset-code.btn.info-flat{:href => 'javascript:;'}
+              %i.icon-refresh
+              %span 重置代码
+            %a.submit.btn.success-flat{:href => 'javascript:;'}
+              %i.icon-ok
+              %span 确定

@@ -73,7 +73,7 @@ class KnowledgeQuestion < ActiveRecord::Base
     when :true_false, :single_choice, :multiple_choices
       self.answer.upcase == input.upcase
     when :code
-      true
+      input == "true"
     end
   end
 
