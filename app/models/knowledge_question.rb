@@ -64,19 +64,19 @@ class KnowledgeQuestion < ActiveRecord::Base
     JSON.parse(read_attribute(:choices) || "[]")
   end
 
-  def self.make(kind, attrs = {})
-    self.build(:create, kind, attrs)
-  end
-
-  def self.touch(kind, attrs = {})
-    self.build(:new, kind, attrs)
-  end
-
   def choices_str
     self.choices.join("\n")
   end
 
-  def self.build(action, kind, attrs)
+  def self.make(kind, attrs = {})
+    self.factory(:create, kind, attrs)
+  end
+
+  def self.touch(kind, attrs = {})
+    self.factory(:new, kind, attrs)
+  end
+
+  def self.factory(action, kind, attrs)
     self.send action, attrs.merge(:kind => kind), :as => kind.to_sym
   end
 
