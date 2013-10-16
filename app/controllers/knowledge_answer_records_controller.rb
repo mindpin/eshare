@@ -1,0 +1,2 @@
+class KnowledgeAnswerRecordsController < ApplicationController
+end

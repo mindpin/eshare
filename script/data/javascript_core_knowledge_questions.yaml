@@ -1,0 +1,424 @@
+- knowledge_node_id: n0
+  kind: single_choice
+  title: 字符 é 的 unicode 转义写法为 \u00E9，那这两个字符串 "café" === "caf\u00e9" 的比较结果是
+  choices: 
+    - "True"
+    - "False"
+  answer: A
+
+- knowledge_node_id: n1
+  kind: single_choice
+  title: 选择正确的单行注释
+  choices:
+    - "// 注释"
+    - "/ 注释"
+    - "/* 注释"
+  answer: A
+
+- knowledge_node_id: n2
+  kind: single_choice
+  title: 选择正确的多行注释
+  choices:
+    - |
+      / 注释
+      *  注释连写多行
+      /
+    - |
+      /* 注释
+      *  注释连写多行
+      */
+  answer: B
+
+- knowledge_node_id: n3
+  kind: multiple_choices
+  title: 选择正确变量
+  choices:
+    - "$sí"
+    - "4$abc"
+    - "é$str"
+  answer: AC
+
+- knowledge_node_id: n4
+  kind: multiple_choices
+  title: 下列哪些是保留字
+  choices:
+    - "if"
+    - "else"
+    - "break"
+    - "do"
+  answer: ABCD
+
+- knowledge_node_id: n5
+  kind: true_false
+  title: 在 javascript 代码中，每行结尾必须有分号
+  answer: F
+
+- knowledge_node_id: n6
+  kind: single_choice
+  title: 哪个才是对象直接量
+  choices:
+    - "12"
+    - "\"hi\""
+    - "null"
+    - "{x:1}"
+  answer: D
+
+- knowledge_node_id: n13
+  kind: multiple_choices
+  title: 下面哪些是正确的整数
+  choices:
+    - "1"
+    - "0x1"
+    - "0a"
+    - "0xa"
+  answer: ABD
+
+- knowledge_node_id: n14
+  kind: true_false
+  title: 在javascript中所有数值均用浮点数表示
+  answer: T
+
+- knowledge_node_id: n15
+  kind: true_false
+  title: 在javascript中字符串既可以使用单引号，也可以使用双引号
+  answer: T
+
+- knowledge_node_id: n16
+  kind: single_choice
+  title: 选择正确的转义字符
+  choices:
+    - "\\n"
+    - "/n"
+  answer: A
+
+- knowledge_node_id: n17
+  kind: multiple_choices
+  title: 下面哪些布尔值是 true
+  choices:
+    - "!1"
+    - "!0"
+    - "!null"
+    - "!undefined"
+  answer: BCD
+
+- knowledge_node_id: n18
+  kind: true_false
+  title: typeof null 的结果是 object
+  answer: T
+
+- knowledge_node_id: n19
+  kind: true_false
+  title: typeof undefined 的结果是 object
+  answer: F
+
+- knowledge_node_id: n22
+  kind: single_choice
+  title: 在浏览器javascript中，表示整个窗口的对象是
+  choices:
+    - Math
+    - RegExp
+    - Date
+    - Window
+  answer: D
+
+- knowledge_node_id: n23
+  kind: multiple_choices
+  title: 有一个变量 var o = {a:1}，下面哪些可以正确访问a属性
+  choices:
+    - o.a
+    - o.a()
+    - o[a]
+    - o["a"]
+  answer: AD
+
+- knowledge_node_id: n24
+  kind: multiple_choices
+  title: 下面哪些是全局属性
+  choices:
+    - Math
+    - undinded
+    - NaN
+    - JSON
+    - Infinity
+  answer: BCE
+
+- knowledge_node_id: n25
+  kind: multiple_choices
+  title: 下面哪些是全局函数
+  choices:
+    - open()
+    - new()
+    - isNaN()
+    - parseInt()
+    - eval()
+  answer: CDE
+########################
+# <node id="n26">
+#   <name>全局构造函数</name>
+#   <desc/>
+# </node>
+# <node id="n27">
+#   <name>变量</name>
+#   <desc/>
+# </node>
+# <node id="n28">
+#   <name>变量声明</name>
+#   <desc/>
+# </node>
+# <node id="n29">
+#   <name>变量作用域</name>
+#   <desc/>
+# </node>
+# <node id="n30">
+#   <name>表达式</name>
+#   <desc/>
+# </node>
+# <node id="n31">
+#   <name>运算符</name>
+#   <desc/>
+# </node>
+# <node id="n32">
+#   <name>合法程序语句</name>
+#   <desc/>
+# </node>
+# <node id="n33">
+#   <name>四则运算</name>
+#   <desc/>
+# </node>
+# <node id="n34">
+#   <name>关系表达式</name>
+#   <desc/>
+# </node>
+# <node id="n35">
+#   <name>逻辑表达式</name>
+#   <desc/>
+# </node>
+# <node id="n36">
+#   <name>赋值表达式</name>
+#   <desc/>
+# </node>
+# <node id="n37">
+#   <name>三元条件运算符?:</name>
+#   <desc/>
+# </node>
+# <node id="n38">
+#   <name>特殊运算符</name>
+#   <desc/>
+# </node>
+# <node id="n39">
+#   <name>typeof</name>
+#   <desc/>
+# </node>
+# <node id="n40">
+#   <name>delete</name>
+#   <desc/>
+# </node>
+# <node id="n41">
+#   <name>void</name>
+#   <desc/>
+# </node>
+# <node id="n42">
+#   <name>条件语句</name>
+#   <desc/>
+# </node>
+# <node id="n43">
+#   <name>循环结构</name>
+#   <desc/>
+# </node>
+# <node id="n44">
+#   <name>跳转结构</name>
+#   <desc/>
+# </node>
+# <node id="n45">
+#   <name>使用对象</name>
+#   <desc/>
+# </node>
+# <node id="n46">
+#   <name>对象操作</name>
+#   <desc/>
+# </node>
+# <node id="n47">
+#   <name>创建对象</name>
+#   <desc/>
+# </node>
+# <node id="n48">
+#   <name>对象属性的一般操作</name>
+#   <desc/>
+# </node>
+# <node id="n49">
+#   <name>删除属性</name>
+#   <desc/>
+# </node>
+# <node id="n50">
+#   <name>检测属性</name>
+#   <desc/>
+# </node>
+# <node id="n51">
+#   <name>枚举属性for...in</name>
+#   <desc/>
+# </node>
+# <node id="n52">
+#   <name>属性取值</name>
+#   <desc/>
+# </node>
+# <node id="n53">
+#   <name>属性赋值</name>
+#   <desc/>
+# </node>
+# <node id="n54">
+#   <name>对象属性的高级操作</name>
+#   <desc/>
+# </node>
+# <node id="n55">
+#   <name>get</name>
+#   <desc/>
+# </node>
+# <node id="n56">
+#   <name>set</name>
+#   <desc/>
+# </node>
+# <node id="n57">
+#   <name>可写性，可枚举性，可配置性定义</name>
+#   <desc/>
+# </node>
+# <node id="n58">
+#   <name>对象序列化</name>
+#   <desc/>
+# </node>
+# <node id="n59">
+#   <name>JSON概念</name>
+#   <desc/>
+# </node>
+# <node id="n60">
+#   <name>对象通用方法-从Object继承</name>
+#   <desc/>
+# </node>
+# <node id="n61">
+#   <name>数组</name>
+#   <desc/>
+# </node>
+# <node id="n62">
+#   <name>创建数组</name>
+#   <desc/>
+# </node>
+# <node id="n63">
+#   <name>数组长度</name>
+#   <desc/>
+# </node>
+# <node id="n64">
+#   <name>数组元素读写</name>
+#   <desc/>
+# </node>
+# <node id="n65">
+#   <name>数组元素增删</name>
+#   <desc/>
+# </node>
+# <node id="n66">
+#   <name>数组遍历</name>
+#   <desc/>
+# </node>
+# <node id="n67">
+#   <name>多维数组</name>
+#   <desc/>
+# </node>
+# <node id="n68">
+#   <name>数组基础方法</name>
+#   <desc/>
+# </node>
+# <node id="n69">
+#   <name>数组ES5高级方法</name>
+#   <desc/>
+# </node>
+# <node id="n70">
+#   <name>数组类型</name>
+#   <desc/>
+# </node>
+# <node id="n71">
+#   <name>数组操作</name>
+#   <desc/>
+# </node>
+# <node id="n72">
+#   <name>函数</name>
+#   <desc/>
+# </node>
+# <node id="n73">
+#   <name>函数的定义</name>
+#   <desc/>
+# </node>
+# <node id="n74">
+#   <name>函数的参数</name>
+#   <desc/>
+# </node>
+# <node id="n75">
+#   <name>函数的调用</name>
+#   <desc/>
+# </node>
+# <node id="n76">
+#   <name>作为值的函数</name>
+#   <desc/>
+# </node>
+# <node id="n77">
+#   <name>作为命名空间的函数</name>
+#   <desc/>
+# </node>
+# <node id="n78">
+#   <name>闭包</name>
+#   <desc/>
+# </node>
+# <node id="n79">
+#   <name>函数的属性，方法，构造函数</name>
+#   <desc/>
+# </node>
+# <node id="n80">
+#   <name>类与构造函数</name>
+#   <desc/>
+# </node>
+# <node id="n81">
+#   <name>类与原型</name>
+#   <desc/>
+# </node>
+# <node id="n82">
+#   <name>类的定义</name>
+#   <desc/>
+# </node>
+# <node id="n83">
+#   <name>类与类型</name>
+#   <desc/>
+# </node>
+# <node id="n84">
+#   <name>子类</name>
+#   <desc/>
+# </node>
+# <node id="n85">
+#   <name>类与对象</name>
+#   <desc/>
+# </node>
+# <node id="n86">
+#   <name>模块组织</name>
+#   <desc/>
+# </node>
+# <node id="n87">
+#   <name>ES5类相关概念</name>
+#   <desc/>
+# </node>
+# <node id="n88">
+#   <name>类的综合使用</name>
+#   <desc/>
+# </node>
+# <node id="n89">
+#   <name>正则表达式</name>
+#   <desc/>
+# </node>
+# <node id="n90">
+#   <name>模式匹配</name>
+#   <desc/>
+# </node>
+# <node id="n91">
+#   <name>RegExp对象</name>
+#   <desc/>
+# </node>
+# <node id="n92">
+#   <name>正则表达式高级技巧</name>
+#   <desc/>
+# </node>
+
