@@ -1,5 +1,5 @@
 - knowledge_node_id: n0
-  kind: single_choices
+  kind: single_choice
   title: 字符 é 的 unicode 转义写法为 \u00E9，那这两个字符串 "café" === "caf\u00e9" 的比较结果是
   choices: 
     - "True"
@@ -7,7 +7,7 @@
   answer: A
 
 - knowledge_node_id: n1
-  kind: single_choices
+  kind: single_choice
   title: 选择正确的单行注释
   choices:
     - "// 注释"
@@ -16,7 +16,7 @@
   answer: A
 
 - knowledge_node_id: n2
-  kind: single_choices
+  kind: single_choice
   title: 选择正确的多行注释
   choices:
     - |
@@ -54,7 +54,7 @@
   answer: F
 
 - knowledge_node_id: n6
-  kind: single_choices
+  kind: single_choice
   title: 哪个才是对象直接量
   choices:
     - "12"
@@ -84,7 +84,7 @@
   answer: T
 
 - knowledge_node_id: n16
-  kind: single_choices
+  kind: single_choice
   title: 选择正确的转义字符
   choices:
     - "\\n"
@@ -112,7 +112,7 @@
   answer: F
 
 - knowledge_node_id: n22
-  kind: single_choices
+  kind: single_choice
   title: 在浏览器javascript中，表示整个窗口的对象是
   choices:
     - Math
