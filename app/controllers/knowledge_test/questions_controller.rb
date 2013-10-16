@@ -6,10 +6,14 @@ class KnowledgeTest::QuestionsController < ApplicationController
   end
 
   def index
-    @questionss = nil
+    @questions = KnowledgeQuestion.page(params[:page])
   end
 
   def show
-    @question = nil
+    @question = KnowledgeQuestion.find(params[:id])
+  end
+
+  def submit_answer
+    # TODO
   end
 end

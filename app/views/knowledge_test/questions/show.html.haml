@@ -1,46 +1,78 @@
+- kind = @question.kind
+
 .page-knowledge-test-question-show
   .question.flat-panel.bordered
     .qhead
-      .title 这是问题标题
+      .title= @question.title
       .clearfix
     .qbody
-      .desc 这是问题正文这是问题正文这是问题正文这是问题正文这是问题正文这是问题正文这是问题正文这是问题正文这是问题正文这是问题正文这是问题正文这是问题正文这是问题正文这是问题正文？
+      .desc= @question.desc
+      .kind= @question.kind(:zh => true)
 
-      .choices
-        %a.choice{:href => 'javascript:;'}
-          .oc A
-          .text 我是选项我是选项
-        %a.choice{:href => 'javascript:;'}
-          .oc B
-          .text 我是选项我是选项
-        %a.choice{:href => 'javascript:;'}
-          .oc C
-          .text 我是选项我是选项
-        %a.choice{:href => 'javascript:;'}
-          .oc D
-          .text 我是选项我是选项
+      - if kind == :single_choice
+        .choices
+          - arr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
+          - @question.choices.each_with_index do |choice, idx|
+            %a.choice{:href => 'javascript:;'}
+              .oc= arr[idx]
+              .text= choice
 
-      .choices.decide
-        %a.choice.correct{:href => 'javascript:;'}
-          .oc
+        .result
+          .my-choice
+            我的选择：A, B, D
+
+          .btns
+            %a.submit.btn.success-flat{:href => 'javascript:;'}
+              %i.icon-ok
+              %span 确定
+
+      - if kind == :multiple_choices
+        .choices
+          - arr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
+          - @question.choices.each_with_index do |choice, idx|
+            %a.choice{:href => 'javascript:;'}
+              .oc= arr[idx]
+              .text= choice
+
+        .result
+          .my-choice
+            我的选择：A, B, D
+
+          .btns
+            %a.submit.btn.success-flat{:href => 'javascript:;'}
+              %i.icon-ok
+              %span 确定
+
+      - if kind == :true_false
+        .choices.decide
+          %a.choice.correct{:href => 'javascript:;'}
+            .oc
+              %i.icon-ok
+            .text 正确
+          %a.choice.error{:href => 'javascript:;'}
+            .oc
+              %i.icon-remove
+            .text 错误
+
+        .result
+          .my-choice
+            %span 我的判断：
             %i.icon-ok
-          .text 正确
-        %a.choice.error{:href => 'javascript:;'}
-          .oc
-            %i.icon-remove
-          .text 错误
 
-      .input-code
-        %pre#code hahaha
+          .btns
+            %a.submit.btn.success-flat{:href => 'javascript:;'}
+              %i.icon-ok
+              %span 确定
 
-      .result
-        .my-choice
-          我的选择：A, B, D
+      - if kind == :code
+        .input-code
+          %pre#code= @question.init_code
 
-        .btns
-          %a.reset-code.btn.info-flat{:href => 'javascript:;'}
-            %i.icon-refresh
-            %span 重置代码
-          %a.submit.btn.success-flat{:href => 'javascript:;'}
-            %i.icon-ok
-            %span 确定
+        .result
+          .btns
+            %a.reset-code.btn.info-flat{:href => 'javascript:;'}
+              %i.icon-refresh
+              %span 重置代码
+            %a.submit.btn.success-flat{:href => 'javascript:;'}
+              %i.icon-ok
+              %span 确定
