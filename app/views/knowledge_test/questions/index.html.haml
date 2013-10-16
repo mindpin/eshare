@@ -1,0 +1,8 @@
+:ruby
+
+.page-knowledge-test-index
+  .questions.flat-list.bordered.zebra
+    - 20.times do |i|
+      %a.question.flat-li{:href => "/knowledge_test/questions/#{i}"}
+        .title 问题#{randstr}
+        .clearfix

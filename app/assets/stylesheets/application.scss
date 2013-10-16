@@ -1343,6 +1343,82 @@ body.coding {
   }
 }
 
+// flat design elements
+
+body.flat-grid {
+  background-color:#F3F2F8;
+
+  .flat-panel {
+    background-color:white;
+    padding:0;
+
+    &.bordered {
+      border:solid 1px #e7e7e7;
+    }
+  }
+
+  .flat-list {
+    background-color:white;
+    padding:0;
+
+    .flat-li {
+      padding:15px;
+      display: block;
+      color:#555;
+      &:hover {
+        text-decoration:none;
+        background-color:#444 !important;
+        color:white;
+      }
+    }
+
+    &.bordered {
+      border:solid 1px #e7e7e7;
+      .flat-li {
+        border-bottom:solid 1px #e7e7e7;
+        &:last-child{border-bottom:none 0;}
+        &:hover{border-color:#444;}
+      }
+    }
+
+    &.zebra {
+      .flat-li {
+        &:nth-child(odd){
+          background-color:#FCFBF9;
+        }
+      }
+    }
+  }
+
+  .btn {
+    &.success-flat {
+      background: #1E9E49 !important;
+      background-repeat: repeat-x;
+      border-color:transparent;
+      box-shadow:none;
+      color:#fff;
+      text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+      &:hover, &:focus, &:active, &.active, &.disabled, &[disabled] {
+        background:lighten(#1E9E49, 5%) !important;
+        color:#fff;
+      }
+    }
+
+    &.info-flat {
+      background: #4F8BBF !important;
+      background-repeat: repeat-x;
+      border-color:transparent;
+      box-shadow:none;
+      color:#fff;
+      text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+      &:hover, &:focus, &:active, &.active, &.disabled, &[disabled] {
+        background:lighten(#4F8BBF, 5%) !important;
+        color:#fff;
+      }
+    }
+  }
+}
+
 .page-user-page-medals {
   overflow:hidden;
   .medal {
@@ -4975,5 +5051,124 @@ form .input.page-form-tag-inputer {
     width:100%;
     @include border-box;
     resize:none;
+  }
+}
+
+.page-knowledge-test-index {
+  .questions {
+    background-color:white;
+    .question {
+      &:before {
+        content:'js';
+        float:left;
+        background-color:#EA5300;
+        color:white;
+        font-weight:bold;
+        font-size:20px;
+        text-align:center;
+        height:32px;width:32px;line-height:32px;
+      }
+
+      .title {
+        float:left;
+        margin-left:15px;
+        line-height:24px;
+        margin-top:4px;
+      }
+    }
+  }
+}
+
+.page-knowledge-test-question-show {
+  .question {
+    .qhead {
+      padding:15px;
+      border-bottom:solid 1px #e7e7e7;
+      background-color:#FCFBF9;
+
+      &:before {
+        content:'js';
+        float:left;
+        background-color:#EA5300;
+        color:white;
+        font-weight:bold;
+        font-size:20px;
+        text-align:center;
+        height:32px;width:32px;line-height:32px;
+      }
+
+      .title {
+        float:left;
+        font-weight:bold;
+        line-height:24px;margin-top:4px;margin-left:15px;
+        font-size:16px;
+      }
+    }
+
+    .qbody {
+      padding:15px;
+      max-width:550px;
+      .desc {
+        padding-bottom:15px;
+      }
+      .choices {
+        a.choice {
+          display:block;
+          padding:15px 15px;
+          overflow:hidden;
+          border-top:dotted 1px #ececec;
+          color:#375D81;
+
+          .oc {
+            background-color:#375D81;
+            color:white;
+            font-weight:bold;
+            text-align:center;
+            width:32px;height:32px;line-height:32px;
+            float:left;
+            @include border-radius(20px);
+          }
+          .text {
+            float:left;
+            line-height:24px;margin-top:4px;
+            margin-left:15px;
+          }
+
+          &:hover {
+            background-color:#4A4D54;
+            border-top:solid 1px #4A4D54;
+            color:white;
+            .oc {
+              background-color:white;
+              color:#4A4D54;
+            }
+          }
+        }
+      }
+
+      .input-code{
+        height:300px;
+        position:relative;
+        pre {
+          margin-top:0;
+          position:absolute;
+          top:0;left:0;bottom:0;right:0;
+          font-size:16px;
+        }
+      }
+
+      .result {
+        border-top:dotted 1px #e7e7e7;
+        padding-top:15px;
+        overflow:hidden;
+        .my-choice {
+          float:left;
+          height:30px;line-height:30px;
+        }
+        .btns {
+          float:right;
+        }
+      }
+    }
   }
 }
