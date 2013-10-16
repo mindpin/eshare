@@ -1,0 +1,6 @@
+.choices
+  - a_z = ("A".."Z").to_a
+  - ["T", "F"].each_with_index do |choice, index|
+    .choice
+      = radio_button_tag :answer, choice
+      #{choice}

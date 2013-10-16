@@ -68,6 +68,15 @@ class KnowledgeQuestion < ActiveRecord::Base
     self.choices.join("\n")
   end
 
+  def evaluate(input)
+    case self.kind
+    when :true_false, :single_choice, :multiple_choices
+      self.answer.upcase == input.upcase
+    when :code
+      true
+    end
+  end
+
   def self.make(kind, attrs = {})
     self.factory(:create, kind, attrs)
   end
@@ -77,6 +86,7 @@ class KnowledgeQuestion < ActiveRecord::Base
   end
 
   def self.factory(action, kind, attrs)
+    puts action, kind, attrs.to_json
     self.send action, attrs.merge(:kind => kind), :as => kind.to_sym
   end
 

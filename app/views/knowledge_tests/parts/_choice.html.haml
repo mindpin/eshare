@@ -1,0 +1,7 @@
+.choices
+  - a_z = ("A".."Z").to_a
+  - @question.choices.each_with_index do |choice, index|
+    .choice
+      - letter = a_z[index]
+      = radio_button_tag :answer, letter
+      #{letter}. #{choice}
