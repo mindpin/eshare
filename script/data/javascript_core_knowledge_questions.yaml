@@ -297,83 +297,170 @@
       - throw
     answer: A
 
+- knowledge_node_id: n47
+  kind: multiple_choices
+  title: 下面哪些写法是正确的
+  choices:
+    - var book = {"main title": "javascript"}
+    - var book = {maintitle : "javascript"}
+    - var book = {main_title : "javascript"}
+    - var book = {main-title : "javascript"}
+  answer: ABC
+
+- knowledge_node_id: n49
+  kind: multiple_choices
+  title: 对象 o = {x: 1} 下面哪些返回结果为 true
+  choices:
+    - delete o.x;
+    - delete o.toString;
+    - delete 1;
+    - delete o;
+  answer: ABC
+
+- knowledge_node_id: n50
+  kind: multiple_choices
+  title: 对象 o = {x: 1} 下面哪些返回结果为 true
+  choices:
+    - "o.hasOwnProperty('x')"
+    - "o.hasOwnProperty('toString')"
+    - "o.x !== undefined"
+    - "o.toString !== undefined"
+  answer: ACD
+
+- knowledge_node_id: n51
+  kind: code
+  code_type: javascript
+  title: 枚举属性
+  desc: |
+    打印对象 o 的所有属性名(打印用 console.log(x) 方法)
+  init_code: |
+    var o = {x: 1, y: 2, z: 3}
+  rule: |
+      if(MT.error){
+        return '代码有错误'
+      }
+      if(MT.code.match(/for/) === null || MT.code.match(/in/) === null){
+        return '没有用到 for in'
+      }
+      return MT.printed("x") && MT.printed("y") && MT.printed("z")
+
+- knowledge_node_id: n52
+  kind: multiple_choices
+  title: 对象 o = {a:1},哪些用法可以得到属性a的值
+  choices:
+    - o[a]
+    - o["a"]
+    - o.a
+  answer: BC
+
+- knowledge_node_id: n53
+  kind: multiple_choices
+  title: 对象 o = {a:1},哪些用法可以修改属性a的值
+  choices:
+    - o[a] = 2
+    - o["a"] = 2
+    - o.a = 2
+  answer: BC
+
+- knowledge_node_id: n55
+  kind: single_choice
+  title: 对象 o = {get a(){return 1}},下面哪个是正确的
+  choices:
+    - o.a() === 1
+    - o.a === 1
+  answer: B
+
+- knowledge_node_id: n56
+  kind: single_choice
+  title: 对象 o = {set a(i){this.b = i}},运行下面那句代码可以使 o.b = 1
+  choices:
+    - o.a(1)
+    - o.a = 1
+  answer: B
+
+- knowledge_node_id: n57
+  kind: code
+  code_type: javascript
+  title: 对象属性的可写性，可枚举性，可配置性
+  desc: |
+    使用 defineProperty 方法, 创建对象 var o = {x: 1}
+    并把 x 属性设置成可写，不可枚举，可配置
+  init_code: ""
+  rule: |
+    if(MT.error){
+      return '代码有错误'
+    }
+    if(MT.code.match(/defineProperty/)){
+      return '没有用到 defineProperty'
+    }
+    var attrs = Object.getOwnPropertyDescriptor(o, 'x')
+    return attrs.writable && !attrs.enumerable && attrs.configurable
+
+- knowledge_node_id: n58
+  kind: single_choice
+  title: 哪个方法是序列化一个对象
+  choices: 
+    - JSON.stringify(o)
+    - JSON.parse(o)
+  answer: A
+
+- knowledge_node_id: n60
+  kind: multiple_choices
+  title: 哪些是从 Object.prototype 继承而来的方法
+  choices: 
+    - toString
+    - valueOf
+    - hasOwnProperty
+    - trim
+  answer: ABC
+
+- knowledge_node_id: n62
+  kind: multiple_choices
+  title: 下面哪些是正确的
+  choices:
+    - "var arr = [1.1,true,'a',]"
+    - "var arr = {1.1,true,'a',}"
+    - "var arr = [1,{x:1,y:2},[2,{x:3,y:4}]"
+    - "var arr = new Array(10)"
+  answer: ACD
+
+- knowledge_node_id: n63
+  kind: single_choice
+  title: 数组 arr = [1,2],如何获取 arr 的数组长度
+  choices:
+    - arr.length
+    - arr.length()
+  answer: A
+
+- knowledge_node_id: n64
+  kind: single_choice
+  title: |
+    var a = ['world'];
+    a[1] = 3.14;
+    i = 2;
+    a[i] = 3;
+    a[i+1] = 'hello';
+    a[a[i]] = a[0];
+    根据上面确定 a[0],a[1],a[2],a[3] 的值
+  choices:
+    - a[0] = 'world',a[1] = 3.14, a[2] = 'hello', a[3] = 3
+    - a[0] = 'world',a[1] = 'hello', a[2] = 3.14, a[3] = 3
+    - a[0] = 'world',a[1] = 3.14, a[2] = 3, a[3] = 'hello'
+    - a[0] = 'world',a[1] = 3, a[2] = 'hello', a[3] = 3.14
+  answer: C
+
+- knowledge_node_id: n65
+  kind: multiple_choices
+  title: a=[1，3，5] 对a数组的操作正确的是
+  choices:
+    - a[0] = 'zero'
+    - a.keys.length
+    - a.push('zero','two')
+    - remove a[1]
+    - delete a[1]
+  answer: ACE
+
 ########################
-# <node id="n47">
-#   <name>创建对象</name>
-#   <desc/>
-# </node>
-# <node id="n48">
-#   <name>对象属性的一般操作</name>
-#   <desc/>
-# </node>
-# <node id="n49">
-#   <name>删除属性</name>
-#   <desc/>
-# </node>
-# <node id="n50">
-#   <name>检测属性</name>
-#   <desc/>
-# </node>
-# <node id="n51">
-#   <name>枚举属性for...in</name>
-#   <desc/>
-# </node>
-# <node id="n52">
-#   <name>属性取值</name>
-#   <desc/>
-# </node>
-# <node id="n53">
-#   <name>属性赋值</name>
-#   <desc/>
-# </node>
-# <node id="n54">
-#   <name>对象属性的高级操作</name>
-#   <desc/>
-# </node>
-# <node id="n55">
-#   <name>get</name>
-#   <desc/>
-# </node>
-# <node id="n56">
-#   <name>set</name>
-#   <desc/>
-# </node>
-# <node id="n57">
-#   <name>可写性，可枚举性，可配置性定义</name>
-#   <desc/>
-# </node>
-# <node id="n58">
-#   <name>对象序列化</name>
-#   <desc/>
-# </node>
-# <node id="n59">
-#   <name>JSON概念</name>
-#   <desc/>
-# </node>
-# <node id="n60">
-#   <name>对象通用方法-从Object继承</name>
-#   <desc/>
-# </node>
-# <node id="n61">
-#   <name>数组</name>
-#   <desc/>
-# </node>
-# <node id="n62">
-#   <name>创建数组</name>
-#   <desc/>
-# </node>
-# <node id="n63">
-#   <name>数组长度</name>
-#   <desc/>
-# </node>
-# <node id="n64">
-#   <name>数组元素读写</name>
-#   <desc/>
-# </node>
-# <node id="n65">
-#   <name>数组元素增删</name>
-#   <desc/>
-# </node>
 # <node id="n66">
 #   <name>数组遍历</name>
 #   <desc/>
