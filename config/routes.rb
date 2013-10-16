@@ -320,10 +320,13 @@ Eshare::Application.routes.draw do
   resources :mists, :shallow => true
 end
 
-# KnowledgeQuestion 添加表单
+# KnowledgeQuestion 相关
 Eshare::Application.routes.draw do
-  resources :knowledge_questions, :shallow => true
-  resources :knowledge_answer_records, :shallow => true
+  namespace :admin do
+    resources :knowledge_questions, :shallow => true
+  end
+
+  resources :knowledge_tests, :shallow => true
 end
 
 # 一般用户进行知识水平测试

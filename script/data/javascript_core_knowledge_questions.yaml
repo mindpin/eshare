@@ -1,5 +1,5 @@
 - knowledge_node_id: n0
-  kind: single_choices
+  kind: single_choice
   title: 字符 é 的 unicode 转义写法为 \u00E9，那这两个字符串 "café" === "caf\u00e9" 的比较结果是
   choices: 
     - "True"
@@ -7,7 +7,7 @@
   answer: A
 
 - knowledge_node_id: n1
-  kind: single_choices
+  kind: single_choice
   title: 选择正确的单行注释
   choices:
     - "// 注释"
@@ -16,7 +16,7 @@
   answer: A
 
 - knowledge_node_id: n2
-  kind: single_choices
+  kind: single_choice
   title: 选择正确的多行注释
   choices:
     - |
@@ -48,13 +48,13 @@
     - "do"
   answer: ABCD
 
-- node_id: n5
+- knowledge_node_id: n5
   kind: true_false
   title: 在 javascript 代码中，每行结尾必须有分号
   answer: F
 
 - knowledge_node_id: n6
-  kind: single_choices
+  kind: single_choice
   title: 哪个才是对象直接量
   choices:
     - "12"
@@ -63,7 +63,7 @@
     - "{x:1}"
   answer: D
 
-- node_id: n13
+- knowledge_node_id: n13
   kind: multiple_choices
   title: 下面哪些是正确的整数
   choices:
@@ -73,18 +73,18 @@
     - "0xa"
   answer: ABD
 
-- node_id: n14
+- knowledge_node_id: n14
   kind: true_false
   title: 在javascript中所有数值均用浮点数表示
   answer: T
 
-- node_id: n15
+- knowledge_node_id: n15
   kind: true_false
   title: 在javascript中字符串既可以使用单引号，也可以使用双引号
   answer: T
 
 - knowledge_node_id: n16
-  kind: single_choices
+  kind: single_choice
   title: 选择正确的转义字符
   choices:
     - "\\n"
@@ -101,18 +101,18 @@
     - "!undefined"
   answer: BCD
 
-- node_id: n18
+- knowledge_node_id: n18
   kind: true_false
   title: typeof null 的结果是 object
   answer: T
 
-- node_id: n19
+- knowledge_node_id: n19
   kind: true_false
   title: typeof undefined 的结果是 object
   answer: F
 
 - knowledge_node_id: n22
-  kind: single_choices
+  kind: single_choice
   title: 在浏览器javascript中，表示整个窗口的对象是
   choices:
     - Math

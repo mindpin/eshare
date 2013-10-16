@@ -1,4 +1,4 @@
-= form_for @question do |f|
+= form_for [:admin, @question] do |f|
   = hidden_field_tag :kind, @question.kind
   = f.label :knowledge_node_id, "知识点"
   = f.select :knowledge_node_id, @nodes.map {|node|[node.name, node.id]}
@@ -6,7 +6,7 @@
   = f.text_field :title
 
   - locals = {:f => f, :question => @question}
-  - form_part = ->(part) {render :partial => "knowledge_questions/parts/#{part}", :locals => locals}
+  - form_part = ->(part) {render :partial => "admin/knowledge_questions/parts/#{part}", :locals => locals}
 
   - case @question.kind
   - when :single_choice, :multiple_choices
