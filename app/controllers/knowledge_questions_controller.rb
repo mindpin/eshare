@@ -30,6 +30,6 @@ class KnowledgeQuestionsController < ApplicationController
   private
 
   def get_knet
-    KnowledgeNet.load_xml_file("config/knowledge_nets/javascript_core.xml")
+    KnowledgeNet::JAVASCRIPT_CORE
   end
 end

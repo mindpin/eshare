@@ -209,4 +209,5 @@ class User < ActiveRecord::Base
   include Medal::UserMethods
   include SimpleCredit::UserMethods
   include Report::UserMethods
+  include KnowledgeAnswerRecord::UserMethods
 end
