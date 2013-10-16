@@ -8,6 +8,21 @@ class KnowledgeAnswerRecord < ActiveRecord::Base
   validates :knowledge_question, :user, :correct_count, :error_count,
             :presence => true
 
+  scope :by_knowledge_net, lambda {|knowledge_net|
+    joins(%`
+      INNER JOIN
+        knowledge_questions
+      ON
+        knowledge_questions.id = knowledge_answer_records.knowledge_question_id
+      INNER JOIN
+        knowledge_node_records 
+      ON
+        knowledge_node_records.knowledge_node_id = knowledge_questions.knowledge_node_id
+    `).where(%`
+      knowledge_node_records.knowledge_net_id = "#{knowledge_net.id}"
+    `)
+  }
+
 
   module KnowledgeQuestionMethods
     def self.included(base)
