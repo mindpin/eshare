@@ -15,6 +15,7 @@ describe KnowledgeAnswerRecord do
 
     it "user error_count" do
       @knowledge_question.error_count_of_user(@user).should == 0
+      @knowledge_question.correct_count_of_user(@user).should == 0
     end
 
     describe "添加 correct_count" do

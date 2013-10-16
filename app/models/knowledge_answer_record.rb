@@ -42,7 +42,7 @@ class KnowledgeAnswerRecord < ActiveRecord::Base
           :correct_count => 0, 
           :error_count => 0)
       end
-      self.knowledge_answer_records.where(:user_id => user.id).first
+      self.knowledge_answer_records.where(:user_id => user.id).first_or_initialize
     end
 
   end
