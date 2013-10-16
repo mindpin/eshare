@@ -1,28 +1,37 @@
 - kind = @question.kind
+- id = @question.id
+- choice_arr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
+
+- correct_count = @question.correct_count_of_user(current_user)
+- error_count = @question.error_count_of_user(current_user)
 
 .page-knowledge-test-question-show
-  .question.flat-panel.bordered
+  .question.flat-panel.bordered{:data => {:kind => kind, :id => id}}
     .qhead
       .title= @question.title
       .clearfix
     .qbody
-      .desc= @question.desc
       .kind= @question.kind(:zh => true)
+      .count
+        %span 答对 #{correct_count} 次，
+        %span 答错 #{error_count} 次
+      .desc= @question.desc
 
       - if kind == :single_choice
         .choices
-          - arr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
           - @question.choices.each_with_index do |choice, idx|
-            %a.choice{:href => 'javascript:;'}
-              .oc= arr[idx]
+            - value = choice_arr[idx]
+            %a.choice{:href => 'javascript:;', :data => {:value => value}}
+              .oc= value
               .text= choice
 
         .result
           .my-choice
-            我的选择：A, B, D
+            %span 我的选择：
+            %span.answer --
 
           .btns
-            %a.submit.btn.success-flat{:href => 'javascript:;'}
+            %a.submit.btn.success-flat.disabled{:href => 'javascript:;'}
               %i.icon-ok
               %span 确定
 
@@ -30,26 +39,28 @@
         .choices
           - arr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
           - @question.choices.each_with_index do |choice, idx|
-            %a.choice{:href => 'javascript:;'}
-              .oc= arr[idx]
+            - value = choice_arr[idx]
+            %a.choice{:href => 'javascript:;', :data => {:value => value}}
+              .oc= value
               .text= choice
 
         .result
           .my-choice
-            我的选择：A, B, D
+            %span 我的选择：
+            %span.answer --
 
           .btns
-            %a.submit.btn.success-flat{:href => 'javascript:;'}
+            %a.submit.btn.success-flat.disabled{:href => 'javascript:;'}
               %i.icon-ok
               %span 确定
 
       - if kind == :true_false
         .choices.decide
-          %a.choice.correct{:href => 'javascript:;'}
+          %a.choice.correct{:href => 'javascript:;', :data => {:value => 'T'}}
             .oc
               %i.icon-ok
             .text 正确
-          %a.choice.error{:href => 'javascript:;'}
+          %a.choice.error{:href => 'javascript:;', :data => {:value => 'F'}}
             .oc
               %i.icon-remove
             .text 错误
@@ -57,7 +68,7 @@
         .result
           .my-choice
             %span 我的判断：
-            %i.icon-ok
+            %span.answer --
 
           .btns
             %a.submit.btn.success-flat{:href => 'javascript:;'}
