@@ -7,17 +7,19 @@
 
 .page-knowledge-test-question-show
   .question.flat-panel.bordered{:data => {:kind => kind, :id => id}}
+
     .qhead
+      .kind= @question.kind(:zh => true)
       .title= @question.title
       .clearfix
+
     .qbody
-      .kind= @question.kind(:zh => true)
-      .count
+      .count{:style => 'display:none;'}
         %span 答对 #{correct_count} 次，
         %span 答错 #{error_count} 次
-      .desc= @question.desc
+      .desc{:style => 'display:none;'}= @question.desc
 
-      - if kind == :single_choice
+      - if kind == :single_choice || kind == :multiple_choices
         .choices
           - @question.choices.each_with_index do |choice, idx|
             - value = choice_arr[idx]
@@ -28,26 +30,7 @@
         .result
           .my-choice
             %span 我的选择：
-            %span.answer --
-
-          .btns
-            %a.submit.btn.success-flat.disabled{:href => 'javascript:;'}
-              %i.icon-ok
-              %span 确定
-
-      - if kind == :multiple_choices
-        .choices
-          - arr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
-          - @question.choices.each_with_index do |choice, idx|
-            - value = choice_arr[idx]
-            %a.choice{:href => 'javascript:;', :data => {:value => value}}
-              .oc= value
-              .text= choice
-
-        .result
-          .my-choice
-            %span 我的选择：
-            %span.answer --
+            %span.answer.no 未选
 
           .btns
             %a.submit.btn.success-flat.disabled{:href => 'javascript:;'}
@@ -64,14 +47,15 @@
             .oc
               %i.icon-remove
             .text 错误
+          .clearfix
 
         .result
           .my-choice
             %span 我的判断：
-            %span.answer --
+            %span.answer.no 未判断
 
           .btns
-            %a.submit.btn.success-flat{:href => 'javascript:;'}
+            %a.submit.btn.success-flat.disabled{:href => 'javascript:;'}
               %i.icon-ok
               %span 确定
 
@@ -84,6 +68,18 @@
             %a.reset-code.btn.info-flat{:href => 'javascript:;'}
               %i.icon-refresh
               %span 重置代码
-            %a.submit.btn.success-flat{:href => 'javascript:;'}
+            %a.submit.btn.success-flat.disabled{:href => 'javascript:;'}
               %i.icon-ok
               %span 确定
+
+      .result-response{:style => 'display:none;'}
+        .correct{:style => 'display:none;'}
+          .oc
+            %i.icon-ok
+          %span 答对了 :)
+          .clearfix
+        .error{:style => 'display:none;'}
+          .oc
+            %i.icon-remove
+          %span 答错了 :(
+          .clearfix

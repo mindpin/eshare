@@ -1,7 +1,13 @@
 class KnowledgeTestQuestion
   constructor: (@$elm)->
-    @kind        = @$elm.find('.question').data('kind')
-    @question_id = @$elm.find('.question').data('id')
+    @$question   = @$elm.find('.question')
+    @kind        = @$question.data('kind')
+    @question_id = @$question.data('id')
+
+    @$answer = @$elm.find('.my-choice .answer')
+    @$submit = @$elm.find('a.submit')
+
+    @$loading = jQuery("<i class='icon-spinner icon-spin'>")
 
     if @kind == 'single_choice'
       @setup_single_choice()
@@ -12,87 +18,102 @@ class KnowledgeTestQuestion
     if @kind == 'true_false'
       @setup_true_false()
 
+    if @kind == 'code'
+      @setup_code()
+
+  _clear_selected: ->
+    @$elm.find('.choices a.choice').removeClass('selected')
+
+  set_answer: (answer)->
+    if answer == ''
+      @$answer.addClass('no').html('未选').data('answer', '')
+      @$submit.addClass('disabled')
+    else
+      @$answer.removeClass('no').html(answer).data('answer', answer)
+      @$submit.removeClass('disabled')
+
+    if @kind == 'true_false'
+      if answer == 'T'
+        @$answer.html jQuery('<i>').addClass('icon-ok')
+      if answer == 'F'
+        @$answer.html jQuery('<i>').addClass('icon-remove')
+
   setup_single_choice: ->
     elm = @$elm
-    question_id = @question_id
+    that = @
 
     elm.delegate '.choices a.choice', 'click', ->
       $choice = jQuery(this)
       value = $choice.data('value')
       
-      elm.find('.choices a.choice').removeClass('selected')
+      that._clear_selected()
       $choice.addClass('selected')
 
-      elm.find('.my-choice .answer').html(value).data('answer', value)
-      elm.find('a.submit').removeClass('disabled')
+      that.set_answer(value)
 
     @init_choice_submit()
 
   setup_multiple_choices: ->
     elm = @$elm
-    question_id = @question_id
+    that = @
 
     elm.delegate '.choices a.choice', 'click', ->
       $choice = jQuery(this)
-      
       $choice.toggleClass('selected')
 
       values = []
       elm.find('.choices a.choice.selected').each ->
         values.push jQuery(this).data('value')
 
-      if values.length > 0
-        value = values.join('')
-        elm.find('.my-choice .answer').html(value).data('answer', value)
-        elm.find('a.submit').removeClass('disabled')
-      else
-        elm.find('.my-choice .answer').html('--').data('answer', '')
-        elm.find('a.submit').addClass('disabled')
+      that.set_answer values.join('')
 
     @init_choice_submit()
 
   setup_true_false: ->
-    elm = @$elm
-    question_id = @question_id
-
-    elm.delegate '.choices a.choice', 'click', ->
-      $choice = jQuery(this)
-      value = $choice.data('value')
-      
-      elm.find('.choices a.choice').removeClass('selected')
-      $choice.addClass('selected')
-
-      elm.find('.my-choice .answer').html(value).data('answer', value)
-      elm.find('a.submit').removeClass('disabled')
-
-    @init_choice_submit()
+    @setup_single_choice()
 
   init_choice_submit: ->
     elm = @$elm
-    question_id = @question_id
+    that = @
     elm.delegate 'a.submit:not(.disabled)', 'click', ->
       answer = elm.find('.my-choice .answer').data('answer')
       jQuery.ajax
-        url: "/knowledge_test/questions/#{question_id}/submit_answer"
+        url: "/knowledge_test/questions/#{that.question_id}/submit_answer"
         method: 'POST'
         data:
           result: answer
+        beforeSend: ->
+          that.$submit.hide()
+          that.$submit.after that.$loading
         success: (res)->
+          that.$loading.remove()
           console.log res
           result = res.result
           if result
-            alert('答对了')
+            that.show_correct_res()
           else
-            alert('答错了')
+            that.show_error_res()
 
-  setup: ->
+  setup_code: ->
+    @code_inputer = ace.edit("code")
+    @code_inputer.setTheme("ace/theme/twilight")
+    @code_inputer.getSession().setMode("ace/mode/javascript")
+    @code_inputer.getSession().setTabSize(2)
 
-    # @code_inputer = ace.edit("code")
-    # @code_inputer.setTheme("ace/theme/twilight")
-    # @code_inputer.getSession().setMode("ace/mode/javascript")
-    # @code_inputer.getSession().setTabSize(2)
+  show_correct_res: ->
+    @$question.addClass('answered')
+    @$elm.find('.result-response').hide()
+      .find('.error').hide().end()
+      .find('.correct').show().end()
+      .slideDown(150)
 
+  show_error_res: ->
+    @$question.addClass('answered')
+    @$elm.find('.result-response').hide()
+      .find('.error').show().end()
+      .find('.correct').hide().end()
+      .slideDown(150)
 
 jQuery ->
   jQuery('.page-knowledge-test-question-show').each ->
-    new KnowledgeTestQuestion(jQuery(@)).setup()
+    new KnowledgeTestQuestion(jQuery(@))
