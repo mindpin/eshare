@@ -4,13 +4,13 @@ describe KnowledgeQuestionPostAndCommentValidator do
   class DummyComment
     include ActiveModel::Validations
 
-    attr_accessor :content, :image, :code, :code_type
+    attr_accessor :content, :file_entity_id, :code, :code_type
     validates_with KnowledgeQuestionPostAndCommentValidator
 
-    def initialize(content, image, code, code_type)
+    def initialize(content, file_entity_id, code, code_type)
       self.content = content
-      self.image   = image
-      self.code    = code
+      self.file_entity_id = file_entity_id
+      self.code = code
       self.code_type = code_type
     end
   end
