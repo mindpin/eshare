@@ -5,6 +5,8 @@
 - correct_count = @question.correct_count_of_user(current_user)
 - error_count = @question.error_count_of_user(current_user)
 
+- notes = @question.knowledge_question_notes.by_creator(current_user)
+
 .page-knowledge-test-question-show
   .question.flat-panel.bordered{:data => {:kind => kind, :id => id}}
 
@@ -84,5 +86,20 @@
           %span 答错了 :(
           .clearfix
 
-    .eshare-ops
-      
+  .question-ops{:style => 'display:none;'}
+    .btns
+      %a.add-note.btn.info-flat{:href => 'javascript:;'}
+        %i.icon-book.icon-large
+        %span 写笔记
+
+      %a.go-discuss.btn.success-flat{:href => 'javascript:;'}
+        %i.icon-comments-alt.icon-large
+        %span 讨论
+
+      %a.fav.btn.fav-flat{:href => 'javascript:;'}
+        %i.icon-star-empty.icon-large
+        %span 收藏
+
+    .clearfix
+
+  = render_cell :knowledge_test, :notes, :notes => notes

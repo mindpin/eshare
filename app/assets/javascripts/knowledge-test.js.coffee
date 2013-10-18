@@ -1,3 +1,62 @@
+class KnowledgeTestQuestionNoteEditor
+  constructor: (@$elm)->
+    @$question   = @$elm.find('.question')
+    @kind        = @$question.data('kind')
+    @question_id = @$question.data('id')
+
+    @$note_btn = @$elm.find('.question-ops a.add-note')
+
+    @setup()
+
+  submit_note: ($editor)->
+    text = $editor.find('textarea').val()
+    code = ''
+    file_entity_id = ''
+
+    jQuery.ajax
+      url: '/knowledge_test/notes'
+      method: 'POST'
+      data:
+        question_id: @question_id
+        text: text
+        code: code
+        file_entity_id: file_entity_id
+      success: (res)->
+        $new_note = jQuery(res.html).find('.note').hide()
+        $editor.before $new_note.fadeIn()
+        $editor.find('textarea').val('')
+
+  setup: ->
+    # @$note_btn.on 'click', =>
+    #   jQuery.ajax
+    #     url: '/knowledge_test/notes'
+    #     data:
+    #       question_id: @question_id
+    #     success: (res)->
+    #       console.log res
+
+    that = @
+
+    # 增加笔记
+    @$elm.delegate '.notes .editor textarea', 'keypress', (evt)->
+      if evt.ctrlKey && evt.which == 13 || evt.which == 10
+        that.submit_note $editor = jQuery(this).closest('.editor')
+
+    @$elm.delegate '.notes a.submit', 'click', ->
+      that.submit_note $editor = jQuery(this).closest('.editor')
+
+    # 删除笔记
+    @$elm.delegate '.notes .note a.remove', 'click', ->
+      if confirm '你确定要删除这条笔记吗？'
+        $note = jQuery(this).closest('.note')
+        note_id = $note.data('id')
+        jQuery.ajax
+          url: "/knowledge_test/notes/#{note_id}"
+          method: 'DELETE'
+          success: (res)->
+            $note.slideUp -> $note.remove()
+
+
 class KnowledgeTestQuestion
   constructor: (@$elm)->
     @$question   = @$elm.find('.question')
@@ -87,7 +146,7 @@ class KnowledgeTestQuestion
   init_choice_submit: ->
     elm = @$elm
     that = @
-    elm.delegate 'a.submit:not(.disabled)', 'click', ->
+    elm.delegate '.question a.submit:not(.disabled)', 'click', ->
       answer = elm.find('.my-choice .answer').data('answer')
       jQuery.ajax
         url: "/knowledge_test/questions/#{that.question_id}/submit_answer"
@@ -129,3 +188,4 @@ class KnowledgeTestQuestion
 jQuery ->
   jQuery('.page-knowledge-test-question-show').each ->
     new KnowledgeTestQuestion(jQuery(@))
+    new KnowledgeTestQuestionNoteEditor(jQuery(@))

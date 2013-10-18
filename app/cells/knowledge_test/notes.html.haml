@@ -1,0 +1,31 @@
+.notes
+  - @notes.each do |note|
+    .note{:data => {:id => note.id}}
+      .ops
+        %a.edit{:href => 'javascript:;', :title => '编辑修改'}
+          %i.icon-edit
+        %a.remove{:href => 'javascript:;', :title => '删除'}
+          %i.icon-remove
+
+      %pre.text
+        = preserve do
+          = note.content
+
+      .time
+        = note.updated_at.strftime('%^b %d %H:%I')
+
+  .editor
+    .ipts
+      %textarea.ipt{:rows => 6, :placeholder => '在这里写笔记…'}
+      .ipt-ops
+        %a.submit.btn.success-flat.small{:href => 'javascript:;'}
+          %i.icon-ok
+          %span 保存笔记
+        %a.code.btn.gray-flat.small{:href => 'javascript:;'}
+          %i.icon-chevron-left
+          %i.icon-chevron-right
+          %span 添加代码
+        %a.img.btn.gray-flat.small{:href => 'javascript:;'}
+          %i.icon-camera
+          %span 添加图片
+        .tips 按 ctrl + enter 保存

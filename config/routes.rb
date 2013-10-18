@@ -337,5 +337,8 @@ Eshare::Application.routes.draw do
         post :submit_answer
       end
     end
+
+    resources :notes, :shallow => true do
+    end
   end
 end
