@@ -325,8 +325,6 @@ Eshare::Application.routes.draw do
   namespace :admin do
     resources :knowledge_questions, :shallow => true
   end
-
-  resources :knowledge_tests, :shallow => true
 end
 
 # 一般用户进行知识水平测试
