@@ -211,4 +211,7 @@ class User < ActiveRecord::Base
   include Report::UserMethods
   include KnowledgeAnswerRecord::UserMethods
   include KnowledgeQuestionNote::UserMethods
+  include KnowledgeQuestionPost::UserMethods
+  include KnowledgeQuestionPostComment::UserMethods
+  include Like::UserMethods
 end
