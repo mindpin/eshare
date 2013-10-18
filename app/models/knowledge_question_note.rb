@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 class KnowledgeQuestionNote < ActiveRecord::Base
-  attr_accessible :knowledge_question, :creator, :content, :image, :code, :code_type
+  attr_accessible :knowledge_question, :creator, :content, :file_entity, :code, :code_type
 
   belongs_to :knowledge_question
+  belongs_to :file_entity
   belongs_to :creator, :class_name => 'User', :foreign_key => :creator_id
 
   validates :knowledge_question, :creator, :code_type,
@@ -10,7 +11,7 @@ class KnowledgeQuestionNote < ActiveRecord::Base
 
   validate :validate_note_type
   def validate_note_type    
-    errors.add(:base, '至少有一项不能为空') if content.blank? && image.blank? && code.blank?
+    errors.add(:base, '至少有一项不能为空') if content.blank? && file_entity.blank? && code.blank?
   end
 
 
