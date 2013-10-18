@@ -162,6 +162,14 @@ class User < ActiveRecord::Base
     model.unfollow_by_user self
   end
 
+  def fav(model)
+    model.fav_by_user self
+  end
+
+  def cancel_fav(model)
+    model.cancel_fav_by_user self
+  end
+
   # 记录用户 增加/修改 个人签名档
   record_feed :scene => :users,
                         :callbacks => [ :update ],
@@ -214,4 +222,5 @@ class User < ActiveRecord::Base
   include KnowledgeQuestionPost::UserMethods
   include KnowledgeQuestionPostComment::UserMethods
   include Like::UserMethods
+  include KnowledgeQuestionFav::UserMethods
 end
