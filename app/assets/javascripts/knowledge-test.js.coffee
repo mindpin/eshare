@@ -8,9 +8,26 @@ class KnowledgeTestQuestionNoteEditor
 
     @setup()
 
+    @code_inputers = {}
+
+    # @$elm.find('.note .code pre').each ->
+    #   code_inputer = ace.edit this
+    #   code_inputer.setTheme("ace/theme/twilight")
+    #   code_inputer.getSession().setMode("ace/mode/javascript")
+    #   code_inputer.getSession().setTabSize(2)
+
+
+  cache_code_inputer: (rnd, inputer)->
+    if inputer
+      @code_inputers[rnd] = inputer
+    
+    return @code_inputers[rnd]
+
   submit_note: ($editor)->
     text = $editor.find('textarea').val()
-    code = ''
+    code_inputer = @cache_code_inputer $editor.find('pre.code').data('rnd')
+    if code_inputer
+      code = code_inputer.getSession().getValue()
     file_entity_id = ''
 
     jQuery.ajax
@@ -25,6 +42,8 @@ class KnowledgeTestQuestionNoteEditor
         $new_note = jQuery(res.html).find('.note').hide()
         $editor.before $new_note.fadeIn()
         $editor.find('textarea').val('')
+        code_inputer.getSession().setValue('')
+        $editor.find('pre.code').parent().hide()
 
   setup: ->
     # @$note_btn.on 'click', =>
@@ -55,6 +74,19 @@ class KnowledgeTestQuestionNoteEditor
           method: 'DELETE'
           success: (res)->
             $note.slideUp -> $note.remove()
+
+    # 添加代码
+    @$elm.delegate '.notes .editor a.code', 'click', ->
+      $pre_code = jQuery(this).closest('.editor').find('pre.code')
+      code_inputer = ace.edit $pre_code[0]
+      code_inputer.setTheme("ace/theme/twilight")
+      code_inputer.getSession().setMode("ace/mode/javascript")
+      code_inputer.getSession().setTabSize(2)
+      $pre_code.parent().fadeIn()
+
+      rnd = Math.random()
+      $pre_code.data('rnd', rnd)
+      that.cache_code_inputer rnd, code_inputer
 
 
 class KnowledgeTestQuestion

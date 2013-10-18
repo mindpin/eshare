@@ -25,6 +25,7 @@ class KnowledgeTest::NotesController < ApplicationController
     @note = @question.knowledge_question_notes.create(
       :creator => current_user,
       :content => params[:text],
+      :code    => params[:code],
       :code_type => 'javascript'
     )
 

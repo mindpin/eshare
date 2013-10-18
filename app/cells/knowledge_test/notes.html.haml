@@ -11,12 +11,26 @@
         = preserve do
           = note.content
 
+      - if note.code
+        .code
+          %pre
+            = preserve do
+              = note.code
+
       .time
         = note.updated_at.strftime('%^b %d %H:%I')
 
   .editor
     .ipts
       %textarea.ipt{:rows => 6, :placeholder => '在这里写笔记…'}
+      .code-ipt{:style => 'display:none;'}
+        .code-params
+          %select.code-type
+            %option javascript
+            %option ruby
+            %option xml
+        %pre.code
+
       .ipt-ops
         %a.submit.btn.success-flat.small{:href => 'javascript:;'}
           %i.icon-ok

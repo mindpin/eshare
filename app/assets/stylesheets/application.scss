@@ -5309,6 +5309,7 @@ form .input.page-form-tag-inputer {
     margin-top:15px;
     background-color:#FCFBF9;
     border:solid 1px #e7e7e7;
+    margin-bottom:100px;
 
     .note {
       background-color:white;
@@ -5348,6 +5349,15 @@ form .input.page-form-tag-inputer {
       pre.text {
         margin:0;
       }
+
+      .code {
+        margin:15px -5px 5px;
+        background-color:#444;
+        color:white;
+        padding:5px;
+        pre {margin: 0;}
+      }
+
       .time {
         // position:absolute;
         // right:-5px;bottom:5px;
@@ -5368,6 +5378,7 @@ form .input.page-form-tag-inputer {
 
     .ipts{
       padding:5px;
+
       textarea.ipt {
         @include border-box;
         width:100%;
@@ -5375,6 +5386,22 @@ form .input.page-form-tag-inputer {
         resize:none;
         margin-bottom:5px;
         @include code-font-family;
+      }
+
+      .code-ipt{
+        height:200px;
+        position:relative;
+        .code-params {
+          select{margin-bottom:0;}
+        }
+
+        pre {
+          margin-top:0;
+          position:absolute;
+          top:35px;left:0;bottom:0;right:0;
+          font-size:16px;
+          margin-bottom:5px;
+        }
       }
 
       .ipt-ops {
