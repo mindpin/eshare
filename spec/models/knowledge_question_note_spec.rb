@@ -18,6 +18,12 @@ describe KnowledgeQuestionNote do
     }
 
     describe "invalid note_hash" do
+      it "empty content, file_entity, code, code_type" do
+        note_hash = {:creator => @user}
+        @note = @knowledge_question.knowledge_question_notes.create(note_hash)
+        @note.id.blank?.should == true
+      end
+
       it "empty content, file_entity, code" do
         note_hash = {:creator => @user, :code_type => @code_type}
         @note = @knowledge_question.knowledge_question_notes.create(note_hash)
@@ -25,13 +31,13 @@ describe KnowledgeQuestionNote do
       end
 
       it "empty file_entity, code" do
-        note_hash = {:creator => @user, :content => @content, :code_type => @code_type}
+        note_hash = {:creator => @user, :content => @content}
         @note = @knowledge_question.knowledge_question_notes.create(note_hash)
         @note.id.blank?.should == false
       end
 
       it "empty content, code" do
-        note_hash = {:creator => @user, :file_entity => @file_entity, :code_type => @code_type}
+        note_hash = {:creator => @user, :file_entity => @file_entity}
         @note = @knowledge_question.knowledge_question_notes.create(note_hash)
         @note.id.blank?.should == false
       end
@@ -126,12 +132,12 @@ describe KnowledgeQuestionNote do
       @content = 'test content'
       @code_type = 'javascript'
 
-      note_hash = {:creator => @user_1, :content => @content, :code_type => @code_type}
+      note_hash = {:creator => @user_1, :content => @content}
       @note_1 = @knowledge_question.knowledge_question_notes.create(note_hash)
       @note_2 = @knowledge_question.knowledge_question_notes.create(note_hash)
       @note_3 = @knowledge_question_2.knowledge_question_notes.create(note_hash)
 
-      note_hash = {:creator => @user_2, :content => @content, :code_type => @code_type}
+      note_hash = {:creator => @user_2, :content => @content}
       @note_4 = @knowledge_question.knowledge_question_notes.create(note_hash)
       @note_5 = @knowledge_question.knowledge_question_notes.create(note_hash)
     }

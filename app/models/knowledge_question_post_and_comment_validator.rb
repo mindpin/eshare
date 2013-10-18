@@ -8,5 +8,9 @@ class KnowledgeQuestionPostAndCommentValidator < ActiveModel::Validator
     if model.code.present? && model.code_type.blank?
       model.errors.add(:base, "请指定代码类型。")
     end
+
+    if model.code_type.present? && model.code.blank?
+      model.errors.add(:base, "请指定代码。")
+    end
   end
 end
