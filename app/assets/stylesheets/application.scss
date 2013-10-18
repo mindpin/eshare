@@ -5137,12 +5137,14 @@ form .input.page-form-tag-inputer {
           font-family:Monaco, Menlo, 'Ubuntu Mono', Consolas, source-code-pro, monospace;
           font-size:16px;
           font-weight:bold;
+          @include border-radius(5px);
 
           &:before {
             content:"";
             position:absolute;
             top:0;left:0;bottom:0;width:20px;
             background-color:darken(#FCFBF9, 5%);
+            @include border-radius(5px 0 0 5px);
           }
 
           .oc {
@@ -5182,10 +5184,10 @@ form .input.page-form-tag-inputer {
           &.correct, &.error{
             // float:left;
             // width:209px;
-            width:50%;
+            // width:50%;
           }
           &.correct {
-            margin-right:14px;
+            // margin-right:14px;
           }
         }
       }

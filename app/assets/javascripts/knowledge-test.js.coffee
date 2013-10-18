@@ -9,6 +9,8 @@ class KnowledgeTestQuestion
 
     @$loading = jQuery("<i class='icon-spinner icon-spin'>")
 
+    # @animation()
+
     if @kind == 'single_choice'
       @setup_single_choice()
 
@@ -20,6 +22,16 @@ class KnowledgeTestQuestion
 
     if @kind == 'code'
       @setup_code()
+
+  # animation: ->
+  #   @$elm.find('.choices a.choice')
+  #     .css
+  #       position: 'relative'
+  #       left: 200
+  #       opacity: 0
+  #     .animate
+  #       left: 0
+  #       opacity: 1
 
   _clear_selected: ->
     @$elm.find('.choices a.choice').removeClass('selected')
