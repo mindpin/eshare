@@ -66,6 +66,10 @@ class KnowledgeAnswerRecord < ActiveRecord::Base
   module UserMethods
     def self.included(base)
       base.has_many :knowledge_answer_records
+      base.has_many :history_knowledge_questions, 
+        :through => :knowledge_answer_records,
+        :source => :knowledge_question,
+        :order => "knowledge_answer_records.updated_at desc"
     end
   end
 
