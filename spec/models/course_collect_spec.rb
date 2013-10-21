@@ -3,7 +3,7 @@ require 'spec_helper'
 describe CourseCollect do
   before {
     @user = FactoryGirl.create(:user)
-    @course_collect_0 = FactoryGirl.create(:course_collect)
+    @course_collect = FactoryGirl.create(:course_collect)
     @course_collect_1 = FactoryGirl.create(:course_collect, :creator => @user)
     @course_collect_2 = FactoryGirl.create(:course_collect, :creator => @user)
   }

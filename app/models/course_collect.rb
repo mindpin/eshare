@@ -11,7 +11,8 @@ class CourseCollect < ActiveRecord::Base
 
   module UserMethods
     def self.included(base)
-      base.has_many :created_course_collects, :class_name => 'User', :foreign_key => :creator_id
+      base.has_many :created_course_collects, :class_name => 'CourseCollect',
+                    :foreign_key => :creator_id
     end
   end
 
