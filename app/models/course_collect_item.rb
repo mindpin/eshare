@@ -7,4 +7,5 @@ class CourseCollectItem < ActiveRecord::Base
   belongs_to :course
 
   validates :course_collect, :course, :presence => true
+
 end

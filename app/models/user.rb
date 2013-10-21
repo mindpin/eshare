@@ -214,4 +214,5 @@ class User < ActiveRecord::Base
   include KnowledgeQuestionPost::UserMethods
   include KnowledgeQuestionPostComment::UserMethods
   include Like::UserMethods
+  include CourseCollect::UserMethods
 end
