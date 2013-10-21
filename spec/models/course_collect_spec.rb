@@ -4,8 +4,8 @@ describe CourseCollect do
   before {
     @user = FactoryGirl.create(:user)
     @course_collect_0 = FactoryGirl.create(:course_collect)
-    @course_collect_1 = FactoryGirl.create(:course_collect, :user => @user)
-    @course_collect_2 = FactoryGirl.create(:course_collect, :user => @user)
+    @course_collect_1 = FactoryGirl.create(:course_collect, :creator => @user)
+    @course_collect_2 = FactoryGirl.create(:course_collect, :creator => @user)
   }
 
   it "查询用户创建的课程专辑" do
