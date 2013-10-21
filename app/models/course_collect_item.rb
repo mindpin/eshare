@@ -7,5 +7,6 @@ class CourseCollectItem < ActiveRecord::Base
   belongs_to :course
 
   validates :course_collect, :course, :presence => true
+  validates :course_collect_id, :uniqueness => {:scope => :course_id}
 
 end
