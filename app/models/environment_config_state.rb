@@ -8,7 +8,7 @@ class EnvironmentConfigState < ActiveRecord::Base
             :presence => true
 
 
-   module CourseWareMethods
+  module CourseWareMethods
     def self.included(base)
       base.has_many :environment_config_states
     end
