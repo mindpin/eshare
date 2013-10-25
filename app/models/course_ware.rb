@@ -11,6 +11,7 @@ class CourseWare < ActiveRecord::Base
   include Note::CourseWareMethods
   include CourseWareMarkdownMethods
   include MarkdownImageRegexMethods
+  include EnvironmentConfigState::CourseWareMethods
 
   attr_accessible :title, :desc, :url, :creator, :total_count
   attr_accessible :title, :desc, :creator, :kind, :chapter, :url, :as => :import
