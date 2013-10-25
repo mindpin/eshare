@@ -3,7 +3,7 @@ require 'spec_helper'
 describe EnvironmentConfigState do
   describe "course_ware 相关 environment_config_state 方法" do
     before {
-      @course_ware = FactoryGirl.create(:course_ware)
+      @course_ware = FactoryGirl.create(:course_ware, :kind => 'environment_config')
 
       @state = FactoryGirl.create(:environment_config_state)
       @state_1 = FactoryGirl.create(:environment_config_state, :course_ware => @course_ware)
@@ -13,17 +13,13 @@ describe EnvironmentConfigState do
       @state_5 = FactoryGirl.create(:environment_config_state, :course_ware => @course_ware)
       @state_6 = FactoryGirl.create(:environment_config_state, :course_ware => @course_ware)
 
-      FactoryGirl.create(:environment_config_state_relation, 
-                          :parent_state => @state_1, :child_state => @state_4)
-      FactoryGirl.create(:environment_config_state_relation, 
-                          :parent_state => @state_2, :child_state => @state_4)
-      FactoryGirl.create(:environment_config_state_relation, 
-                          :parent_state => @state_3, :child_state => @state_4)
+  
+      EnvironmentConfigStateRelation.create(:parent_state => @state_1, :child_state => @state_4)
+      EnvironmentConfigStateRelation.create(:parent_state => @state_2, :child_state => @state_4)
+      EnvironmentConfigStateRelation.create(:parent_state => @state_3, :child_state => @state_4)
 
-      FactoryGirl.create(:environment_config_state_relation, 
-                          :parent_state => @state_4, :child_state => @state_5)
-      FactoryGirl.create(:environment_config_state_relation, 
-                          :parent_state => @state_4, :child_state => @state_6)
+      EnvironmentConfigStateRelation.create(:parent_state => @state_4, :child_state => @state_5)
+      EnvironmentConfigStateRelation.create(:parent_state => @state_4, :child_state => @state_6)
     }
 
     it "course_ware.environment_config_states" do
