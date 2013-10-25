@@ -4,7 +4,7 @@ class EnvironmentConfigState < ActiveRecord::Base
 
   belongs_to :course_ware
 
-  validates :course_ware, :content, :title,
+  validates :course_ware, :title, :content,
             :presence => true
 
 
