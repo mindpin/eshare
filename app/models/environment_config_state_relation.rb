@@ -8,9 +8,7 @@ class EnvironmentConfigStateRelation < ActiveRecord::Base
   belongs_to :child_state, :class_name => 'EnvironmentConfigState',
              :foreign_key => :child_state_id
 
-  validates :parent_state, :child_state,
-            :presence => true
 
-
+  validates :parent_state, :presence => {:unless => 'child_state'}
 
 end
